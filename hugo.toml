@@ -1,0 +1,36 @@
+baseURL = "https://yinji.org/"
+languageCode = "zh-cn"
+title = "印记博客"
+theme = "hugo-bearneo"
+
+defaultContentLanguage = "zh-cn"
+
+
+[permalinks]
+  blog = "/:contentbasename.html"
+  tags = "/tags/:slug"
+
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+
+[outputFormats.RSS]
+  mediaType = "application/rss+xml"
+  baseName = "feed"
+
+
+[params]
+  description = "Live a life you will remember."
+
+  [params.author]
+    name = "青山"
+    email = ""
+
+  [params.RSS]
+    enableRSS = true
+    pageLimit = 20
+
+
+[pagination]
+  pagerSize = 10

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Afilmory on 印记博客</title>
+    <link>http://localhost:1313/tags/afilmory/</link>
+    <description>Recent content in Afilmory on 印记博客</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    
+    
+    
+    
+    <lastBuildDate>Sat, 27 Sep 2025 00:00:00 +0000</lastBuildDate>
+    
+    
+    <atom:link href="http://localhost:1313/tags/afilmory/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>展示照片的好地方</title>
+      <link>http://localhost:1313/chronoframe.html/</link>
+      <pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/chronoframe.html/</guid>
+      <description>&lt;h2 id=&#34;缘起&#34;&gt;缘起&lt;/h2&gt;&#xA;&lt;p&gt;我见过许多可以上传照片，将其作为作品展示的平台，比如小红书、Instagram、抖音，再或者是图虫，或者是国外的 &lt;a href=&#34;https://unsplash.com/@huhexian&#34;&gt;Unsplash&lt;/a&gt; 等平台。或许和写博客一样，内心有一股执念，数据只有掌握在自己手里才安全，紧接着便开始搜索各种可自部署的图片展示服务。&lt;/p&gt;&#xA;&lt;p&gt;过去使用 Typecho 搭配立云图志的 &lt;a href=&#34;http://www.lopwon.com/snapic-plus-v5.html&#34;&gt;Snapic Plus&lt;/a&gt; 主题，折腾了一段时间，最近又因为拾一的 &lt;a href=&#34;https://github.com/Afilmory/afilmory&#34;&gt;Afilmory&lt;/a&gt; 项目，勾起自己的折腾兴趣，尝试了许多次，终究因为它缺少后台管理功能，无法直接在后台添加新的照片，需要在存储端进行增加，较为繁琐。最近找到另一款类似的项目——&lt;a href=&#34;https://github.com/HoshinoSuzumi/chronoframe&#34;&gt;ChronoFrame&lt;/a&gt;，外观、功能大差不差，最重要的是有 dashboard，随时随地登录后台添加新照片，极其方便。&lt;/p&gt;&#xA;&lt;h2 id=&#34;chronoframe&#34;&gt;ChronoFrame&lt;/h2&gt;&#xA;&lt;p&gt;相比较 Afilmory，ChronoFrame 的部署也更简单利落，熟悉 Docker 则非常容易上手。提供 Docker 和 Docker Compose 两种形式，这里将自己的过程记录下来，方便以后继续使用。&lt;/p&gt;&#xA;&lt;p&gt;我在服务器上安装了 1panel，新建文件夹，命名“photo”，然后新建文件，命名为 .env，在文件里填入下列信息：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Admin user email (required)&#xA;CFRAME_ADMIN_EMAIL=&#xA;# Admin user name (required)&#xA;CFRAME_ADMIN_NAME=&#xA;# Admin user password (required)&#xA;CFRAME_ADMIN_PASSWORD=&#xA;&#xA;# 应用标题与口号&#xA;NUXT_PUBLIC_APP_TITLE=&#xA;NUXT_PUBLIC_APP_SLOGAN=&#xA;NUXT_PUBLIC_APP_AUTHOR=&#xA;NUXT_PUBLIC_APP_AVATAR_URL=&#xA;&#xA;# Mapbox Token&#xA;NUXT_PUBLIC_MAPBOX_ACCESS_TOKEN=&#xA;&#xA;# 存储提供者（s3/github/local）(required)&#xA;NUXT_STORAGE_PROVIDER=s3&#xA;# S3 存储服务配置(required)&#xA;NUXT_PROVIDER_S3_ENDPOINT=&#xA;NUXT_PROVIDER_S3_BUCKET=chronoframe&#xA;NUXT_PROVIDER_S3_REGION=auto&#xA;NUXT_PROVIDER_S3_ACCESS_KEY_ID=&#xA;NUXT_PROVIDER_S3_SECRET_ACCESS_KEY=&#xA;NUXT_PROVIDER_S3_PREFIX=photos/&#xA;NUXT_PROVIDER_S3_CDN_URL=&#xA;&#xA;# 会话密码（32 位随机字符串，必须设置）(required)&#xA;NUXT_SESSION_PASSWORD=&#xA;&#xA;# GitHub OAuth&#xA;NUXT_OAUTH_GITHUB_CLIENT_ID=&#xA;NUXT_OAUTH_GITHUB_CLIENT_SECRET=&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;备注 required 的则是必填项，最上面是登录邮箱和密码，接着是网站标题和描述、头像地址等，如果照片上存有地点信息，则可以申请 Mapbox 的 Token 一并部署，网站上就可以显示相应的地理信息；最主要的是存储提供者，目前仅支持 S3 协议，比如缤纷云、阿里云 OSS、腾讯云 COS，都可以使用，难点在于存储桶的相关信息要填写正确。&lt;/p&gt;&#xA;&lt;p&gt;另外还需要创建 &lt;code&gt;docker-compose.yml&lt;/code&gt; 文件，填入下列信息：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;services:&#xA;  chronoframe:&#xA;    image: ghcr.io/hoshinosuzumi/chronoframe:latest&#xA;    container_name: chronoframe&#xA;    restart: unless-stopped&#xA;    ports:&#xA;      - &amp;#39;3000:3000&amp;#39;&#xA;    volumes:&#xA;      - ./data:/app/data&#xA;    env_file:&#xA;      - .env&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最后一步，启动命令：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker-compose up -d&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这是我部署的：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://fade.im&#34;&gt;https://fade.im&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;这是陈仓颉部署的：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://photo.imzm.org&#34;&gt;https://photo.imzm.org&lt;/a&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;他一开始部署没成功，气得红温，最后还是折腾成功了。&lt;/p&gt;&#xA;&lt;h2 id=&#34;后话&#34;&gt;后话&lt;/h2&gt;&#xA;&lt;p&gt;部署完这个服务之后，上传了一些自认为还不错的照片，然后呢，内心又陷入一阵空虚。照片没拍几张，却一心想着如何展示，你拍得很好吗？其实也一般，但只要自己喜欢，就足够了。&lt;/p&gt;&#xA;&lt;p&gt;最后，问一下小孙，你的 &lt;a href=&#34;https://github.com/sun0225SUN/camlife&#34;&gt;Camlife&lt;/a&gt; 进展如何。&lt;/p&gt;&#xA;</description>
+    </item>
+  </channel>
+</rss>

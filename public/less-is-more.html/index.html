@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Less is more | 印记博客</title>
+<meta name="title" content="Less is more" />
+<meta name="description" content="
+    
+    
+    
+    
+
+
+在很多地方都看到过这句出自 Ludwig Mies van der Rohe 的名言：Less is more，少即是多，不仅建筑领域有所应用，许多独立开发者也将其作为产品的要义之一，今天正好和朋友聊到这个话题，引申到自己的博客，也是同样的道理。
+什么是信息密度
+源于陈仓颉的 TiddlyWiki——仿生猫不会梦见电子猫粮，他说信息密度太小，很难有阅读的欲望，我说我下班之后对任何东西都没有阅读欲望。原谅我的愚钝，需要查一下信息密度的含义：信息中有用信息、核心信息在整个信息中的比例，那我就懂了，Less is more 在我看来就是倡导增加信息密度。
+为什么很多人喜欢用国外的软件，或者寻找国产软件的国际版本，因为它们简洁，突出主要功能，不像某打车软件、外卖软件，正经功能没有好好打磨，反倒是天天想给你借钱，主打一个促进消费，带动经济增长，领导看了笑开颜。
+如果一个软件的信息密度太小，半天都找不到它的主要功能，容易被其他功能或模块所干扰，我多半不会经常使用它。
+信息密度与 Less is more
+Less is more，少即是多，尽量增加信息密度，信息量虽然看起来少，但是想要传递的有用信息却很多。
+前段时间更换博客主题以及关闭评论的时候说过，我要给博客做减法，回顾过去的博客主题、排版、设计，概括来说是比较杂乱无章，借用某位博友的观点，写博客是为了立人设，那我就需要直截了当的让人看见我的人设，页面上铺天盖地的各种信息，甚至还有狗皮膏药似的广告，你的人设是什么，邋遢大王吗？
+所以当时选择了仿 BearBlog 的 Dear 主题，再次感谢雅余的精心制作。在首页简单几句话，甚至几个词概括我是谁，我要做什么，我写什么，让密度变小，让阅读者舒适地欣赏你的内容，而不是轰炸他，在此感谢哲学家韩宇，他做程序员可惜了，我建议转行做产品经理。
+前几天因为 Apple Music 到期，转而投向了 Spotify 的怀抱，两个都是好产品，音乐软件主打音乐播放，相比网易云音乐，前者更让我有使用的欲望，为什么？因为它们不会在你打开软件时弹出弹窗广告和推荐内容，不会在播放时推荐你使用各种音效、动效，甚至是付费的功能。
+如果将信息密度应用在软件上，就叫功能密度吧，功能中有用功能、核心功能在整个功能中的比例。
+博客的 Less is more
+我也不夸自己的博客有点 Less is more 的味儿了，免得像是王婆卖瓜。
+比如 Obsidian 的 CEO，Steph Ango的博客，Y Combinator 创始人，Paul Graham 的博客，本站主题作者，雅余的博客，以及我非常喜欢的 atpX 和 Dayu，都是 Less is more 的最佳体现。
+再借用某博友的观点，如果写博客是为了让别人看见，那就更应该对自己的博客做减法，而不是做加法，尽量做到 Less is more。做加法很简单，各种时髦的功能往上加，哪个主题热门用哪个，哪个插件有趣装哪个，我以前就是如此，但越到最后越是难受，想要做减法异常困难，舍不得这个，舍不得那个，但你要想，你写博客是为了让别人看见，那你希望别人看你的博客像是看电线杆小广告还是看蓝天白云？
+正如 Steph Ango 最新文章 What can we remove? 所说——Systems want to grow and grow, but without pruning, they collapse. Slowly, then spectacularly. 系统想要不断增长，但如果不进行精简，它们会缓慢地、惊人地崩塌。" />
+<meta name="keywords" content="less-is-more," />
+
+<link rel="canonical" href="http://localhost:1313/less-is-more.html/">
+
+
+<meta property="og:url" content="http://localhost:1313/less-is-more.html/">
+	<meta property="og:site_name" content="印记博客">
+	<meta property="og:title" content="Less is more">
+	<meta property="og:description" content="在很多地方都看到过这句出自 Ludwig Mies van der Rohe 的名言：Less is more，少即是多，不仅建筑领域有所应用，许多独立开发者也将其作为产品的要义之一，今天正好和朋友聊到这个话题，引申到自己的博客，也是同样的道理。
+什么是信息密度 源于陈仓颉的 TiddlyWiki——仿生猫不会梦见电子猫粮，他说信息密度太小，很难有阅读的欲望，我说我下班之后对任何东西都没有阅读欲望。原谅我的愚钝，需要查一下信息密度的含义：信息中有用信息、核心信息在整个信息中的比例，那我就懂了，Less is more 在我看来就是倡导增加信息密度。
+为什么很多人喜欢用国外的软件，或者寻找国产软件的国际版本，因为它们简洁，突出主要功能，不像某打车软件、外卖软件，正经功能没有好好打磨，反倒是天天想给你借钱，主打一个促进消费，带动经济增长，领导看了笑开颜。
+如果一个软件的信息密度太小，半天都找不到它的主要功能，容易被其他功能或模块所干扰，我多半不会经常使用它。
+信息密度与 Less is more Less is more，少即是多，尽量增加信息密度，信息量虽然看起来少，但是想要传递的有用信息却很多。
+前段时间更换博客主题以及关闭评论的时候说过，我要给博客做减法，回顾过去的博客主题、排版、设计，概括来说是比较杂乱无章，借用某位博友的观点，写博客是为了立人设，那我就需要直截了当的让人看见我的人设，页面上铺天盖地的各种信息，甚至还有狗皮膏药似的广告，你的人设是什么，邋遢大王吗？
+所以当时选择了仿 BearBlog 的 Dear 主题，再次感谢雅余的精心制作。在首页简单几句话，甚至几个词概括我是谁，我要做什么，我写什么，让密度变小，让阅读者舒适地欣赏你的内容，而不是轰炸他，在此感谢哲学家韩宇，他做程序员可惜了，我建议转行做产品经理。
+前几天因为 Apple Music 到期，转而投向了 Spotify 的怀抱，两个都是好产品，音乐软件主打音乐播放，相比网易云音乐，前者更让我有使用的欲望，为什么？因为它们不会在你打开软件时弹出弹窗广告和推荐内容，不会在播放时推荐你使用各种音效、动效，甚至是付费的功能。
+如果将信息密度应用在软件上，就叫功能密度吧，功能中有用功能、核心功能在整个功能中的比例。
+博客的 Less is more 我也不夸自己的博客有点 Less is more 的味儿了，免得像是王婆卖瓜。
+比如 Obsidian 的 CEO，Steph Ango的博客，Y Combinator 创始人，Paul Graham 的博客，本站主题作者，雅余的博客，以及我非常喜欢的 atpX 和 Dayu，都是 Less is more 的最佳体现。
+再借用某博友的观点，如果写博客是为了让别人看见，那就更应该对自己的博客做减法，而不是做加法，尽量做到 Less is more。做加法很简单，各种时髦的功能往上加，哪个主题热门用哪个，哪个插件有趣装哪个，我以前就是如此，但越到最后越是难受，想要做减法异常困难，舍不得这个，舍不得那个，但你要想，你写博客是为了让别人看见，那你希望别人看你的博客像是看电线杆小广告还是看蓝天白云？
+正如 Steph Ango 最新文章 What can we remove? 所说——Systems want to grow and grow, but without pruning, they collapse. Slowly, then spectacularly. 系统想要不断增长，但如果不进行精简，它们会缓慢地、惊人地崩塌。">
+	<meta property="og:locale" content="zh_cn">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="blog">
+		<meta property="article:published_time" content="2024-11-28T00:00:00+00:00">
+		<meta property="article:modified_time" content="2024-11-28T00:00:00+00:00">
+		<meta property="article:tag" content="Less-Is-More">
+
+
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Less is more">
+	<meta name="twitter:description" content="在很多地方都看到过这句出自 Ludwig Mies van der Rohe 的名言：Less is more，少即是多，不仅建筑领域有所应用，许多独立开发者也将其作为产品的要义之一，今天正好和朋友聊到这个话题，引申到自己的博客，也是同样的道理。
+什么是信息密度 源于陈仓颉的 TiddlyWiki——仿生猫不会梦见电子猫粮，他说信息密度太小，很难有阅读的欲望，我说我下班之后对任何东西都没有阅读欲望。原谅我的愚钝，需要查一下信息密度的含义：信息中有用信息、核心信息在整个信息中的比例，那我就懂了，Less is more 在我看来就是倡导增加信息密度。
+为什么很多人喜欢用国外的软件，或者寻找国产软件的国际版本，因为它们简洁，突出主要功能，不像某打车软件、外卖软件，正经功能没有好好打磨，反倒是天天想给你借钱，主打一个促进消费，带动经济增长，领导看了笑开颜。
+如果一个软件的信息密度太小，半天都找不到它的主要功能，容易被其他功能或模块所干扰，我多半不会经常使用它。
+信息密度与 Less is more Less is more，少即是多，尽量增加信息密度，信息量虽然看起来少，但是想要传递的有用信息却很多。
+前段时间更换博客主题以及关闭评论的时候说过，我要给博客做减法，回顾过去的博客主题、排版、设计，概括来说是比较杂乱无章，借用某位博友的观点，写博客是为了立人设，那我就需要直截了当的让人看见我的人设，页面上铺天盖地的各种信息，甚至还有狗皮膏药似的广告，你的人设是什么，邋遢大王吗？
+所以当时选择了仿 BearBlog 的 Dear 主题，再次感谢雅余的精心制作。在首页简单几句话，甚至几个词概括我是谁，我要做什么，我写什么，让密度变小，让阅读者舒适地欣赏你的内容，而不是轰炸他，在此感谢哲学家韩宇，他做程序员可惜了，我建议转行做产品经理。
+前几天因为 Apple Music 到期，转而投向了 Spotify 的怀抱，两个都是好产品，音乐软件主打音乐播放，相比网易云音乐，前者更让我有使用的欲望，为什么？因为它们不会在你打开软件时弹出弹窗广告和推荐内容，不会在播放时推荐你使用各种音效、动效，甚至是付费的功能。
+如果将信息密度应用在软件上，就叫功能密度吧，功能中有用功能、核心功能在整个功能中的比例。
+博客的 Less is more 我也不夸自己的博客有点 Less is more 的味儿了，免得像是王婆卖瓜。
+比如 Obsidian 的 CEO，Steph Ango的博客，Y Combinator 创始人，Paul Graham 的博客，本站主题作者，雅余的博客，以及我非常喜欢的 atpX 和 Dayu，都是 Less is more 的最佳体现。
+再借用某博友的观点，如果写博客是为了让别人看见，那就更应该对自己的博客做减法，而不是做加法，尽量做到 Less is more。做加法很简单，各种时髦的功能往上加，哪个主题热门用哪个，哪个插件有趣装哪个，我以前就是如此，但越到最后越是难受，想要做减法异常困难，舍不得这个，舍不得那个，但你要想，你写博客是为了让别人看见，那你希望别人看你的博客像是看电线杆小广告还是看蓝天白云？
+正如 Steph Ango 最新文章 What can we remove? 所说——Systems want to grow and grow, but without pruning, they collapse. Slowly, then spectacularly. 系统想要不断增长，但如果不进行精简，它们会缓慢地、惊人地崩塌。">
+
+
+
+
+	<meta itemprop="name" content="Less is more">
+	<meta itemprop="description" content="在很多地方都看到过这句出自 Ludwig Mies van der Rohe 的名言：Less is more，少即是多，不仅建筑领域有所应用，许多独立开发者也将其作为产品的要义之一，今天正好和朋友聊到这个话题，引申到自己的博客，也是同样的道理。
+什么是信息密度 源于陈仓颉的 TiddlyWiki——仿生猫不会梦见电子猫粮，他说信息密度太小，很难有阅读的欲望，我说我下班之后对任何东西都没有阅读欲望。原谅我的愚钝，需要查一下信息密度的含义：信息中有用信息、核心信息在整个信息中的比例，那我就懂了，Less is more 在我看来就是倡导增加信息密度。
+为什么很多人喜欢用国外的软件，或者寻找国产软件的国际版本，因为它们简洁，突出主要功能，不像某打车软件、外卖软件，正经功能没有好好打磨，反倒是天天想给你借钱，主打一个促进消费，带动经济增长，领导看了笑开颜。
+如果一个软件的信息密度太小，半天都找不到它的主要功能，容易被其他功能或模块所干扰，我多半不会经常使用它。
+信息密度与 Less is more Less is more，少即是多，尽量增加信息密度，信息量虽然看起来少，但是想要传递的有用信息却很多。
+前段时间更换博客主题以及关闭评论的时候说过，我要给博客做减法，回顾过去的博客主题、排版、设计，概括来说是比较杂乱无章，借用某位博友的观点，写博客是为了立人设，那我就需要直截了当的让人看见我的人设，页面上铺天盖地的各种信息，甚至还有狗皮膏药似的广告，你的人设是什么，邋遢大王吗？
+所以当时选择了仿 BearBlog 的 Dear 主题，再次感谢雅余的精心制作。在首页简单几句话，甚至几个词概括我是谁，我要做什么，我写什么，让密度变小，让阅读者舒适地欣赏你的内容，而不是轰炸他，在此感谢哲学家韩宇，他做程序员可惜了，我建议转行做产品经理。
+前几天因为 Apple Music 到期，转而投向了 Spotify 的怀抱，两个都是好产品，音乐软件主打音乐播放，相比网易云音乐，前者更让我有使用的欲望，为什么？因为它们不会在你打开软件时弹出弹窗广告和推荐内容，不会在播放时推荐你使用各种音效、动效，甚至是付费的功能。
+如果将信息密度应用在软件上，就叫功能密度吧，功能中有用功能、核心功能在整个功能中的比例。
+博客的 Less is more 我也不夸自己的博客有点 Less is more 的味儿了，免得像是王婆卖瓜。
+比如 Obsidian 的 CEO，Steph Ango的博客，Y Combinator 创始人，Paul Graham 的博客，本站主题作者，雅余的博客，以及我非常喜欢的 atpX 和 Dayu，都是 Less is more 的最佳体现。
+再借用某博友的观点，如果写博客是为了让别人看见，那就更应该对自己的博客做减法，而不是做加法，尽量做到 Less is more。做加法很简单，各种时髦的功能往上加，哪个主题热门用哪个，哪个插件有趣装哪个，我以前就是如此，但越到最后越是难受，想要做减法异常困难，舍不得这个，舍不得那个，但你要想，你写博客是为了让别人看见，那你希望别人看你的博客像是看电线杆小广告还是看蓝天白云？
+正如 Steph Ango 最新文章 What can we remove? 所说——Systems want to grow and grow, but without pruning, they collapse. Slowly, then spectacularly. 系统想要不断增长，但如果不进行精简，它们会缓慢地、惊人地崩塌。">
+	<meta itemprop="datePublished" content="2024-11-28T00:00:00+00:00">
+	<meta itemprop="dateModified" content="2024-11-28T00:00:00+00:00">
+	<meta itemprop="wordCount" content="99">
+	<meta itemprop="keywords" content="Less-Is-More">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+     
+    :root {
+        --width-max: 720px;
+        --font-primary: Verdana, sans-serif;
+        --font-secondary: monospace;
+        --font-size-primary: 1em;
+        --font-size-secondary: 0.8em;
+        --bg-color-primary: #fdfdfd;
+        --bg-color-secondary: #f2f4f7;
+        --text-color-primary: #1a1a1a;
+        --text-color-secondary: #444;
+        --text-color-tertiary: #8c8c8c;
+        --link-color: #0066cc;
+        --link-visited-color: #551a8b;
+        --border-color: #d0d7de;
+        --upvoted-color: #fa8072;
+    }
+
+    @media (prefers-color-scheme: dark) {
+         
+        :root {
+            --bg-color-primary: #121212;
+            --bg-color-secondary: #1c1f24;
+            --text-color-primary: #e5e5e5;
+            --text-color-secondary: #b3b3b7;
+            --text-color-tertiary: #a0a0a0;
+            --link-color: #6da6ff;
+            --link-visited-color: #b388ff;
+            --border-color: #30363d;
+            --upvoted-color: #ff6b6b;
+        }
+    }
+
+    body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-primary);
+        margin: auto;
+        padding: 20px;
+        max-width: var(--width-max);
+        text-align: left;
+        background-color: var(--bg-color-primary);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 16px 0;
+    }
+
+    a {
+        color: var(--link-color);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .title {
+        text-decoration: none;
+        border: 0;
+    }
+
+    .title:hover {
+        text-decoration: none;
+    }
+
+    .title span {
+        font-weight: 400;
+    }
+
+    nav a {
+        margin-right: 8px;
+    }
+
+    textarea {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    content {
+        line-height: 1.6;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+    }
+
+    th,
+    td {
+        border: 1px solid var(--border-color);
+        padding: 4px;
+    }
+
+    th {
+        background-color: var(--bg-color-secondary);
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px dashed;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        content-visibility: auto;
+    }
+
+    img[src*="#minipic"] {
+        max-width: 50%;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .image-caption figcaption {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.8em;
+        margin-top: 0.6em;
+        color: var(--text-color-secondary);
+    }
+
+    .image-caption {
+        margin: auto;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    time {
+        font-family: var(--font-secondary);
+        font-size: 15px;
+    }
+
+    code {
+        font-family: var(--font-secondary);
+        background-color: var(--bg-color-secondary);
+        padding: 2px;
+        border-radius: 4px;
+    }
+
+    pre code {
+        display: block;
+        padding: 16px;
+        white-space: pre-wrap;
+        overflow-x: auto;
+    }
+
+    div.highlight pre {
+        border-radius: 4px;
+    }
+
+    div.highlight code {
+        background-color: var(--bg-color-secondary);
+    }
+
+    blockquote {
+        border-left: 4px solid var(--border-color);
+        color: var(--text-color-secondary);
+        margin: 0;
+        padding-left: 8px;
+        font-style: normal;
+    }
+
+    blockquote p {
+        margin: 0;
+    }
+
+    footer {
+        padding: 25px 0;
+        text-align: center;
+        font-size: var(--font-size-secondary);
+    }
+
+    ul li:has(input) {
+        list-style-type: none;
+        margin-left: -25.5px;
+    }
+
+     
+    ul.blog-posts {
+        list-style-type: none;
+        padding: unset;
+    }
+
+    ul.blog-posts li {
+        display: flex;
+    }
+
+    ul.blog-posts li span {
+        flex: 0 0 130px;
+    }
+
+    ul.blog-posts li span.grouped {
+        flex: 0 0 80px;
+    }
+
+    ul.blog-posts li a:visited {
+        color: var(--link-visited-color);
+    }
+
+     
+    div.toc {
+        position: fixed;  
+        top: 50%;  
+        left: calc(
+            (100vw + var(--width-max)) / 2
+        );  
+        transform: translateY(-50%);  
+        width: calc((90vw - var(--width-max)) / 2);  
+        max-height: 80vh;  
+        overflow-y: auto;  
+        border: none;  
+        padding: 0;  
+        margin: 0;  
+        z-index: 99;  
+
+         
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+
+    div.toc::-webkit-scrollbar {
+         
+        display: none;  
+    }
+
+    .toc-nav {
+         
+        padding: 1.5rem;  
+    }
+
+    .toc-nav ul {
+         
+        list-style: none;  
+        padding: 0;  
+        margin: 0;  
+    }
+
+    .toc-nav li {
+         
+        margin: 8px 0;  
+    }
+
+    .toc-nav a {
+         
+        display: block;  
+        text-decoration: none;  
+        color: transparent;  
+        padding: 0 12px;  
+        transition: all 0.2s ease;  
+        font-size: 0.9rem;  
+        line-height: 1.4;  
+        text-align: left;  
+        white-space: nowrap;  
+        overflow: hidden;  
+        text-overflow: ellipsis;  
+        max-width: 100%;  
+    }
+
+    .toc-nav:hover a {
+        color: var(--text-color-tertiary);  
+    }
+
+    .toc-nav a::before {
+         
+        content: "";  
+        display: inline-block;  
+        width: 16px;  
+        height: 4px;  
+        background-color: var(--text-color-tertiary);
+        border-radius: 16px;  
+        margin-right: 12px;  
+        vertical-align: middle;  
+    }
+
+    .toc-nav ul ul a::before {
+         
+        width: 12px;  
+        margin-right: 16px;  
+    }
+
+    .toc-nav ul ul ul a::before {
+         
+        width: 8px;  
+        margin-right: 20px;  
+    }
+
+    .toc-nav a.active,
+    .toc-nav a:hover {
+        text-decoration: none;
+        color: var(--text-color-primary);
+    }
+
+    .toc-nav a.active::before,
+    .toc-nav a:hover::before {
+        background-color: var(--text-color-primary);
+    }
+
+     
+    button.upvote-btn {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-color-primary);
+    }
+
+    button.upvoted {
+        color: var(--upvoted-color);
+    }
+
+    span.upvote-count {
+        margin-top: -4px;
+        font-size: smaller;
+    }
+
+     
+    body:has(.image-zoom-toggle:checked) {
+        overflow: hidden;
+    }
+
+    .image-zoom-container {
+        position: relative;
+        display: block;
+    }
+
+    .image-zoom-toggle {
+        display: none;
+    }
+
+    .image-zoom-label {
+        cursor: zoom-in;
+        display: block;
+        position: relative;
+    }
+
+    .image-zoom-label:focus {
+        outline: 2px solid var(--link-color);
+        outline-offset: 2px;
+    }
+
+    .zoomable-image {
+        transition: transform 0.3s ease;
+    }
+
+     
+    .image-zoom-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay {
+        display: flex;
+        cursor: zoom-out;
+    }
+
+     
+    .image-zoom-toggle:checked ~ .image-zoom-label {
+        cursor: default;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay .zoomable-image {
+        max-width: 90vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        transform: scale(1);
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+        content: "✕";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+        cursor: pointer;
+        z-index: 1002;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        z-index: 1001;
+        max-width: 80vw;
+        text-align: center;
+    }
+
+     
+    @media (max-width: 800px) {
+        img[src*="#minipic"] {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        div.toc {
+            display: none;
+        }
+
+        .image-zoom-label {
+            cursor: pointer;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay {
+            padding: 10px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::before,
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+            bottom: 10px;
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+  <header><a href="/" class="title">
+  <h1>印记博客</h1>
+</a>
+<nav><a href="/">Home</a>
+
+<a href="/roll.html">Roll</a>
+
+
+<a href="/blog/">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+
+<h1>Less is more</h1>
+
+<p>
+  <i>
+    <time datetime='2024-11-28' pubdate>
+      28 Nov, 2024
+    </time>
+  </i>
+</p>
+
+
+ 
+
+<content> <p><figure
+    class="image-caption"
+>
+    
+    <img src="https://huhexian.s3.bitiful.net/2024/11/497311b41af468234329a4e601dc5f6d.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>在很多地方都看到过这句出自 <a href="https://zh.wikipedia.org/wiki/%E8%B7%AF%E5%BE%B7%E7%B6%AD%E5%B8%8C%C2%B7%E5%AF%86%E6%96%AF%C2%B7%E5%87%A1%E5%BE%B7%E7%BE%85">Ludwig Mies van der Rohe</a> 的名言：<strong>Less is more</strong>，少即是多，不仅建筑领域有所应用，许多独立开发者也将其作为产品的要义之一，今天正好和朋友聊到这个话题，引申到自己的博客，也是同样的道理。</p>
+<h2 id="什么是信息密度">什么是信息密度</h2>
+<p>源于<a href="https://imzm.im">陈仓颉</a>的 TiddlyWiki——<a href="https://jefftay.com/">仿生猫不会梦见电子猫粮</a>，他说信息密度太小，很难有阅读的欲望，我说我下班之后对任何东西都没有阅读欲望。原谅我的愚钝，需要查一下信息密度的含义：<strong>信息中有用信息、核心信息在整个信息中的比例</strong>，那我就懂了，Less is more 在我看来就是倡导增加信息密度。</p>
+<p>为什么很多人喜欢用国外的软件，或者寻找国产软件的国际版本，因为它们简洁，突出主要功能，不像某打车软件、外卖软件，正经功能没有好好打磨，反倒是天天想给你借钱，主打一个促进消费，带动经济增长，领导看了笑开颜。</p>
+<p>如果一个软件的信息密度太小，半天都找不到它的主要功能，容易被其他功能或模块所干扰，我多半不会经常使用它。</p>
+<h2 id="信息密度与-less-is-more">信息密度与 Less is more</h2>
+<p>Less is more，少即是多，尽量增加信息密度，信息量虽然看起来少，但是想要传递的有用信息却很多。</p>
+<p>前段时间更换博客主题以及关闭评论的时候说过，我要给博客做减法，回顾过去的博客主题、排版、设计，概括来说是比较杂乱无章，借用某位博友的观点，写博客是为了立人设，那我就需要直截了当的让人看见我的人设，页面上铺天盖地的各种信息，甚至还有狗皮膏药似的广告，你的人设是什么，邋遢大王吗？</p>
+<p>所以当时选择了仿 <a href="https://bearblog.dev">BearBlog</a> 的 <a href="https://yayu.net/projects/wordpress-dear">Dear</a> 主题，再次感谢雅余的精心制作。在首页简单几句话，甚至几个词概括我是谁，我要做什么，我写什么，<strong>让密度变小，让阅读者舒适地欣赏你的内容，而不是轰炸他</strong>，在此感谢哲学家<a href="https://hanyu.me">韩宇</a>，<strong>他做程序员可惜了，我建议转行做产品经理</strong>。</p>
+<p>前几天因为 Apple Music 到期，转而投向了 Spotify 的怀抱，两个都是好产品，音乐软件主打音乐播放，相比网易云音乐，前者更让我有使用的欲望，为什么？因为它们不会在你打开软件时弹出弹窗广告和推荐内容，不会在播放时推荐你使用各种音效、动效，甚至是付费的功能。</p>
+<p>如果将信息密度应用在软件上，就叫功能密度吧，功能中有用功能、核心功能在整个功能中的比例。</p>
+<h2 id="博客的-less-is-more">博客的 Less is more</h2>
+<p>我也不夸自己的博客有点 Less is more 的味儿了，免得像是王婆卖瓜。</p>
+<p>比如 Obsidian 的 CEO，<a href="https://stephango.com/">Steph Ango</a>的博客，Y Combinator 创始人，<a href="https://www.paulgraham.com/">Paul Graham</a> 的博客，本站主题作者，<a href="https://yayu.net/">雅余</a>的博客，以及我非常喜欢的 <a href="https://atpx.com/">atpX</a> 和 <a href="https://anotherdayu.com/">Dayu</a>，都是 Less is more 的最佳体现。</p>
+<p>再借用某博友的观点，如果写博客是为了让别人看见，那就更应该对自己的博客做减法，而不是做加法，尽量做到 Less is more。做加法很简单，各种时髦的功能往上加，哪个主题热门用哪个，哪个插件有趣装哪个，我以前就是如此，但越到最后越是难受，想要做减法异常困难，舍不得这个，舍不得那个，但你要想，你写博客是为了让别人看见，那你希望别人看你的博客像是看电线杆小广告还是看蓝天白云？</p>
+<p>正如 Steph Ango 最新文章 <em><a href="https://stephango.com/remove">What can we remove?</a></em> 所说——Systems want to grow and grow, but without pruning, they collapse. Slowly, then spectacularly. 系统想要不断增长，但如果不进行精简，它们会缓慢地、惊人地崩塌。</p>
+<p>真正的 Less is more 不是删繁就简，而是在纷繁中建立秩序，上面我说到的几个博客，还能继续精简吗？当然可以，图片去掉，链接去掉，就留下文章标题，但是很难体现秩序感，那不叫简洁，叫简陋，别人更不会看了。</p>
+<h2 id="如何做到-less-is-more">如何做到 Less is more</h2>
+<p>我无法给出合适的建议，因为我也还在研究，但可以参考上述博客的设计，或者你可以找韩宇聊聊，他会让你怀疑人生、怀疑自己。</p>
+ </content>
+
+<p>
+  
+  <a href="http://localhost:1313/tags/less-is-more/">#Less-Is-More</a>
+  
+</p>
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+
+
+
+
+Subscribe via <a href="/index.xml">RSS</a>.
+<br />
+
+
+
+
+
+
+Made with
+<a href="https://github.com/rokcso/hugo-bearneo/">Hugo Bear Neo</a>.
+<br />
+
+
+
+
+
+
+
+🗺️ <a href="/sitemap.xml">Sitemap</a>.
+
+</footer>
+
+    
+
+
+</body>
+
+</html>

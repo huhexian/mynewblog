@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ActivityPub 与去中心化社交 | 印记博客</title>
+<meta name="title" content="ActivityPub 与去中心化社交" />
+<meta name="description" content="
+    
+    
+    
+    
+
+
+什么时候开始聊起 Mastodon，已经不太记得，我曾经提过一次，群里如果想玩的人多，一起部署一个实例，后面不了了之；1900 最近分享部署 GoToSocial 的心得，带动了几个群友一起入坑，韩宇提议要不部署一个实例一起使用，我表示赞同，并提供 yxvm 的服务器使用，然而一周不到，从开始到放弃。
+Mastodon 始于2016年，一个开源项目，往大了讲，是组成联邦宇宙的服务之一，具体我也不是很清楚。凭我的感觉来说，Mastodon 似乎一直不温不火，像是 Twitter 的替代品，在 Elon Musk 收购 Twitter 之后，以及 Twitter 限制用户使用频率期间，都有一大批用户逃离 Twitter，拥抱 Mastodon，我也是其中之一，甚至还有工具支持一键迁移关注者（只需在 Twitter 的 Bio 上备注 Mastodon 的用户名），称之为 Twitter 难民。
+但 Twitter 改名 X 之后，仍然活得好好的，Mastodon 也没有将其取而代之，包括后面 Meta 推出的 Threads，我感觉只要 Twitter 仍然存在，同类型的软件或服务便很难取代它，即使做得再好，也很难改变一个人的使用习惯，我体验过 Mastodon、Threads，熟悉的人和内容仍然在 Twitter 上，切换到另一个软件上则十分不适应。
+以上内容来自四个月前的 Obsidian 笔记，当时群里都热衷部署 Mastodon 和 GoToSocial，本想继续往下写，但最终还是昙花一现，现在也只是偶尔提一提。今天重新拾起，是因为上周在 WordPress 上安装了 ActivityPub 插件，我的理解是它将 WordPress 博客作为一个去中心化的节点，连接去中心化社交网络，因此可以在 Mastodon、GoToSocial、Friendica、Misskey 等联邦平台通过搜索huhexian@yinji.org来关注我，WordPress 上发布的博客都会自动同步一条动态至联邦平台，在联邦平台留下的评论或点赞，都会同步反馈到 WordPress。
+
+    
+    
+    
+    
+
+
+前段时间短暂体验 Ghost，在 6.0 版本中新增了 Fediverse 功能，即我上面提到的去中心化社交网络，不用安装任何插件，也是同样的原理，有点不同的是 WordPress 只能同步新文章动态，而 Ghost 完全可以作为一个联邦平台使用，不仅同步新文章动态，还可以自己发布内容。" />
+<meta name="keywords" content="activitypub,fediverse," />
+
+<link rel="canonical" href="http://localhost:1313/activitypub.html/">
+
+
+<meta property="og:url" content="http://localhost:1313/activitypub.html/">
+	<meta property="og:site_name" content="印记博客">
+	<meta property="og:title" content="ActivityPub 与去中心化社交">
+	<meta property="og:description" content="什么时候开始聊起 Mastodon，已经不太记得，我曾经提过一次，群里如果想玩的人多，一起部署一个实例，后面不了了之；1900 最近分享部署 GoToSocial 的心得，带动了几个群友一起入坑，韩宇提议要不部署一个实例一起使用，我表示赞同，并提供 yxvm 的服务器使用，然而一周不到，从开始到放弃。
+Mastodon 始于2016年，一个开源项目，往大了讲，是组成联邦宇宙的服务之一，具体我也不是很清楚。凭我的感觉来说，Mastodon 似乎一直不温不火，像是 Twitter 的替代品，在 Elon Musk 收购 Twitter 之后，以及 Twitter 限制用户使用频率期间，都有一大批用户逃离 Twitter，拥抱 Mastodon，我也是其中之一，甚至还有工具支持一键迁移关注者（只需在 Twitter 的 Bio 上备注 Mastodon 的用户名），称之为 Twitter 难民。
+但 Twitter 改名 X 之后，仍然活得好好的，Mastodon 也没有将其取而代之，包括后面 Meta 推出的 Threads，我感觉只要 Twitter 仍然存在，同类型的软件或服务便很难取代它，即使做得再好，也很难改变一个人的使用习惯，我体验过 Mastodon、Threads，熟悉的人和内容仍然在 Twitter 上，切换到另一个软件上则十分不适应。
+以上内容来自四个月前的 Obsidian 笔记，当时群里都热衷部署 Mastodon 和 GoToSocial，本想继续往下写，但最终还是昙花一现，现在也只是偶尔提一提。今天重新拾起，是因为上周在 WordPress 上安装了 ActivityPub 插件，我的理解是它将 WordPress 博客作为一个去中心化的节点，连接去中心化社交网络，因此可以在 Mastodon、GoToSocial、Friendica、Misskey 等联邦平台通过搜索huhexian@yinji.org来关注我，WordPress 上发布的博客都会自动同步一条动态至联邦平台，在联邦平台留下的评论或点赞，都会同步反馈到 WordPress。
+前段时间短暂体验 Ghost，在 6.0 版本中新增了 Fediverse 功能，即我上面提到的去中心化社交网络，不用安装任何插件，也是同样的原理，有点不同的是 WordPress 只能同步新文章动态，而 Ghost 完全可以作为一个联邦平台使用，不仅同步新文章动态，还可以自己发布内容。">
+	<meta property="og:locale" content="zh_cn">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="blog">
+		<meta property="article:published_time" content="2025-09-07T00:00:00+00:00">
+		<meta property="article:modified_time" content="2025-09-07T00:00:00+00:00">
+		<meta property="article:tag" content="Activitypub">
+		<meta property="article:tag" content="Fediverse">
+
+
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="ActivityPub 与去中心化社交">
+	<meta name="twitter:description" content="什么时候开始聊起 Mastodon，已经不太记得，我曾经提过一次，群里如果想玩的人多，一起部署一个实例，后面不了了之；1900 最近分享部署 GoToSocial 的心得，带动了几个群友一起入坑，韩宇提议要不部署一个实例一起使用，我表示赞同，并提供 yxvm 的服务器使用，然而一周不到，从开始到放弃。
+Mastodon 始于2016年，一个开源项目，往大了讲，是组成联邦宇宙的服务之一，具体我也不是很清楚。凭我的感觉来说，Mastodon 似乎一直不温不火，像是 Twitter 的替代品，在 Elon Musk 收购 Twitter 之后，以及 Twitter 限制用户使用频率期间，都有一大批用户逃离 Twitter，拥抱 Mastodon，我也是其中之一，甚至还有工具支持一键迁移关注者（只需在 Twitter 的 Bio 上备注 Mastodon 的用户名），称之为 Twitter 难民。
+但 Twitter 改名 X 之后，仍然活得好好的，Mastodon 也没有将其取而代之，包括后面 Meta 推出的 Threads，我感觉只要 Twitter 仍然存在，同类型的软件或服务便很难取代它，即使做得再好，也很难改变一个人的使用习惯，我体验过 Mastodon、Threads，熟悉的人和内容仍然在 Twitter 上，切换到另一个软件上则十分不适应。
+以上内容来自四个月前的 Obsidian 笔记，当时群里都热衷部署 Mastodon 和 GoToSocial，本想继续往下写，但最终还是昙花一现，现在也只是偶尔提一提。今天重新拾起，是因为上周在 WordPress 上安装了 ActivityPub 插件，我的理解是它将 WordPress 博客作为一个去中心化的节点，连接去中心化社交网络，因此可以在 Mastodon、GoToSocial、Friendica、Misskey 等联邦平台通过搜索huhexian@yinji.org来关注我，WordPress 上发布的博客都会自动同步一条动态至联邦平台，在联邦平台留下的评论或点赞，都会同步反馈到 WordPress。
+前段时间短暂体验 Ghost，在 6.0 版本中新增了 Fediverse 功能，即我上面提到的去中心化社交网络，不用安装任何插件，也是同样的原理，有点不同的是 WordPress 只能同步新文章动态，而 Ghost 完全可以作为一个联邦平台使用，不仅同步新文章动态，还可以自己发布内容。">
+
+
+
+
+	<meta itemprop="name" content="ActivityPub 与去中心化社交">
+	<meta itemprop="description" content="什么时候开始聊起 Mastodon，已经不太记得，我曾经提过一次，群里如果想玩的人多，一起部署一个实例，后面不了了之；1900 最近分享部署 GoToSocial 的心得，带动了几个群友一起入坑，韩宇提议要不部署一个实例一起使用，我表示赞同，并提供 yxvm 的服务器使用，然而一周不到，从开始到放弃。
+Mastodon 始于2016年，一个开源项目，往大了讲，是组成联邦宇宙的服务之一，具体我也不是很清楚。凭我的感觉来说，Mastodon 似乎一直不温不火，像是 Twitter 的替代品，在 Elon Musk 收购 Twitter 之后，以及 Twitter 限制用户使用频率期间，都有一大批用户逃离 Twitter，拥抱 Mastodon，我也是其中之一，甚至还有工具支持一键迁移关注者（只需在 Twitter 的 Bio 上备注 Mastodon 的用户名），称之为 Twitter 难民。
+但 Twitter 改名 X 之后，仍然活得好好的，Mastodon 也没有将其取而代之，包括后面 Meta 推出的 Threads，我感觉只要 Twitter 仍然存在，同类型的软件或服务便很难取代它，即使做得再好，也很难改变一个人的使用习惯，我体验过 Mastodon、Threads，熟悉的人和内容仍然在 Twitter 上，切换到另一个软件上则十分不适应。
+以上内容来自四个月前的 Obsidian 笔记，当时群里都热衷部署 Mastodon 和 GoToSocial，本想继续往下写，但最终还是昙花一现，现在也只是偶尔提一提。今天重新拾起，是因为上周在 WordPress 上安装了 ActivityPub 插件，我的理解是它将 WordPress 博客作为一个去中心化的节点，连接去中心化社交网络，因此可以在 Mastodon、GoToSocial、Friendica、Misskey 等联邦平台通过搜索huhexian@yinji.org来关注我，WordPress 上发布的博客都会自动同步一条动态至联邦平台，在联邦平台留下的评论或点赞，都会同步反馈到 WordPress。
+前段时间短暂体验 Ghost，在 6.0 版本中新增了 Fediverse 功能，即我上面提到的去中心化社交网络，不用安装任何插件，也是同样的原理，有点不同的是 WordPress 只能同步新文章动态，而 Ghost 完全可以作为一个联邦平台使用，不仅同步新文章动态，还可以自己发布内容。">
+	<meta itemprop="datePublished" content="2025-09-07T00:00:00+00:00">
+	<meta itemprop="dateModified" content="2025-09-07T00:00:00+00:00">
+	<meta itemprop="wordCount" content="97">
+	<meta itemprop="keywords" content="Activitypub,Fediverse">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+     
+    :root {
+        --width-max: 720px;
+        --font-primary: Verdana, sans-serif;
+        --font-secondary: monospace;
+        --font-size-primary: 1em;
+        --font-size-secondary: 0.8em;
+        --bg-color-primary: #fdfdfd;
+        --bg-color-secondary: #f2f4f7;
+        --text-color-primary: #1a1a1a;
+        --text-color-secondary: #444;
+        --text-color-tertiary: #8c8c8c;
+        --link-color: #0066cc;
+        --link-visited-color: #551a8b;
+        --border-color: #d0d7de;
+        --upvoted-color: #fa8072;
+    }
+
+    @media (prefers-color-scheme: dark) {
+         
+        :root {
+            --bg-color-primary: #121212;
+            --bg-color-secondary: #1c1f24;
+            --text-color-primary: #e5e5e5;
+            --text-color-secondary: #b3b3b7;
+            --text-color-tertiary: #a0a0a0;
+            --link-color: #6da6ff;
+            --link-visited-color: #b388ff;
+            --border-color: #30363d;
+            --upvoted-color: #ff6b6b;
+        }
+    }
+
+    body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-primary);
+        margin: auto;
+        padding: 20px;
+        max-width: var(--width-max);
+        text-align: left;
+        background-color: var(--bg-color-primary);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 16px 0;
+    }
+
+    a {
+        color: var(--link-color);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .title {
+        text-decoration: none;
+        border: 0;
+    }
+
+    .title:hover {
+        text-decoration: none;
+    }
+
+    .title span {
+        font-weight: 400;
+    }
+
+    nav a {
+        margin-right: 8px;
+    }
+
+    textarea {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    content {
+        line-height: 1.6;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+    }
+
+    th,
+    td {
+        border: 1px solid var(--border-color);
+        padding: 4px;
+    }
+
+    th {
+        background-color: var(--bg-color-secondary);
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px dashed;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        content-visibility: auto;
+    }
+
+    img[src*="#minipic"] {
+        max-width: 50%;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .image-caption figcaption {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.8em;
+        margin-top: 0.6em;
+        color: var(--text-color-secondary);
+    }
+
+    .image-caption {
+        margin: auto;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    time {
+        font-family: var(--font-secondary);
+        font-size: 15px;
+    }
+
+    code {
+        font-family: var(--font-secondary);
+        background-color: var(--bg-color-secondary);
+        padding: 2px;
+        border-radius: 4px;
+    }
+
+    pre code {
+        display: block;
+        padding: 16px;
+        white-space: pre-wrap;
+        overflow-x: auto;
+    }
+
+    div.highlight pre {
+        border-radius: 4px;
+    }
+
+    div.highlight code {
+        background-color: var(--bg-color-secondary);
+    }
+
+    blockquote {
+        border-left: 4px solid var(--border-color);
+        color: var(--text-color-secondary);
+        margin: 0;
+        padding-left: 8px;
+        font-style: normal;
+    }
+
+    blockquote p {
+        margin: 0;
+    }
+
+    footer {
+        padding: 25px 0;
+        text-align: center;
+        font-size: var(--font-size-secondary);
+    }
+
+    ul li:has(input) {
+        list-style-type: none;
+        margin-left: -25.5px;
+    }
+
+     
+    ul.blog-posts {
+        list-style-type: none;
+        padding: unset;
+    }
+
+    ul.blog-posts li {
+        display: flex;
+    }
+
+    ul.blog-posts li span {
+        flex: 0 0 130px;
+    }
+
+    ul.blog-posts li span.grouped {
+        flex: 0 0 80px;
+    }
+
+    ul.blog-posts li a:visited {
+        color: var(--link-visited-color);
+    }
+
+     
+    div.toc {
+        position: fixed;  
+        top: 50%;  
+        left: calc(
+            (100vw + var(--width-max)) / 2
+        );  
+        transform: translateY(-50%);  
+        width: calc((90vw - var(--width-max)) / 2);  
+        max-height: 80vh;  
+        overflow-y: auto;  
+        border: none;  
+        padding: 0;  
+        margin: 0;  
+        z-index: 99;  
+
+         
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+
+    div.toc::-webkit-scrollbar {
+         
+        display: none;  
+    }
+
+    .toc-nav {
+         
+        padding: 1.5rem;  
+    }
+
+    .toc-nav ul {
+         
+        list-style: none;  
+        padding: 0;  
+        margin: 0;  
+    }
+
+    .toc-nav li {
+         
+        margin: 8px 0;  
+    }
+
+    .toc-nav a {
+         
+        display: block;  
+        text-decoration: none;  
+        color: transparent;  
+        padding: 0 12px;  
+        transition: all 0.2s ease;  
+        font-size: 0.9rem;  
+        line-height: 1.4;  
+        text-align: left;  
+        white-space: nowrap;  
+        overflow: hidden;  
+        text-overflow: ellipsis;  
+        max-width: 100%;  
+    }
+
+    .toc-nav:hover a {
+        color: var(--text-color-tertiary);  
+    }
+
+    .toc-nav a::before {
+         
+        content: "";  
+        display: inline-block;  
+        width: 16px;  
+        height: 4px;  
+        background-color: var(--text-color-tertiary);
+        border-radius: 16px;  
+        margin-right: 12px;  
+        vertical-align: middle;  
+    }
+
+    .toc-nav ul ul a::before {
+         
+        width: 12px;  
+        margin-right: 16px;  
+    }
+
+    .toc-nav ul ul ul a::before {
+         
+        width: 8px;  
+        margin-right: 20px;  
+    }
+
+    .toc-nav a.active,
+    .toc-nav a:hover {
+        text-decoration: none;
+        color: var(--text-color-primary);
+    }
+
+    .toc-nav a.active::before,
+    .toc-nav a:hover::before {
+        background-color: var(--text-color-primary);
+    }
+
+     
+    button.upvote-btn {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-color-primary);
+    }
+
+    button.upvoted {
+        color: var(--upvoted-color);
+    }
+
+    span.upvote-count {
+        margin-top: -4px;
+        font-size: smaller;
+    }
+
+     
+    body:has(.image-zoom-toggle:checked) {
+        overflow: hidden;
+    }
+
+    .image-zoom-container {
+        position: relative;
+        display: block;
+    }
+
+    .image-zoom-toggle {
+        display: none;
+    }
+
+    .image-zoom-label {
+        cursor: zoom-in;
+        display: block;
+        position: relative;
+    }
+
+    .image-zoom-label:focus {
+        outline: 2px solid var(--link-color);
+        outline-offset: 2px;
+    }
+
+    .zoomable-image {
+        transition: transform 0.3s ease;
+    }
+
+     
+    .image-zoom-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay {
+        display: flex;
+        cursor: zoom-out;
+    }
+
+     
+    .image-zoom-toggle:checked ~ .image-zoom-label {
+        cursor: default;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay .zoomable-image {
+        max-width: 90vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        transform: scale(1);
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+        content: "✕";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+        cursor: pointer;
+        z-index: 1002;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        z-index: 1001;
+        max-width: 80vw;
+        text-align: center;
+    }
+
+     
+    @media (max-width: 800px) {
+        img[src*="#minipic"] {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        div.toc {
+            display: none;
+        }
+
+        .image-zoom-label {
+            cursor: pointer;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay {
+            padding: 10px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::before,
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+            bottom: 10px;
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+  <header><a href="/" class="title">
+  <h1>印记博客</h1>
+</a>
+<nav><a href="/">Home</a>
+
+<a href="/roll.html">Roll</a>
+
+
+<a href="/blog/">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+
+<h1>ActivityPub 与去中心化社交</h1>
+
+<p>
+  <i>
+    <time datetime='2025-09-07' pubdate>
+      07 Sep, 2025
+    </time>
+  </i>
+</p>
+
+
+ 
+
+<content> <p><figure
+    class="image-caption"
+>
+    
+    <img src="https://img.yinji.org/activitypub-wordpress.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>什么时候开始聊起 <a href="https://joinmastodon.org/">Mastodon</a>，已经不太记得，我曾经提过一次，群里如果想玩的人多，一起部署一个实例，后面不了了之；<a href="https://1900.live">1900</a> 最近分享部署 <a href="https://gotosocial.org/">GoToSocial</a> 的心得，带动了几个群友一起入坑，韩宇提议要不部署一个实例一起使用，我表示赞同，并提供 <a href="https://yxvm.com/aff.php?aff=773">yxvm</a> 的服务器使用，然而一周不到，从开始到放弃。</p>
+<p>Mastodon 始于2016年，一个开源项目，往大了讲，是组成联邦宇宙的服务之一，具体我也不是很清楚。凭我的感觉来说，Mastodon 似乎一直不温不火，像是 Twitter 的替代品，在 Elon Musk 收购 Twitter 之后，以及 Twitter 限制用户使用频率期间，都有一大批用户逃离 Twitter，拥抱 Mastodon，我也是其中之一，甚至还有工具支持一键迁移关注者（只需在 Twitter 的 Bio 上备注 Mastodon 的用户名），称之为 Twitter 难民。</p>
+<p>但 Twitter 改名 X 之后，仍然活得好好的，Mastodon 也没有将其取而代之，包括后面 Meta 推出的 Threads，我感觉只要 Twitter 仍然存在，同类型的软件或服务便很难取代它，即使做得再好，也很难改变一个人的使用习惯，我体验过 Mastodon、Threads，熟悉的人和内容仍然在 Twitter 上，切换到另一个软件上则十分不适应。</p>
+<p>以上内容来自四个月前的 Obsidian 笔记，当时群里都热衷部署 Mastodon 和 GoToSocial，本想继续往下写，但最终还是昙花一现，现在也只是偶尔提一提。今天重新拾起，是因为上周在 WordPress 上安装了 <a href="https://cn.wordpress.org/plugins/activitypub/">ActivityPub</a> 插件，我的理解是它将 WordPress 博客作为一个去中心化的节点，连接去中心化社交网络，因此可以在 Mastodon、GoToSocial、<a href="https://friendi.ca/">Friendica</a>、<a href="https://misskey-hub.net/">Misskey</a> 等联邦平台通过搜索<code>huhexian@yinji.org</code>来关注我，WordPress 上发布的博客都会自动同步一条动态至联邦平台，在联邦平台留下的评论或点赞，都会同步反馈到 WordPress。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="https://img.yinji.org/WX20250907-195818@2x.png" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>前段时间短暂体验 Ghost，在 6.0 版本中新增了 Fediverse 功能，即我上面提到的去中心化社交网络，不用安装任何插件，也是同样的原理，有点不同的是 WordPress 只能同步新文章动态，而 Ghost 完全可以作为一个联邦平台使用，不仅同步新文章动态，还可以自己发布内容。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="https://img.yinji.org/WX20250907-194522@2x.png" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>那天我发了一句话，这确实是我理想中的去中心化，不用自己部署类似 Mastodon 一样的服务，不用额外注册账号，不用费尽心思选择实例，只要部署一个 Ghost，既可以写博客，也可以发动态，通过去中心化社交网络，可以浏览别人的内容。</p>
+<p>目前 WordPress 上的 ActivityPub 插件还没有类似的功能，希望后续能跟上。有意思的一个点，在使用 Ghost 的时候，同步了几条动态到 Fediverse 上，但我删除 Ghost 之后，Fediverse 上的内容仍然保存着，包括账号、动态、点赞，以及别人的评论，博友<a href="https://iliu.org/">老刘</a>戏称我在 Fediverse 上拉了一坨屎，然后扬长而去。</p>
+<blockquote>
+<p><a href="https://limboy.me/posts/mastodon/">什么是 Mastodon（长毛象），应该怎么玩</a></p>
+<p><a href="https://blog.fivest.one/archives/5903">WordPress 的 ActivityPub 插件</a></p>
+</blockquote>
+<p>社交平台和短视频一样，会让有一种刷不完、看不完的错觉，每天醒来、睡前习惯性地打开 Twitter、微博等平台，刷一刷看一看，我觉得这其实不是好习惯。人还是要有具体的生活。出门，下楼，去街道，去自然中，吹野外的风，见到人群，见到动物，摸摸花草和树。不能关上房门在互联网大战风车。人会坏掉的。</p>
+<p>所以还是写博客吧。</p>
+<hr>
+<p>说一句题外话，又想把博客评论关掉了，原因可以看上一篇文章评论区。</p>
+ </content>
+
+<p>
+  
+  <a href="http://localhost:1313/tags/activitypub/">#Activitypub</a>
+  
+  <a href="http://localhost:1313/tags/fediverse/">#Fediverse</a>
+  
+</p>
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+
+
+
+
+Subscribe via <a href="/index.xml">RSS</a>.
+<br />
+
+
+
+
+
+
+Made with
+<a href="https://github.com/rokcso/hugo-bearneo/">Hugo Bear Neo</a>.
+<br />
+
+
+
+
+
+
+
+🗺️ <a href="/sitemap.xml">Sitemap</a>.
+
+</footer>
+
+    
+
+
+</body>
+
+</html>

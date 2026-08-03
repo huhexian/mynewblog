@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on 印记博客</title>
+    <link>http://localhost:1313/tags/hugo/</link>
+    <description>Recent content in Hugo on 印记博客</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    
+    
+    
+    
+    <lastBuildDate>Wed, 22 Nov 2023 00:00:00 +0000</lastBuildDate>
+    
+    
+    <atom:link href="http://localhost:1313/tags/hugo/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>多写点内容，少折腾工具</title>
+      <link>http://localhost:1313/write-more-content-and-use-less-tools.html/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/write-more-content-and-use-less-tools.html/</guid>
+      <description>&lt;p&gt;&lt;figure&#xA;    class=&#34;image-caption&#34;&#xA;&gt;&#xA;    &#xA;    &lt;img src=&#34;https://huhexian.s3.bitiful.net/2023/11/22/16d752129c8b722284240182a6c8ccaa.webp&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;&#xA;    &#xA;    &lt;figcaption&gt;&lt;/figcaption&gt;&#xA;&lt;/figure&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;标题这句话是说给自己听的，并不是用来劝诫别人。&lt;/p&gt;&#xA;&lt;p&gt;今天在 Hugo 上花了数小时的时间，到最后没有折腾出什么名堂，问 ChatGPT 得不到正确的答案和方法，问 Claude 却超出了免费额度，原本以为按照网上的教程一步一步设置、修改，就能得到想要的模样，结果在最后不知修改了哪里的文件和代码，导致文章页的标题凭空消失，回滚代码没有复原，也未发现原因。&lt;/p&gt;&#xA;&lt;p&gt;遂放弃，老老实实、安安分分地继续使用 WordPress，即使看到再心动的 Hugo 主题，我也会控制自己，多写点内容，少折腾工具。&lt;/p&gt;&#xA;&lt;p&gt;简要记录整个过程，以此为戒。&lt;/p&gt;&#xA;&lt;p&gt;起初是看到一个静态网站托管服务——Bear Blog，被它简洁、大气的界面所吸引，而后看到群友&lt;a href=&#34;https://yuhang.ch&#34;&gt;陈昱行&lt;/a&gt;的博客，使用 Astro 静态程序和仿 Bear Blog 的主题，但我对 Astro 不熟悉，正巧有一款 &lt;a href=&#34;https://github.com/janraasch/hugo-bearblog&#34;&gt;Hugo 主题&lt;/a&gt;也是仿照 Bear Blog 开发，更加符合我心中的极简主义。再加上阅读完雅余的《&lt;a href=&#34;https://yayu.net/3762.html&#34;&gt;一个极简主义博客的要素&lt;/a&gt;》，按耐不住内心的冲动，便捣鼓了一天的 Hugo。&lt;/p&gt;&#xA;&lt;p&gt;刚开始还比较顺利，曾经也用过一段时间 Hugo，对于基本的操作还有印象。通过插件，将 WordPress 的文章转成 Markdown 格式，也按照自己的审美将 Bear Blog 主题的部分样式做了修改，但是在设置 OpenGraph 的途中犯了难，网上也没有详细的介绍和教程，便出现了上面提到的情况。&lt;/p&gt;&#xA;&lt;p&gt;回过头去看我目前的博客、主题，以及 Bear Blog，发现自己有点贪心，一方面想拥有 Bear Blog 的极简，另一方面又需要 WordPress 上各种完善的功能。韩宇说你要不先试着用用 Hugo，等熟悉了再换。一开始我也是这样想，一步一步修改、一步一步转换，最后发现还是习惯使用了5年之久的 WordPress，尽管我没有开发主题和插件的能力，遇到问题还需要上网搜索，但只要有写博客的想法，我第一反应便是使用 WordPress。&lt;/p&gt;&#xA;&lt;p&gt;多写点内容，少折腾工具。从2018年到现在，期间很多时候都会走向这样一个误区，光顾着装饰外表，忽略了内容的充实，写博客的人，大多都会将自己的网站比喻成一个小家，想方设法把它精心打扮，如有客人来访，内心也是十分兴奋。华丽的外表固然是吸引客人的原因之一，但留住客人的还得是这个家的主人。&lt;a href=&#34;https://anotherdayu.com/&#34;&gt;Dayu&lt;/a&gt; 发了一条&lt;a href=&#34;https://twitter.com/another_dayu/status/1722218938715799918&#34;&gt;推文&lt;/a&gt;，说平时他博客的 Visitors: Visits 是1:2，最近到1:2.6了，有点开心，大家似乎愿意多停留一会了。多好呀，客人愿意在你家里多待一会，想与你有更深入的了解。&lt;/p&gt;&#xA;&lt;p&gt;折腾和写作都是 Blogger 的乐趣之一，有的人擅长写作，有的人擅长折腾，没有优劣贵贱尊卑之分，各有各的玩法和兴致，而我的这两方面还处于学习阶段，以今天的经历，告诉自己，多写点内容，少折腾工具。&lt;/p&gt;&#xA;&lt;p&gt;最后我想分享一段在&lt;a href=&#34;https://t.me/weiyexing&#34;&gt;为也行&lt;/a&gt;频道里看到的话：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;我们大可宽容些，没必要事事都嘲讽。&lt;/p&gt;&#xA;&lt;p&gt;有人喜欢记笔记，那就记笔记，有人喜欢折腾笔记工具，那就折腾笔记工具，这个世界不会因为多了折腾工具的人而出现什么不好。&lt;/p&gt;&#xA;&lt;p&gt;博客也是如此，那种嘲讽「博客没几篇，模版倒是换得勤」大可不必。&lt;/p&gt;&#xA;&lt;p&gt;就像阅读，这个世界需要阅读的人，也需要买了不读的人。后者满足了自己，也给整个市场做了贡献，为他为你为大家，不好么？&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;</description>
+    </item>
+  </channel>
+</rss>

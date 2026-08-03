@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cloudflare 与 OneKey Card | 印记博客</title>
+<meta name="title" content="Cloudflare 与 OneKey Card" />
+<meta name="description" content="
+    
+    
+    
+    
+
+
+原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那tmd叫洗稿。
+赛博佛祖
+不止一次听过 Cloudflare 赛博佛祖的外号，也一直想把域名转入到 Cloudflare，使用它的一些免费服务，但信用卡对我来说是一个门槛，没有办理，不知道该办理哪种信用卡，目前也不太想过早使用信用卡，所以 Cloudflare 在我这里还没有派上太大用场。
+
+    
+    
+    
+    
+
+
+前段时间参与 Dogs 的空投（它的狗头画得真丑），昨天发现已经到账 Telegram 的 Wallet，46刀，正想着如何把它用掉，便想到很早之前注册过的 OneKey Card，因为当时需要充值 USDC 或 USDT 才能激活，兴趣不大，就搁置了，轻松几步，就将 Telegram Wallet 里的 Dogs 转入到 OneKey Card，并开通了虚拟 Visa 卡。
+信用卡有了，那就开始用 Cloudflare。在将 OneKey Card 绑定到 Cloudflare 作为主要支付方式时，账单地址填写遇到了一点小问题，应该是地址需要稍微调整，不过我挺好奇，外国人非常喜欢邮寄账单吗，听上去是一种很传统的形式，虽然在美剧里也看到过邮寄水电煤账单和选票之类的情节。
+Cloudflare R2
+Cloudflare R2 的使用，参考了 Pseudoyu 和 Leslie 的文章，写得非常详细，我是两篇一起看的，理论上不冲突，但个人愚钝，差点搞混了里面的步骤。通过 Pseudoyu 的教程，进行了 Cloudflare 的基础设置，以及 WebP Cloud 的开通；通过 Leslie 的教程，部署了一个球大佬开发的 R2 Uploader 工具，部署简单，界面也很简洁美观，和他博客一样。
+我对 WebP Cloud 的理解，相当于国内云存储平台的图片处理功能，可以对图片进行体积压缩、添加水印、缓存等等，也有免费额度。
+R2 Uploader 即是一个图片上传工具，替换 Cloudflare R2 后台简陋的上传页面，据 Leslie 的文章介绍，还有图像压缩、大文件上传等功能。" />
+<meta name="keywords" content="cloudflare,cloudflare-r2,onekey-card,webp-cloud," />
+
+<link rel="canonical" href="http://localhost:1313/cloudflare-and-onekey-card.html/">
+
+
+<meta property="og:url" content="http://localhost:1313/cloudflare-and-onekey-card.html/">
+	<meta property="og:site_name" content="印记博客">
+	<meta property="og:title" content="Cloudflare 与 OneKey Card">
+	<meta property="og:description" content="原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那tmd叫洗稿。
+赛博佛祖 不止一次听过 Cloudflare 赛博佛祖的外号，也一直想把域名转入到 Cloudflare，使用它的一些免费服务，但信用卡对我来说是一个门槛，没有办理，不知道该办理哪种信用卡，目前也不太想过早使用信用卡，所以 Cloudflare 在我这里还没有派上太大用场。
+前段时间参与 Dogs 的空投（它的狗头画得真丑），昨天发现已经到账 Telegram 的 Wallet，46刀，正想着如何把它用掉，便想到很早之前注册过的 OneKey Card，因为当时需要充值 USDC 或 USDT 才能激活，兴趣不大，就搁置了，轻松几步，就将 Telegram Wallet 里的 Dogs 转入到 OneKey Card，并开通了虚拟 Visa 卡。
+信用卡有了，那就开始用 Cloudflare。在将 OneKey Card 绑定到 Cloudflare 作为主要支付方式时，账单地址填写遇到了一点小问题，应该是地址需要稍微调整，不过我挺好奇，外国人非常喜欢邮寄账单吗，听上去是一种很传统的形式，虽然在美剧里也看到过邮寄水电煤账单和选票之类的情节。
+Cloudflare R2 Cloudflare R2 的使用，参考了 Pseudoyu 和 Leslie 的文章，写得非常详细，我是两篇一起看的，理论上不冲突，但个人愚钝，差点搞混了里面的步骤。通过 Pseudoyu 的教程，进行了 Cloudflare 的基础设置，以及 WebP Cloud 的开通；通过 Leslie 的教程，部署了一个球大佬开发的 R2 Uploader 工具，部署简单，界面也很简洁美观，和他博客一样。
+我对 WebP Cloud 的理解，相当于国内云存储平台的图片处理功能，可以对图片进行体积压缩、添加水印、缓存等等，也有免费额度。
+R2 Uploader 即是一个图片上传工具，替换 Cloudflare R2 后台简陋的上传页面，据 Leslie 的文章介绍，还有图像压缩、大文件上传等功能。">
+	<meta property="og:locale" content="zh_cn">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="blog">
+		<meta property="article:published_time" content="2024-09-01T00:00:00+00:00">
+		<meta property="article:modified_time" content="2024-09-01T00:00:00+00:00">
+		<meta property="article:tag" content="Cloudflare">
+		<meta property="article:tag" content="Cloudflare-R2">
+		<meta property="article:tag" content="Onekey-Card">
+		<meta property="article:tag" content="Webp-Cloud">
+
+
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Cloudflare 与 OneKey Card">
+	<meta name="twitter:description" content="原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那tmd叫洗稿。
+赛博佛祖 不止一次听过 Cloudflare 赛博佛祖的外号，也一直想把域名转入到 Cloudflare，使用它的一些免费服务，但信用卡对我来说是一个门槛，没有办理，不知道该办理哪种信用卡，目前也不太想过早使用信用卡，所以 Cloudflare 在我这里还没有派上太大用场。
+前段时间参与 Dogs 的空投（它的狗头画得真丑），昨天发现已经到账 Telegram 的 Wallet，46刀，正想着如何把它用掉，便想到很早之前注册过的 OneKey Card，因为当时需要充值 USDC 或 USDT 才能激活，兴趣不大，就搁置了，轻松几步，就将 Telegram Wallet 里的 Dogs 转入到 OneKey Card，并开通了虚拟 Visa 卡。
+信用卡有了，那就开始用 Cloudflare。在将 OneKey Card 绑定到 Cloudflare 作为主要支付方式时，账单地址填写遇到了一点小问题，应该是地址需要稍微调整，不过我挺好奇，外国人非常喜欢邮寄账单吗，听上去是一种很传统的形式，虽然在美剧里也看到过邮寄水电煤账单和选票之类的情节。
+Cloudflare R2 Cloudflare R2 的使用，参考了 Pseudoyu 和 Leslie 的文章，写得非常详细，我是两篇一起看的，理论上不冲突，但个人愚钝，差点搞混了里面的步骤。通过 Pseudoyu 的教程，进行了 Cloudflare 的基础设置，以及 WebP Cloud 的开通；通过 Leslie 的教程，部署了一个球大佬开发的 R2 Uploader 工具，部署简单，界面也很简洁美观，和他博客一样。
+我对 WebP Cloud 的理解，相当于国内云存储平台的图片处理功能，可以对图片进行体积压缩、添加水印、缓存等等，也有免费额度。
+R2 Uploader 即是一个图片上传工具，替换 Cloudflare R2 后台简陋的上传页面，据 Leslie 的文章介绍，还有图像压缩、大文件上传等功能。">
+
+
+
+
+	<meta itemprop="name" content="Cloudflare 与 OneKey Card">
+	<meta itemprop="description" content="原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那tmd叫洗稿。
+赛博佛祖 不止一次听过 Cloudflare 赛博佛祖的外号，也一直想把域名转入到 Cloudflare，使用它的一些免费服务，但信用卡对我来说是一个门槛，没有办理，不知道该办理哪种信用卡，目前也不太想过早使用信用卡，所以 Cloudflare 在我这里还没有派上太大用场。
+前段时间参与 Dogs 的空投（它的狗头画得真丑），昨天发现已经到账 Telegram 的 Wallet，46刀，正想着如何把它用掉，便想到很早之前注册过的 OneKey Card，因为当时需要充值 USDC 或 USDT 才能激活，兴趣不大，就搁置了，轻松几步，就将 Telegram Wallet 里的 Dogs 转入到 OneKey Card，并开通了虚拟 Visa 卡。
+信用卡有了，那就开始用 Cloudflare。在将 OneKey Card 绑定到 Cloudflare 作为主要支付方式时，账单地址填写遇到了一点小问题，应该是地址需要稍微调整，不过我挺好奇，外国人非常喜欢邮寄账单吗，听上去是一种很传统的形式，虽然在美剧里也看到过邮寄水电煤账单和选票之类的情节。
+Cloudflare R2 Cloudflare R2 的使用，参考了 Pseudoyu 和 Leslie 的文章，写得非常详细，我是两篇一起看的，理论上不冲突，但个人愚钝，差点搞混了里面的步骤。通过 Pseudoyu 的教程，进行了 Cloudflare 的基础设置，以及 WebP Cloud 的开通；通过 Leslie 的教程，部署了一个球大佬开发的 R2 Uploader 工具，部署简单，界面也很简洁美观，和他博客一样。
+我对 WebP Cloud 的理解，相当于国内云存储平台的图片处理功能，可以对图片进行体积压缩、添加水印、缓存等等，也有免费额度。
+R2 Uploader 即是一个图片上传工具，替换 Cloudflare R2 后台简陋的上传页面，据 Leslie 的文章介绍，还有图像压缩、大文件上传等功能。">
+	<meta itemprop="datePublished" content="2024-09-01T00:00:00+00:00">
+	<meta itemprop="dateModified" content="2024-09-01T00:00:00+00:00">
+	<meta itemprop="wordCount" content="110">
+	<meta itemprop="keywords" content="Cloudflare,Cloudflare-R2,Onekey-Card,Webp-Cloud">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+     
+    :root {
+        --width-max: 720px;
+        --font-primary: Verdana, sans-serif;
+        --font-secondary: monospace;
+        --font-size-primary: 1em;
+        --font-size-secondary: 0.8em;
+        --bg-color-primary: #fdfdfd;
+        --bg-color-secondary: #f2f4f7;
+        --text-color-primary: #1a1a1a;
+        --text-color-secondary: #444;
+        --text-color-tertiary: #8c8c8c;
+        --link-color: #0066cc;
+        --link-visited-color: #551a8b;
+        --border-color: #d0d7de;
+        --upvoted-color: #fa8072;
+    }
+
+    @media (prefers-color-scheme: dark) {
+         
+        :root {
+            --bg-color-primary: #121212;
+            --bg-color-secondary: #1c1f24;
+            --text-color-primary: #e5e5e5;
+            --text-color-secondary: #b3b3b7;
+            --text-color-tertiary: #a0a0a0;
+            --link-color: #6da6ff;
+            --link-visited-color: #b388ff;
+            --border-color: #30363d;
+            --upvoted-color: #ff6b6b;
+        }
+    }
+
+    body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-primary);
+        margin: auto;
+        padding: 20px;
+        max-width: var(--width-max);
+        text-align: left;
+        background-color: var(--bg-color-primary);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 16px 0;
+    }
+
+    a {
+        color: var(--link-color);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .title {
+        text-decoration: none;
+        border: 0;
+    }
+
+    .title:hover {
+        text-decoration: none;
+    }
+
+    .title span {
+        font-weight: 400;
+    }
+
+    nav a {
+        margin-right: 8px;
+    }
+
+    textarea {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    content {
+        line-height: 1.6;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+    }
+
+    th,
+    td {
+        border: 1px solid var(--border-color);
+        padding: 4px;
+    }
+
+    th {
+        background-color: var(--bg-color-secondary);
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px dashed;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        content-visibility: auto;
+    }
+
+    img[src*="#minipic"] {
+        max-width: 50%;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .image-caption figcaption {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.8em;
+        margin-top: 0.6em;
+        color: var(--text-color-secondary);
+    }
+
+    .image-caption {
+        margin: auto;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    time {
+        font-family: var(--font-secondary);
+        font-size: 15px;
+    }
+
+    code {
+        font-family: var(--font-secondary);
+        background-color: var(--bg-color-secondary);
+        padding: 2px;
+        border-radius: 4px;
+    }
+
+    pre code {
+        display: block;
+        padding: 16px;
+        white-space: pre-wrap;
+        overflow-x: auto;
+    }
+
+    div.highlight pre {
+        border-radius: 4px;
+    }
+
+    div.highlight code {
+        background-color: var(--bg-color-secondary);
+    }
+
+    blockquote {
+        border-left: 4px solid var(--border-color);
+        color: var(--text-color-secondary);
+        margin: 0;
+        padding-left: 8px;
+        font-style: normal;
+    }
+
+    blockquote p {
+        margin: 0;
+    }
+
+    footer {
+        padding: 25px 0;
+        text-align: center;
+        font-size: var(--font-size-secondary);
+    }
+
+    ul li:has(input) {
+        list-style-type: none;
+        margin-left: -25.5px;
+    }
+
+     
+    ul.blog-posts {
+        list-style-type: none;
+        padding: unset;
+    }
+
+    ul.blog-posts li {
+        display: flex;
+    }
+
+    ul.blog-posts li span {
+        flex: 0 0 130px;
+    }
+
+    ul.blog-posts li span.grouped {
+        flex: 0 0 80px;
+    }
+
+    ul.blog-posts li a:visited {
+        color: var(--link-visited-color);
+    }
+
+     
+    div.toc {
+        position: fixed;  
+        top: 50%;  
+        left: calc(
+            (100vw + var(--width-max)) / 2
+        );  
+        transform: translateY(-50%);  
+        width: calc((90vw - var(--width-max)) / 2);  
+        max-height: 80vh;  
+        overflow-y: auto;  
+        border: none;  
+        padding: 0;  
+        margin: 0;  
+        z-index: 99;  
+
+         
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+
+    div.toc::-webkit-scrollbar {
+         
+        display: none;  
+    }
+
+    .toc-nav {
+         
+        padding: 1.5rem;  
+    }
+
+    .toc-nav ul {
+         
+        list-style: none;  
+        padding: 0;  
+        margin: 0;  
+    }
+
+    .toc-nav li {
+         
+        margin: 8px 0;  
+    }
+
+    .toc-nav a {
+         
+        display: block;  
+        text-decoration: none;  
+        color: transparent;  
+        padding: 0 12px;  
+        transition: all 0.2s ease;  
+        font-size: 0.9rem;  
+        line-height: 1.4;  
+        text-align: left;  
+        white-space: nowrap;  
+        overflow: hidden;  
+        text-overflow: ellipsis;  
+        max-width: 100%;  
+    }
+
+    .toc-nav:hover a {
+        color: var(--text-color-tertiary);  
+    }
+
+    .toc-nav a::before {
+         
+        content: "";  
+        display: inline-block;  
+        width: 16px;  
+        height: 4px;  
+        background-color: var(--text-color-tertiary);
+        border-radius: 16px;  
+        margin-right: 12px;  
+        vertical-align: middle;  
+    }
+
+    .toc-nav ul ul a::before {
+         
+        width: 12px;  
+        margin-right: 16px;  
+    }
+
+    .toc-nav ul ul ul a::before {
+         
+        width: 8px;  
+        margin-right: 20px;  
+    }
+
+    .toc-nav a.active,
+    .toc-nav a:hover {
+        text-decoration: none;
+        color: var(--text-color-primary);
+    }
+
+    .toc-nav a.active::before,
+    .toc-nav a:hover::before {
+        background-color: var(--text-color-primary);
+    }
+
+     
+    button.upvote-btn {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-color-primary);
+    }
+
+    button.upvoted {
+        color: var(--upvoted-color);
+    }
+
+    span.upvote-count {
+        margin-top: -4px;
+        font-size: smaller;
+    }
+
+     
+    body:has(.image-zoom-toggle:checked) {
+        overflow: hidden;
+    }
+
+    .image-zoom-container {
+        position: relative;
+        display: block;
+    }
+
+    .image-zoom-toggle {
+        display: none;
+    }
+
+    .image-zoom-label {
+        cursor: zoom-in;
+        display: block;
+        position: relative;
+    }
+
+    .image-zoom-label:focus {
+        outline: 2px solid var(--link-color);
+        outline-offset: 2px;
+    }
+
+    .zoomable-image {
+        transition: transform 0.3s ease;
+    }
+
+     
+    .image-zoom-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay {
+        display: flex;
+        cursor: zoom-out;
+    }
+
+     
+    .image-zoom-toggle:checked ~ .image-zoom-label {
+        cursor: default;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay .zoomable-image {
+        max-width: 90vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        transform: scale(1);
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+        content: "✕";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+        cursor: pointer;
+        z-index: 1002;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        z-index: 1001;
+        max-width: 80vw;
+        text-align: center;
+    }
+
+     
+    @media (max-width: 800px) {
+        img[src*="#minipic"] {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        div.toc {
+            display: none;
+        }
+
+        .image-zoom-label {
+            cursor: pointer;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay {
+            padding: 10px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::before,
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+            bottom: 10px;
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+  <header><a href="/" class="title">
+  <h1>印记博客</h1>
+</a>
+<nav><a href="/">Home</a>
+
+<a href="/roll.html">Roll</a>
+
+
+<a href="/blog/">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+
+<h1>Cloudflare 与 OneKey Card</h1>
+
+<p>
+  <i>
+    <time datetime='2024-09-01' pubdate>
+      01 Sep, 2024
+    </time>
+  </i>
+</p>
+
+
+ 
+
+<content> <p><figure
+    class="image-caption"
+>
+    
+    <img src="https://webp.yinji.org/202409012242640.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那tmd叫<a href="https://t.me/FindBlog/501">洗稿</a>。</p>
+<h2 id="赛博佛祖">赛博佛祖</h2>
+<p>不止一次听过 <a href="https://www.cloudflare.com/zh-cn/">Cloudflare</a> 赛博佛祖的外号，也一直想把域名转入到 Cloudflare，使用它的一些免费服务，但信用卡对我来说是一个门槛，没有办理，不知道该办理哪种信用卡，目前也不太想过早使用信用卡，所以 Cloudflare 在我这里还没有派上太大用场。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="https://webp.yinji.org/202409012231465.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>前段时间参与 <a href="https://t.me/dogshouse_bot/join?startapp=m64px3aLRdSfQiipYchkCQ">Dogs</a> 的空投（它的狗头画得真丑），昨天发现已经到账 Telegram 的 Wallet，46刀，正想着如何把它用掉，便想到很早之前注册过的 <a href="https://card.onekey.so/?i=VFDH2E">OneKey Card</a>，因为当时需要充值 USDC 或 USDT 才能激活，兴趣不大，就搁置了，轻松几步，就将 Telegram Wallet 里的 Dogs 转入到 OneKey Card，并开通了虚拟 Visa 卡。</p>
+<p>信用卡有了，那就开始用 Cloudflare。在将 OneKey Card 绑定到 Cloudflare 作为主要支付方式时，账单地址填写遇到了一点小问题，应该是地址需要稍微调整，不过我挺好奇，外国人非常喜欢邮寄账单吗，听上去是一种很传统的形式，虽然在美剧里也看到过邮寄水电煤账单和选票之类的情节。</p>
+<h2 id="cloudflare-r2">Cloudflare R2</h2>
+<p><a href="https://www.cloudflare.com/zh-cn/developer-platform/r2/">Cloudflare R2</a> 的使用，参考了 <a href="https://www.pseudoyu.com/zh/2024/06/30/free_image_hosting_system_using_r2_webp_cloud_and_picgo/">Pseudoyu</a> 和 <a href="https://justgoidea.com/posts/2024-022/">Leslie</a> 的文章，写得非常详细，我是两篇一起看的，理论上不冲突，但个人愚钝，差点搞混了里面的步骤。通过 Pseudoyu 的教程，进行了 Cloudflare 的基础设置，以及 <a href="https://webp.se/">WebP Cloud</a> 的开通；通过 Leslie 的教程，部署了<a href="https://github.com/jw-12138">一个球</a>大佬开发的 <a href="https://github.com/jw-12138/r2-uploader">R2 Uploader</a> 工具，部署简单，界面也很简洁美观，和他<a href="https://jw1.dev/">博客</a>一样。</p>
+<p>我对 WebP Cloud 的理解，相当于国内云存储平台的图片处理功能，可以对图片进行体积压缩、添加水印、缓存等等，也有免费额度。</p>
+<p>R2 Uploader 即是一个图片上传工具，替换 Cloudflare R2 后台简陋的上传页面，据 Leslie 的文章介绍，还有图像压缩、大文件上传等功能。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="https://webp.yinji.org/202409012231824.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>将 WebP Cloud 和 R2 Uploader 联动起来，实现一键上传和代理。我在 Piclist 上也进行了相关设置，主要是想使用<strong>从剪切板上传</strong>和<strong>上传后自动复制 markdown 链接</strong>这两个功能，隔空喊话一个球大佬，后续是否有计划给 R2 Uploader 加上这两个功能。</p>
+<p>域名转入不再赘述，就和将大象装进冰箱一样简单。仍然纳闷的是，为何国外域名服务商转移域名如此之快，6年前将一个域名从国内某主机服务商转入腾讯云，花了10天，今天从 Porkbun 转到 Cloudflare，10分钟左右搞定。</p>
+<h2 id="onekey-card">OneKey Card</h2>
+<p>不记得什么时候注册的账号，当时一起的似乎还有 Depay，或者说 Dupay，不知道它们什么关系，现在情况如何。</p>
+<p>看网上的消息，现在 <a href="https://card.onekey.so/?i=VFDH2E">OneKey Card</a> 免月费，不用白不用，趁此机会绑定了支付宝，虽然不知道为什么无法在淘宝上使用这张卡，但在美团上实打实能支付，中午点了麦当劳外卖、买了团购优惠券，本想再充个话费，似乎不太行。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="https://webp.yinji.org/202409012227703.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>头一回知道虚拟货币还能这样使用，也算是开了眼界。用它作为 Cloudflare 的主要支付方式，也非常方便，只不过以后需要支付，还得往里面充值虚拟货币。</p>
+<p><a href="https://card.onekey.so/?i=VFDH2E">OneKey Card</a> 现在还能注册，Google 账号一键登录即可，建议尝试一下。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="https://webp.yinji.org/202409012234583.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+ </content>
+
+<p>
+  
+  <a href="http://localhost:1313/tags/cloudflare/">#Cloudflare</a>
+  
+  <a href="http://localhost:1313/tags/cloudflare-r2/">#Cloudflare-R2</a>
+  
+  <a href="http://localhost:1313/tags/onekey-card/">#Onekey-Card</a>
+  
+  <a href="http://localhost:1313/tags/webp-cloud/">#Webp-Cloud</a>
+  
+</p>
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+
+
+
+
+Subscribe via <a href="/index.xml">RSS</a>.
+<br />
+
+
+
+
+
+
+Made with
+<a href="https://github.com/rokcso/hugo-bearneo/">Hugo Bear Neo</a>.
+<br />
+
+
+
+
+
+
+
+🗺️ <a href="/sitemap.xml">Sitemap</a>.
+
+</footer>
+
+    
+
+
+</body>
+
+</html>

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>使用 Vercel 免费部署 LobeChat | 印记博客</title>
+<meta name="title" content="使用 Vercel 免费部署 LobeChat" />
+<meta name="description" content="我在之前的文章《充分发挥 ChatGPT 在日常生活中的作用》中介绍过一款开源项目——ChatNextWeb，搭配 Vercel 即可部署自己的网页对话机器人，但它仅支持对话，如果想使用 DELL·E 3 模型进行文生图，似乎无法实现。最近看到另一个类似的项目——LobeChat，功能更加齐全、丰富，UI 也更加好看，便记录一下部署过程。
+
+    
+    
+    
+    
+
+
+LobeChat 介绍
+该项目在 GitHub 上已有 17.7k stars，这几个特性比较吸引人：
+
+GPT 视觉认知。支持了 OpenAI 最新的 gpt-4-vision 模型，视觉识别，只需上传图片，即可识别图片内容，然后基于此进行对话。
+TTS &amp; STT 语音会话。这一功能在 ChatGPT 的官方客户端上就能体验，通过语音转文字或者文字转语音，与人工智能助手进行对话。
+Text to Image 文生图。即支持通过插件唤醒 GPT-4 内置的 DALL-E 3 模型，直接调用文生图工具进行绘画，我在 Bing Create 上使用该功能绘制 Daily 图片，仅用一句诗，就能生成与之相符的图片。
+
+如果开通了 ChatGPT Plus，以上三点应该可以轻松实现并体验，但对我来说太贵，便找到了平替方案。
+LobeChat 部署
+LobeChat 提供了 Docker 镜像，也提供了 Vercel 的自托管版本，两种方式我都进行了测试，都可以正常部署并使用。
+Docker 部署
+在 VPS 终端输入以下命令，就可以一键安装并启动 LobeChat 服务：
+docker run -d -p 3210:3210 \
+  -e OPENAI_API_KEY=sk-xxxx \
+  -e OPENAI_PROXY_URL=https://api-proxy.com/v1 \
+  -e ACCESS_CODE=lobe66 \
+  --name lobe-chat \
+  lobehub/lobe-chat
+其中涉及到一些环境变量，OPENAI_API_KEY 是从 OpenAI 获取到的 API Key，如果你使用的 API Key 并不是来自官方，则需要加一条环境变量OPENAI_PROXY_URL配置代理地址，比如我使用的是第三方 API Key，由 AIGC API 提供，ACCESS_CODE是访问密码，建议设置。最后需要确保 VPS 端口 3210 保持开启且未被占用，然后通过 IP:端口的方式进行访问即可，或者进行反向代理，绑定域名使用。" />
+<meta name="keywords" content="chatgpt,lobechat,openai," />
+
+<link rel="canonical" href="http://localhost:1313/deploy-lobechat-for-free-with-vercel.html/">
+
+
+<meta property="og:url" content="http://localhost:1313/deploy-lobechat-for-free-with-vercel.html/">
+	<meta property="og:site_name" content="印记博客">
+	<meta property="og:title" content="使用 Vercel 免费部署 LobeChat">
+	<meta property="og:description" content="我在之前的文章《充分发挥 ChatGPT 在日常生活中的作用》中介绍过一款开源项目——ChatNextWeb，搭配 Vercel 即可部署自己的网页对话机器人，但它仅支持对话，如果想使用 DELL·E 3 模型进行文生图，似乎无法实现。最近看到另一个类似的项目——LobeChat，功能更加齐全、丰富，UI 也更加好看，便记录一下部署过程。
+LobeChat 介绍 该项目在 GitHub 上已有 17.7k stars，这几个特性比较吸引人：
+GPT 视觉认知。支持了 OpenAI 最新的 gpt-4-vision 模型，视觉识别，只需上传图片，即可识别图片内容，然后基于此进行对话。 TTS &amp; STT 语音会话。这一功能在 ChatGPT 的官方客户端上就能体验，通过语音转文字或者文字转语音，与人工智能助手进行对话。 Text to Image 文生图。即支持通过插件唤醒 GPT-4 内置的 DALL-E 3 模型，直接调用文生图工具进行绘画，我在 Bing Create 上使用该功能绘制 Daily 图片，仅用一句诗，就能生成与之相符的图片。 如果开通了 ChatGPT Plus，以上三点应该可以轻松实现并体验，但对我来说太贵，便找到了平替方案。
+LobeChat 部署 LobeChat 提供了 Docker 镜像，也提供了 Vercel 的自托管版本，两种方式我都进行了测试，都可以正常部署并使用。
+Docker 部署 在 VPS 终端输入以下命令，就可以一键安装并启动 LobeChat 服务：
+docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=https://api-proxy.com/v1 \ -e ACCESS_CODE=lobe66 \ --name lobe-chat \ lobehub/lobe-chat 其中涉及到一些环境变量，OPENAI_API_KEY 是从 OpenAI 获取到的 API Key，如果你使用的 API Key 并不是来自官方，则需要加一条环境变量OPENAI_PROXY_URL配置代理地址，比如我使用的是第三方 API Key，由 AIGC API 提供，ACCESS_CODE是访问密码，建议设置。最后需要确保 VPS 端口 3210 保持开启且未被占用，然后通过 IP:端口的方式进行访问即可，或者进行反向代理，绑定域名使用。">
+	<meta property="og:locale" content="zh_cn">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="blog">
+		<meta property="article:published_time" content="2024-02-11T00:00:00+00:00">
+		<meta property="article:modified_time" content="2024-02-11T00:00:00+00:00">
+		<meta property="article:tag" content="Chatgpt">
+		<meta property="article:tag" content="Lobechat">
+		<meta property="article:tag" content="Openai">
+
+
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="使用 Vercel 免费部署 LobeChat">
+	<meta name="twitter:description" content="我在之前的文章《充分发挥 ChatGPT 在日常生活中的作用》中介绍过一款开源项目——ChatNextWeb，搭配 Vercel 即可部署自己的网页对话机器人，但它仅支持对话，如果想使用 DELL·E 3 模型进行文生图，似乎无法实现。最近看到另一个类似的项目——LobeChat，功能更加齐全、丰富，UI 也更加好看，便记录一下部署过程。
+LobeChat 介绍 该项目在 GitHub 上已有 17.7k stars，这几个特性比较吸引人：
+GPT 视觉认知。支持了 OpenAI 最新的 gpt-4-vision 模型，视觉识别，只需上传图片，即可识别图片内容，然后基于此进行对话。 TTS &amp; STT 语音会话。这一功能在 ChatGPT 的官方客户端上就能体验，通过语音转文字或者文字转语音，与人工智能助手进行对话。 Text to Image 文生图。即支持通过插件唤醒 GPT-4 内置的 DALL-E 3 模型，直接调用文生图工具进行绘画，我在 Bing Create 上使用该功能绘制 Daily 图片，仅用一句诗，就能生成与之相符的图片。 如果开通了 ChatGPT Plus，以上三点应该可以轻松实现并体验，但对我来说太贵，便找到了平替方案。
+LobeChat 部署 LobeChat 提供了 Docker 镜像，也提供了 Vercel 的自托管版本，两种方式我都进行了测试，都可以正常部署并使用。
+Docker 部署 在 VPS 终端输入以下命令，就可以一键安装并启动 LobeChat 服务：
+docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=https://api-proxy.com/v1 \ -e ACCESS_CODE=lobe66 \ --name lobe-chat \ lobehub/lobe-chat 其中涉及到一些环境变量，OPENAI_API_KEY 是从 OpenAI 获取到的 API Key，如果你使用的 API Key 并不是来自官方，则需要加一条环境变量OPENAI_PROXY_URL配置代理地址，比如我使用的是第三方 API Key，由 AIGC API 提供，ACCESS_CODE是访问密码，建议设置。最后需要确保 VPS 端口 3210 保持开启且未被占用，然后通过 IP:端口的方式进行访问即可，或者进行反向代理，绑定域名使用。">
+
+
+
+
+	<meta itemprop="name" content="使用 Vercel 免费部署 LobeChat">
+	<meta itemprop="description" content="我在之前的文章《充分发挥 ChatGPT 在日常生活中的作用》中介绍过一款开源项目——ChatNextWeb，搭配 Vercel 即可部署自己的网页对话机器人，但它仅支持对话，如果想使用 DELL·E 3 模型进行文生图，似乎无法实现。最近看到另一个类似的项目——LobeChat，功能更加齐全、丰富，UI 也更加好看，便记录一下部署过程。
+LobeChat 介绍 该项目在 GitHub 上已有 17.7k stars，这几个特性比较吸引人：
+GPT 视觉认知。支持了 OpenAI 最新的 gpt-4-vision 模型，视觉识别，只需上传图片，即可识别图片内容，然后基于此进行对话。 TTS &amp; STT 语音会话。这一功能在 ChatGPT 的官方客户端上就能体验，通过语音转文字或者文字转语音，与人工智能助手进行对话。 Text to Image 文生图。即支持通过插件唤醒 GPT-4 内置的 DALL-E 3 模型，直接调用文生图工具进行绘画，我在 Bing Create 上使用该功能绘制 Daily 图片，仅用一句诗，就能生成与之相符的图片。 如果开通了 ChatGPT Plus，以上三点应该可以轻松实现并体验，但对我来说太贵，便找到了平替方案。
+LobeChat 部署 LobeChat 提供了 Docker 镜像，也提供了 Vercel 的自托管版本，两种方式我都进行了测试，都可以正常部署并使用。
+Docker 部署 在 VPS 终端输入以下命令，就可以一键安装并启动 LobeChat 服务：
+docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=https://api-proxy.com/v1 \ -e ACCESS_CODE=lobe66 \ --name lobe-chat \ lobehub/lobe-chat 其中涉及到一些环境变量，OPENAI_API_KEY 是从 OpenAI 获取到的 API Key，如果你使用的 API Key 并不是来自官方，则需要加一条环境变量OPENAI_PROXY_URL配置代理地址，比如我使用的是第三方 API Key，由 AIGC API 提供，ACCESS_CODE是访问密码，建议设置。最后需要确保 VPS 端口 3210 保持开启且未被占用，然后通过 IP:端口的方式进行访问即可，或者进行反向代理，绑定域名使用。">
+	<meta itemprop="datePublished" content="2024-02-11T00:00:00+00:00">
+	<meta itemprop="dateModified" content="2024-02-11T00:00:00+00:00">
+	<meta itemprop="wordCount" content="158">
+	<meta itemprop="keywords" content="Chatgpt,Lobechat,Openai">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+     
+    :root {
+        --width-max: 720px;
+        --font-primary: Verdana, sans-serif;
+        --font-secondary: monospace;
+        --font-size-primary: 1em;
+        --font-size-secondary: 0.8em;
+        --bg-color-primary: #fdfdfd;
+        --bg-color-secondary: #f2f4f7;
+        --text-color-primary: #1a1a1a;
+        --text-color-secondary: #444;
+        --text-color-tertiary: #8c8c8c;
+        --link-color: #0066cc;
+        --link-visited-color: #551a8b;
+        --border-color: #d0d7de;
+        --upvoted-color: #fa8072;
+    }
+
+    @media (prefers-color-scheme: dark) {
+         
+        :root {
+            --bg-color-primary: #121212;
+            --bg-color-secondary: #1c1f24;
+            --text-color-primary: #e5e5e5;
+            --text-color-secondary: #b3b3b7;
+            --text-color-tertiary: #a0a0a0;
+            --link-color: #6da6ff;
+            --link-visited-color: #b388ff;
+            --border-color: #30363d;
+            --upvoted-color: #ff6b6b;
+        }
+    }
+
+    body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-primary);
+        margin: auto;
+        padding: 20px;
+        max-width: var(--width-max);
+        text-align: left;
+        background-color: var(--bg-color-primary);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 16px 0;
+    }
+
+    a {
+        color: var(--link-color);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .title {
+        text-decoration: none;
+        border: 0;
+    }
+
+    .title:hover {
+        text-decoration: none;
+    }
+
+    .title span {
+        font-weight: 400;
+    }
+
+    nav a {
+        margin-right: 8px;
+    }
+
+    textarea {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    content {
+        line-height: 1.6;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+    }
+
+    th,
+    td {
+        border: 1px solid var(--border-color);
+        padding: 4px;
+    }
+
+    th {
+        background-color: var(--bg-color-secondary);
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px dashed;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        content-visibility: auto;
+    }
+
+    img[src*="#minipic"] {
+        max-width: 50%;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .image-caption figcaption {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.8em;
+        margin-top: 0.6em;
+        color: var(--text-color-secondary);
+    }
+
+    .image-caption {
+        margin: auto;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    time {
+        font-family: var(--font-secondary);
+        font-size: 15px;
+    }
+
+    code {
+        font-family: var(--font-secondary);
+        background-color: var(--bg-color-secondary);
+        padding: 2px;
+        border-radius: 4px;
+    }
+
+    pre code {
+        display: block;
+        padding: 16px;
+        white-space: pre-wrap;
+        overflow-x: auto;
+    }
+
+    div.highlight pre {
+        border-radius: 4px;
+    }
+
+    div.highlight code {
+        background-color: var(--bg-color-secondary);
+    }
+
+    blockquote {
+        border-left: 4px solid var(--border-color);
+        color: var(--text-color-secondary);
+        margin: 0;
+        padding-left: 8px;
+        font-style: normal;
+    }
+
+    blockquote p {
+        margin: 0;
+    }
+
+    footer {
+        padding: 25px 0;
+        text-align: center;
+        font-size: var(--font-size-secondary);
+    }
+
+    ul li:has(input) {
+        list-style-type: none;
+        margin-left: -25.5px;
+    }
+
+     
+    ul.blog-posts {
+        list-style-type: none;
+        padding: unset;
+    }
+
+    ul.blog-posts li {
+        display: flex;
+    }
+
+    ul.blog-posts li span {
+        flex: 0 0 130px;
+    }
+
+    ul.blog-posts li span.grouped {
+        flex: 0 0 80px;
+    }
+
+    ul.blog-posts li a:visited {
+        color: var(--link-visited-color);
+    }
+
+     
+    div.toc {
+        position: fixed;  
+        top: 50%;  
+        left: calc(
+            (100vw + var(--width-max)) / 2
+        );  
+        transform: translateY(-50%);  
+        width: calc((90vw - var(--width-max)) / 2);  
+        max-height: 80vh;  
+        overflow-y: auto;  
+        border: none;  
+        padding: 0;  
+        margin: 0;  
+        z-index: 99;  
+
+         
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+
+    div.toc::-webkit-scrollbar {
+         
+        display: none;  
+    }
+
+    .toc-nav {
+         
+        padding: 1.5rem;  
+    }
+
+    .toc-nav ul {
+         
+        list-style: none;  
+        padding: 0;  
+        margin: 0;  
+    }
+
+    .toc-nav li {
+         
+        margin: 8px 0;  
+    }
+
+    .toc-nav a {
+         
+        display: block;  
+        text-decoration: none;  
+        color: transparent;  
+        padding: 0 12px;  
+        transition: all 0.2s ease;  
+        font-size: 0.9rem;  
+        line-height: 1.4;  
+        text-align: left;  
+        white-space: nowrap;  
+        overflow: hidden;  
+        text-overflow: ellipsis;  
+        max-width: 100%;  
+    }
+
+    .toc-nav:hover a {
+        color: var(--text-color-tertiary);  
+    }
+
+    .toc-nav a::before {
+         
+        content: "";  
+        display: inline-block;  
+        width: 16px;  
+        height: 4px;  
+        background-color: var(--text-color-tertiary);
+        border-radius: 16px;  
+        margin-right: 12px;  
+        vertical-align: middle;  
+    }
+
+    .toc-nav ul ul a::before {
+         
+        width: 12px;  
+        margin-right: 16px;  
+    }
+
+    .toc-nav ul ul ul a::before {
+         
+        width: 8px;  
+        margin-right: 20px;  
+    }
+
+    .toc-nav a.active,
+    .toc-nav a:hover {
+        text-decoration: none;
+        color: var(--text-color-primary);
+    }
+
+    .toc-nav a.active::before,
+    .toc-nav a:hover::before {
+        background-color: var(--text-color-primary);
+    }
+
+     
+    button.upvote-btn {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-color-primary);
+    }
+
+    button.upvoted {
+        color: var(--upvoted-color);
+    }
+
+    span.upvote-count {
+        margin-top: -4px;
+        font-size: smaller;
+    }
+
+     
+    body:has(.image-zoom-toggle:checked) {
+        overflow: hidden;
+    }
+
+    .image-zoom-container {
+        position: relative;
+        display: block;
+    }
+
+    .image-zoom-toggle {
+        display: none;
+    }
+
+    .image-zoom-label {
+        cursor: zoom-in;
+        display: block;
+        position: relative;
+    }
+
+    .image-zoom-label:focus {
+        outline: 2px solid var(--link-color);
+        outline-offset: 2px;
+    }
+
+    .zoomable-image {
+        transition: transform 0.3s ease;
+    }
+
+     
+    .image-zoom-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay {
+        display: flex;
+        cursor: zoom-out;
+    }
+
+     
+    .image-zoom-toggle:checked ~ .image-zoom-label {
+        cursor: default;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay .zoomable-image {
+        max-width: 90vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        transform: scale(1);
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+        content: "✕";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+        cursor: pointer;
+        z-index: 1002;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        z-index: 1001;
+        max-width: 80vw;
+        text-align: center;
+    }
+
+     
+    @media (max-width: 800px) {
+        img[src*="#minipic"] {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        div.toc {
+            display: none;
+        }
+
+        .image-zoom-label {
+            cursor: pointer;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay {
+            padding: 10px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::before,
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+            bottom: 10px;
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+  <header><a href="/" class="title">
+  <h1>印记博客</h1>
+</a>
+<nav><a href="/">Home</a>
+
+<a href="/roll.html">Roll</a>
+
+
+<a href="/blog/">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+
+<h1>使用 Vercel 免费部署 LobeChat</h1>
+
+<p>
+  <i>
+    <time datetime='2024-02-11' pubdate>
+      11 Feb, 2024
+    </time>
+  </i>
+</p>
+
+
+ 
+
+<content> <p>我在之前的文章《<a href="https://yinji.org/5225.html">充分发挥 ChatGPT 在日常生活中的作用</a>》中介绍过一款开源项目——ChatNextWeb，搭配 Vercel 即可部署自己的网页对话机器人，但它仅支持对话，如果想使用 DELL·E 3 模型进行文生图，似乎无法实现。最近看到另一个类似的项目——<a href="https://github.com/lobehub/lobe-chat">LobeChat</a>，功能更加齐全、丰富，UI 也更加好看，便记录一下部署过程。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="images/6943e682bf035424e66991258bcbc9c2.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<h2 id="lobechat-介绍">LobeChat 介绍</h2>
+<p>该项目在 GitHub 上已有 17.7k stars，这几个特性比较吸引人：</p>
+<ol>
+<li><strong>GPT 视觉认知</strong>。支持了 OpenAI 最新的 gpt-4-vision 模型，视觉识别，只需上传图片，即可识别图片内容，然后基于此进行对话。</li>
+<li><strong>TTS &amp; STT 语音会话</strong>。这一功能在 ChatGPT 的官方客户端上就能体验，通过语音转文字或者文字转语音，与人工智能助手进行对话。</li>
+<li><strong>Text to Image 文生图</strong>。即支持通过插件唤醒 GPT-4 内置的 DALL-E 3 模型，直接调用文生图工具进行绘画，我在 Bing Create 上使用该功能绘制 Daily 图片，仅用一句诗，就能生成与之相符的图片。</li>
+</ol>
+<p>如果开通了 ChatGPT Plus，以上三点应该可以轻松实现并体验，但对我来说太贵，便找到了平替方案。</p>
+<h2 id="lobechat-部署">LobeChat 部署</h2>
+<p>LobeChat 提供了 Docker 镜像，也提供了 Vercel 的自托管版本，两种方式我都进行了测试，都可以正常部署并使用。</p>
+<h3 id="docker-部署">Docker 部署</h3>
+<p>在 VPS 终端输入以下命令，就可以一键安装并启动 LobeChat 服务：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d -p 3210:3210 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e OPENAI_API_KEY<span style="color:#f92672">=</span>sk-xxxx <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e OPENAI_PROXY_URL<span style="color:#f92672">=</span>https://api-proxy.com/v1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  -e ACCESS_CODE<span style="color:#f92672">=</span>lobe66 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --name lobe-chat <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  lobehub/lobe-chat
+</span></span></code></pre></div><p>其中涉及到一些环境变量，<code>OPENAI_API_KEY</code> 是从 OpenAI 获取到的 API Key，如果你使用的 API Key 并不是来自官方，则需要加一条环境变量<code>OPENAI_PROXY_URL</code>配置代理地址，比如我使用的是第三方 API Key，由 <a href="https://aigcapi.io/register?aff=HyYk">AIGC API</a> 提供，<code>ACCESS_CODE</code>是访问密码，建议设置。最后需要确保 VPS 端口 3210 保持开启且未被占用，然后通过 IP:端口的方式进行访问即可，或者进行反向代理，绑定域名使用。</p>
+<h3 id="vercel-部署">Vercel 部署</h3>
+<p>使用 Vercel 部署更加方便快捷，不用登录 SSH，也不用输入命令。</p>
+<p>进入 GitHub 项目页面，fork LobeChat 项目之后登录 Vercel，选择对应的仓库进行导入。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="images/82c6b012e45b84c72cffbdf8d69179b3.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>在环境变量部分填入相应的 Key 和 Value，如下图所示，我填写了<code>ACCESS_CODE</code> 、<code>OPENAI_API_KEY</code>和<code>OPENAI_PROXY_URL</code>，这样就可以通过 AIGCAPI 提供的第三方 API Key 使用 GPT-4 等模型。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="images/97f59869fb2d9109e0507b1cc7f727a6.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>注意，如果在环境变量里填写了<code>OPENAI_API_KEY</code>等其他模型服务商的 API Key，则该服务部署成功之后可以直接使用，无需再在网站中填写 API Key，这一点在项目文档中写得比较清楚。</p>
+<p>点击 Deploy，等待部署完成。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="images/18adff18a50d10106962f2d511ec8c8c.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>即可访问网站，使用服务。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="images/b5b42b544bd12b4ec4b0d3b2262ca577.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>切换 GPT-4 模型，打开内置的 DALL·E 3 插件，即可开启文生图模式。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="images/b4172e6f91e026ea7db5bdd9907fec5d.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>除此之外，还内置了各种 AI 助手，涵盖写作、翻译、代码等方面。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="images/5cd268f0e52a5df279954b707ff810e1.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>最后给大家分享一家我一直在使用的第三方 API Key 提供商，<a href="https://aigcapi.io/register?aff=HyYk">AIGC API</a>，提供高效且稳定的 OpenAI 聚合 API，相比官方20$/月的 ChatGPT Plus，它提供的 API，价格低至1美元只需要2元人民币，除了 GPT-4 模型，图中这些也可以进行调用。</p>
+<p><figure
+    class="image-caption"
+>
+    
+    <img src="images/e3b81857165bf5d1b2580b2616fbcfd8.webp" alt="" loading="lazy" />
+    
+    <figcaption></figcaption>
+</figure>
+</p>
+<p>最近因为写毕业论文需要，便使用 LobeChat 和 <a href="https://aigcapi.io/register?aff=HyYk">AIGC API</a> 的服务部署了一个网站，给自己和同学使用，效果还不错。</p>
+ </content>
+
+<p>
+  
+  <a href="http://localhost:1313/tags/chatgpt/">#Chatgpt</a>
+  
+  <a href="http://localhost:1313/tags/lobechat/">#Lobechat</a>
+  
+  <a href="http://localhost:1313/tags/openai/">#Openai</a>
+  
+</p>
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+
+
+
+
+Subscribe via <a href="/index.xml">RSS</a>.
+<br />
+
+
+
+
+
+
+Made with
+<a href="https://github.com/rokcso/hugo-bearneo/">Hugo Bear Neo</a>.
+<br />
+
+
+
+
+
+
+
+🗺️ <a href="/sitemap.xml">Sitemap</a>.
+
+</footer>
+
+    
+
+
+</body>
+
+</html>

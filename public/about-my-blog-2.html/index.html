@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>关于我的博客2.0 | 印记博客</title>
+<meta name="title" content="关于我的博客2.0" />
+<meta name="description" content="终于动手写《关于我的博客2.0》。
+在两年前写了一篇介绍自己博客的文章《[[about-my-blog|关于我的博客]]》，两年时间过去了，和当时相比，只能说大同小异。正好前段时间有网友留言，看到我对于 Twenty Twelve 主题的修改，问能否写个教程。我也是从网上各种教程文章扒的代码，便找时间记录下来吧。
+框架
+依然使用 WordPress 和 Twenty Twelve 主题，但是主题经过了比较大的修改，后面会详细说明。
+运行在 CloudCone 提供的美国 VPS 上，具体情况可以看之前的文章。
+域名是昨天在 NameSilo 注册的，由于我没有信用卡，无法使用 Google Domains 进行注册。Google Domains 土耳其区注册 .net 域名每年仅需人民币25元左右。亏大发了。
+插件
+目前加上强化拓展，一共只使用了3个插件。
+分别是 WP Githuber MD（用于 Markdown 写作）、WP-Douban（用于生成豆瓣条目信息） 和 object-cache.php（用于外部对象缓存）。
+其他能用代码集成到 function.php 文件中的都用代码替代插件了。
+主题
+一开始我是基于 WordPress 官方默认主题 Twenty Twelve 进行修改的，但后面看到有一款修改程度更好的成品——Twenty Twelve 木头人修改精简版，就在它的基础上继续修改。
+所以有想法的朋友可以直接使用上面提到的成品主题，或者继续看我的内容。
+我修改的最终版本：2012-huhexian
+首页右上角图片
+先在 header.php 加入下列代码：
+&lt;a href=&#34;https://yinji.org/&#34; title=&#34;回到首页&#34;&gt;&lt;img src=&#34;https://dogefs.s3.ladydaily.com/lucy/storage/1680832936501.png&#34; alt=&#34;胡鹤仙&#34;width=&#34;70&#34; height=&#34;70&#34;/&gt;&lt;/a&gt;
+具体位置大概在 &lt;hgroup&gt;下方，上述内容请替换为自己的网址。
+然后在 style.css 中加入样式代码：
+/*顶部图片*/
+.site-header hgroup{position: relative;}
+.site-header hgroup img{position: absolute;right: 0;}
+@media (max-width: 650px) {
+.site-header hgroup img{ display:none}
+}
+标签云
+/* 标签云样式修改 */ 
+ .tagcloud {
+     overflow:hidden;
+     line-height:20px;
+ }
+ .tagcloud a {
+    font-size: 13px!important;
+    padding: 3px;
+    margin-right: 3px;
+    float: left;
+    display: block;
+ }
+ .tagcloud a:not(.dots):hover {
+     background-color: #336699;
+     color: #FFFFFF;
+     border:0;
+ }
+引用
+/*引用*/
+.entry-content blockquote,
+.comment-content blockquote
+{
+    background-image: url(data:image/svg&#43;xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI&#43;PHN2ZyB0PSIxNTg1NTQxNjE3MDQ5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjM3MTgiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI&#43;PC9zdHlsZT48L2RlZnM&#43;PHBhdGggZD0iTTQwNi41NTcyNTcgMTE4LjUzNTMxNHYxMzcuOTAzNTQzYy04Ny4xNDI0IDE5Ljk1MzM3MS0xMjguODkyMzQzIDc0LjQ3NDA1Ny0xMzQuMzYzNDI4IDE3Ni4wMTA5NzJoMTM0LjM2MzQyOHYzMjYuNzQzNzcxSDExNC4yOTMwMjlWNDkwLjUxMDYyOWMwLTE5NC4xNzk2NTcgODMuNDk5ODg2LTM0My4wMTA3NDMgMjkyLjI2NDIyOC0zNzEuOTc1MzE1bTAtNTguNTE0Mjg1Yy0yLjY3NzAyOSAwLTUuMzU0MDU3IDAuMTkwMTcxLTguMDQ1NzE0IDAuNTU1ODg1QzE3Ny41MDMwODYgOTEuMjM4NCA1NS43Nzg3NDMgMjQzLjkzMTQyOSA1NS43Nzg3NDMgNDkwLjUxMDYyOXYyNjguNjY4MzQyYTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2IDU4LjUxNDI4NmgyOTIuMjY0MjI4YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2LTU4LjUxNDI4NlY0MzIuNDQ5ODI5YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAtNTguNTE0Mjg2LTU4LjUxNDI4NmgtNjQuNTI2NjI4YzE0LjQ1MzAyOS0zNy42MTAwNTcgNDEuNDI4MTE0LTUyLjE4MDExNCA3Ny41ODk5NDItNjAuNDU5ODg2YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNDUuNDUwOTcyLTU3LjAzNjhWMTE4LjUzNTMxNGE1OC41MTQyODYgNTguNTE0Mjg2IDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODV6TTkwOS43MDY5NzEgMjY0LjgyMTAyOXYxMzcuOTAzNTQyYy04Ny4xMTMxNDMgMTkuOTUzMzcxLTEyOC44NjMwODYgNzQuNDc0MDU3LTEzNC4zMzQxNzEgMTc2LjAxMDk3MmgxMzQuMzM0MTcxdjMyNi43NDM3NzFINjE3LjQ0Mjc0M1Y2MzYuNzk2MzQzYzAtMTk0LjE3OTY1NyA4My41MTQ1MTQtMzQzLjAxMDc0MyAyOTIuMjY0MjI4LTM3MS45NzUzMTRtMC01OC41MTQyODZjLTIuNjc3MDI5IDAtNS4zNTQwNTcgMC4xOTAxNzEtOC4wNDU3MTQgMC41NTU4ODYtMjIxLjAwODQ1NyAzMC42NzYxMTQtMzQyLjczMjggMTgzLjM1NDUxNC0zNDIuNzMyOCA0MjkuOTQ4MzQydjI2OC42NjgzNDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYgNTguNTE0Mjg2aDI5Mi4yNjQyMjhhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYtNTguNTE0Mjg2VjU3OC43MzU1NDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMC01OC41MTQyODYtNTguNTE0Mjg2aC02NC40OTczNzFjMTQuNDUzMDI5LTM3LjYxMDA1NyA0MS40MTM0ODYtNTIuMTgwMTE0IDc3LjU3NTMxNC02MC40NTk4ODZhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA0NS40MzYzNDMtNTcuMDM2OHYtMTM3LjkwMzU0MmE1OC41NDM1NDMgNTguNTQzNTQzIDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODZ6IiBmaWxsPSIjY2YzZjc0IiBwLWlkPSIzNzE5Ij48L3BhdGg&#43;PHBhdGggZD0iTTM1OS42MTQxNzEgNjY2LjU1MDg1N2ExNC42Mjg1NzEgMTQuNjI4NTcxIDAgMCAxLTE0LjYyODU3MS0xNC42Mjg1NzFWNDkxLjI3MTMxNGgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1OHYxNzUuNTQyODU3YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA4NDIuMDkzNzE0YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MXYtMjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMjkuMjU3MTQzIDB2MjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA3NTQuMzIyMjg2YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MnYtMTAyLjEzNjY4NWgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1N3YxMTcuMDI4NTcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MnoiIGZpbGw9IiNjZjNmNzQiIHAtaWQ9IjM3MjAiPjwvcGF0aD48L3N2Zz4=);
+    background-repeat: no-repeat;
+    color: rgba(0,0,0,.7);
+    margin-top: 0;
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 20px 20px 20px 60px;
+    position: relative;}
+头像转动
+/*头像转动*/
+.avatar{-webkit-transition:0.4s;-webkit-transition:-webkit-transform 0.4s ease-out;transition:transform 0.4s ease-out;-moz-transition:-moz-transform 0.4s ease-out;}
+.avatar:hover{transform:rotateZ(360deg);-webkit-transform:rotateZ(360deg);-moz-transform:rotateZ(360deg);}
+调整网页宽度
+/* 网页宽度 */
+ .site {
+     margin: 0 auto;
+       max-width: 960px;
+     overflow: hidden;
+ }
+html {
+    margin-top: 32px !important;
+}
+小工具及首页文章标题下划线
+/* 小工具标题字体样式以及下横线 */
+ .widget-title {
+     font-size: 18px;
+     font-weight: normal;
+     color: #21759b;
+     border-bottom: 1px solid #ededed;
+ }
+/* 首页文章标题行高以及下横线 */
+ .entry-header .entry-title {
+     line-height: 2.181818182;
+     border-bottom: 1px solid #ededed;
+ }
+二级、三级标题样式
+/*标题样式*/
+.entry-content h2, .comment-content h2, .mu_register h2 {
+    font-weight: bold;
+    background-color: #f6f6f6;
+    margin: 20px 0;
+    border-bottom: 0px solid #21759b;
+    padding: 5px 12px;
+    border-left: 5px solid #21759b;
+}
+
+.entry-content h3, .comment-content h3, .mu_register h3 {
+    font-weight: bold;
+    background-color: #f6f6f6;
+    margin: 20px 0;
+    border-bottom: 0px solid #53a7dc;
+    padding: 0px 12px;
+    border-left: 5px solid #53a7dc;
+}
+归档页面样式修改
+#archives {
+    position: relative;
+}
+
+#archives h3 {
+    margin-bottom: 0;
+    padding: 0 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+    letter-spacing: 5px
+}
+
+#archives ul {
+    list-style: none;
+    margin: 0 30px;
+    padding: 10px 0 20px 10px;
+    border-left: 1px solid #ddd;
+    font-size: 18px
+}
+
+#archives li {
+    list-style: none;
+    position: relative;
+    line-height: 30px
+}
+
+#archives ul ul {
+    margin: -15px 0 0 0;
+    padding: 15px 0 10px 0
+}
+
+#archives ul ul li {
+    padding: 0 0 0 15px
+}
+
+#archives ul ul li:before {
+    content: &#34;&#34;;
+    position: absolute;
+    left: 0;
+    top: 10px;
+    border-top: 5px dashed transparent;
+    border-bottom: 5px dashed transparent;
+    border-left: 10px solid #ddd
+}
+
+#al_expand_collapse {
+    display: inline-block;
+    line-height: 24px;
+    padding: 0 10px;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: none;
+    background: linear-gradient(to bottom, #4caf50 20%, #388e3c 80%) repeat scroll 0 0 transparent;/*这个颜色和下面的我都做了一些修改*/
+    background: -webkit-linear-gradient(to bottom, #4caf50 20%, #388e3c 80%) repeat scroll 0 0 transparent
+}
+
+#al_expand_collapse:hover {
+    background: linear-gradient(to bottom, #388e3c 20%, #4caf50 80%) repeat scroll 0 0 transparent;
+    background: -webkit-linear-gradient(to bottom, #388e3c 20%, #4caf50 80%) repeat scroll 0 0 transparent
+}
+
+#archives em {
+    padding-left: 5px;
+    font-size: 12px;
+    color: #777
+}
+
+#archives .al_mon {
+    padding-left: 5px;
+    font-size: 14px;
+    font-weight: 700
+}
+
+#archives .al_mon:after {
+    content: &#34;&#34;;
+    position: absolute;
+    left: -10px;
+    top: 15px;
+    width: 10px;
+    height: 1px;
+    background: #ddd
+}
+
+#archives .al_mon em {
+    font-size: 12px;
+    font-weight: 400
+}
+添加面包屑导航
+在 functions.php 中加入下列代码：" />
+<meta name="keywords" content="twenty-twelve,wordpress,主题,博客,折腾," />
+
+<link rel="canonical" href="http://localhost:1313/about-my-blog-2.html/">
+
+
+<meta property="og:url" content="http://localhost:1313/about-my-blog-2.html/">
+	<meta property="og:site_name" content="印记博客">
+	<meta property="og:title" content="关于我的博客2.0">
+	<meta property="og:description" content="终于动手写《关于我的博客2.0》。
+在两年前写了一篇介绍自己博客的文章《[[about-my-blog|关于我的博客]]》，两年时间过去了，和当时相比，只能说大同小异。正好前段时间有网友留言，看到我对于 Twenty Twelve 主题的修改，问能否写个教程。我也是从网上各种教程文章扒的代码，便找时间记录下来吧。
+框架 依然使用 WordPress 和 Twenty Twelve 主题，但是主题经过了比较大的修改，后面会详细说明。
+运行在 CloudCone 提供的美国 VPS 上，具体情况可以看之前的文章。
+域名是昨天在 NameSilo 注册的，由于我没有信用卡，无法使用 Google Domains 进行注册。Google Domains 土耳其区注册 .net 域名每年仅需人民币25元左右。亏大发了。
+插件 目前加上强化拓展，一共只使用了3个插件。
+分别是 WP Githuber MD（用于 Markdown 写作）、WP-Douban（用于生成豆瓣条目信息） 和 object-cache.php（用于外部对象缓存）。
+其他能用代码集成到 function.php 文件中的都用代码替代插件了。
+主题 一开始我是基于 WordPress 官方默认主题 Twenty Twelve 进行修改的，但后面看到有一款修改程度更好的成品——Twenty Twelve 木头人修改精简版，就在它的基础上继续修改。
+所以有想法的朋友可以直接使用上面提到的成品主题，或者继续看我的内容。
+我修改的最终版本：2012-huhexian
+首页右上角图片 先在 header.php 加入下列代码：
+&lt;a href=&#34;https://yinji.org/&#34; title=&#34;回到首页&#34;&gt;&lt;img src=&#34;https://dogefs.s3.ladydaily.com/lucy/storage/1680832936501.png&#34; alt=&#34;胡鹤仙&#34;width=&#34;70&#34; height=&#34;70&#34;/&gt;&lt;/a&gt; 具体位置大概在 &lt;hgroup&gt;下方，上述内容请替换为自己的网址。
+然后在 style.css 中加入样式代码：
+/*顶部图片*/ .site-header hgroup{position: relative;} .site-header hgroup img{position: absolute;right: 0;} @media (max-width: 650px) { .site-header hgroup img{ display:none} } 标签云 /* 标签云样式修改 */ .tagcloud { overflow:hidden; line-height:20px; } .tagcloud a { font-size: 13px!important; padding: 3px; margin-right: 3px; float: left; display: block; } .tagcloud a:not(.dots):hover { background-color: #336699; color: #FFFFFF; border:0; } 引用 /*引用*/ .entry-content blockquote, .comment-content blockquote { background-image: url(data:image/svg&#43;xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI&#43;PHN2ZyB0PSIxNTg1NTQxNjE3MDQ5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjM3MTgiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI&#43;PC9zdHlsZT48L2RlZnM&#43;PHBhdGggZD0iTTQwNi41NTcyNTcgMTE4LjUzNTMxNHYxMzcuOTAzNTQzYy04Ny4xNDI0IDE5Ljk1MzM3MS0xMjguODkyMzQzIDc0LjQ3NDA1Ny0xMzQuMzYzNDI4IDE3Ni4wMTA5NzJoMTM0LjM2MzQyOHYzMjYuNzQzNzcxSDExNC4yOTMwMjlWNDkwLjUxMDYyOWMwLTE5NC4xNzk2NTcgODMuNDk5ODg2LTM0My4wMTA3NDMgMjkyLjI2NDIyOC0zNzEuOTc1MzE1bTAtNTguNTE0Mjg1Yy0yLjY3NzAyOSAwLTUuMzU0MDU3IDAuMTkwMTcxLTguMDQ1NzE0IDAuNTU1ODg1QzE3Ny41MDMwODYgOTEuMjM4NCA1NS43Nzg3NDMgMjQzLjkzMTQyOSA1NS43Nzg3NDMgNDkwLjUxMDYyOXYyNjguNjY4MzQyYTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2IDU4LjUxNDI4NmgyOTIuMjY0MjI4YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2LTU4LjUxNDI4NlY0MzIuNDQ5ODI5YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAtNTguNTE0Mjg2LTU4LjUxNDI4NmgtNjQuNTI2NjI4YzE0LjQ1MzAyOS0zNy42MTAwNTcgNDEuNDI4MTE0LTUyLjE4MDExNCA3Ny41ODk5NDItNjAuNDU5ODg2YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNDUuNDUwOTcyLTU3LjAzNjhWMTE4LjUzNTMxNGE1OC41MTQyODYgNTguNTE0Mjg2IDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODV6TTkwOS43MDY5NzEgMjY0LjgyMTAyOXYxMzcuOTAzNTQyYy04Ny4xMTMxNDMgMTkuOTUzMzcxLTEyOC44NjMwODYgNzQuNDc0MDU3LTEzNC4zMzQxNzEgMTc2LjAxMDk3MmgxMzQuMzM0MTcxdjMyNi43NDM3NzFINjE3LjQ0Mjc0M1Y2MzYuNzk2MzQzYzAtMTk0LjE3OTY1NyA4My41MTQ1MTQtMzQzLjAxMDc0MyAyOTIuMjY0MjI4LTM3MS45NzUzMTRtMC01OC41MTQyODZjLTIuNjc3MDI5IDAtNS4zNTQwNTcgMC4xOTAxNzEtOC4wNDU3MTQgMC41NTU4ODYtMjIxLjAwODQ1NyAzMC42NzYxMTQtMzQyLjczMjggMTgzLjM1NDUxNC0zNDIuNzMyOCA0MjkuOTQ4MzQydjI2OC42NjgzNDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYgNTguNTE0Mjg2aDI5Mi4yNjQyMjhhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYtNTguNTE0Mjg2VjU3OC43MzU1NDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMC01OC41MTQyODYtNTguNTE0Mjg2aC02NC40OTczNzFjMTQuNDUzMDI5LTM3LjYxMDA1NyA0MS40MTM0ODYtNTIuMTgwMTE0IDc3LjU3NTMxNC02MC40NTk4ODZhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA0NS40MzYzNDMtNTcuMDM2OHYtMTM3LjkwMzU0MmE1OC41NDM1NDMgNTguNTQzNTQzIDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODZ6IiBmaWxsPSIjY2YzZjc0IiBwLWlkPSIzNzE5Ij48L3BhdGg&#43;PHBhdGggZD0iTTM1OS42MTQxNzEgNjY2LjU1MDg1N2ExNC42Mjg1NzEgMTQuNjI4NTcxIDAgMCAxLTE0LjYyODU3MS0xNC42Mjg1NzFWNDkxLjI3MTMxNGgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1OHYxNzUuNTQyODU3YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA4NDIuMDkzNzE0YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MXYtMjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMjkuMjU3MTQzIDB2MjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA3NTQuMzIyMjg2YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MnYtMTAyLjEzNjY4NWgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1N3YxMTcuMDI4NTcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MnoiIGZpbGw9IiNjZjNmNzQiIHAtaWQ9IjM3MjAiPjwvcGF0aD48L3N2Zz4=); background-repeat: no-repeat; color: rgba(0,0,0,.7); margin-top: 0; margin-bottom: 15px; margin-left: 0; margin-right: 0; padding: 20px 20px 20px 60px; position: relative;} 头像转动 /*头像转动*/ .avatar{-webkit-transition:0.4s;-webkit-transition:-webkit-transform 0.4s ease-out;transition:transform 0.4s ease-out;-moz-transition:-moz-transform 0.4s ease-out;} .avatar:hover{transform:rotateZ(360deg);-webkit-transform:rotateZ(360deg);-moz-transform:rotateZ(360deg);} 调整网页宽度 /* 网页宽度 */ .site { margin: 0 auto; max-width: 960px; overflow: hidden; } html { margin-top: 32px !important; } 小工具及首页文章标题下划线 /* 小工具标题字体样式以及下横线 */ .widget-title { font-size: 18px; font-weight: normal; color: #21759b; border-bottom: 1px solid #ededed; } /* 首页文章标题行高以及下横线 */ .entry-header .entry-title { line-height: 2.181818182; border-bottom: 1px solid #ededed; } 二级、三级标题样式 /*标题样式*/ .entry-content h2, .comment-content h2, .mu_register h2 { font-weight: bold; background-color: #f6f6f6; margin: 20px 0; border-bottom: 0px solid #21759b; padding: 5px 12px; border-left: 5px solid #21759b; } .entry-content h3, .comment-content h3, .mu_register h3 { font-weight: bold; background-color: #f6f6f6; margin: 20px 0; border-bottom: 0px solid #53a7dc; padding: 0px 12px; border-left: 5px solid #53a7dc; } 归档页面样式修改 #archives { position: relative; } #archives h3 { margin-bottom: 0; padding: 0 15px; border-bottom: 1px solid #ddd; font-size: 20px; font-weight: 400; text-align: center; letter-spacing: 5px } #archives ul { list-style: none; margin: 0 30px; padding: 10px 0 20px 10px; border-left: 1px solid #ddd; font-size: 18px } #archives li { list-style: none; position: relative; line-height: 30px } #archives ul ul { margin: -15px 0 0 0; padding: 15px 0 10px 0 } #archives ul ul li { padding: 0 0 0 15px } #archives ul ul li:before { content: &#34;&#34;; position: absolute; left: 0; top: 10px; border-top: 5px dashed transparent; border-bottom: 5px dashed transparent; border-left: 10px solid #ddd } #al_expand_collapse { display: inline-block; line-height: 24px; padding: 0 10px; color: #fff; font-size: 12px; text-decoration: none; background: linear-gradient(to bottom, #4caf50 20%, #388e3c 80%) repeat scroll 0 0 transparent;/*这个颜色和下面的我都做了一些修改*/ background: -webkit-linear-gradient(to bottom, #4caf50 20%, #388e3c 80%) repeat scroll 0 0 transparent } #al_expand_collapse:hover { background: linear-gradient(to bottom, #388e3c 20%, #4caf50 80%) repeat scroll 0 0 transparent; background: -webkit-linear-gradient(to bottom, #388e3c 20%, #4caf50 80%) repeat scroll 0 0 transparent } #archives em { padding-left: 5px; font-size: 12px; color: #777 } #archives .al_mon { padding-left: 5px; font-size: 14px; font-weight: 700 } #archives .al_mon:after { content: &#34;&#34;; position: absolute; left: -10px; top: 15px; width: 10px; height: 1px; background: #ddd } #archives .al_mon em { font-size: 12px; font-weight: 400 } 添加面包屑导航 在 functions.php 中加入下列代码：">
+	<meta property="og:locale" content="zh_cn">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="blog">
+		<meta property="article:published_time" content="2023-05-07T00:00:00+00:00">
+		<meta property="article:modified_time" content="2023-05-07T00:00:00+00:00">
+		<meta property="article:tag" content="Twenty-Twelve">
+		<meta property="article:tag" content="Wordpress">
+		<meta property="article:tag" content="主题">
+		<meta property="article:tag" content="博客">
+		<meta property="article:tag" content="折腾">
+
+
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="关于我的博客2.0">
+	<meta name="twitter:description" content="终于动手写《关于我的博客2.0》。
+在两年前写了一篇介绍自己博客的文章《[[about-my-blog|关于我的博客]]》，两年时间过去了，和当时相比，只能说大同小异。正好前段时间有网友留言，看到我对于 Twenty Twelve 主题的修改，问能否写个教程。我也是从网上各种教程文章扒的代码，便找时间记录下来吧。
+框架 依然使用 WordPress 和 Twenty Twelve 主题，但是主题经过了比较大的修改，后面会详细说明。
+运行在 CloudCone 提供的美国 VPS 上，具体情况可以看之前的文章。
+域名是昨天在 NameSilo 注册的，由于我没有信用卡，无法使用 Google Domains 进行注册。Google Domains 土耳其区注册 .net 域名每年仅需人民币25元左右。亏大发了。
+插件 目前加上强化拓展，一共只使用了3个插件。
+分别是 WP Githuber MD（用于 Markdown 写作）、WP-Douban（用于生成豆瓣条目信息） 和 object-cache.php（用于外部对象缓存）。
+其他能用代码集成到 function.php 文件中的都用代码替代插件了。
+主题 一开始我是基于 WordPress 官方默认主题 Twenty Twelve 进行修改的，但后面看到有一款修改程度更好的成品——Twenty Twelve 木头人修改精简版，就在它的基础上继续修改。
+所以有想法的朋友可以直接使用上面提到的成品主题，或者继续看我的内容。
+我修改的最终版本：2012-huhexian
+首页右上角图片 先在 header.php 加入下列代码：
+&lt;a href=&#34;https://yinji.org/&#34; title=&#34;回到首页&#34;&gt;&lt;img src=&#34;https://dogefs.s3.ladydaily.com/lucy/storage/1680832936501.png&#34; alt=&#34;胡鹤仙&#34;width=&#34;70&#34; height=&#34;70&#34;/&gt;&lt;/a&gt; 具体位置大概在 &lt;hgroup&gt;下方，上述内容请替换为自己的网址。
+然后在 style.css 中加入样式代码：
+/*顶部图片*/ .site-header hgroup{position: relative;} .site-header hgroup img{position: absolute;right: 0;} @media (max-width: 650px) { .site-header hgroup img{ display:none} } 标签云 /* 标签云样式修改 */ .tagcloud { overflow:hidden; line-height:20px; } .tagcloud a { font-size: 13px!important; padding: 3px; margin-right: 3px; float: left; display: block; } .tagcloud a:not(.dots):hover { background-color: #336699; color: #FFFFFF; border:0; } 引用 /*引用*/ .entry-content blockquote, .comment-content blockquote { background-image: url(data:image/svg&#43;xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI&#43;PHN2ZyB0PSIxNTg1NTQxNjE3MDQ5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjM3MTgiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI&#43;PC9zdHlsZT48L2RlZnM&#43;PHBhdGggZD0iTTQwNi41NTcyNTcgMTE4LjUzNTMxNHYxMzcuOTAzNTQzYy04Ny4xNDI0IDE5Ljk1MzM3MS0xMjguODkyMzQzIDc0LjQ3NDA1Ny0xMzQuMzYzNDI4IDE3Ni4wMTA5NzJoMTM0LjM2MzQyOHYzMjYuNzQzNzcxSDExNC4yOTMwMjlWNDkwLjUxMDYyOWMwLTE5NC4xNzk2NTcgODMuNDk5ODg2LTM0My4wMTA3NDMgMjkyLjI2NDIyOC0zNzEuOTc1MzE1bTAtNTguNTE0Mjg1Yy0yLjY3NzAyOSAwLTUuMzU0MDU3IDAuMTkwMTcxLTguMDQ1NzE0IDAuNTU1ODg1QzE3Ny41MDMwODYgOTEuMjM4NCA1NS43Nzg3NDMgMjQzLjkzMTQyOSA1NS43Nzg3NDMgNDkwLjUxMDYyOXYyNjguNjY4MzQyYTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2IDU4LjUxNDI4NmgyOTIuMjY0MjI4YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2LTU4LjUxNDI4NlY0MzIuNDQ5ODI5YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAtNTguNTE0Mjg2LTU4LjUxNDI4NmgtNjQuNTI2NjI4YzE0LjQ1MzAyOS0zNy42MTAwNTcgNDEuNDI4MTE0LTUyLjE4MDExNCA3Ny41ODk5NDItNjAuNDU5ODg2YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNDUuNDUwOTcyLTU3LjAzNjhWMTE4LjUzNTMxNGE1OC41MTQyODYgNTguNTE0Mjg2IDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODV6TTkwOS43MDY5NzEgMjY0LjgyMTAyOXYxMzcuOTAzNTQyYy04Ny4xMTMxNDMgMTkuOTUzMzcxLTEyOC44NjMwODYgNzQuNDc0MDU3LTEzNC4zMzQxNzEgMTc2LjAxMDk3MmgxMzQuMzM0MTcxdjMyNi43NDM3NzFINjE3LjQ0Mjc0M1Y2MzYuNzk2MzQzYzAtMTk0LjE3OTY1NyA4My41MTQ1MTQtMzQzLjAxMDc0MyAyOTIuMjY0MjI4LTM3MS45NzUzMTRtMC01OC41MTQyODZjLTIuNjc3MDI5IDAtNS4zNTQwNTcgMC4xOTAxNzEtOC4wNDU3MTQgMC41NTU4ODYtMjIxLjAwODQ1NyAzMC42NzYxMTQtMzQyLjczMjggMTgzLjM1NDUxNC0zNDIuNzMyOCA0MjkuOTQ4MzQydjI2OC42NjgzNDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYgNTguNTE0Mjg2aDI5Mi4yNjQyMjhhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYtNTguNTE0Mjg2VjU3OC43MzU1NDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMC01OC41MTQyODYtNTguNTE0Mjg2aC02NC40OTczNzFjMTQuNDUzMDI5LTM3LjYxMDA1NyA0MS40MTM0ODYtNTIuMTgwMTE0IDc3LjU3NTMxNC02MC40NTk4ODZhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA0NS40MzYzNDMtNTcuMDM2OHYtMTM3LjkwMzU0MmE1OC41NDM1NDMgNTguNTQzNTQzIDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODZ6IiBmaWxsPSIjY2YzZjc0IiBwLWlkPSIzNzE5Ij48L3BhdGg&#43;PHBhdGggZD0iTTM1OS42MTQxNzEgNjY2LjU1MDg1N2ExNC42Mjg1NzEgMTQuNjI4NTcxIDAgMCAxLTE0LjYyODU3MS0xNC42Mjg1NzFWNDkxLjI3MTMxNGgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1OHYxNzUuNTQyODU3YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA4NDIuMDkzNzE0YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MXYtMjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMjkuMjU3MTQzIDB2MjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA3NTQuMzIyMjg2YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MnYtMTAyLjEzNjY4NWgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1N3YxMTcuMDI4NTcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MnoiIGZpbGw9IiNjZjNmNzQiIHAtaWQ9IjM3MjAiPjwvcGF0aD48L3N2Zz4=); background-repeat: no-repeat; color: rgba(0,0,0,.7); margin-top: 0; margin-bottom: 15px; margin-left: 0; margin-right: 0; padding: 20px 20px 20px 60px; position: relative;} 头像转动 /*头像转动*/ .avatar{-webkit-transition:0.4s;-webkit-transition:-webkit-transform 0.4s ease-out;transition:transform 0.4s ease-out;-moz-transition:-moz-transform 0.4s ease-out;} .avatar:hover{transform:rotateZ(360deg);-webkit-transform:rotateZ(360deg);-moz-transform:rotateZ(360deg);} 调整网页宽度 /* 网页宽度 */ .site { margin: 0 auto; max-width: 960px; overflow: hidden; } html { margin-top: 32px !important; } 小工具及首页文章标题下划线 /* 小工具标题字体样式以及下横线 */ .widget-title { font-size: 18px; font-weight: normal; color: #21759b; border-bottom: 1px solid #ededed; } /* 首页文章标题行高以及下横线 */ .entry-header .entry-title { line-height: 2.181818182; border-bottom: 1px solid #ededed; } 二级、三级标题样式 /*标题样式*/ .entry-content h2, .comment-content h2, .mu_register h2 { font-weight: bold; background-color: #f6f6f6; margin: 20px 0; border-bottom: 0px solid #21759b; padding: 5px 12px; border-left: 5px solid #21759b; } .entry-content h3, .comment-content h3, .mu_register h3 { font-weight: bold; background-color: #f6f6f6; margin: 20px 0; border-bottom: 0px solid #53a7dc; padding: 0px 12px; border-left: 5px solid #53a7dc; } 归档页面样式修改 #archives { position: relative; } #archives h3 { margin-bottom: 0; padding: 0 15px; border-bottom: 1px solid #ddd; font-size: 20px; font-weight: 400; text-align: center; letter-spacing: 5px } #archives ul { list-style: none; margin: 0 30px; padding: 10px 0 20px 10px; border-left: 1px solid #ddd; font-size: 18px } #archives li { list-style: none; position: relative; line-height: 30px } #archives ul ul { margin: -15px 0 0 0; padding: 15px 0 10px 0 } #archives ul ul li { padding: 0 0 0 15px } #archives ul ul li:before { content: &#34;&#34;; position: absolute; left: 0; top: 10px; border-top: 5px dashed transparent; border-bottom: 5px dashed transparent; border-left: 10px solid #ddd } #al_expand_collapse { display: inline-block; line-height: 24px; padding: 0 10px; color: #fff; font-size: 12px; text-decoration: none; background: linear-gradient(to bottom, #4caf50 20%, #388e3c 80%) repeat scroll 0 0 transparent;/*这个颜色和下面的我都做了一些修改*/ background: -webkit-linear-gradient(to bottom, #4caf50 20%, #388e3c 80%) repeat scroll 0 0 transparent } #al_expand_collapse:hover { background: linear-gradient(to bottom, #388e3c 20%, #4caf50 80%) repeat scroll 0 0 transparent; background: -webkit-linear-gradient(to bottom, #388e3c 20%, #4caf50 80%) repeat scroll 0 0 transparent } #archives em { padding-left: 5px; font-size: 12px; color: #777 } #archives .al_mon { padding-left: 5px; font-size: 14px; font-weight: 700 } #archives .al_mon:after { content: &#34;&#34;; position: absolute; left: -10px; top: 15px; width: 10px; height: 1px; background: #ddd } #archives .al_mon em { font-size: 12px; font-weight: 400 } 添加面包屑导航 在 functions.php 中加入下列代码：">
+
+
+
+
+	<meta itemprop="name" content="关于我的博客2.0">
+	<meta itemprop="description" content="终于动手写《关于我的博客2.0》。
+在两年前写了一篇介绍自己博客的文章《[[about-my-blog|关于我的博客]]》，两年时间过去了，和当时相比，只能说大同小异。正好前段时间有网友留言，看到我对于 Twenty Twelve 主题的修改，问能否写个教程。我也是从网上各种教程文章扒的代码，便找时间记录下来吧。
+框架 依然使用 WordPress 和 Twenty Twelve 主题，但是主题经过了比较大的修改，后面会详细说明。
+运行在 CloudCone 提供的美国 VPS 上，具体情况可以看之前的文章。
+域名是昨天在 NameSilo 注册的，由于我没有信用卡，无法使用 Google Domains 进行注册。Google Domains 土耳其区注册 .net 域名每年仅需人民币25元左右。亏大发了。
+插件 目前加上强化拓展，一共只使用了3个插件。
+分别是 WP Githuber MD（用于 Markdown 写作）、WP-Douban（用于生成豆瓣条目信息） 和 object-cache.php（用于外部对象缓存）。
+其他能用代码集成到 function.php 文件中的都用代码替代插件了。
+主题 一开始我是基于 WordPress 官方默认主题 Twenty Twelve 进行修改的，但后面看到有一款修改程度更好的成品——Twenty Twelve 木头人修改精简版，就在它的基础上继续修改。
+所以有想法的朋友可以直接使用上面提到的成品主题，或者继续看我的内容。
+我修改的最终版本：2012-huhexian
+首页右上角图片 先在 header.php 加入下列代码：
+&lt;a href=&#34;https://yinji.org/&#34; title=&#34;回到首页&#34;&gt;&lt;img src=&#34;https://dogefs.s3.ladydaily.com/lucy/storage/1680832936501.png&#34; alt=&#34;胡鹤仙&#34;width=&#34;70&#34; height=&#34;70&#34;/&gt;&lt;/a&gt; 具体位置大概在 &lt;hgroup&gt;下方，上述内容请替换为自己的网址。
+然后在 style.css 中加入样式代码：
+/*顶部图片*/ .site-header hgroup{position: relative;} .site-header hgroup img{position: absolute;right: 0;} @media (max-width: 650px) { .site-header hgroup img{ display:none} } 标签云 /* 标签云样式修改 */ .tagcloud { overflow:hidden; line-height:20px; } .tagcloud a { font-size: 13px!important; padding: 3px; margin-right: 3px; float: left; display: block; } .tagcloud a:not(.dots):hover { background-color: #336699; color: #FFFFFF; border:0; } 引用 /*引用*/ .entry-content blockquote, .comment-content blockquote { background-image: url(data:image/svg&#43;xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI&#43;PHN2ZyB0PSIxNTg1NTQxNjE3MDQ5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjM3MTgiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI&#43;PC9zdHlsZT48L2RlZnM&#43;PHBhdGggZD0iTTQwNi41NTcyNTcgMTE4LjUzNTMxNHYxMzcuOTAzNTQzYy04Ny4xNDI0IDE5Ljk1MzM3MS0xMjguODkyMzQzIDc0LjQ3NDA1Ny0xMzQuMzYzNDI4IDE3Ni4wMTA5NzJoMTM0LjM2MzQyOHYzMjYuNzQzNzcxSDExNC4yOTMwMjlWNDkwLjUxMDYyOWMwLTE5NC4xNzk2NTcgODMuNDk5ODg2LTM0My4wMTA3NDMgMjkyLjI2NDIyOC0zNzEuOTc1MzE1bTAtNTguNTE0Mjg1Yy0yLjY3NzAyOSAwLTUuMzU0MDU3IDAuMTkwMTcxLTguMDQ1NzE0IDAuNTU1ODg1QzE3Ny41MDMwODYgOTEuMjM4NCA1NS43Nzg3NDMgMjQzLjkzMTQyOSA1NS43Nzg3NDMgNDkwLjUxMDYyOXYyNjguNjY4MzQyYTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2IDU4LjUxNDI4NmgyOTIuMjY0MjI4YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2LTU4LjUxNDI4NlY0MzIuNDQ5ODI5YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAtNTguNTE0Mjg2LTU4LjUxNDI4NmgtNjQuNTI2NjI4YzE0LjQ1MzAyOS0zNy42MTAwNTcgNDEuNDI4MTE0LTUyLjE4MDExNCA3Ny41ODk5NDItNjAuNDU5ODg2YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNDUuNDUwOTcyLTU3LjAzNjhWMTE4LjUzNTMxNGE1OC41MTQyODYgNTguNTE0Mjg2IDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODV6TTkwOS43MDY5NzEgMjY0LjgyMTAyOXYxMzcuOTAzNTQyYy04Ny4xMTMxNDMgMTkuOTUzMzcxLTEyOC44NjMwODYgNzQuNDc0MDU3LTEzNC4zMzQxNzEgMTc2LjAxMDk3MmgxMzQuMzM0MTcxdjMyNi43NDM3NzFINjE3LjQ0Mjc0M1Y2MzYuNzk2MzQzYzAtMTk0LjE3OTY1NyA4My41MTQ1MTQtMzQzLjAxMDc0MyAyOTIuMjY0MjI4LTM3MS45NzUzMTRtMC01OC41MTQyODZjLTIuNjc3MDI5IDAtNS4zNTQwNTcgMC4xOTAxNzEtOC4wNDU3MTQgMC41NTU4ODYtMjIxLjAwODQ1NyAzMC42NzYxMTQtMzQyLjczMjggMTgzLjM1NDUxNC0zNDIuNzMyOCA0MjkuOTQ4MzQydjI2OC42NjgzNDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYgNTguNTE0Mjg2aDI5Mi4yNjQyMjhhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYtNTguNTE0Mjg2VjU3OC43MzU1NDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMC01OC41MTQyODYtNTguNTE0Mjg2aC02NC40OTczNzFjMTQuNDUzMDI5LTM3LjYxMDA1NyA0MS40MTM0ODYtNTIuMTgwMTE0IDc3LjU3NTMxNC02MC40NTk4ODZhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA0NS40MzYzNDMtNTcuMDM2OHYtMTM3LjkwMzU0MmE1OC41NDM1NDMgNTguNTQzNTQzIDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODZ6IiBmaWxsPSIjY2YzZjc0IiBwLWlkPSIzNzE5Ij48L3BhdGg&#43;PHBhdGggZD0iTTM1OS42MTQxNzEgNjY2LjU1MDg1N2ExNC42Mjg1NzEgMTQuNjI4NTcxIDAgMCAxLTE0LjYyODU3MS0xNC42Mjg1NzFWNDkxLjI3MTMxNGgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1OHYxNzUuNTQyODU3YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA4NDIuMDkzNzE0YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MXYtMjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMjkuMjU3MTQzIDB2MjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA3NTQuMzIyMjg2YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MnYtMTAyLjEzNjY4NWgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1N3YxMTcuMDI4NTcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MnoiIGZpbGw9IiNjZjNmNzQiIHAtaWQ9IjM3MjAiPjwvcGF0aD48L3N2Zz4=); background-repeat: no-repeat; color: rgba(0,0,0,.7); margin-top: 0; margin-bottom: 15px; margin-left: 0; margin-right: 0; padding: 20px 20px 20px 60px; position: relative;} 头像转动 /*头像转动*/ .avatar{-webkit-transition:0.4s;-webkit-transition:-webkit-transform 0.4s ease-out;transition:transform 0.4s ease-out;-moz-transition:-moz-transform 0.4s ease-out;} .avatar:hover{transform:rotateZ(360deg);-webkit-transform:rotateZ(360deg);-moz-transform:rotateZ(360deg);} 调整网页宽度 /* 网页宽度 */ .site { margin: 0 auto; max-width: 960px; overflow: hidden; } html { margin-top: 32px !important; } 小工具及首页文章标题下划线 /* 小工具标题字体样式以及下横线 */ .widget-title { font-size: 18px; font-weight: normal; color: #21759b; border-bottom: 1px solid #ededed; } /* 首页文章标题行高以及下横线 */ .entry-header .entry-title { line-height: 2.181818182; border-bottom: 1px solid #ededed; } 二级、三级标题样式 /*标题样式*/ .entry-content h2, .comment-content h2, .mu_register h2 { font-weight: bold; background-color: #f6f6f6; margin: 20px 0; border-bottom: 0px solid #21759b; padding: 5px 12px; border-left: 5px solid #21759b; } .entry-content h3, .comment-content h3, .mu_register h3 { font-weight: bold; background-color: #f6f6f6; margin: 20px 0; border-bottom: 0px solid #53a7dc; padding: 0px 12px; border-left: 5px solid #53a7dc; } 归档页面样式修改 #archives { position: relative; } #archives h3 { margin-bottom: 0; padding: 0 15px; border-bottom: 1px solid #ddd; font-size: 20px; font-weight: 400; text-align: center; letter-spacing: 5px } #archives ul { list-style: none; margin: 0 30px; padding: 10px 0 20px 10px; border-left: 1px solid #ddd; font-size: 18px } #archives li { list-style: none; position: relative; line-height: 30px } #archives ul ul { margin: -15px 0 0 0; padding: 15px 0 10px 0 } #archives ul ul li { padding: 0 0 0 15px } #archives ul ul li:before { content: &#34;&#34;; position: absolute; left: 0; top: 10px; border-top: 5px dashed transparent; border-bottom: 5px dashed transparent; border-left: 10px solid #ddd } #al_expand_collapse { display: inline-block; line-height: 24px; padding: 0 10px; color: #fff; font-size: 12px; text-decoration: none; background: linear-gradient(to bottom, #4caf50 20%, #388e3c 80%) repeat scroll 0 0 transparent;/*这个颜色和下面的我都做了一些修改*/ background: -webkit-linear-gradient(to bottom, #4caf50 20%, #388e3c 80%) repeat scroll 0 0 transparent } #al_expand_collapse:hover { background: linear-gradient(to bottom, #388e3c 20%, #4caf50 80%) repeat scroll 0 0 transparent; background: -webkit-linear-gradient(to bottom, #388e3c 20%, #4caf50 80%) repeat scroll 0 0 transparent } #archives em { padding-left: 5px; font-size: 12px; color: #777 } #archives .al_mon { padding-left: 5px; font-size: 14px; font-weight: 700 } #archives .al_mon:after { content: &#34;&#34;; position: absolute; left: -10px; top: 15px; width: 10px; height: 1px; background: #ddd } #archives .al_mon em { font-size: 12px; font-weight: 400 } 添加面包屑导航 在 functions.php 中加入下列代码：">
+	<meta itemprop="datePublished" content="2023-05-07T00:00:00+00:00">
+	<meta itemprop="dateModified" content="2023-05-07T00:00:00+00:00">
+	<meta itemprop="wordCount" content="2076">
+	<meta itemprop="keywords" content="Twenty-Twelve,Wordpress,主题,博客,折腾">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+     
+    :root {
+        --width-max: 720px;
+        --font-primary: Verdana, sans-serif;
+        --font-secondary: monospace;
+        --font-size-primary: 1em;
+        --font-size-secondary: 0.8em;
+        --bg-color-primary: #fdfdfd;
+        --bg-color-secondary: #f2f4f7;
+        --text-color-primary: #1a1a1a;
+        --text-color-secondary: #444;
+        --text-color-tertiary: #8c8c8c;
+        --link-color: #0066cc;
+        --link-visited-color: #551a8b;
+        --border-color: #d0d7de;
+        --upvoted-color: #fa8072;
+    }
+
+    @media (prefers-color-scheme: dark) {
+         
+        :root {
+            --bg-color-primary: #121212;
+            --bg-color-secondary: #1c1f24;
+            --text-color-primary: #e5e5e5;
+            --text-color-secondary: #b3b3b7;
+            --text-color-tertiary: #a0a0a0;
+            --link-color: #6da6ff;
+            --link-visited-color: #b388ff;
+            --border-color: #30363d;
+            --upvoted-color: #ff6b6b;
+        }
+    }
+
+    body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-primary);
+        margin: auto;
+        padding: 20px;
+        max-width: var(--width-max);
+        text-align: left;
+        background-color: var(--bg-color-primary);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+        color: var(--text-color-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 16px 0;
+    }
+
+    a {
+        color: var(--link-color);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .title {
+        text-decoration: none;
+        border: 0;
+    }
+
+    .title:hover {
+        text-decoration: none;
+    }
+
+    .title span {
+        font-weight: 400;
+    }
+
+    nav a {
+        margin-right: 8px;
+    }
+
+    textarea {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    content {
+        line-height: 1.6;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+    }
+
+    th,
+    td {
+        border: 1px solid var(--border-color);
+        padding: 4px;
+    }
+
+    th {
+        background-color: var(--bg-color-secondary);
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px dashed;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        content-visibility: auto;
+    }
+
+    img[src*="#minipic"] {
+        max-width: 50%;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .image-caption figcaption {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.8em;
+        margin-top: 0.6em;
+        color: var(--text-color-secondary);
+    }
+
+    .image-caption {
+        margin: auto;
+    }
+
+    i {
+        font-style: normal;
+    }
+
+    time {
+        font-family: var(--font-secondary);
+        font-size: 15px;
+    }
+
+    code {
+        font-family: var(--font-secondary);
+        background-color: var(--bg-color-secondary);
+        padding: 2px;
+        border-radius: 4px;
+    }
+
+    pre code {
+        display: block;
+        padding: 16px;
+        white-space: pre-wrap;
+        overflow-x: auto;
+    }
+
+    div.highlight pre {
+        border-radius: 4px;
+    }
+
+    div.highlight code {
+        background-color: var(--bg-color-secondary);
+    }
+
+    blockquote {
+        border-left: 4px solid var(--border-color);
+        color: var(--text-color-secondary);
+        margin: 0;
+        padding-left: 8px;
+        font-style: normal;
+    }
+
+    blockquote p {
+        margin: 0;
+    }
+
+    footer {
+        padding: 25px 0;
+        text-align: center;
+        font-size: var(--font-size-secondary);
+    }
+
+    ul li:has(input) {
+        list-style-type: none;
+        margin-left: -25.5px;
+    }
+
+     
+    ul.blog-posts {
+        list-style-type: none;
+        padding: unset;
+    }
+
+    ul.blog-posts li {
+        display: flex;
+    }
+
+    ul.blog-posts li span {
+        flex: 0 0 130px;
+    }
+
+    ul.blog-posts li span.grouped {
+        flex: 0 0 80px;
+    }
+
+    ul.blog-posts li a:visited {
+        color: var(--link-visited-color);
+    }
+
+     
+    div.toc {
+        position: fixed;  
+        top: 50%;  
+        left: calc(
+            (100vw + var(--width-max)) / 2
+        );  
+        transform: translateY(-50%);  
+        width: calc((90vw - var(--width-max)) / 2);  
+        max-height: 80vh;  
+        overflow-y: auto;  
+        border: none;  
+        padding: 0;  
+        margin: 0;  
+        z-index: 99;  
+
+         
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+
+    div.toc::-webkit-scrollbar {
+         
+        display: none;  
+    }
+
+    .toc-nav {
+         
+        padding: 1.5rem;  
+    }
+
+    .toc-nav ul {
+         
+        list-style: none;  
+        padding: 0;  
+        margin: 0;  
+    }
+
+    .toc-nav li {
+         
+        margin: 8px 0;  
+    }
+
+    .toc-nav a {
+         
+        display: block;  
+        text-decoration: none;  
+        color: transparent;  
+        padding: 0 12px;  
+        transition: all 0.2s ease;  
+        font-size: 0.9rem;  
+        line-height: 1.4;  
+        text-align: left;  
+        white-space: nowrap;  
+        overflow: hidden;  
+        text-overflow: ellipsis;  
+        max-width: 100%;  
+    }
+
+    .toc-nav:hover a {
+        color: var(--text-color-tertiary);  
+    }
+
+    .toc-nav a::before {
+         
+        content: "";  
+        display: inline-block;  
+        width: 16px;  
+        height: 4px;  
+        background-color: var(--text-color-tertiary);
+        border-radius: 16px;  
+        margin-right: 12px;  
+        vertical-align: middle;  
+    }
+
+    .toc-nav ul ul a::before {
+         
+        width: 12px;  
+        margin-right: 16px;  
+    }
+
+    .toc-nav ul ul ul a::before {
+         
+        width: 8px;  
+        margin-right: 20px;  
+    }
+
+    .toc-nav a.active,
+    .toc-nav a:hover {
+        text-decoration: none;
+        color: var(--text-color-primary);
+    }
+
+    .toc-nav a.active::before,
+    .toc-nav a:hover::before {
+        background-color: var(--text-color-primary);
+    }
+
+     
+    button.upvote-btn {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-color-primary);
+    }
+
+    button.upvoted {
+        color: var(--upvoted-color);
+    }
+
+    span.upvote-count {
+        margin-top: -4px;
+        font-size: smaller;
+    }
+
+     
+    body:has(.image-zoom-toggle:checked) {
+        overflow: hidden;
+    }
+
+    .image-zoom-container {
+        position: relative;
+        display: block;
+    }
+
+    .image-zoom-toggle {
+        display: none;
+    }
+
+    .image-zoom-label {
+        cursor: zoom-in;
+        display: block;
+        position: relative;
+    }
+
+    .image-zoom-label:focus {
+        outline: 2px solid var(--link-color);
+        outline-offset: 2px;
+    }
+
+    .zoomable-image {
+        transition: transform 0.3s ease;
+    }
+
+     
+    .image-zoom-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay {
+        display: flex;
+        cursor: zoom-out;
+    }
+
+     
+    .image-zoom-toggle:checked ~ .image-zoom-label {
+        cursor: default;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay .zoomable-image {
+        max-width: 90vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        transform: scale(1);
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+        content: "✕";
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+        cursor: pointer;
+        z-index: 1002;
+    }
+
+    .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        z-index: 1001;
+        max-width: 80vw;
+        text-align: center;
+    }
+
+     
+    @media (max-width: 800px) {
+        img[src*="#minipic"] {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        div.toc {
+            display: none;
+        }
+
+        .image-zoom-label {
+            cursor: pointer;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay {
+            padding: 10px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::before,
+        .image-zoom-toggle:checked ~ .image-zoom-overlay::after {
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+        }
+
+        .image-zoom-toggle:checked ~ .image-zoom-overlay figcaption {
+            bottom: 10px;
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+  <header><a href="/" class="title">
+  <h1>印记博客</h1>
+</a>
+<nav><a href="/">Home</a>
+
+<a href="/roll.html">Roll</a>
+
+
+<a href="/blog/">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+
+<h1>关于我的博客2.0</h1>
+
+<p>
+  <i>
+    <time datetime='2023-05-07' pubdate>
+      07 May, 2023
+    </time>
+  </i>
+</p>
+
+
+ 
+
+<content> <p>终于动手写《关于我的博客2.0》。</p>
+<p>在两年前写了一篇介绍自己博客的文章《[[about-my-blog|关于我的博客]]》，两年时间过去了，和当时相比，只能说大同小异。正好前段时间有网友留言，看到我对于 Twenty Twelve 主题的修改，问能否写个教程。我也是从网上各种教程文章扒的代码，便找时间记录下来吧。</p>
+<h2 id="框架">框架</h2>
+<p>依然使用 WordPress 和 Twenty Twelve 主题，但是主题经过了比较大的修改，后面会详细说明。</p>
+<p>运行在 CloudCone 提供的美国 VPS 上，具体情况可以看之前的文章。</p>
+<p>域名是昨天在 NameSilo 注册的，由于我没有信用卡，无法使用 Google Domains 进行注册。Google Domains 土耳其区注册 .net 域名每年仅需人民币25元左右。亏大发了。</p>
+<h2 id="插件">插件</h2>
+<p>目前加上强化拓展，一共只使用了3个插件。</p>
+<p>分别是 <a href="https://github.com/terrylinooo/githuber-md">WP Githuber MD</a>（用于 Markdown 写作）、<a href="https://fatesinger.com/101005">WP-Douban</a>（用于生成豆瓣条目信息） 和 object-cache.php（用于外部对象缓存）。</p>
+<p>其他能用代码集成到 function.php 文件中的都用代码替代插件了。</p>
+<h2 id="主题">主题</h2>
+<p>一开始我是基于 WordPress 官方默认主题 Twenty Twelve 进行修改的，但后面看到有一款修改程度更好的成品——<a href="https://xuv.cc/1">Twenty Twelve 木头人修改精简版</a>，就在它的基础上继续修改。</p>
+<p>所以有想法的朋友可以直接使用上面提到的成品主题，或者继续看我的内容。</p>
+<p>我修改的最终版本：<a href="https://github.com/huhexian/2012-huhexian">2012-huhexian</a></p>
+<h3 id="首页右上角图片">首页右上角图片</h3>
+<p>先在 header.php 加入下列代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://yinji.org/&#34;</span> <span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;回到首页&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://dogefs.s3.ladydaily.com/lucy/storage/1680832936501.png&#34;</span> <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;胡鹤仙&#34;</span><span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;70&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;70&#34;</span><span style="color:#f92672">/&gt;&lt;/</span><span style="color:#a6e22e">a</span><span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><p>具体位置大概在 <code>&lt;hgroup&gt;</code>下方，上述内容请替换为自己的网址。</p>
+<p>然后在 style.css 中加入样式代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/*顶部图片*/</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">site-header</span> <span style="color:#f92672">hgroup</span>{<span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">relative</span>;}
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">site-header</span> <span style="color:#f92672">hgroup</span> <span style="color:#f92672">img</span>{<span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">absolute</span>;<span style="color:#66d9ef">right</span>: <span style="color:#ae81ff">0</span>;}
+</span></span><span style="display:flex;"><span>@<span style="color:#66d9ef">media</span> <span style="color:#f92672">(</span><span style="color:#f92672">max-width</span><span style="color:#f92672">:</span> <span style="color:#f92672">650px</span><span style="color:#f92672">)</span> {
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">site-header</span> <span style="color:#f92672">hgroup</span> <span style="color:#f92672">img</span>{ <span style="color:#66d9ef">display</span>:<span style="color:#66d9ef">none</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="标签云">标签云</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/* 标签云样式修改 */</span> 
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">tagcloud</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">overflow</span>:<span style="color:#66d9ef">hidden</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">line-height</span>:<span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">tagcloud</span> <span style="color:#f92672">a</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">13</span><span style="color:#66d9ef">px</span><span style="color:#75715e">!important</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">3</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin-right</span>: <span style="color:#ae81ff">3</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span>: <span style="color:#66d9ef">left</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">block</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">tagcloud</span> <span style="color:#f92672">a</span>:<span style="color:#a6e22e">not</span><span style="color:#f92672">(</span>.<span style="color:#a6e22e">dots</span><span style="color:#f92672">)</span>:<span style="color:#a6e22e">hover</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#336699</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#FFFFFF</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">border</span>:<span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><h3 id="引用">引用</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/*引用*/</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">entry-content</span> <span style="color:#f92672">blockquote</span><span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">comment-content</span> <span style="color:#f92672">blockquote</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background-image</span>: url(<span style="color:#e6db74">data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTg1NTQxNjE3MDQ5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjM3MTgiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTQwNi41NTcyNTcgMTE4LjUzNTMxNHYxMzcuOTAzNTQzYy04Ny4xNDI0IDE5Ljk1MzM3MS0xMjguODkyMzQzIDc0LjQ3NDA1Ny0xMzQuMzYzNDI4IDE3Ni4wMTA5NzJoMTM0LjM2MzQyOHYzMjYuNzQzNzcxSDExNC4yOTMwMjlWNDkwLjUxMDYyOWMwLTE5NC4xNzk2NTcgODMuNDk5ODg2LTM0My4wMTA3NDMgMjkyLjI2NDIyOC0zNzEuOTc1MzE1bTAtNTguNTE0Mjg1Yy0yLjY3NzAyOSAwLTUuMzU0MDU3IDAuMTkwMTcxLTguMDQ1NzE0IDAuNTU1ODg1QzE3Ny41MDMwODYgOTEuMjM4NCA1NS43Nzg3NDMgMjQzLjkzMTQyOSA1NS43Nzg3NDMgNDkwLjUxMDYyOXYyNjguNjY4MzQyYTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2IDU4LjUxNDI4NmgyOTIuMjY0MjI4YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNTguNTE0Mjg2LTU4LjUxNDI4NlY0MzIuNDQ5ODI5YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAtNTguNTE0Mjg2LTU4LjUxNDI4NmgtNjQuNTI2NjI4YzE0LjQ1MzAyOS0zNy42MTAwNTcgNDEuNDI4MTE0LTUyLjE4MDExNCA3Ny41ODk5NDItNjAuNDU5ODg2YTU4LjUxNDI4NiA1OC41MTQyODYgMCAwIDAgNDUuNDUwOTcyLTU3LjAzNjhWMTE4LjUzNTMxNGE1OC41MTQyODYgNTguNTE0Mjg2IDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODV6TTkwOS43MDY5NzEgMjY0LjgyMTAyOXYxMzcuOTAzNTQyYy04Ny4xMTMxNDMgMTkuOTUzMzcxLTEyOC44NjMwODYgNzQuNDc0MDU3LTEzNC4zMzQxNzEgMTc2LjAxMDk3MmgxMzQuMzM0MTcxdjMyNi43NDM3NzFINjE3LjQ0Mjc0M1Y2MzYuNzk2MzQzYzAtMTk0LjE3OTY1NyA4My41MTQ1MTQtMzQzLjAxMDc0MyAyOTIuMjY0MjI4LTM3MS45NzUzMTRtMC01OC41MTQyODZjLTIuNjc3MDI5IDAtNS4zNTQwNTcgMC4xOTAxNzEtOC4wNDU3MTQgMC41NTU4ODYtMjIxLjAwODQ1NyAzMC42NzYxMTQtMzQyLjczMjggMTgzLjM1NDUxNC0zNDIuNzMyOCA0MjkuOTQ4MzQydjI2OC42NjgzNDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYgNTguNTE0Mjg2aDI5Mi4yNjQyMjhhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA1OC41MTQyODYtNTguNTE0Mjg2VjU3OC43MzU1NDNhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMC01OC41MTQyODYtNTguNTE0Mjg2aC02NC40OTczNzFjMTQuNDUzMDI5LTM3LjYxMDA1NyA0MS40MTM0ODYtNTIuMTgwMTE0IDc3LjU3NTMxNC02MC40NTk4ODZhNTguNTE0Mjg2IDU4LjUxNDI4NiAwIDAgMCA0NS40MzYzNDMtNTcuMDM2OHYtMTM3LjkwMzU0MmE1OC41NDM1NDMgNTguNTQzNTQzIDAgMCAwLTU4LjUxNDI4Ni01OC41MTQyODZ6IiBmaWxsPSIjY2YzZjc0IiBwLWlkPSIzNzE5Ij48L3BhdGg+PHBhdGggZD0iTTM1OS42MTQxNzEgNjY2LjU1MDg1N2ExNC42Mjg1NzEgMTQuNjI4NTcxIDAgMCAxLTE0LjYyODU3MS0xNC42Mjg1NzFWNDkxLjI3MTMxNGgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1OHYxNzUuNTQyODU3YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA4NDIuMDkzNzE0YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MXYtMjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMjkuMjU3MTQzIDB2MjkuMjU3MTQzYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MXpNODcxLjYxNDE3MSA3NTQuMzIyMjg2YTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcxLTE0LjYyODU3MnYtMTAyLjEzNjY4NWgtNjguMDgxMzcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAxIDEgMC0yOS4yNTcxNDNoODcuNzcxNDI4YzguMDg5NiAwIDkuNTY3MDg2IDYuMjkwMjg2IDkuNTY3MDg2IDE0LjM2NTI1N3YxMTcuMDI4NTcxYTE0LjYyODU3MSAxNC42Mjg1NzEgMCAwIDEtMTQuNjI4NTcyIDE0LjYyODU3MnoiIGZpbGw9IiNjZjNmNzQiIHAtaWQ9IjM3MjAiPjwvcGF0aD48L3N2Zz4=</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background-repeat</span>: <span style="color:#66d9ef">no-repeat</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">color</span>: rgba(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">.7</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin-top</span>: <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin-bottom</span>: <span style="color:#ae81ff">15</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin-left</span>: <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin-right</span>: <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">60</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">relative</span>;}
+</span></span></code></pre></div><h3 id="头像转动">头像转动</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/*头像转动*/</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">avatar</span>{<span style="color:#66d9ef">-webkit-</span><span style="color:#66d9ef">transition</span>:<span style="color:#ae81ff">0.4</span><span style="color:#66d9ef">s</span>;<span style="color:#66d9ef">-webkit-</span><span style="color:#66d9ef">transition</span>:<span style="color:#66d9ef">-webkit-</span><span style="color:#66d9ef">transform</span> <span style="color:#ae81ff">0.4</span><span style="color:#66d9ef">s</span> <span style="color:#66d9ef">ease-out</span>;<span style="color:#66d9ef">transition</span>:<span style="color:#66d9ef">transform</span> <span style="color:#ae81ff">0.4</span><span style="color:#66d9ef">s</span> <span style="color:#66d9ef">ease-out</span>;<span style="color:#66d9ef">-moz-</span><span style="color:#66d9ef">transition</span>:<span style="color:#66d9ef">-moz-</span><span style="color:#66d9ef">transform</span> <span style="color:#ae81ff">0.4</span><span style="color:#66d9ef">s</span> <span style="color:#66d9ef">ease-out</span>;}
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">avatar</span>:<span style="color:#a6e22e">hover</span>{<span style="color:#66d9ef">transform</span>:rotateZ(<span style="color:#ae81ff">360</span><span style="color:#66d9ef">deg</span>);<span style="color:#66d9ef">-webkit-</span><span style="color:#66d9ef">transform</span>:rotateZ(<span style="color:#ae81ff">360</span><span style="color:#66d9ef">deg</span>);<span style="color:#66d9ef">-moz-</span><span style="color:#66d9ef">transform</span>:rotateZ(<span style="color:#ae81ff">360</span><span style="color:#66d9ef">deg</span>);}
+</span></span></code></pre></div><h3 id="调整网页宽度">调整网页宽度</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/* 网页宽度 */</span>
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">site</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">auto</span>;
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">max-width</span>: <span style="color:#ae81ff">960</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">overflow</span>: <span style="color:#66d9ef">hidden</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">html</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin-top</span>: <span style="color:#ae81ff">32</span><span style="color:#66d9ef">px</span> <span style="color:#75715e">!important</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="小工具及首页文章标题下划线">小工具及首页文章标题下划线</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/* 小工具标题字体样式以及下横线 */</span>
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">widget-title</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">18</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">font-weight</span>: <span style="color:#66d9ef">normal</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#21759b</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#ededed</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* 首页文章标题行高以及下横线 */</span>
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">entry-header</span> .<span style="color:#a6e22e">entry-title</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">line-height</span>: <span style="color:#ae81ff">2.181818182</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#ededed</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><h3 id="二级三级标题样式">二级、三级标题样式</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/*标题样式*/</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">entry-content</span> <span style="color:#f92672">h2</span><span style="color:#f92672">,</span> .<span style="color:#a6e22e">comment-content</span> <span style="color:#f92672">h2</span><span style="color:#f92672">,</span> .<span style="color:#a6e22e">mu_register</span> <span style="color:#f92672">h2</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-weight</span>: <span style="color:#66d9ef">bold</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#f6f6f6</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">0</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#21759b</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">12</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-left</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#21759b</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">entry-content</span> <span style="color:#f92672">h3</span><span style="color:#f92672">,</span> .<span style="color:#a6e22e">comment-content</span> <span style="color:#f92672">h3</span><span style="color:#f92672">,</span> .<span style="color:#a6e22e">mu_register</span> <span style="color:#f92672">h3</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-weight</span>: <span style="color:#66d9ef">bold</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#f6f6f6</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">0</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#53a7dc</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">0</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">12</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-left</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#53a7dc</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="归档页面样式修改">归档页面样式修改</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>#archives {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">relative</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives <span style="color:#f92672">h3</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin-bottom</span>: <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">15</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#ddd</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-weight</span>: <span style="color:#ae81ff">400</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">text-align</span>: <span style="color:#66d9ef">center</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">letter-spacing</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives <span style="color:#f92672">ul</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">list-style</span>: <span style="color:#66d9ef">none</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-left</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#ddd</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">18</span><span style="color:#66d9ef">px</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives <span style="color:#f92672">li</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">list-style</span>: <span style="color:#66d9ef">none</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">relative</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">line-height</span>: <span style="color:#ae81ff">30</span><span style="color:#66d9ef">px</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives <span style="color:#f92672">ul</span> <span style="color:#f92672">ul</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">-15</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">15</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives <span style="color:#f92672">ul</span> <span style="color:#f92672">ul</span> <span style="color:#f92672">li</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">15</span><span style="color:#66d9ef">px</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives <span style="color:#f92672">ul</span> <span style="color:#f92672">ul</span> <span style="color:#f92672">li</span>:<span style="color:#a6e22e">before</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">content</span>: <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">absolute</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">left</span>: <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">top</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-top</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">dashed</span> <span style="color:#66d9ef">transparent</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-bottom</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">dashed</span> <span style="color:#66d9ef">transparent</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border-left</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#ddd</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#al_expand_collapse {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">inline-block</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">line-height</span>: <span style="color:#ae81ff">24</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#fff</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">12</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">text-decoration</span>: <span style="color:#66d9ef">none</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background</span>: linear-gradient(<span style="color:#66d9ef">to</span> <span style="color:#66d9ef">bottom</span>, <span style="color:#ae81ff">#4caf50</span> <span style="color:#ae81ff">20</span><span style="color:#66d9ef">%</span>, <span style="color:#ae81ff">#388e3c</span> <span style="color:#ae81ff">80</span><span style="color:#66d9ef">%</span>) <span style="color:#66d9ef">repeat</span> <span style="color:#66d9ef">scroll</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">transparent</span>;<span style="color:#75715e">/*这个颜色和下面的我都做了一些修改*/</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background</span>: <span style="color:#66d9ef">-webkit-</span>linear-gradient(<span style="color:#66d9ef">to</span> <span style="color:#66d9ef">bottom</span>, <span style="color:#ae81ff">#4caf50</span> <span style="color:#ae81ff">20</span><span style="color:#66d9ef">%</span>, <span style="color:#ae81ff">#388e3c</span> <span style="color:#ae81ff">80</span><span style="color:#66d9ef">%</span>) <span style="color:#66d9ef">repeat</span> <span style="color:#66d9ef">scroll</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">transparent</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#al_expand_collapse:<span style="color:#a6e22e">hover</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background</span>: linear-gradient(<span style="color:#66d9ef">to</span> <span style="color:#66d9ef">bottom</span>, <span style="color:#ae81ff">#388e3c</span> <span style="color:#ae81ff">20</span><span style="color:#66d9ef">%</span>, <span style="color:#ae81ff">#4caf50</span> <span style="color:#ae81ff">80</span><span style="color:#66d9ef">%</span>) <span style="color:#66d9ef">repeat</span> <span style="color:#66d9ef">scroll</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">transparent</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background</span>: <span style="color:#66d9ef">-webkit-</span>linear-gradient(<span style="color:#66d9ef">to</span> <span style="color:#66d9ef">bottom</span>, <span style="color:#ae81ff">#388e3c</span> <span style="color:#ae81ff">20</span><span style="color:#66d9ef">%</span>, <span style="color:#ae81ff">#4caf50</span> <span style="color:#ae81ff">80</span><span style="color:#66d9ef">%</span>) <span style="color:#66d9ef">repeat</span> <span style="color:#66d9ef">scroll</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">transparent</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives <span style="color:#f92672">em</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding-left</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">12</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#777</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives .<span style="color:#a6e22e">al_mon</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding-left</span>: <span style="color:#ae81ff">5</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">14</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-weight</span>: <span style="color:#ae81ff">700</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives .<span style="color:#a6e22e">al_mon</span>:<span style="color:#a6e22e">after</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">content</span>: <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">absolute</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">left</span>: <span style="color:#ae81ff">-10</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">top</span>: <span style="color:#ae81ff">15</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background</span>: <span style="color:#ae81ff">#ddd</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#archives .<span style="color:#a6e22e">al_mon</span> <span style="color:#f92672">em</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">12</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-weight</span>: <span style="color:#ae81ff">400</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="添加面包屑导航">添加面包屑导航</h3>
+<p>在 functions.php 中加入下列代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">// 面包屑导航
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">breadcrumb</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Check if is front/home page, return
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_front_page</span>() ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Define
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">global</span> $post;
+</span></span><span style="display:flex;"><span>  $custom_taxonomy  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>; <span style="color:#75715e">// If you have custom taxonomy place it here
+</span></span></span><span style="display:flex;"><span>  $defaults <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;seperator&#39;</span>   <span style="color:#f92672">=&gt;</span>  <span style="color:#e6db74">&#39; / &#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;id&#39;</span>          <span style="color:#f92672">=&gt;</span>  <span style="color:#e6db74">&#39;breadcrumb&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;classes&#39;</span>     <span style="color:#f92672">=&gt;</span>  <span style="color:#e6db74">&#39;breadcrumb&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;home_title&#39;</span>  <span style="color:#f92672">=&gt;</span>  <span style="color:#a6e22e">esc_html__</span>( <span style="color:#e6db74">&#39;⚐ Home&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span> )
+</span></span><span style="display:flex;"><span>  );
+</span></span><span style="display:flex;"><span>  $sep  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;seperator&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">esc_html</span>( $defaults[<span style="color:#e6db74">&#39;seperator&#39;</span>] ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Start the breadcrumb with a link to your homepage
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;ul id=&#34;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">esc_attr</span>( $defaults[<span style="color:#e6db74">&#39;id&#39;</span>] ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34; class=&#34;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">esc_attr</span>( $defaults[<span style="color:#e6db74">&#39;classes&#39;</span>] ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Creating home link
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item&#34;&gt;&lt;a href=&#34;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_home_url</span>() <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">esc_html</span>( $defaults[<span style="color:#e6db74">&#39;home_title&#39;</span>] ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/a&gt;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_single</span>() ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Get posts type
+</span></span></span><span style="display:flex;"><span>    $post_type <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_post_type</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// If post type is not post
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( $post_type <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;post&#39;</span> ) {
+</span></span><span style="display:flex;"><span>      $post_type_object   <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_post_type_object</span>( $post_type );
+</span></span><span style="display:flex;"><span>      $post_type_link     <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_post_type_archive_link</span>( $post_type );
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item item-cat&#34;&gt;&lt;a href=&#34;&#39;</span><span style="color:#f92672">.</span> $post_type_link <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span><span style="color:#f92672">.</span> $post_type_object<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">labels</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/a&gt;&lt;/li&gt;&#39;</span><span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Get categories
+</span></span></span><span style="display:flex;"><span>    $category <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_the_category</span>( $post<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">ID</span> );
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// If category not empty
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( <span style="color:#f92672">!</span><span style="color:#66d9ef">empty</span>( $category ) ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Arrange category parent to child
+</span></span></span><span style="display:flex;"><span>      $category_values      <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_values</span>( $category );
+</span></span><span style="display:flex;"><span>      $get_last_category    <span style="color:#f92672">=</span> <span style="color:#a6e22e">end</span>( $category_values );
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// $get_last_category    = $category[count($category) - 1];
+</span></span></span><span style="display:flex;"><span>      $get_parent_category  <span style="color:#f92672">=</span> <span style="color:#a6e22e">rtrim</span>( <span style="color:#a6e22e">get_category_parents</span>( $get_last_category<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">term_id</span>, <span style="color:#66d9ef">true</span>, <span style="color:#e6db74">&#39;,&#39;</span> ), <span style="color:#e6db74">&#39;,&#39;</span> );
+</span></span><span style="display:flex;"><span>      $cat_parent           <span style="color:#f92672">=</span> <span style="color:#a6e22e">explode</span>( <span style="color:#e6db74">&#39;,&#39;</span>, $get_parent_category );
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Store category in $display_category
+</span></span></span><span style="display:flex;"><span>      $display_category <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">foreach</span>( $cat_parent <span style="color:#66d9ef">as</span> $p ) {
+</span></span><span style="display:flex;"><span>        $display_category <span style="color:#f92672">.=</span>  <span style="color:#e6db74">&#39;&lt;li class=&#34;item item-cat&#34;&gt;&#39;</span><span style="color:#f92672">.</span> $p <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// If it&#39;s a custom post type within a custom taxonomy
+</span></span></span><span style="display:flex;"><span>    $taxonomy_exists <span style="color:#f92672">=</span> <span style="color:#a6e22e">taxonomy_exists</span>( $custom_taxonomy );
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( <span style="color:#66d9ef">empty</span>( $get_last_category ) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#66d9ef">empty</span>( $custom_taxonomy ) <span style="color:#f92672">&amp;&amp;</span> $taxonomy_exists ) {
+</span></span><span style="display:flex;"><span>      $taxonomy_terms <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_the_terms</span>( $post<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">ID</span>, $custom_taxonomy );
+</span></span><span style="display:flex;"><span>      $cat_id         <span style="color:#f92672">=</span> $taxonomy_terms[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">term_id</span>;
+</span></span><span style="display:flex;"><span>      $cat_link       <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_term_link</span>($taxonomy_terms[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">term_id</span>, $custom_taxonomy);
+</span></span><span style="display:flex;"><span>      $cat_name       <span style="color:#f92672">=</span> $taxonomy_terms[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Check if the post is in a category
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( <span style="color:#f92672">!</span><span style="color:#66d9ef">empty</span>( $get_last_category ) ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> $display_category;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item item-current&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_title</span>() <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>( <span style="color:#f92672">!</span><span style="color:#66d9ef">empty</span>( $cat_id ) ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item item-cat&#34;&gt;&lt;a href=&#34;&#39;</span><span style="color:#f92672">.</span> $cat_link <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span><span style="color:#f92672">.</span> $cat_name <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/a&gt;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_title</span>() <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_title</span>() <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>( <span style="color:#a6e22e">is_archive</span>() ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( <span style="color:#a6e22e">is_tax</span>() ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Get posts type
+</span></span></span><span style="display:flex;"><span>      $post_type <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_post_type</span>();
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// If post type is not post
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span>( $post_type <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;post&#39;</span> ) {
+</span></span><span style="display:flex;"><span>        $post_type_object   <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_post_type_object</span>( $post_type );
+</span></span><span style="display:flex;"><span>        $post_type_link     <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_post_type_archive_link</span>( $post_type );
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item item-cat item-custom-post-type-&#39;</span> <span style="color:#f92672">.</span> $post_type <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&#34;&gt;&lt;a href=&#34;&#39;</span> <span style="color:#f92672">.</span> $post_type_link <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&#34;&gt;&#39;</span> <span style="color:#f92672">.</span> $post_type_object<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">labels</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&lt;/a&gt;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      $custom_tax_name <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_queried_object</span>()<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item item-current&#34;&gt;&#39;</span><span style="color:#f92672">.</span> $custom_tax_name <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_category</span>() ) {
+</span></span><span style="display:flex;"><span>      $parent <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_queried_object</span>()<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">category_parent</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> ( $parent <span style="color:#f92672">!==</span> <span style="color:#ae81ff">0</span> ) {
+</span></span><span style="display:flex;"><span>        $parent_category <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_category</span>( $parent );
+</span></span><span style="display:flex;"><span>        $category_link   <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_category_link</span>( $parent );
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item&#34;&gt;&lt;a href=&#34;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">esc_url</span>( $category_link ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span><span style="color:#f92672">.</span> $parent_category<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/a&gt;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item item-current&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">single_cat_title</span>( <span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#66d9ef">false</span> ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_tag</span>() ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Get tag information
+</span></span></span><span style="display:flex;"><span>      $term_id        <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_query_var</span>(<span style="color:#e6db74">&#39;tag_id&#39;</span>);
+</span></span><span style="display:flex;"><span>      $taxonomy       <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;post_tag&#39;</span>;
+</span></span><span style="display:flex;"><span>      $args           <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;include=&#39;</span> <span style="color:#f92672">.</span> $term_id;
+</span></span><span style="display:flex;"><span>      $terms          <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_terms</span>( $taxonomy, $args );
+</span></span><span style="display:flex;"><span>      $get_term_name  <span style="color:#f92672">=</span> $terms[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Display the tag name
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> $get_term_name <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>( <span style="color:#a6e22e">is_day</span>() ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Day archive
+</span></span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Year link
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-year item&#34;&gt;&lt;a href=&#34;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_year_link</span>( <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;Y&#39;</span>) ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;Y&#39;</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;年&lt;/a&gt;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Month link
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-month item&#34;&gt;&lt;a href=&#34;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_month_link</span>( <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;Y&#39;</span>), <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;m&#39;</span>) ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;M&#39;</span>) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/a&gt;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Day display
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;jS&#39;</span>) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;M&#39;</span>)<span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>( <span style="color:#a6e22e">is_month</span>() ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Month archive
+</span></span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Year link
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-year item&#34;&gt;&lt;a href=&#34;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_year_link</span>( <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;Y&#39;</span>) ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;Y&#39;</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;年&lt;/a&gt;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Month Display
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-month item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;M&#39;</span>) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_year</span>() ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Year Display
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-year item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_time</span>(<span style="color:#e6db74">&#39;Y&#39;</span>) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;年&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_author</span>() ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Auhor archive
+</span></span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Get the author information
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">global</span> $author;
+</span></span><span style="display:flex;"><span>      $userdata <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_userdata</span>( $author );
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Display author name
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;Author: &#39;</span><span style="color:#f92672">.</span> $userdata<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display_name</span> <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item item-current&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">post_type_archive_title</span>() <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_page</span>() ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Standard page
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( $post<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">post_parent</span> ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// If child page, get parents
+</span></span></span><span style="display:flex;"><span>      $anc <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_post_ancestors</span>( $post<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">ID</span> );
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Get parents in the right order
+</span></span></span><span style="display:flex;"><span>      $anc <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_reverse</span>( $anc );
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Parent page loop
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">isset</span>( $parents ) ) $parents <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">foreach</span> ( $anc <span style="color:#66d9ef">as</span> $ancestor ) {
+</span></span><span style="display:flex;"><span>        $parents <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-parent item&#34;&gt;&lt;a href=&#34;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_permalink</span>( $ancestor ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_title</span>( $ancestor ) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/a&gt;&lt;/li&gt;&#39;</span> <span style="color:#f92672">.</span> $sep;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Display parent pages
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> $parents;
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Current page
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_title</span>() <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Just display current page if not parents
+</span></span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;&#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_the_title</span>() <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_search</span>() ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Search results page
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;Search results for: &#39;</span><span style="color:#f92672">.</span> <span style="color:#a6e22e">get_search_query</span>() <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_404</span>() ) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 404 page
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;li class=&#34;item-current item&#34;&gt;&#39;</span> <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;Error 404&#39;</span> <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&lt;/li&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// End breadcrumb
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;/ul&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后在 header.php 末尾添加下列代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span><span style="color:#75715e">// 文章页面添加面包屑导航
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">function_exists</span>(<span style="color:#e6db74">&#39;breadcrumb&#39;</span>) ) <span style="color:#a6e22e">breadcrumb</span>();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>最后添加样式代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/* 面包屑导航样式 */</span>
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">breadcrumb</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">12</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#888</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">margin</span>:<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">auto</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">breadcrumb</span> <span style="color:#f92672">a</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#888</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">breadcrumb</span> <span style="color:#f92672">a</span>:<span style="color:#a6e22e">not</span><span style="color:#f92672">(</span>.<span style="color:#a6e22e">dots</span><span style="color:#f92672">)</span>:<span style="color:#a6e22e">hover</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#CC0033</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> .<span style="color:#a6e22e">breadcrumb</span> <span style="color:#f92672">li</span> {
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">inline</span>;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">line-height</span>:<span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><h3 id="首页文章标题正文标题下方添加元素">首页文章标题、正文标题下方添加元素</h3>
+<p>其中有一个用于统计每篇文章的字数的代码，需要添加到 functions.php 文件中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">//字数统计
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">zm_count_words</span> ($text) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">global</span> $post;
+</span></span><span style="display:flex;"><span>    $output<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">empty</span>($text)) {
+</span></span><span style="display:flex;"><span>        $text <span style="color:#f92672">=</span> $post<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">post_content</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mb_strlen</span>($output, <span style="color:#e6db74">&#39;UTF-8&#39;</span>) <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">mb_strlen</span>($text, <span style="color:#e6db74">&#39;UTF-8&#39;</span>)) $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;span class=&#34;word-count&#34;&gt;共&#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">mb_strlen</span>(<span style="color:#a6e22e">preg_replace</span>(<span style="color:#e6db74">&#39;/\s/&#39;</span>,<span style="color:#e6db74">&#39;&#39;</span>,<span style="color:#a6e22e">html_entity_decode</span>(<span style="color:#a6e22e">strip_tags</span>($post<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">post_content</span>))),<span style="color:#e6db74">&#39;UTF-8&#39;</span>) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;字&lt;/span&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> $output;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>打开 content.php，找到以下代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_single</span>() ) <span style="color:#f92672">:</span> <span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&lt;h1 class=&#34;entry-title&#34;&gt;&lt;?php the_title(); ?&gt;&lt;/h1&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&lt;?php else : ?&gt;
+</span></span></span></code></pre></div><p>然后在 <code>&lt;?php else: ?&gt;</code> 的上面添加以下代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">p</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;meta&#34;</span><span style="color:#f92672">&gt;&lt;!--</span><span style="color:#a6e22e">文章页标题下标签</span><span style="color:#f92672">--&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Auth</span><span style="color:#f92672">:&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#a6e22e">the_author_nickname</span>(); <span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">Date:&lt;?php echo the_time(&#39;Y/m/j&#39;); ?&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">Cat:&lt;?php the_category(&#39;、&#39;); ?&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">Word:&lt;?php echo zm_count_words($text); ?&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&lt;/p&gt;
+</span></span></span></code></pre></div><p>在 content.php 找到<code>&lt;footer&gt;&lt;/footer&gt;</code>，将这两个标签内（包括这两个标签）的所有内容删除，并替换为以下代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">is_single</span>() ) <span style="color:#f92672">:</span> <span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">            &lt;footer class=&#34;content-foot&#34;&gt;&lt;!--文章页脚部显示修改--&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">                &lt;?php the_tags(&#39;⚑Tags：&#39;,&#39;、&#39;); ?&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">            &lt;/footer&gt;&lt;!-- .content-foot --&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">        &lt;?php else : ?&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">            &lt;footer class=&#34;home-foot&#34;&gt;&lt;!--除文章页脚部显示修改--&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">                ◷&lt;?php echo the_time(&#39;Y/m/j&#39;); ?&gt;&amp;nbsp&amp;nbsp
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">                @&lt;?php the_author_nickname(); ?&gt;&amp;nbsp&amp;nbsp
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">                ▤&lt;?php the_category(&#39;、&#39;); ?&gt;&amp;nbsp&amp;nbsp
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">                ⚑&lt;?php the_tags(&#39;&#39;,&#39;、&#39;); ?&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">                &lt;?php edit_post_link( __( &#39;——编辑&#39;, &#39;twentytwelve-child&#39; ), &#39;&lt;span class=&#34;edit-link&#34;&gt;&#39;, &#39;&lt;/span&gt;&#39; ); ?&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">            &lt;/footer&gt;&lt;!-- .entry-meta --&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">        &lt;?php endif;  // is_single() ?&gt;
+</span></span></span></code></pre></div><p>最后添加样式代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/* 文章页标题、meta块、和脚部样式修改 */</span>
+</span></span><span style="display:flex;"><span>#content .<span style="color:#a6e22e">title</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">24</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding-bottom</span>: <span style="color:#ae81ff">24</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">text-align</span>: <span style="color:#66d9ef">center</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>#content .<span style="color:#a6e22e">meta</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">13</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">border</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">dashed</span> rgba(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0.15</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">text-align</span>: <span style="color:#66d9ef">center</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">letter-spacing</span>: <span style="color:#ae81ff">0.035</span><span style="color:#66d9ef">rem</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>#content .<span style="color:#a6e22e">content-foot</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">font-size</span>: <span style="color:#ae81ff">13</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">24</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">-24</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">-24</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">-24</span><span style="color:#66d9ef">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">letter-spacing</span>: <span style="color:#ae81ff">0.035</span><span style="color:#66d9ef">rem</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#ededed</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="禁止加载语言包">禁止加载语言包</h3>
+<p>在 functions.php 中加入下列代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">//关闭翻译
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">add_filter</span>(<span style="color:#e6db74">&#39;locale&#39;</span>, <span style="color:#66d9ef">function</span>($locale) {
+</span></span><span style="display:flex;"><span>    $locale <span style="color:#f92672">=</span> ( <span style="color:#a6e22e">is_admin</span>() ) <span style="color:#f92672">?</span> $locale <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;en_US&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> $locale;
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h3 id="为摘要添加继续阅读字样">为摘要添加“继续阅读”字样</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">//为摘要添加继续阅读字样
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Remove the ... from excerpt and change the text
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">change_excerpt_more</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">new_excerpt_more</span>($more)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Use .read-more to style the link
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;......&lt;span class=&#34;read-more&#34;&gt; &lt;a href=&#34;&#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">get_permalink</span>($post<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">ID</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&#34;&gt;&lt;br/&gt;&lt;br/&gt;继续阅读»»»&lt;/a&gt;&lt;/span&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add_filter</span>(<span style="color:#e6db74">&#39;excerpt_more&#39;</span>, <span style="color:#e6db74">&#39;new_excerpt_more&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add_action</span>(<span style="color:#e6db74">&#39;after_setup_theme&#39;</span>, <span style="color:#e6db74">&#39;change_excerpt_more&#39;</span>);
+</span></span></code></pre></div><h3 id="页面添加-html-后缀">页面添加 html 后缀</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">//WordPress页面链接添加html后缀
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">html_page_permalink</span>() {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">global</span> $wp_rewrite;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">strpos</span>($wp_rewrite<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_page_permastruct</span>(), <span style="color:#e6db74">&#39;.html&#39;</span>)){
+</span></span><span style="display:flex;"><span>$wp_rewrite<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">page_structure</span> <span style="color:#f92672">=</span> $wp_rewrite<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">page_structure</span> <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;.html&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add_action</span>(<span style="color:#e6db74">&#39;init&#39;</span>, <span style="color:#e6db74">&#39;html_page_permalink&#39;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span></code></pre></div><h3 id="修改全局字体">修改全局字体</h3>
+<p>我采用的是开源字体——<a href="https://github.com/lxgw/LxgwWenKai">霞鹜文楷</a>。在 header.php 添加下列代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;!--</span> <span style="color:#a6e22e">Screen</span> <span style="color:#a6e22e">version</span> <span style="color:#f92672">--&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://npm.elemecdn.com/lxgw-wenkai-screen-webfont@1.1.0/style.css&#34;</span> <span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">style</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">body</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">/* Screen version */</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">font</span><span style="color:#f92672">-</span><span style="color:#a6e22e">family</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;LXGW WenKai Screen&#34;</span>, <span style="color:#a6e22e">sans</span><span style="color:#f92672">-</span><span style="color:#a6e22e">serif</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/</span><span style="color:#a6e22e">style</span><span style="color:#f92672">&gt;</span>
+</span></span></code></pre></div><h3 id="网站统计小工具">网站统计小工具</h3>
+<p>在主题目录新建文件 <strong>widget-websitestat.php</strong>，并添加下列内容。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// WordPress统计信息小工具
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 定义小工具的类 EfanWebsitestat
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EfanWebsitestat</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">WP_Widget</span>{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">__construct</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 定义小工具的构造函数
+</span></span></span><span style="display:flex;"><span>    $widget_ops <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#39;classname&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;widget_Websitestat&#39;</span>, <span style="color:#e6db74">&#39;description&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;显示网站的统计信息&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//     $this-&gt;WP_Widget(false, &#39;网站统计&#39;, $widget_ops);
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">parent</span><span style="color:#f92672">::</span><span style="color:#a6e22e">__construct</span>( <span style="color:#66d9ef">false</span>, <span style="color:#e6db74">&#39;网站统计&#39;</span>, $widget_ops);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">form</span>($instance){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 表单函数,控制后台显示
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// $instance 为之前保存过的数据
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果之前没有数据的话,设置默认量
+</span></span></span><span style="display:flex;"><span>    $instance <span style="color:#f92672">=</span> <span style="color:#a6e22e">wp_parse_args</span>(
+</span></span><span style="display:flex;"><span>      (<span style="color:#66d9ef">array</span>)$instance,
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">array</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;title&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;网站信息统计&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;establish_time&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;2021-01-01&#39;</span>
+</span></span><span style="display:flex;"><span>      )
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    $title <span style="color:#f92672">=</span> <span style="color:#a6e22e">htmlspecialchars</span>($instance[<span style="color:#e6db74">&#39;title&#39;</span>]);
+</span></span><span style="display:flex;"><span>    $establish_time <span style="color:#f92672">=</span> <span style="color:#a6e22e">htmlspecialchars</span>($instance[<span style="color:#e6db74">&#39;establish_time&#39;</span>]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 表格布局输出表单
+</span></span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;table&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;tr&gt;&lt;td&gt;标题&lt;/td&gt;&lt;td&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;input id=&#34;&#39;</span><span style="color:#f92672">.</span>$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_field_id</span>(<span style="color:#e6db74">&#39;title&#39;</span>) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34; name=&#34;&#39;</span><span style="color:#f92672">.</span>$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_field_name</span>(<span style="color:#e6db74">&#39;title&#39;</span>)<span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34; type=&#34;text&#34; value=&#34;&#39;</span><span style="color:#f92672">.</span>$instance[<span style="color:#e6db74">&#39;title&#39;</span>]<span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34; /&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;建站时间：&lt;/td&gt;&lt;td&gt;&#39;</span>;   
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;input id=&#34;&#39;</span><span style="color:#f92672">.</span>$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_field_id</span>(<span style="color:#e6db74">&#39;establish_time&#39;</span>) <span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34; name=&#34;&#39;</span><span style="color:#f92672">.</span>$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_field_name</span>(<span style="color:#e6db74">&#39;establish_time&#39;</span>)<span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34; type=&#34;text&#34; value=&#34;&#39;</span><span style="color:#f92672">.</span>$instance[<span style="color:#e6db74">&#39;establish_time&#39;</span>]<span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&#34; /&gt;&#39;</span>;   
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#39;</span>;  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $output;   
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">update</span>($new_instance, $old_instance){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 更新数据的函数
+</span></span></span><span style="display:flex;"><span>    $instance <span style="color:#f92672">=</span> $old_instance;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 数据处理
+</span></span></span><span style="display:flex;"><span>    $instance[<span style="color:#e6db74">&#39;title&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">strip_tags</span>(<span style="color:#a6e22e">stripslashes</span>($new_instance[<span style="color:#e6db74">&#39;title&#39;</span>]));
+</span></span><span style="display:flex;"><span>    $instance[<span style="color:#e6db74">&#39;establish_time&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">strip_tags</span>(<span style="color:#a6e22e">stripslashes</span>($new_instance[<span style="color:#e6db74">&#39;establish_time&#39;</span>]));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> $instance;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">widget</span>($args, $instance){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">extract</span>($args); <span style="color:#75715e">//展开数组
+</span></span></span><span style="display:flex;"><span>    $title <span style="color:#f92672">=</span> <span style="color:#a6e22e">apply_filters</span>(<span style="color:#e6db74">&#39;widget_title&#39;</span>,<span style="color:#66d9ef">empty</span>($instance[<span style="color:#e6db74">&#39;title&#39;</span>]) <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">:</span> $instance[<span style="color:#e6db74">&#39;title&#39;</span>]);
+</span></span><span style="display:flex;"><span>    $establish_time <span style="color:#f92672">=</span> <span style="color:#66d9ef">empty</span>($instance[<span style="color:#e6db74">&#39;establish_time&#39;</span>]) <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;2021-01-01&#39;</span> <span style="color:#f92672">:</span> $instance[<span style="color:#e6db74">&#39;establish_time&#39;</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $before_widget;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $before_title <span style="color:#f92672">.</span> $title <span style="color:#f92672">.</span> $after_title;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-boys&#34;&gt;&lt;ul&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">efan_get_websitestat</span>($establish_time);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;&lt;/ul&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $after_widget;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">efan_get_websitestat</span>($establish_time){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 相关数据的获取
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">global</span> $wpdb;
+</span></span><span style="display:flex;"><span>    $count_posts <span style="color:#f92672">=</span> <span style="color:#a6e22e">wp_count_posts</span>();
+</span></span><span style="display:flex;"><span>    $published_posts <span style="color:#f92672">=</span> $count_posts<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">publish</span>;
+</span></span><span style="display:flex;"><span>    $comments_count <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_var</span>(<span style="color:#e6db74">&#34;SELECT COUNT(*) FROM </span><span style="color:#e6db74">$wpdb-&gt;comments</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    $time <span style="color:#f92672">=</span> <span style="color:#a6e22e">floor</span>((<span style="color:#a6e22e">time</span>()<span style="color:#f92672">-</span><span style="color:#a6e22e">strtotime</span>($establish_time))<span style="color:#f92672">/</span><span style="color:#ae81ff">86400</span>);
+</span></span><span style="display:flex;"><span>    $count_tags <span style="color:#f92672">=</span> <span style="color:#a6e22e">wp_count_terms</span>(<span style="color:#e6db74">&#39;post_tag&#39;</span>);
+</span></span><span style="display:flex;"><span>    $count_pages <span style="color:#f92672">=</span> <span style="color:#a6e22e">wp_count_posts</span>(<span style="color:#e6db74">&#39;page&#39;</span>);
+</span></span><span style="display:flex;"><span>    $link <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_var</span>(<span style="color:#e6db74">&#34;SELECT COUNT(*) FROM </span><span style="color:#e6db74">$wpdb-&gt;links</span><span style="color:#e6db74"> WHERE link_visible = &#39;Y&#39;&#34;</span>); 
+</span></span><span style="display:flex;"><span>    $users <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_var</span>(<span style="color:#e6db74">&#34;SELECT COUNT(ID) FROM </span><span style="color:#e6db74">$wpdb-&gt;users</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    $last <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_results</span>(<span style="color:#e6db74">&#34;SELECT MAX(post_modified) AS MAX_m FROM </span><span style="color:#e6db74">$wpdb-&gt;posts</span><span style="color:#e6db74"> WHERE (post_type = &#39;post&#39; OR post_type = &#39;page&#39;) AND (post_status = &#39;publish&#39; OR post_status = &#39;private&#39;)&#34;</span>);
+</span></span><span style="display:flex;"><span>    $last <span style="color:#f92672">=</span> <span style="color:#a6e22e">date</span>(<span style="color:#e6db74">&#39;Y-m-d&#39;</span>, <span style="color:#a6e22e">strtotime</span>($last[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">MAX_m</span>));
+</span></span><span style="display:flex;"><span>    $total_views <span style="color:#f92672">=</span> $wpdb<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_var</span>(<span style="color:#e6db74">&#34;SELECT SUM(meta_value+0) FROM </span><span style="color:#e6db74">$wpdb-&gt;postmeta</span><span style="color:#e6db74"> WHERE meta_key = &#39;views&#39;&#34;</span>);  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 显示数据
+</span></span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg1 wb-top&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-snowflake-o&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 文章总数：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> $published_posts;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39; 篇&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg2&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-paper-plane-o&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 评论数目：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> $comments_count;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39; 条&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg3&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-star-o&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 标签总数：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> $count_tags;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39; 个&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg4&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-pie-chart&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 浏览次数：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> $total_views;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39; 次&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg5&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-link&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 友链总数：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> $link;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39; 个&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg7&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-refresh&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 运行天数：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> $time;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39; 天&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg8&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-calendar&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 建站时间：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> $establish_time;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg9&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-clock-o&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 最后更新：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> $last;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//   页面生成耗时+数据库查询  
+</span></span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg10&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-podcast&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 数据查询：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#a6e22e">get_num_queries</span>();
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39; 次 &lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;&lt;div class=&#34;widgest-bg widgest-bg11 wb-bottom&#34;&gt;&lt;div class=&#34;widgest-main&#34;&gt;&lt;div class=&#34;widgest-meat&#34;&gt;&lt;li&gt;&lt;i class=&#34;fa fa-hourglass-half&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt; 生成耗时：&#39;</span>;
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#a6e22e">timer_stop</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">5</span>);
+</span></span><span style="display:flex;"><span>    $output <span style="color:#f92672">.=</span> <span style="color:#e6db74">&#39;秒&lt;/li&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $output;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">EfanWebsitestat</span>(){
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 注册小工具
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">register_widget</span>(<span style="color:#e6db74">&#39;EfanWebsitestat&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">add_action</span>(<span style="color:#e6db74">&#39;widgets_init&#39;</span>,<span style="color:#e6db74">&#39;EfanWebsitestat&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>然后在 functions.php 文件中加入下列代码。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#75715e">//添加站点统计小工具
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#34;widget-websitestat.php&#34;</span>);
+</span></span></code></pre></div><p>网站后台添加小工具即可。</p>
+<h3 id="写完哪本书了">写完哪本书了？</h3>
+<p>详见文章《<a href="https://yinji.org/4901.html">ChatGPT 帮我写代码，实现“已写完哪本书”统计</a>》</p>
+<hr>
+<p>大致就是以上这些，具体还有一些小细节，我直接在 style.css 对照审查元素进行修改了，没有记录，需要的可以下载文件，对照我博客进行修改。</p>
+<p>参考文章：</p>
+<ul>
+<li>《<a href="https://www.bgbiji.com/701.html">WordPress建站，twenty twelve子主题修改全记录</a>》</li>
+<li>《<a href="https://xuv.cc/1">WordPress 经典主题 TwentyTwelve 木头人修改精简版</a>》</li>
+</ul>
+<h2 id="下载地址">下载地址</h2>
+<ul>
+<li>我修改的：<a href="https://github.com/huhexian/2012-huhexian">GitHub</a></li>
+<li>木头人修改版：<a href="https://pan.lanzouw.com/ilrtz0uyd82d">蓝奏网盘</a></li>
+</ul>
+ </content>
+
+<p>
+  
+  <a href="http://localhost:1313/tags/twenty-twelve/">#Twenty-Twelve</a>
+  
+  <a href="http://localhost:1313/tags/wordpress/">#Wordpress</a>
+  
+  <a href="http://localhost:1313/tags/%E4%B8%BB%E9%A2%98/">#主题</a>
+  
+  <a href="http://localhost:1313/tags/%E5%8D%9A%E5%AE%A2/">#博客</a>
+  
+  <a href="http://localhost:1313/tags/%E6%8A%98%E8%85%BE/">#折腾</a>
+  
+</p>
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+
+
+
+
+Subscribe via <a href="/index.xml">RSS</a>.
+<br />
+
+
+
+
+
+
+Made with
+<a href="https://github.com/rokcso/hugo-bearneo/">Hugo Bear Neo</a>.
+<br />
+
+
+
+
+
+
+
+🗺️ <a href="/sitemap.xml">Sitemap</a>.
+
+</footer>
+
+    
+
+
+</body>
+
+</html>

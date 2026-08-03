@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>印记 on 印记博客</title>
+    <link>http://localhost:1313/tags/%E5%8D%B0%E8%AE%B0/</link>
+    <description>Recent content in 印记 on 印记博客</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    
+    
+    
+    
+    <lastBuildDate>Fri, 08 Sep 2023 00:00:00 +0000</lastBuildDate>
+    
+    
+    <atom:link href="http://localhost:1313/tags/%E5%8D%B0%E8%AE%B0/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello，印记！</title>
+      <link>http://localhost:1313/hello-yinji.html/</link>
+      <pubDate>Fri, 08 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/hello-yinji.html/</guid>
+      <description>&lt;p&gt;&lt;figure&#xA;    class=&#34;image-caption&#34;&#xA;&gt;&#xA;    &#xA;    &lt;img src=&#34;images/1694131805214.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;&#xA;    &#xA;    &lt;figcaption&gt;&lt;/figcaption&gt;&#xA;&lt;/figure&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;准确来说，从昨天（9月7日）开始，我就和 @&lt;a href=&#34;https://iliu.org&#34;&gt;图南博客&lt;/a&gt;、@&lt;a href=&#34;https://laozhang.org&#34;&gt;老张博客&lt;/a&gt; 一样，开始使用 .org 域名。&lt;/p&gt;&#xA;&lt;p&gt;又一次打脸，距离上次更换域名还不到半年。我以为我和朋友都对原来的 zuofei.net 域名挺满意的，因为“今是昨非”，寓意也不错，直到最近 @&lt;a href=&#34;https://hanyu.life&#34;&gt;韩宇&lt;/a&gt; 提到 yinji.org，“印记”寓意更加明显，更适合博客。我便发现原先的域名也就那样。&lt;/p&gt;&#xA;&lt;p&gt;在 Google Domains 注册只需要 75 TRY/年，折合人民币 20 元，目前 @&lt;a href=&#34;https://hanyu.life&#34;&gt;韩宇&lt;/a&gt; 已经帮我续费满 9 年，等时间一到，便转入 Porkbun，拉满 10 年，所以未来 10 年我都将使用这个域名，那个时候我已经 31 岁。&lt;/p&gt;&#xA;&lt;p&gt;不考虑以后的备案，继续使用国外的 VPS，所以域名后缀能否备案对我来说已经不重要。&lt;/p&gt;&#xA;&lt;p&gt;如有添加友链的朋友，还请麻烦修改域名和名称，旧域名已经做好跳转。&lt;/p&gt;&#xA;</description>
+    </item>
+  </channel>
+</rss>
