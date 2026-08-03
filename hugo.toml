@@ -1,6 +1,6 @@
 baseURL = "https://yinji.org/"
 languageCode = "zh-cn"
-title = "印记博客"
+title = "印记"
 theme = "hugo-bearneo"
 
 defaultContentLanguage = "zh-cn"
