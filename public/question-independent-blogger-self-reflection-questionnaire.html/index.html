@@ -860,7 +860,7 @@ Affiliate 是一种更加合适的形式，存在互利共赢，你通过推荐�
     upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
 
     try {
-      const response = await fetch('upvote.yinji.org\/upvote', {
+      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -885,7 +885,7 @@ Affiliate 是一种更加合适的形式，存在互利共赢，你通过推荐�
   
   async function getCount(slug, retryCount = 0) {
     try {
-      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

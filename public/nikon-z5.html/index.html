@@ -1149,7 +1149,7 @@ Z5 拿在手上的感觉比较沉，但也是很有分量，握持非常舒服�
     upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
 
     try {
-      const response = await fetch('upvote.yinji.org\/upvote', {
+      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1174,7 +1174,7 @@ Z5 拿在手上的感觉比较沉，但也是很有分量，握持非常舒服�
   
   async function getCount(slug, retryCount = 0) {
     try {
-      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -767,7 +767,7 @@ Younger readers may not even know that the internet used to be made entirely ofÂ
     upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
 
     try {
-      const response = await fetch('upvote.yinji.org\/upvote', {
+      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -792,7 +792,7 @@ Younger readers may not even know that the internet used to be made entirely ofÂ
   
   async function getCount(slug, retryCount = 0) {
     try {
-      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -804,7 +804,7 @@ Mastodon 始于2016年，一个开源项目，往大了讲，是组成联邦宇�
     upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
 
     try {
-      const response = await fetch('upvote.yinji.org\/upvote', {
+      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -829,7 +829,7 @@ Mastodon 始于2016年，一个开源项目，往大了讲，是组成联邦宇�
   
   async function getCount(slug, retryCount = 0) {
     try {
-      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
