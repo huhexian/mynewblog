@@ -33,6 +33,7 @@ defaultContentLanguage = "zh-cn"
   imageZoom = true
   upvote = true
   upvoteURL = "https://upvote.yinji.org/"
+  customCSS = ["/custom.css"]
 
   [params.author]
     name = "青山"

@@ -1,0 +1,105 @@
+/* =========================
+   首页 Recent Posts
+   ========================= */
+
+
+.recent-posts {
+    margin-top: 3rem;
+}
+
+
+/* 标题 */
+
+.recent-posts h2 {
+    margin-bottom: 2rem;
+}
+
+
+
+/* 列表 */
+
+.recent-posts ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+
+/* 每一篇文章 */
+
+.recent-posts li {
+
+    display: grid;
+
+    grid-template-columns: 130px 1fr;
+
+    column-gap: 35px;
+
+    align-items: baseline;
+
+    margin-bottom: 0.8rem;
+
+    line-height: 1.8;
+}
+
+
+
+/* 日期 */
+
+.recent-posts time {
+
+    color: #999;
+
+    font-size: 1rem;
+
+    font-variant-numeric: tabular-nums;
+
+}
+
+
+
+/* 文章标题 */
+
+.recent-posts a {
+
+    color: #b03060;
+
+    text-decoration: none;
+
+    transition: opacity .2s;
+
+}
+
+
+.recent-posts a:hover {
+
+    opacity: .7;
+
+}
+
+
+
+/* 手机端 */
+
+@media (max-width: 600px) {
+
+
+    .recent-posts li {
+
+        display: block;
+
+        margin-bottom: 1.2rem;
+
+    }
+
+
+    .recent-posts time {
+
+        display: block;
+
+        margin-bottom: .2rem;
+
+    }
+
+
+}
