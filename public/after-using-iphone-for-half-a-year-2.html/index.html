@@ -5,11 +5,19 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>使用 iPhone 半年之后（2） | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>使用 iPhone 半年之后（2） | 印记</title>
 <meta name="title" content="使用 iPhone 半年之后（2）" />
 <meta name="description" content="书接上回，每每聊到我使用过的数码产品，不管产品本身好烂与否，我都有强烈的分享欲望，于是上一篇分享中没说完，今天继续。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -26,7 +34,7 @@ iPhone 有太多有意思的内容可以分享，也有太多令人无语的设�
 
 
 <meta property="og:url" content="http://localhost:1313/after-using-iphone-for-half-a-year-2.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="使用 iPhone 半年之后（2）">
 	<meta property="og:description" content="书接上回，每每聊到我使用过的数码产品，不管产品本身好烂与否，我都有强烈的分享欲望，于是上一篇分享中没说完，今天继续。
 今年9月份苹果发布了最新一代 iPhone，16 及 16 Pro，除了年年都说的芯片更新换代，提升了多少性能，降低了多少功耗，这次最大的肉眼可见的变化是一个相机按钮，钟文泽都忍不住吐槽“不好用”的相机按钮。
@@ -578,9 +586,11 @@ iPhone 有太多有意思的内容可以分享，也有太多令人无语的设�
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -607,10 +617,37 @@ iPhone 有太多有意思的内容可以分享，也有太多令人无语的设�
 
 <content> <p>书接上回，每每聊到我使用过的数码产品，不管产品本身好烂与否，我都有强烈的分享欲望，于是上一篇分享中没说完，今天继续。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://img.yinji.org/d7F-9RTTveYRIN9f.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-0b465b79"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-0b465b79"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://img.yinji.org/d7F-9RTTveYRIN9f.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-0b465b79"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://img.yinji.org/d7F-9RTTveYRIN9f.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -632,9 +669,116 @@ iPhone 有太多有意思的内容可以分享，也有太多令人无语的设�
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -644,7 +788,7 @@ iPhone 有太多有意思的内容可以分享，也有太多令人无语的设�
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -659,10 +803,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

@@ -5,7 +5,8 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>关于“死”的一些思考 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>关于“死”的一些思考 | 印记</title>
 <meta name="title" content="关于“死”的一些思考" />
 <meta name="description" content="最近在学校听到附近有办丧事的声音，白天传过来的声音很熟悉，确实是有人家在办丧事。临近年关，马上就是农历新年的到来，在这个原本团团圆圆的喜庆时刻，家里突然遭遇这样的变故，年还会怎么过呢？我已经不是第一次了解到这样的事情了，不止一次看见临近除夕，仍有人离我们远去，留给亲人以无尽的悲伤。也曾看到过比较“幸运”的，过完年，与家人团团圆圆之后不久，在春节里离去的。别人家里还洋溢着新年的喜气氛围，而他们家早已用白绸取代了红灯笼，我奶奶了解之后，感慨道：也挺好的，起码让他过完了年。
 团圆之际，喜庆之时，却遭遇如此不幸，不禁让人咋舌。前些天在网上买的《北野武的小酒馆》到了，看了第一节，讲的是生死的关系。“人死了只意味着不复存在，既没有什么天堂，也没有什么地狱，死人会简单地消失在活人的记忆中。”
@@ -26,7 +27,7 @@
 
 
 <meta property="og:url" content="http://localhost:1313/about-death.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="关于“死”的一些思考">
 	<meta property="og:description" content="最近在学校听到附近有办丧事的声音，白天传过来的声音很熟悉，确实是有人家在办丧事。临近年关，马上就是农历新年的到来，在这个原本团团圆圆的喜庆时刻，家里突然遭遇这样的变故，年还会怎么过呢？我已经不是第一次了解到这样的事情了，不止一次看见临近除夕，仍有人离我们远去，留给亲人以无尽的悲伤。也曾看到过比较“幸运”的，过完年，与家人团团圆圆之后不久，在春节里离去的。别人家里还洋溢着新年的喜气氛围，而他们家早已用白绸取代了红灯笼，我奶奶了解之后，感慨道：也挺好的，起码让他过完了年。
 团圆之际，喜庆之时，却遭遇如此不幸，不禁让人咋舌。前些天在网上买的《北野武的小酒馆》到了，看了第一节，讲的是生死的关系。“人死了只意味着不复存在，既没有什么天堂，也没有什么地狱，死人会简单地消失在活人的记忆中。”
@@ -593,9 +594,11 @@
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -645,9 +648,116 @@
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -657,7 +767,7 @@
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -672,10 +782,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

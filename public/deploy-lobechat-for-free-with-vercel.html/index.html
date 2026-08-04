@@ -5,11 +5,19 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>使用 Vercel 免费部署 LobeChat | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>使用 Vercel 免费部署 LobeChat | 印记</title>
 <meta name="title" content="使用 Vercel 免费部署 LobeChat" />
 <meta name="description" content="我在之前的文章《充分发挥 ChatGPT 在日常生活中的作用》中介绍过一款开源项目——ChatNextWeb，搭配 Vercel 即可部署自己的网页对话机器人，但它仅支持对话，如果想使用 DELL·E 3 模型进行文生图，似乎无法实现。最近看到另一个类似的项目——LobeChat，功能更加齐全、丰富，UI 也更加好看，便记录一下部署过程。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -40,7 +48,7 @@ docker run -d -p 3210:3210 \
 
 
 <meta property="og:url" content="http://localhost:1313/deploy-lobechat-for-free-with-vercel.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="使用 Vercel 免费部署 LobeChat">
 	<meta property="og:description" content="我在之前的文章《充分发挥 ChatGPT 在日常生活中的作用》中介绍过一款开源项目——ChatNextWeb，搭配 Vercel 即可部署自己的网页对话机器人，但它仅支持对话，如果想使用 DELL·E 3 模型进行文生图，似乎无法实现。最近看到另一个类似的项目——LobeChat，功能更加齐全、丰富，UI 也更加好看，便记录一下部署过程。
 LobeChat 介绍 该项目在 GitHub 上已有 17.7k stars，这几个特性比较吸引人：
@@ -593,9 +601,11 @@ docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=htt
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -622,10 +632,37 @@ docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=htt
 
 <content> <p>我在之前的文章《<a href="https://yinji.org/5225.html">充分发挥 ChatGPT 在日常生活中的作用</a>》中介绍过一款开源项目——ChatNextWeb，搭配 Vercel 即可部署自己的网页对话机器人，但它仅支持对话，如果想使用 DELL·E 3 模型进行文生图，似乎无法实现。最近看到另一个类似的项目——<a href="https://github.com/lobehub/lobe-chat">LobeChat</a>，功能更加齐全、丰富，UI 也更加好看，便记录一下部署过程。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/6943e682bf035424e66991258bcbc9c2.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-50bfecd1"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-50bfecd1"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/6943e682bf035424e66991258bcbc9c2.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-50bfecd1"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/6943e682bf035424e66991258bcbc9c2.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -653,20 +690,74 @@ docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=htt
 <p>使用 Vercel 部署更加方便快捷，不用登录 SSH，也不用输入命令。</p>
 <p>进入 GitHub 项目页面，fork LobeChat 项目之后登录 Vercel，选择对应的仓库进行导入。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/82c6b012e45b84c72cffbdf8d69179b3.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-a2f89104"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-a2f89104"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/82c6b012e45b84c72cffbdf8d69179b3.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-a2f89104"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/82c6b012e45b84c72cffbdf8d69179b3.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>在环境变量部分填入相应的 Key 和 Value，如下图所示，我填写了<code>ACCESS_CODE</code> 、<code>OPENAI_API_KEY</code>和<code>OPENAI_PROXY_URL</code>，这样就可以通过 AIGCAPI 提供的第三方 API Key 使用 GPT-4 等模型。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/97f59869fb2d9109e0507b1cc7f727a6.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-f67bb9d5"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-f67bb9d5"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/97f59869fb2d9109e0507b1cc7f727a6.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-f67bb9d5"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/97f59869fb2d9109e0507b1cc7f727a6.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -674,50 +765,185 @@ docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=htt
 <p>注意，如果在环境变量里填写了<code>OPENAI_API_KEY</code>等其他模型服务商的 API Key，则该服务部署成功之后可以直接使用，无需再在网站中填写 API Key，这一点在项目文档中写得比较清楚。</p>
 <p>点击 Deploy，等待部署完成。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/18adff18a50d10106962f2d511ec8c8c.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-06ea97a2"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-06ea97a2"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/18adff18a50d10106962f2d511ec8c8c.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-06ea97a2"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/18adff18a50d10106962f2d511ec8c8c.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>即可访问网站，使用服务。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/b5b42b544bd12b4ec4b0d3b2262ca577.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-311d3a6d"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-311d3a6d"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/b5b42b544bd12b4ec4b0d3b2262ca577.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-311d3a6d"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/b5b42b544bd12b4ec4b0d3b2262ca577.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>切换 GPT-4 模型，打开内置的 DALL·E 3 插件，即可开启文生图模式。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/b4172e6f91e026ea7db5bdd9907fec5d.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-a0e181a3"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-a0e181a3"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/b4172e6f91e026ea7db5bdd9907fec5d.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-a0e181a3"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/b4172e6f91e026ea7db5bdd9907fec5d.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>除此之外，还内置了各种 AI 助手，涵盖写作、翻译、代码等方面。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/5cd268f0e52a5df279954b707ff810e1.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-41f886e9"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-41f886e9"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/5cd268f0e52a5df279954b707ff810e1.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-41f886e9"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/5cd268f0e52a5df279954b707ff810e1.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>最后给大家分享一家我一直在使用的第三方 API Key 提供商，<a href="https://aigcapi.io/register?aff=HyYk">AIGC API</a>，提供高效且稳定的 OpenAI 聚合 API，相比官方20$/月的 ChatGPT Plus，它提供的 API，价格低至1美元只需要2元人民币，除了 GPT-4 模型，图中这些也可以进行调用。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/e3b81857165bf5d1b2580b2616fbcfd8.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-39f3e7c5"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-39f3e7c5"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/e3b81857165bf5d1b2580b2616fbcfd8.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-39f3e7c5"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/e3b81857165bf5d1b2580b2616fbcfd8.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -737,9 +963,256 @@ docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=htt
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+<aside class="toc-nav" role="navigation" aria-label="目录">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#lobechat-介绍">LobeChat 介绍</a></li>
+    <li><a href="#lobechat-部署">LobeChat 部署</a>
+      <ul>
+        <li><a href="#docker-部署">Docker 部署</a></li>
+        <li><a href="#vercel-部署">Vercel 部署</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tocNav = document.querySelector('.toc-nav');
+    if (!tocNav) return;
+
+    const tocLinks = Array.from(tocNav.querySelectorAll('a'));
+    if (!tocLinks.length) return;
+
+    
+    const idToLink = new Map();
+    const headings = [];
+    const seen = new Set();
+
+    for (const link of tocLinks) {
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') continue;
+        const id = decodeURIComponent(hash.slice(1));
+        idToLink.set(id, link);
+
+        if (!seen.has(id)) {
+            const h = document.getElementById(id);
+            if (h) {
+                headings.push(h);
+                seen.add(id);
+            }
+        }
+    }
+
+    if (!headings.length) return;
+
+    const OFFSET = 100; 
+
+    
+    let currentActive = null;
+    let currentChain = [];
+
+    function buildChainFromLink(link) {
+        const chain = [];
+        if (!link) return chain;
+        chain.push(link);
+        let li = link.closest('li');
+        while (li) {
+            const parentLi = li.parentElement ? li.parentElement.closest('li') : null;
+            if (parentLi) {
+                const parentLink = parentLi.querySelector('a');
+                if (parentLink) chain.push(parentLink);
+            }
+            li = parentLi;
+        }
+        return chain;
+    }
+
+    function applyActiveChain(newLink) {
+        if (newLink === currentActive) return;
+        const newChain = buildChainFromLink(newLink);
+
+        
+        for (const el of currentChain) {
+            if (!newChain.includes(el)) el.classList.remove('active');
+        }
+        
+        for (const el of newChain) {
+            if (!el.classList.contains('active')) el.classList.add('active');
+        }
+
+        currentActive = newLink || null;
+        currentChain = newChain;
+    }
+
+    
+    tocNav.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (!link || !tocNav.contains(link)) return;
+
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') return;
+
+        const id = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start'
+        });
+
+        
+        applyActiveChain(link);
+    });
+
+    
+    function updateActiveLink() {
+        let linkToActivate = null;
+        for (let i = headings.length - 1; i >= 0; i--) {
+            const top = headings[i].getBoundingClientRect().top;
+            if (top <= OFFSET) {
+                linkToActivate = idToLink.get(headings[i].id) || null;
+                break;
+            }
+        }
+        applyActiveChain(linkToActivate);
+    }
+
+    
+    let ticking = false;
+    function onScrollOrResize() {
+        if (!ticking) {
+            requestAnimationFrame(function () {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    
+    updateActiveLink();
+});
+</script>
+
+
+</div>
 
 
 
@@ -749,7 +1222,7 @@ docker run -d -p 3210:3210 \ -e OPENAI_API_KEY=sk-xxxx \ -e OPENAI_PROXY_URL=htt
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -764,10 +1237,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>梦 on 印记博客</title>
+    <title>梦 on 印记</title>
     <link>http://localhost:1313/tags/%E6%A2%A6/</link>
-    <description>Recent content in 梦 on 印记博客</description>
+    <description>Recent content in 梦 on 印记</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     
     
+    
+    <copyright>Copyright © 2018-2026, huhexian.</copyright>
     
     
     <lastBuildDate>Wed, 11 Mar 2026 00:00:00 +0000</lastBuildDate>
@@ -19,7 +21,7 @@
       <link>http://localhost:1313/dream.html/</link>
       <pubDate>Wed, 11 Mar 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/dream.html/</guid>
-      <description>&lt;p&gt;&lt;figure&#xA;    class=&#34;image-caption&#34;&#xA;&gt;&#xA;    &#xA;    &lt;img src=&#34;https://yinji-1253682336.cos.ap-guangzhou.myqcloud.com/2026/03/20260311225452535.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;&#xA;    &#xA;    &lt;figcaption&gt;&lt;/figcaption&gt;&#xA;&lt;/figure&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;昨天晚上做了一个很奇怪、却又很真实的梦。&lt;/p&gt;&#xA;&lt;p&gt;梦里我好像回到了初中。那是一种非常熟悉的感觉——宿舍楼、走廊、清晨还没完全亮起来的天空，还有那种学生时代特有的慌张气氛。&lt;/p&gt;&#xA;&lt;p&gt;我和几个初中同学一起住在宿舍里。突然有人说了一句：“完了，睡过头了。”那种熟悉的紧张立马就来了。大家匆匆忙忙从床上爬起来，宿舍里一阵手忙脚乱。有人找袜子，有人找衣服，还有人冲到水池边胡乱洗把脸。&lt;/p&gt;&#xA;&lt;p&gt;可还没等我们收拾好，班主任已经出现在门口了。他站在寝室门口，看着我们，像当年一样皱着眉头。那一瞬间我心里只有一个念头：完了，又被抓到了。班主任往里面看了看，忽然愣了一下，然后认出了我们。他说：“原来是你们啊。”语气忽然变得有点无奈，又有点好笑。&lt;/p&gt;&#xA;&lt;p&gt;“经常迟到的那几个……行了行了，走吧走吧。”&lt;/p&gt;&#xA;&lt;p&gt;我们几个人赶紧往外跑，好像生怕他反悔一样。就在我跑出寝室门的一瞬间，我低头看了一眼自己，忽然发现有点不对。身上穿的不是校服，而是日常上班的通勤装。手里拿着的也不是书包，而是一张挂在胸前的工牌。&lt;/p&gt;&#xA;&lt;p&gt;我愣了一下，回头看了一眼。身后的地方也不是学校宿舍，而是一间狭小的出租屋。房间很小，里面放着一张床、一张桌子，还有一些零碎的生活用品。那一刻我才突然意识到——原来我已经没有在读书了，我是在工作。&lt;/p&gt;&#xA;&lt;p&gt;然后我就醒了。醒来的时候心里还有点恍惚。但仔细想想，这个梦好像又没有那么奇怪。因为这既是梦，也是我每一天的日常，起床、赶时间、害怕迟到。&lt;/p&gt;&#xA;&lt;p&gt;只不过当年怕的是上课迟到，现在怕的是上班迟到。&lt;/p&gt;&#xA;</description>
+      <description>&lt;p&gt;&lt;figure&#xA;    class=&#34;image-caption image-zoom-container&#34;&#xA;&gt;&#xA;    &#xA;    &lt;input&#xA;        type=&#34;checkbox&#34;&#xA;        id=&#34;img-b957e905&#34;&#xA;        class=&#34;image-zoom-toggle&#34;&#xA;        aria-label=&#34;放大图片：&#34;&#xA;    /&gt;&#xA;    &lt;label&#xA;        for=&#34;img-b957e905&#34;&#xA;        class=&#34;image-zoom-label&#34;&#xA;    &gt;&#xA;        &lt;img&#xA;            src=&#34;https://yinji-1253682336.cos.ap-guangzhou.myqcloud.com/2026/03/20260311225452535.png&#34;&#xA;            alt=&#34;&#34;&#xA;            loading=&#34;lazy&#34;&#xA;            class=&#34;zoomable-image&#34;&#xA;        /&gt;&#xA;    &lt;/label&gt;&#xA;    &#xA;    &lt;label&#xA;        for=&#34;img-b957e905&#34;&#xA;        class=&#34;image-zoom-overlay&#34;&#xA;    &gt;&#xA;        &lt;img&#xA;            src=&#34;https://yinji-1253682336.cos.ap-guangzhou.myqcloud.com/2026/03/20260311225452535.png&#34;&#xA;            alt=&#34;&#34;&#xA;            class=&#34;zoomable-image&#34;&#xA;        /&gt;&#xA;    &lt;/label&gt;&#xA;    &#xA;    &lt;figcaption&gt;&lt;/figcaption&gt;&#xA;&lt;/figure&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;昨天晚上做了一个很奇怪、却又很真实的梦。&lt;/p&gt;&#xA;&lt;p&gt;梦里我好像回到了初中。那是一种非常熟悉的感觉——宿舍楼、走廊、清晨还没完全亮起来的天空，还有那种学生时代特有的慌张气氛。&lt;/p&gt;&#xA;&lt;p&gt;我和几个初中同学一起住在宿舍里。突然有人说了一句：“完了，睡过头了。”那种熟悉的紧张立马就来了。大家匆匆忙忙从床上爬起来，宿舍里一阵手忙脚乱。有人找袜子，有人找衣服，还有人冲到水池边胡乱洗把脸。&lt;/p&gt;&#xA;&lt;p&gt;可还没等我们收拾好，班主任已经出现在门口了。他站在寝室门口，看着我们，像当年一样皱着眉头。那一瞬间我心里只有一个念头：完了，又被抓到了。班主任往里面看了看，忽然愣了一下，然后认出了我们。他说：“原来是你们啊。”语气忽然变得有点无奈，又有点好笑。&lt;/p&gt;&#xA;&lt;p&gt;“经常迟到的那几个……行了行了，走吧走吧。”&lt;/p&gt;&#xA;&lt;p&gt;我们几个人赶紧往外跑，好像生怕他反悔一样。就在我跑出寝室门的一瞬间，我低头看了一眼自己，忽然发现有点不对。身上穿的不是校服，而是日常上班的通勤装。手里拿着的也不是书包，而是一张挂在胸前的工牌。&lt;/p&gt;&#xA;&lt;p&gt;我愣了一下，回头看了一眼。身后的地方也不是学校宿舍，而是一间狭小的出租屋。房间很小，里面放着一张床、一张桌子，还有一些零碎的生活用品。那一刻我才突然意识到——原来我已经没有在读书了，我是在工作。&lt;/p&gt;&#xA;&lt;p&gt;然后我就醒了。醒来的时候心里还有点恍惚。但仔细想想，这个梦好像又没有那么奇怪。因为这既是梦，也是我每一天的日常，起床、赶时间、害怕迟到。&lt;/p&gt;&#xA;&lt;p&gt;只不过当年怕的是上课迟到，现在怕的是上班迟到。&lt;/p&gt;&#xA;</description>
     </item>
   </channel>
 </rss>

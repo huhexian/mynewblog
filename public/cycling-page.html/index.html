@@ -5,10 +5,18 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cycling Page | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>Cycling Page | 印记</title>
 <meta name="title" content="Cycling Page" />
 <meta name="description" content="
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -21,6 +29,13 @@ yihong 开源的 Running Page 项目特别有意思，他本人是一个跑步�
 第二步，获取 Strava 的 Token 和 Code。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -42,7 +57,7 @@ curl -X POST https://www.strava.com/oauth/token \
 
 
 <meta property="og:url" content="http://localhost:1313/cycling-page.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="Cycling Page">
 	<meta property="og:description" content="yihong 开源的 Running Page 项目特别有意思，他本人是一个跑步爱好者，从他的页面数据可以了解到，跑步 14 年，总里程 12737km，相当于 0.3 个赤道。
 我不喜欢跑步，体力不太行，去年年底买了公路自行车，上半年骑了不少，后来搬家买了二手电动车，自行车时不时就被闲置，以及 6 月买的一块 iGPSORT 码表，如何再次提起骑行的兴趣，部署一个 Running Cycling Page 或许是不错的选择。
@@ -603,9 +618,11 @@ curl -X POST https://www.strava.com/oauth/token \ -F client_id=${Your Client ID}
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -631,10 +648,37 @@ curl -X POST https://www.strava.com/oauth/token \ -F client_id=${Your Client ID}
  
 
 <content> <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://img.yinji.org/WX20250824-213928@2x.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-85bbfd9e"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-85bbfd9e"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://img.yinji.org/WX20250824-213928@2x.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-85bbfd9e"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://img.yinji.org/WX20250824-213928@2x.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -645,10 +689,37 @@ curl -X POST https://www.strava.com/oauth/token \ -F client_id=${Your Client ID}
 <p>第一步，Fork 仓库，<a href="https://cyc.guoqi.dev/">小孙同学</a>也是骑公路车，我直接 Fork 他的仓库，在上面修改一些数据。</p>
 <p>第二步，获取 Strava 的 Token 和 Code。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://img.yinji.org/WX20250824-211330@2x.png" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-d5ea8c0a"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-d5ea8c0a"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://img.yinji.org/WX20250824-211330@2x.png"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-d5ea8c0a"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://img.yinji.org/WX20250824-211330@2x.png"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -664,10 +735,37 @@ curl -X POST https://www.strava.com/oauth/token \ -F client_id=${Your Client ID}
 -F grant_type=authorization_code
 </code></pre><p>最后把获取到的三项内容，添加到 Repository secrets 中。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://img.yinji.org/1756041873870.jpg" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-c3e07ca8"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-c3e07ca8"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://img.yinji.org/1756041873870.jpg"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-c3e07ca8"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://img.yinji.org/1756041873870.jpg"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -678,10 +776,37 @@ curl -X POST https://www.strava.com/oauth/token \ -F client_id=${Your Client ID}
 <p><a href="https://cycling.yinji.org">https://cycling.yinji.org</a></p>
 </blockquote>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://img.yinji.org/WX20250824-213928@2x.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-85bbfd9e"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-85bbfd9e"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://img.yinji.org/WX20250824-213928@2x.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-85bbfd9e"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://img.yinji.org/WX20250824-213928@2x.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -698,9 +823,116 @@ curl -X POST https://www.strava.com/oauth/token \ -F client_id=${Your Client ID}
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -710,7 +942,7 @@ curl -X POST https://www.strava.com/oauth/token \ -F client_id=${Your Client ID}
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -725,10 +957,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

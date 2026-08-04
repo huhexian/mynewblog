@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>为人处世 on 印记博客</title>
+    <title>为人处世 on 印记</title>
     <link>http://localhost:1313/tags/%E4%B8%BA%E4%BA%BA%E5%A4%84%E4%B8%96/</link>
-    <description>Recent content in 为人处世 on 印记博客</description>
+    <description>Recent content in 为人处世 on 印记</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     
     
+    
+    <copyright>Copyright © 2018-2026, huhexian.</copyright>
     
     
     <lastBuildDate>Sat, 27 Feb 2021 00:00:00 +0000</lastBuildDate>

@@ -5,11 +5,19 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>选择一种方式，然后坚持写下去 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>选择一种方式，然后坚持写下去 | 印记</title>
 <meta name="title" content="选择一种方式，然后坚持写下去" />
 <meta name="description" content="最近，国外知名日记软件 Day One[1] 被 WordPress.com 母公司 Automattic lnc.收购，日记这个词又一次出现在大众视野。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -30,7 +38,7 @@ WordPress 创始人 Matt Mullenweg 在他的个人博客[3]中提到，Having a 
 
 
 <meta property="og:url" content="http://localhost:1313/choose-a-method-and-stick-with-it.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="选择一种方式，然后坚持写下去">
 	<meta property="og:description" content="最近，国外知名日记软件 Day One[1] 被 WordPress.com 母公司 Automattic lnc.收购，日记这个词又一次出现在大众视野。
 不管是在软件上写日记，还是在自建的博客上写日记，亦或是最传统的方式——手写日记，都只是写日记的一种形式，本质不变，依旧是记录自己的日常与想法。
@@ -594,9 +602,11 @@ WordPress 创始人 Matt Mullenweg 在他的个人博客[3]中提到，Having a 
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -623,10 +633,37 @@ WordPress 创始人 Matt Mullenweg 在他的个人博客[3]中提到，Having a 
 
 <content> <p>最近，国外知名日记软件 Day One[1] 被 WordPress.com 母公司 Automattic lnc.收购，日记这个词又一次出现在大众视野。</p>
 <p><a href="https://rmt.ladydaily.com/fetch/lucy/storage/20210615211405.png"><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/20210615211405.png" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-00b9a536"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-00b9a536"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/20210615211405.png"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-00b9a536"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/20210615211405.png"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -652,9 +689,116 @@ WordPress 创始人 Matt Mullenweg 在他的个人博客[3]中提到，Having a 
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -664,7 +808,7 @@ WordPress 创始人 Matt Mullenweg 在他的个人博客[3]中提到，Having a 
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -679,10 +823,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

@@ -5,7 +5,8 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>从自身需求出发，选择自己合适的笔记软件 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>从自身需求出发，选择自己合适的笔记软件 | 印记</title>
 <meta name="title" content="从自身需求出发，选择自己合适的笔记软件" />
 <meta name="description" content="
 最近，我建立的中文博客圈微信群里掀起了一股笔记软件讨论风。或者说这个话题一直没有断过，不断有人安利新的笔记软件，咨询使用方法，前段时间我在日记里简单写了我对于笔记软件的用途，今天趁此机会聊聊我对于选择笔记软件的看法。
@@ -40,7 +41,7 @@ Obsidian
 
 
 <meta property="og:url" content="http://localhost:1313/choose-the-right-note-taking-software-based-on-your-needs.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="从自身需求出发，选择自己合适的笔记软件">
 	<meta property="og:description" content="最近，我建立的中文博客圈微信群里掀起了一股笔记软件讨论风。或者说这个话题一直没有断过，不断有人安利新的笔记软件，咨询使用方法，前段时间我在日记里简单写了我对于笔记软件的用途，今天趁此机会聊聊我对于选择笔记软件的看法。
 “好记性不如烂笔头”，我觉得这是大部分人选择记笔记的主要原因之一，人的记忆力是有限的，脑海中能容纳的东西有限，记笔记就成了我们开发第二个大脑的方式。从最原始的手写笔记，到现在各种笔记软件层出不穷，各具特色，极大地丰富了我们对记笔记的理解和使用，但这或许也会让我们陷入选择的困境。可供我们选择的太多太多了，经常会有人问：我应该用哪一款笔记软件。在我看来，从自身需求出发，选择自己合适的笔记软件，即先了解自己为什么要记笔记。
@@ -615,9 +616,11 @@ Obsidian 对于 Obsidian，它是我接触最晚的一款笔记软件，但目�
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -691,9 +694,257 @@ Obsidian 对于 Obsidian，它是我接触最晚的一款笔记软件，但目�
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+<aside class="toc-nav" role="navigation" aria-label="目录">
+  <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#notion">Notion</a></li>
+        <li><a href="#flomo">flomo</a></li>
+        <li><a href="#obsidian">Obsidian</a></li>
+        <li><a href="#第二大脑">第二大脑</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tocNav = document.querySelector('.toc-nav');
+    if (!tocNav) return;
+
+    const tocLinks = Array.from(tocNav.querySelectorAll('a'));
+    if (!tocLinks.length) return;
+
+    
+    const idToLink = new Map();
+    const headings = [];
+    const seen = new Set();
+
+    for (const link of tocLinks) {
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') continue;
+        const id = decodeURIComponent(hash.slice(1));
+        idToLink.set(id, link);
+
+        if (!seen.has(id)) {
+            const h = document.getElementById(id);
+            if (h) {
+                headings.push(h);
+                seen.add(id);
+            }
+        }
+    }
+
+    if (!headings.length) return;
+
+    const OFFSET = 100; 
+
+    
+    let currentActive = null;
+    let currentChain = [];
+
+    function buildChainFromLink(link) {
+        const chain = [];
+        if (!link) return chain;
+        chain.push(link);
+        let li = link.closest('li');
+        while (li) {
+            const parentLi = li.parentElement ? li.parentElement.closest('li') : null;
+            if (parentLi) {
+                const parentLink = parentLi.querySelector('a');
+                if (parentLink) chain.push(parentLink);
+            }
+            li = parentLi;
+        }
+        return chain;
+    }
+
+    function applyActiveChain(newLink) {
+        if (newLink === currentActive) return;
+        const newChain = buildChainFromLink(newLink);
+
+        
+        for (const el of currentChain) {
+            if (!newChain.includes(el)) el.classList.remove('active');
+        }
+        
+        for (const el of newChain) {
+            if (!el.classList.contains('active')) el.classList.add('active');
+        }
+
+        currentActive = newLink || null;
+        currentChain = newChain;
+    }
+
+    
+    tocNav.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (!link || !tocNav.contains(link)) return;
+
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') return;
+
+        const id = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start'
+        });
+
+        
+        applyActiveChain(link);
+    });
+
+    
+    function updateActiveLink() {
+        let linkToActivate = null;
+        for (let i = headings.length - 1; i >= 0; i--) {
+            const top = headings[i].getBoundingClientRect().top;
+            if (top <= OFFSET) {
+                linkToActivate = idToLink.get(headings[i].id) || null;
+                break;
+            }
+        }
+        applyActiveChain(linkToActivate);
+    }
+
+    
+    let ticking = false;
+    function onScrollOrResize() {
+        if (!ticking) {
+            requestAnimationFrame(function () {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    
+    updateActiveLink();
+});
+</script>
+
+
+</div>
 
 
 
@@ -703,7 +954,7 @@ Obsidian 对于 Obsidian，它是我接触最晚的一款笔记软件，但目�
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -718,10 +969,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

@@ -5,7 +5,8 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Roll | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>Roll | 印记</title>
 <meta name="title" content="Roll" />
 <meta name="description" content="本页面非友情链接，仅作收藏/书签，请随意。
 
@@ -42,7 +43,7 @@ Raye&rsquo;s Journey：且趁闲身未老，尽放我、些子疏狂。
 
 
 <meta property="og:url" content="http://localhost:1313/roll.html">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="Roll">
 	<meta property="og:description" content="本页面非友情链接，仅作收藏/书签，请随意。
 陈仓颉： 帅小伙。 图南博客：博客圈里的眼科专家，经营着一家眼镜店，在他那配过眼镜。 Damon：东北爷们，热心肠。 云顶天：唯一面基过的博友，80 后玩家。 1900：Ghost 玩家，喜欢旅行、骑行，他博客中的自省栏目非常有意思。 Jack：把 Gutenberg 和 Blocksy 主题玩得特别厉害，博客非常漂亮。头像和语言风格让我以为是个大学生，没想到已经结婚。 Dayu：和 Jack 一样，使用 Blocksy 主题，但风格不一样，木和叶的区别。如上，也让我有一种以为他是大学生的错觉。 依然：摄影穷三代，单反毁一生。 林木木：Hugo 高级玩家，经常折腾许多新鲜事物，推荐他编辑整理的广场周刊。 燕渡寒潭：2023年移居加拿大，很喜欢她博客的一句话：别为活命而败坏生存之根。 杨景文：以前叫学长，现在叫叔叔更合适。认识5年多的博友，也是一个有故事的男人，不知道现在是否依然单身，只知道5年前的时候是单身。 东评西就：我是他博客列表里的非典一代，他是我博客列表里的天涯用户。 老张博客：人民教师，群里永不停止折腾的爷们。 小猪的窝：三句不离前女友。 胡涂说：同为胡姓人家，虽然叫胡涂说，但博客里的文章一点也不糊涂。 Pseudoyu：我是受他和他博客的影响，开始写周报。 荔色粒子：通过博客和 Twitter 认识，非常厉害的女生，对人工智能、ChatGPT 有研究内容。 叶子笔记：又一位江西老表，对 WordPress 主题和插件开发很有经验，向他学习过很多东西。 DemoChen：特立独行的异类，非常友好，助人为乐。从以前的 Hexo 到现在的 Hugo，还有两个有意思的站点，都部署在我的服务器上。 NodeSeek：经常逛的一个论坛，内容多以主机交流为主，氛围不错，值得收藏。 雪糕：流动的水没有形状，漂流的风找不到踪迹，任何美食的品味都取决于心。唯一看透美食的是外表看似小孩，智慧却过于常人的乌龙桃桃。 何老师：博主本姓何，育人廿六载。我住长江边，君自四海来。文字不修饰，实是无文采。飞絮落叶雪，唯待梨花开。 绝非善类：酷 boy，肌肉男，天津爷们。 Raye’s Journey：且趁闲身未老，尽放我、些子疏狂。 博客大联盟：一个属于写作者的博客联盟。慢一点，写长一点，读认真一点。 …更新中">
@@ -574,9 +575,11 @@ Raye&rsquo;s Journey：且趁闲身未老，尽放我、些子疏狂。
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -625,9 +628,116 @@ Raye&rsquo;s Journey：且趁闲身未老，尽放我、些子疏狂。
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -637,7 +747,7 @@ Raye&rsquo;s Journey：且趁闲身未老，尽放我、些子疏狂。
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -652,10 +762,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

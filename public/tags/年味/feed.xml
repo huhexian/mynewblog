@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>年味 on 印记博客</title>
+    <title>年味 on 印记</title>
     <link>http://localhost:1313/tags/%E5%B9%B4%E5%91%B3/</link>
-    <description>Recent content in 年味 on 印记博客</description>
+    <description>Recent content in 年味 on 印记</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     
     
+    
+    <copyright>Copyright © 2018-2026, huhexian.</copyright>
     
     
     <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate>

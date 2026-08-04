@@ -5,7 +5,8 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>那些年我们一起谈过的恋爱 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>那些年我们一起谈过的恋爱 | 印记</title>
 <meta name="title" content="那些年我们一起谈过的恋爱" />
 <meta name="description" content="源于我在 Twitter 上面看到的一条推文：我小时候一直有女朋友。直到大学毕业后才又单身了好多年。然后碰到我媳妇又谈恋爱。现在想起来。谈恋爱真的是小时候谈感觉最好。好像大了以后，喜欢别人的能力就降低了。很难再有那种就想见对方一面，哪怕就是打个招呼抱一下，心里也能甜一下午的感觉了。不让学生谈恋爱真的罪大恶极。对于最后一句话，在我看来，大学不谈恋爱真的是罪大恶极。
 看完这条推之后，我也写了下自己的想法：初中时候谈过恋爱，懵懵懂懂，啥也不知道，初中在学校谈恋爱就跟做贼一样。高考结束了，暑假谈了一次恋爱，那种就真正有恋爱的感觉，也第一次有初恋的感觉。我上初中到现在读大学，家里一直不让我谈恋爱，说以后参加工作了再想这些，以至于现在大学恋爱也是瞒着家里人。不知以后怎样，但现在感觉很好。
@@ -18,7 +19,7 @@
 
 
 <meta property="og:url" content="http://localhost:1313/the-love-we-had-in-those-years.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="那些年我们一起谈过的恋爱">
 	<meta property="og:description" content="源于我在 Twitter 上面看到的一条推文：我小时候一直有女朋友。直到大学毕业后才又单身了好多年。然后碰到我媳妇又谈恋爱。现在想起来。谈恋爱真的是小时候谈感觉最好。好像大了以后，喜欢别人的能力就降低了。很难再有那种就想见对方一面，哪怕就是打个招呼抱一下，心里也能甜一下午的感觉了。不让学生谈恋爱真的罪大恶极。对于最后一句话，在我看来，大学不谈恋爱真的是罪大恶极。
 看完这条推之后，我也写了下自己的想法：初中时候谈过恋爱，懵懵懂懂，啥也不知道，初中在学校谈恋爱就跟做贼一样。高考结束了，暑假谈了一次恋爱，那种就真正有恋爱的感觉，也第一次有初恋的感觉。我上初中到现在读大学，家里一直不让我谈恋爱，说以后参加工作了再想这些，以至于现在大学恋爱也是瞒着家里人。不知以后怎样，但现在感觉很好。
@@ -567,9 +568,11 @@
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -611,9 +614,116 @@
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -623,7 +733,7 @@
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -638,10 +748,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

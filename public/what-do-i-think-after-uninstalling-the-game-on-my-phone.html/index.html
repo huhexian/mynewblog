@@ -5,7 +5,8 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>卸载手机上的游戏之后我在想什么 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>卸载手机上的游戏之后我在想什么 | 印记</title>
 <meta name="title" content="卸载手机上的游戏之后我在想什么" />
 <meta name="description" content="1月4日，我在朋友圈发了这样一句话：卸载了手机上的游戏，有更多的时间可以做感兴趣的事情。毋庸置疑，在卸载之前，我的确会在空闲的时间登一把王者，开一把黑，经常这样的结果是什么呢？想看的书没看完，想看的电影一直没动，就如同我说的这句话一样，很多感兴趣的事情由于游戏的干扰，没能做成。
 的确，我也希望卸载游戏之后，可以像我计划的那样，规划寒假的每一天，何时看书、记单词、看网课，但是“计划总赶不上变化”，为什么游戏卸载了，我仍然还是会花很多时间在手机上？在那条朋友圈下面，有这样一条评论：先卸载抖音、微博、知乎。看到之后，我恍然大悟，回过头来仔细想想每一天使用的APP，除了微信和QQ，使用时间和频率最长的，就是抖音、微博和知乎，其时间和频率是比游戏还要高的。
@@ -23,7 +24,7 @@
 
 
 <meta property="og:url" content="http://localhost:1313/what-do-i-think-after-uninstalling-the-game-on-my-phone.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="卸载手机上的游戏之后我在想什么">
 	<meta property="og:description" content="1月4日，我在朋友圈发了这样一句话：卸载了手机上的游戏，有更多的时间可以做感兴趣的事情。毋庸置疑，在卸载之前，我的确会在空闲的时间登一把王者，开一把黑，经常这样的结果是什么呢？想看的书没看完，想看的电影一直没动，就如同我说的这句话一样，很多感兴趣的事情由于游戏的干扰，没能做成。
 的确，我也希望卸载游戏之后，可以像我计划的那样，规划寒假的每一天，何时看书、记单词、看网课，但是“计划总赶不上变化”，为什么游戏卸载了，我仍然还是会花很多时间在手机上？在那条朋友圈下面，有这样一条评论：先卸载抖音、微博、知乎。看到之后，我恍然大悟，回过头来仔细想想每一天使用的APP，除了微信和QQ，使用时间和频率最长的，就是抖音、微博和知乎，其时间和频率是比游戏还要高的。
@@ -589,9 +590,11 @@
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -642,9 +645,116 @@
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -654,7 +764,7 @@
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -669,10 +779,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

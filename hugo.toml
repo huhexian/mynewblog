@@ -24,6 +24,15 @@ defaultContentLanguage = "zh-cn"
   title = "印记"
   description = "Live a life you will remember."
   favicon = "img/favicon.png"
+  copyright = "Copyright © 2018-2026, huhexian."
+  enableRobotsTXT = true
+  postSearch = true
+  toc = true
+  groupByYear = true
+  showPostCount = true
+  imageZoom = true
+  upvote = true
+  upvoteURL = "upvote.yinji.org/"
 
   [params.author]
     name = "青山"
@@ -38,4 +47,5 @@ defaultContentLanguage = "zh-cn"
   pagerSize = 10
 
 
-enableRobotsTXT = true
+
+

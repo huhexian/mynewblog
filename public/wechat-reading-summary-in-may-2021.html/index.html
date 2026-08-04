@@ -5,7 +5,8 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>2021年5月微信读书总结 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>2021年5月微信读书总结 | 印记</title>
 <meta name="title" content="2021年5月微信读书总结" />
 <meta name="description" content="5月份微信读书共13小时55分钟，读完了三本书，分别是《人民的名义》、《我们仨》、《高效学习法：用思维导图和知识卡片快速构建个人知识体系》。三本书不同类型，涉及的知识和内容也不一样。
 《人民的名义》
@@ -16,6 +17,13 @@
 读此书，不难看见杨绛与钱钟书夫妻俩真切的感情。他们把游玩称作“探险”，他们在一起，随处都能探索到新奇的事，即使到了晚年，也能像年轻时那么兴致，对什么都感兴趣。即使在生活条件困难的情况下，仍然不停顿的是读书与工作，这是他们的乐趣。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -32,7 +40,7 @@
 
 
 <meta property="og:url" content="http://localhost:1313/wechat-reading-summary-in-may-2021.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="2021年5月微信读书总结">
 	<meta property="og:description" content="5月份微信读书共13小时55分钟，读完了三本书，分别是《人民的名义》、《我们仨》、《高效学习法：用思维导图和知识卡片快速构建个人知识体系》。三本书不同类型，涉及的知识和内容也不一样。
 《人民的名义》 看完电视剧再看原著给我最大的感受是：每一个角色都有一个具体的形象留在你的脑海中。陆毅饰演的侯亮平、吴刚饰演的李达康、张丰毅饰演的沙瑞金……书中的角色不仅仅只是那一个个名字，而是有血有肉有形象的人物，读到他们的时候自然而然会把影视中的形象代入进去。面对小说，很多人遇到的问题是小说里人物太多，角色记不住，而看完电视剧再看原著，这个问题其实就解决一半了，你会记得他们各自的性格特点。
@@ -596,9 +604,11 @@
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -631,10 +641,37 @@
 <p>杨绛先生在晚年写下《我们仨》，回忆过去三人相处的各种情景，从她和钱钟书赴英国留学、喜得爱女钱媛，到最后女儿丈夫相继离世，用极其质朴的语言叙述生活中最平常但最难忘的小事。丈夫与女儿的离去，让白发人送黑发人，杨绛先生的晚年异常艰辛，仍能用心记述了他们这个家庭63年的点点滴滴。</p>
 <p>读此书，不难看见杨绛与钱钟书夫妻俩真切的感情。他们把游玩称作“探险”，他们在一起，随处都能探索到新奇的事，即使到了晚年，也能像年轻时那么兴致，对什么都感兴趣。即使在生活条件困难的情况下，仍然不停顿的是读书与工作，这是他们的乐趣。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://yinji.org/wp-content/uploads/2022/05/2022051303003215.png" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-5b9c1edf"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-5b9c1edf"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://yinji.org/wp-content/uploads/2022/05/2022051303003215.png"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-5b9c1edf"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://yinji.org/wp-content/uploads/2022/05/2022051303003215.png"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -662,9 +699,252 @@
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+<aside class="toc-nav" role="navigation" aria-label="目录">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#人民的名义">《人民的名义》</a></li>
+    <li><a href="#我们仨">《我们仨》</a></li>
+    <li><a href="#高效学习法用思维导图和知识卡片快速构建个人知识体系">《高效学习法：用思维导图和知识卡片快速构建个人知识体系》</a></li>
+  </ul>
+</nav>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tocNav = document.querySelector('.toc-nav');
+    if (!tocNav) return;
+
+    const tocLinks = Array.from(tocNav.querySelectorAll('a'));
+    if (!tocLinks.length) return;
+
+    
+    const idToLink = new Map();
+    const headings = [];
+    const seen = new Set();
+
+    for (const link of tocLinks) {
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') continue;
+        const id = decodeURIComponent(hash.slice(1));
+        idToLink.set(id, link);
+
+        if (!seen.has(id)) {
+            const h = document.getElementById(id);
+            if (h) {
+                headings.push(h);
+                seen.add(id);
+            }
+        }
+    }
+
+    if (!headings.length) return;
+
+    const OFFSET = 100; 
+
+    
+    let currentActive = null;
+    let currentChain = [];
+
+    function buildChainFromLink(link) {
+        const chain = [];
+        if (!link) return chain;
+        chain.push(link);
+        let li = link.closest('li');
+        while (li) {
+            const parentLi = li.parentElement ? li.parentElement.closest('li') : null;
+            if (parentLi) {
+                const parentLink = parentLi.querySelector('a');
+                if (parentLink) chain.push(parentLink);
+            }
+            li = parentLi;
+        }
+        return chain;
+    }
+
+    function applyActiveChain(newLink) {
+        if (newLink === currentActive) return;
+        const newChain = buildChainFromLink(newLink);
+
+        
+        for (const el of currentChain) {
+            if (!newChain.includes(el)) el.classList.remove('active');
+        }
+        
+        for (const el of newChain) {
+            if (!el.classList.contains('active')) el.classList.add('active');
+        }
+
+        currentActive = newLink || null;
+        currentChain = newChain;
+    }
+
+    
+    tocNav.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (!link || !tocNav.contains(link)) return;
+
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') return;
+
+        const id = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start'
+        });
+
+        
+        applyActiveChain(link);
+    });
+
+    
+    function updateActiveLink() {
+        let linkToActivate = null;
+        for (let i = headings.length - 1; i >= 0; i--) {
+            const top = headings[i].getBoundingClientRect().top;
+            if (top <= OFFSET) {
+                linkToActivate = idToLink.get(headings[i].id) || null;
+                break;
+            }
+        }
+        applyActiveChain(linkToActivate);
+    }
+
+    
+    let ticking = false;
+    function onScrollOrResize() {
+        if (!ticking) {
+            requestAnimationFrame(function () {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    
+    updateActiveLink();
+});
+</script>
+
+
+</div>
 
 
 
@@ -674,7 +954,7 @@
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -689,10 +969,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

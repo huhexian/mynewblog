@@ -5,10 +5,18 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>关于中文博客圈的思考 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>关于中文博客圈的思考 | 印记</title>
 <meta name="title" content="关于中文博客圈的思考" />
 <meta name="description" content="
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -37,7 +45,7 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
 
 
 <meta property="og:url" content="http://localhost:1313/thoughts-on-the-chinese-blogosphere.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="关于中文博客圈的思考">
 	<meta property="og:description" content="我在2019年3月的时候发起了这样一个“项目”，将写博客的人聚集在一个QQ群里，让这个群作为大家交流的平台，群名就叫“中文博客圈”。后来发现QQ群的活跃度远不如十多年前，我便在2020年末建立微信群作为主要的交流平台。
 当然，这个群的经历也是比较曲折。2022年11月23日，由于不可抗力因素，群被封，随即建立新群，一直到今天，群里共有104人。
@@ -601,9 +609,11 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -629,10 +639,37 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
  
 
 <content> <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/06/02/64796a64497e6.png" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-42e22c04"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-42e22c04"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/06/02/64796a64497e6.png"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-42e22c04"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/06/02/64796a64497e6.png"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -666,9 +703,116 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -678,7 +822,7 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -693,10 +837,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

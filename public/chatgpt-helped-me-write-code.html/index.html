@@ -5,13 +5,21 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ChatGPT 帮我写代码，实现“已写完哪本书”统计 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>ChatGPT 帮我写代码，实现“已写完哪本书”统计 | 印记</title>
 <meta name="title" content="ChatGPT 帮我写代码，实现“已写完哪本书”统计" />
 <meta name="description" content="我算是第一批用上 ChatGPT 的人群，去年12月就已经注册好了。到目前为止，我用它帮我写过调查问卷、日常作业，也会问一些奇奇怪怪的问题。昨天利用它，帮我写了一段 WordPress 的代码。
 起初是在林木木的博客里看到他写《已写完了哪本书》 ，原理我懂，获取全站所有文章的字数，然后看你字数在哪个区间，便输出对应字数的书籍，奈何人家使用的是 Hugo，我便问他如果用在 WordPress 上需要如何修改，他给了我 Typecho 的修改版本，具体看《博客全站总字数统计》。又难倒我了，我随即向 ChatGPT 寻求帮助。
 我先将林木木博客的代码发给它，解释了一遍代码原理。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -22,12 +30,26 @@
     
     
     
+        
+    
+    
+    
+        
+    
+    
     
 
 
 最后，再要求它基于上述代码，修改为 WordPress 可用的版本，虽然由于字数限制，它无法一次性生成全部代码，但好在成功了。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -106,7 +128,7 @@ function allwords() {
 
 
 <meta property="og:url" content="http://localhost:1313/chatgpt-helped-me-write-code.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="ChatGPT 帮我写代码，实现“已写完哪本书”统计">
 	<meta property="og:description" content="我算是第一批用上 ChatGPT 的人群，去年12月就已经注册好了。到目前为止，我用它帮我写过调查问卷、日常作业，也会问一些奇奇怪怪的问题。昨天利用它，帮我写了一段 WordPress 的代码。
 起初是在林木木的博客里看到他写《已写完了哪本书》 ，原理我懂，获取全站所有文章的字数，然后看你字数在哪个区间，便输出对应字数的书籍，奈何人家使用的是 Hugo，我便问他如果用在 WordPress 上需要如何修改，他给了我 Typecho 的修改版本，具体看《博客全站总字数统计》。又难倒我了，我随即向 ChatGPT 寻求帮助。
@@ -660,9 +682,11 @@ function allwords() {
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -691,30 +715,111 @@ function allwords() {
 <p>起初是在林木木的博客里看到他写《<a href="https://immmmm.com/what-book-i-write/">已写完了哪本书</a>》 ，原理我懂，获取全站所有文章的字数，然后看你字数在哪个区间，便输出对应字数的书籍，奈何人家使用的是 Hugo，我便问他如果用在 WordPress 上需要如何修改，他给了我 Typecho 的修改版本，具体看《<a href="https://www.jdeal.cn/152.html">博客全站总字数统计</a>》。又难倒我了，我随即向 ChatGPT 寻求帮助。</p>
 <p>我先将林木木博客的代码发给它，解释了一遍代码原理。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/20230417084350.png" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-65d87ba4"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-65d87ba4"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/20230417084350.png"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-65d87ba4"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/20230417084350.png"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>随后，我让它将此代码修改为 WordPress 可用的版本，但是写出来似乎不起作用。我就给它发送 Typecho 的版本进行修改，同样也给我解释了代码的原理。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/20230417084410.png" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-ab0f782c"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-ab0f782c"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/20230417084410.png"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-ab0f782c"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/20230417084410.png"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>最后，再要求它基于上述代码，修改为 WordPress 可用的版本，虽然由于字数限制，它无法一次性生成全部代码，但好在成功了。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/20230417084440.png" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-841e02a4"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-841e02a4"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/20230417084440.png"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-841e02a4"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/20230417084440.png"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -789,10 +894,37 @@ function allwords() {
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">allwords</span>(); <span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span></code></pre></div><p>我目前是放在了 footer.php 文件中，显示在页面末尾。上述代码可以根据实际情况自由修改，比如字数、书名等等，也可以添加更多的字数区间和书名。以上便是我用 ChatGPT 的过程。效果如下图所示。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="images/20230417085513.png" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-223748e2"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-223748e2"
+        class="image-zoom-label"
+    >
+        <img
+            src="images/20230417085513.png"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-223748e2"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="images/20230417085513.png"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -808,9 +940,116 @@ function allwords() {
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -820,7 +1059,7 @@ function allwords() {
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -835,10 +1074,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

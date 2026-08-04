@@ -5,7 +5,8 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>消费与生活 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>消费与生活 | 印记</title>
 <meta name="title" content="消费与生活" />
 <meta name="description" content="上一次更新还是在10月30日，一个月左右的样子，我几乎快忘了自己还有一个新建立不久的博客。或许是事情太多了，生活太忙了，也可能是我自己太懒了。每天都有写的想法，写写这个、写写那个，但是缺乏写的动力，零零碎碎的文字不足以拿出来亮相，即便是写出来给自己看，也要有仪式感和正式感。
 我一贯以来的消费理念就是，自己用不上的东西，再好再便宜我也不会买，自己用得上而且必须得用的东西，再贵我也会攒钱买。前几天第一次为一款笔记应用付费——flomo，对于它的具体介绍我不详述，官网说得比我清楚。原本一直使用赠送的会员服务，到期了也不影响我继续记笔记，但是当我需要回顾过去的记录时，有些有双向链接的笔记回顾起来则需要使用会员功能，再者，我习惯使用微信读书时，在微信读书软件上“划线”、“标注”，看完该本书之后通过 flomo 的 api 功能，将划线和标注同步到 flomo 上，可巧不巧的是 api 也需要会员功能。这个时候我发现了自己的需求，便用自己高校学生的身份，购买了教育版 flomo 会员，以继续满足我的使用需求。
@@ -19,7 +20,7 @@
 
 
 <meta property="og:url" content="http://localhost:1313/consumption-and-life.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="消费与生活">
 	<meta property="og:description" content="上一次更新还是在10月30日，一个月左右的样子，我几乎快忘了自己还有一个新建立不久的博客。或许是事情太多了，生活太忙了，也可能是我自己太懒了。每天都有写的想法，写写这个、写写那个，但是缺乏写的动力，零零碎碎的文字不足以拿出来亮相，即便是写出来给自己看，也要有仪式感和正式感。
 我一贯以来的消费理念就是，自己用不上的东西，再好再便宜我也不会买，自己用得上而且必须得用的东西，再贵我也会攒钱买。前几天第一次为一款笔记应用付费——flomo，对于它的具体介绍我不详述，官网说得比我清楚。原本一直使用赠送的会员服务，到期了也不影响我继续记笔记，但是当我需要回顾过去的记录时，有些有双向链接的笔记回顾起来则需要使用会员功能，再者，我习惯使用微信读书时，在微信读书软件上“划线”、“标注”，看完该本书之后通过 flomo 的 api 功能，将划线和标注同步到 flomo 上，可巧不巧的是 api 也需要会员功能。这个时候我发现了自己的需求，便用自己高校学生的身份，购买了教育版 flomo 会员，以继续满足我的使用需求。
@@ -572,9 +573,11 @@
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -619,9 +622,116 @@
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -631,7 +741,7 @@
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -646,10 +756,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

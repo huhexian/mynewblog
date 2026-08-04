@@ -5,7 +5,8 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>关于我的博客 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>关于我的博客 | 印记</title>
 <meta name="title" content="关于我的博客" />
 <meta name="description" content="之前在网上看到过这样一句话：当你不知道该写什么的时候就写如何搭建博客。不过，我这篇不是要讲如何搭建，而是介绍下我博客的相关信息。因为经常会有网友给我留言，问我博客是什么程序、什么主题，用的什么服务器之类的问题，今天就整理下。
 
@@ -70,7 +71,7 @@ twentytwelve 主题功能增强
 
 
 <meta property="og:url" content="http://localhost:1313/about-my-blog.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="关于我的博客">
 	<meta property="og:description" content="之前在网上看到过这样一句话：当你不知道该写什么的时候就写如何搭建博客。不过，我这篇不是要讲如何搭建，而是介绍下我博客的相关信息。因为经常会有网友给我留言，问我博客是什么程序、什么主题，用的什么服务器之类的问题，今天就整理下。
 博客程序 WordPress 博客主题 Twenty Twelve 域名 腾讯云 服务器 腾讯云（学生机） 域名解析 DNSPod 服务器面板 宝塔面板 博客基本的信息就是表格里所示。现在详细说一说。
@@ -650,9 +651,11 @@ commonWP Comet Cache twentytwelve 主题功能增强 积木箱子 豆瓣读书�
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -763,9 +766,256 @@ commonWP Comet Cache twentytwelve 主题功能增强 积木箱子 豆瓣读书�
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+<aside class="toc-nav" role="navigation" aria-label="目录">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#服务器">服务器</a></li>
+    <li><a href="#域名">域名</a></li>
+    <li><a href="#程序">程序</a></li>
+    <li><a href="#插件">插件</a></li>
+    <li><a href="#主题">主题</a></li>
+    <li><a href="#优化">优化</a></li>
+    <li><a href="#rss阅读">RSS阅读</a></li>
+  </ul>
+</nav>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tocNav = document.querySelector('.toc-nav');
+    if (!tocNav) return;
+
+    const tocLinks = Array.from(tocNav.querySelectorAll('a'));
+    if (!tocLinks.length) return;
+
+    
+    const idToLink = new Map();
+    const headings = [];
+    const seen = new Set();
+
+    for (const link of tocLinks) {
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') continue;
+        const id = decodeURIComponent(hash.slice(1));
+        idToLink.set(id, link);
+
+        if (!seen.has(id)) {
+            const h = document.getElementById(id);
+            if (h) {
+                headings.push(h);
+                seen.add(id);
+            }
+        }
+    }
+
+    if (!headings.length) return;
+
+    const OFFSET = 100; 
+
+    
+    let currentActive = null;
+    let currentChain = [];
+
+    function buildChainFromLink(link) {
+        const chain = [];
+        if (!link) return chain;
+        chain.push(link);
+        let li = link.closest('li');
+        while (li) {
+            const parentLi = li.parentElement ? li.parentElement.closest('li') : null;
+            if (parentLi) {
+                const parentLink = parentLi.querySelector('a');
+                if (parentLink) chain.push(parentLink);
+            }
+            li = parentLi;
+        }
+        return chain;
+    }
+
+    function applyActiveChain(newLink) {
+        if (newLink === currentActive) return;
+        const newChain = buildChainFromLink(newLink);
+
+        
+        for (const el of currentChain) {
+            if (!newChain.includes(el)) el.classList.remove('active');
+        }
+        
+        for (const el of newChain) {
+            if (!el.classList.contains('active')) el.classList.add('active');
+        }
+
+        currentActive = newLink || null;
+        currentChain = newChain;
+    }
+
+    
+    tocNav.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (!link || !tocNav.contains(link)) return;
+
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') return;
+
+        const id = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start'
+        });
+
+        
+        applyActiveChain(link);
+    });
+
+    
+    function updateActiveLink() {
+        let linkToActivate = null;
+        for (let i = headings.length - 1; i >= 0; i--) {
+            const top = headings[i].getBoundingClientRect().top;
+            if (top <= OFFSET) {
+                linkToActivate = idToLink.get(headings[i].id) || null;
+                break;
+            }
+        }
+        applyActiveChain(linkToActivate);
+    }
+
+    
+    let ticking = false;
+    function onScrollOrResize() {
+        if (!ticking) {
+            requestAnimationFrame(function () {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    
+    updateActiveLink();
+});
+</script>
+
+
+</div>
 
 
 
@@ -775,7 +1025,7 @@ commonWP Comet Cache twentytwelve 主题功能增强 积木箱子 豆瓣读书�
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -790,10 +1040,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

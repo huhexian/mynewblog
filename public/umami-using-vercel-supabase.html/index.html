@@ -5,11 +5,19 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>使用 Vercel &#43; Supabase 零成本部署 Umami | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>使用 Vercel &#43; Supabase 零成本部署 Umami | 印记</title>
 <meta name="title" content="使用 Vercel &#43; Supabase 零成本部署 Umami" />
 <meta name="description" content="早些年用过友盟、51.la、百度统计、Google Analytics，各有各的优缺点，百度统计目前只允许备案网站使用，友盟和51.la体验效果不喜欢，Google Analytics 访问也不太好，权衡之下使用这款开源的网站统计服务——Umami。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -23,12 +31,26 @@
     
     
     
+        
+    
+    
+    
+        
+    
+    
     2023_9130_supabase
 
 
 在官网选择 Free 方案，进入 Create a new project 页面，按要求填写相关内容。Name 填写任意项目名，Database Password 可以使用下方工具 Generate a password 生成，并保存到记事本备用。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     20230424085956
@@ -40,19 +62,23 @@
     
     
     
+        
+    
+    
+    
+        
+    
+    
     0230424090454
 
-
-Supabase 平台的操作就结束了。
-在 Vercel 部署 Umami
-登录 Vercel 之后，点击右上角 Add New Project，并导入事先 Fork 的项目仓库。" />
+" />
 <meta name="keywords" content="github,supabase,umami,vercel," />
 
 <link rel="canonical" href="http://localhost:1313/umami-using-vercel-supabase.html/">
 
 
 <meta property="og:url" content="http://localhost:1313/umami-using-vercel-supabase.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="使用 Vercel &#43; Supabase 零成本部署 Umami">
 	<meta property="og:description" content="早些年用过友盟、51.la、百度统计、Google Analytics，各有各的优缺点，百度统计目前只允许备案网站使用，友盟和51.la体验效果不喜欢，Google Analytics 访问也不太好，权衡之下使用这款开源的网站统计服务——Umami。
 根据官网介绍，Umami 是一款简单、易用、美观、轻量、快速、隐私、安全的开源免费网站统计工具，从部署到使用，都是简单、快速，体验也很满意。
@@ -61,8 +87,7 @@ Supabase 平台的操作就结束了。
 在 Supabase 建立数据库 2023_9130_supabase 在官网选择 Free 方案，进入 Create a new project 页面，按要求填写相关内容。Name 填写任意项目名，Database Password 可以使用下方工具 Generate a password 生成，并保存到记事本备用。
 20230424085956 等待数据库建立，需要几分钟的时间。
 建立之后，点击左下方的 Project Settings，选择 Database，找到 Connection string 中的 URL 一栏，复制内容，并将**[YOUR-PASSWORD]**替换为上一步生成的密码。
-0230424090454 Supabase 平台的操作就结束了。
-在 Vercel 部署 Umami 登录 Vercel 之后，点击右上角 Add New Project，并导入事先 Fork 的项目仓库。">
+0230424090454">
 	<meta property="og:locale" content="zh_cn">
 	<meta property="og:type" content="article">
 		<meta property="article:section" content="blog">
@@ -85,8 +110,7 @@ Supabase 平台的操作就结束了。
 在 Supabase 建立数据库 2023_9130_supabase 在官网选择 Free 方案，进入 Create a new project 页面，按要求填写相关内容。Name 填写任意项目名，Database Password 可以使用下方工具 Generate a password 生成，并保存到记事本备用。
 20230424085956 等待数据库建立，需要几分钟的时间。
 建立之后，点击左下方的 Project Settings，选择 Database，找到 Connection string 中的 URL 一栏，复制内容，并将**[YOUR-PASSWORD]**替换为上一步生成的密码。
-0230424090454 Supabase 平台的操作就结束了。
-在 Vercel 部署 Umami 登录 Vercel 之后，点击右上角 Add New Project，并导入事先 Fork 的项目仓库。">
+0230424090454">
 
 
 
@@ -99,8 +123,7 @@ Supabase 平台的操作就结束了。
 在 Supabase 建立数据库 2023_9130_supabase 在官网选择 Free 方案，进入 Create a new project 页面，按要求填写相关内容。Name 填写任意项目名，Database Password 可以使用下方工具 Generate a password 生成，并保存到记事本备用。
 20230424085956 等待数据库建立，需要几分钟的时间。
 建立之后，点击左下方的 Project Settings，选择 Database，找到 Connection string 中的 URL 一栏，复制内容，并将**[YOUR-PASSWORD]**替换为上一步生成的密码。
-0230424090454 Supabase 平台的操作就结束了。
-在 Vercel 部署 Umami 登录 Vercel 之后，点击右上角 Add New Project，并导入事先 Fork 的项目仓库。">
+0230424090454">
 	<meta itemprop="datePublished" content="2023-04-24T00:00:00+00:00">
 	<meta itemprop="dateModified" content="2023-04-24T00:00:00+00:00">
 	<meta itemprop="wordCount" content="106">
@@ -615,9 +638,11 @@ Supabase 平台的操作就结束了。
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -644,10 +669,37 @@ Supabase 平台的操作就结束了。
 
 <content> <p>早些年用过友盟、51.la、百度统计、Google Analytics，各有各的优缺点，百度统计目前只允许备案网站使用，友盟和51.la体验效果不喜欢，Google Analytics 访问也不太好，权衡之下使用这款开源的网站统计服务——Umami。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085849.6uue596hp3k0.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-2862fc80"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-2862fc80"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085849.6uue596hp3k0.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-2862fc80"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085849.6uue596hp3k0.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -657,20 +709,74 @@ Supabase 平台的操作就结束了。
 <p>在使用前，先注册并登录好 <a href="https://github.com">GitHub</a>、<a href="https://vercel.com/">Vercel</a>、<a href="https://supabase.com/">Supabase</a> 三个平台，并在 GitHub 平台 Fork Umami 的项目仓库。</p>
 <h2 id="在-supabase-建立数据库">在 Supabase 建立数据库</h2>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/2023_9130_supabase.3hyoeg3aqp00.webp" alt="2023_9130_supabase" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-593fd909"
+        class="image-zoom-toggle"
+        aria-label="放大图片：2023_9130_supabase"
+    />
+    <label
+        for="img-593fd909"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/2023_9130_supabase.3hyoeg3aqp00.webp"
+            alt="2023_9130_supabase"
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-593fd909"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/2023_9130_supabase.3hyoeg3aqp00.webp"
+            alt="2023_9130_supabase"
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption>2023_9130_supabase</figcaption>
 </figure>
 </p>
 <p>在官网选择 <a href="https://supabase.com/pricing">Free</a> 方案，进入 Create a new project 页面，按要求填写相关内容。Name 填写任意项目名，Database Password 可以使用下方工具 Generate a password 生成，并保存到记事本备用。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085956.7a3bvdm3cpg0.webp" alt="20230424085956" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-1a7ff6cd"
+        class="image-zoom-toggle"
+        aria-label="放大图片：20230424085956"
+    />
+    <label
+        for="img-1a7ff6cd"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085956.7a3bvdm3cpg0.webp"
+            alt="20230424085956"
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-1a7ff6cd"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085956.7a3bvdm3cpg0.webp"
+            alt="20230424085956"
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption>20230424085956</figcaption>
 </figure>
@@ -678,10 +784,37 @@ Supabase 平台的操作就结束了。
 <p>等待数据库建立，需要几分钟的时间。</p>
 <p>建立之后，点击左下方的 Project Settings，选择 Database，找到 Connection string 中的 URL 一栏，复制内容，并将**[YOUR-PASSWORD]**替换为上一步生成的密码。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/0230424090454.3uya78wr9zi0.webp" alt="0230424090454" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-3093f37d"
+        class="image-zoom-toggle"
+        aria-label="放大图片：0230424090454"
+    />
+    <label
+        for="img-3093f37d"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/0230424090454.3uya78wr9zi0.webp"
+            alt="0230424090454"
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-3093f37d"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/0230424090454.3uya78wr9zi0.webp"
+            alt="0230424090454"
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption>0230424090454</figcaption>
 </figure>
@@ -690,39 +823,147 @@ Supabase 平台的操作就结束了。
 <h2 id="在-vercel-部署-umami">在 Vercel 部署 Umami</h2>
 <p>登录 Vercel 之后，点击右上角 Add New Project，并导入事先 Fork 的项目仓库。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424093134.7j39y4ynm6o0.webp" alt="20230424093134" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-b166da7f"
+        class="image-zoom-toggle"
+        aria-label="放大图片：20230424093134"
+    />
+    <label
+        for="img-b166da7f"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424093134.7j39y4ynm6o0.webp"
+            alt="20230424093134"
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-b166da7f"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424093134.7j39y4ynm6o0.webp"
+            alt="20230424093134"
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption>20230424093134</figcaption>
 </figure>
 </p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090338.5hx60tko8lk0.webp" alt="20230424090338" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-d6be82e0"
+        class="image-zoom-toggle"
+        aria-label="放大图片：20230424090338"
+    />
+    <label
+        for="img-d6be82e0"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090338.5hx60tko8lk0.webp"
+            alt="20230424090338"
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-d6be82e0"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090338.5hx60tko8lk0.webp"
+            alt="20230424090338"
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption>20230424090338</figcaption>
 </figure>
 </p>
 <p>在 Configure Project 中需要设置两个环境变量（Environment Variables）。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090758.4wooxtytmu40.webp" alt="20230424090758" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-1e2199a1"
+        class="image-zoom-toggle"
+        aria-label="放大图片：20230424090758"
+    />
+    <label
+        for="img-1e2199a1"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090758.4wooxtytmu40.webp"
+            alt="20230424090758"
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-1e2199a1"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090758.4wooxtytmu40.webp"
+            alt="20230424090758"
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption>20230424090758</figcaption>
 </figure>
 </p>
 <p>分别添加 <strong>DATABASE_URL</strong> 和 <strong>HASH_SALT</strong>。前者是上一步在 Subabase 复制的 URL，记得替换自己的 Password；后者需要自己随意生成一长串字符串。最后点击 Deploy，等待两分钟。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090827.hyj4gf67hmw.webp" alt="20230424090827" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-ac3b07a7"
+        class="image-zoom-toggle"
+        aria-label="放大图片：20230424090827"
+    />
+    <label
+        for="img-ac3b07a7"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090827.hyj4gf67hmw.webp"
+            alt="20230424090827"
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-ac3b07a7"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090827.hyj4gf67hmw.webp"
+            alt="20230424090827"
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption>20230424090827</figcaption>
 </figure>
@@ -731,28 +972,109 @@ Supabase 平台的操作就结束了。
 <h2 id="使用-vercel-自带的-storage-数据库">使用 Vercel 自带的 Storage 数据库</h2>
 <p>Vercel 目前已经提供 PostgreSQL 数据库，无需其他服务，只需要按照上述教程，创建数据库，获取数据库地址，添加对应变量即可。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/pic/2024/05/cba3ef3a6e0153ac40420e9c83d24a2c.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-cce1ef92"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-cce1ef92"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/pic/2024/05/cba3ef3a6e0153ac40420e9c83d24a2c.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-cce1ef92"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/pic/2024/05/cba3ef3a6e0153ac40420e9c83d24a2c.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/pic/2024/05/6b807437ae03b3f9f7dd7b35ecb959c6.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-d86cbd03"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-d86cbd03"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/pic/2024/05/6b807437ae03b3f9f7dd7b35ecb959c6.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-d86cbd03"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/pic/2024/05/6b807437ae03b3f9f7dd7b35ecb959c6.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/pic/2024/05/d4f906c2041488a508be949ae16e592f.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-23f48c22"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-23f48c22"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/pic/2024/05/d4f906c2041488a508be949ae16e592f.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-23f48c22"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/pic/2024/05/d4f906c2041488a508be949ae16e592f.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -776,9 +1098,253 @@ Supabase 平台的操作就结束了。
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+<aside class="toc-nav" role="navigation" aria-label="目录">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#在-supabase-建立数据库">在 Supabase 建立数据库</a></li>
+    <li><a href="#在-vercel-部署-umami">在 Vercel 部署 Umami</a></li>
+    <li><a href="#使用-vercel-自带的-storage-数据库">使用 Vercel 自带的 Storage 数据库</a></li>
+    <li><a href="#使用-umami">使用 Umami</a></li>
+  </ul>
+</nav>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tocNav = document.querySelector('.toc-nav');
+    if (!tocNav) return;
+
+    const tocLinks = Array.from(tocNav.querySelectorAll('a'));
+    if (!tocLinks.length) return;
+
+    
+    const idToLink = new Map();
+    const headings = [];
+    const seen = new Set();
+
+    for (const link of tocLinks) {
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') continue;
+        const id = decodeURIComponent(hash.slice(1));
+        idToLink.set(id, link);
+
+        if (!seen.has(id)) {
+            const h = document.getElementById(id);
+            if (h) {
+                headings.push(h);
+                seen.add(id);
+            }
+        }
+    }
+
+    if (!headings.length) return;
+
+    const OFFSET = 100; 
+
+    
+    let currentActive = null;
+    let currentChain = [];
+
+    function buildChainFromLink(link) {
+        const chain = [];
+        if (!link) return chain;
+        chain.push(link);
+        let li = link.closest('li');
+        while (li) {
+            const parentLi = li.parentElement ? li.parentElement.closest('li') : null;
+            if (parentLi) {
+                const parentLink = parentLi.querySelector('a');
+                if (parentLink) chain.push(parentLink);
+            }
+            li = parentLi;
+        }
+        return chain;
+    }
+
+    function applyActiveChain(newLink) {
+        if (newLink === currentActive) return;
+        const newChain = buildChainFromLink(newLink);
+
+        
+        for (const el of currentChain) {
+            if (!newChain.includes(el)) el.classList.remove('active');
+        }
+        
+        for (const el of newChain) {
+            if (!el.classList.contains('active')) el.classList.add('active');
+        }
+
+        currentActive = newLink || null;
+        currentChain = newChain;
+    }
+
+    
+    tocNav.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (!link || !tocNav.contains(link)) return;
+
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') return;
+
+        const id = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start'
+        });
+
+        
+        applyActiveChain(link);
+    });
+
+    
+    function updateActiveLink() {
+        let linkToActivate = null;
+        for (let i = headings.length - 1; i >= 0; i--) {
+            const top = headings[i].getBoundingClientRect().top;
+            if (top <= OFFSET) {
+                linkToActivate = idToLink.get(headings[i].id) || null;
+                break;
+            }
+        }
+        applyActiveChain(linkToActivate);
+    }
+
+    
+    let ticking = false;
+    function onScrollOrResize() {
+        if (!ticking) {
+            requestAnimationFrame(function () {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    
+    updateActiveLink();
+});
+</script>
+
+
+</div>
 
 
 
@@ -788,7 +1354,7 @@ Supabase 平台的操作就结束了。
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -803,10 +1369,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

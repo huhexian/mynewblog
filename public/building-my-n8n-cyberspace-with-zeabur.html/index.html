@@ -5,13 +5,21 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>使用 Zeabur 构建我的 n8n 赛博空间 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>使用 Zeabur 构建我的 n8n 赛博空间 | 印记</title>
 <meta name="title" content="使用 Zeabur 构建我的 n8n 赛博空间" />
 <meta name="description" content="标题里有两个工具，先简单介绍一番。
 Zeabur 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。
 n8n 是一个开源的工作流自动化工具，类似于 IFTTT，iOS 用户应该更容易理解，相当于快捷指令，通过某个条件触发某个动作。
 
     
+    
+    
+        
+    
+    
+    
+        
     
     
     cover.webp
@@ -28,6 +36,13 @@ Zeabur 中有一个 Marketplace，搜索 PostgreSQL 即可一键部署该服务�
     
     
     
+        
+    
+    
+    
+        
+    
+    
     
 
 
@@ -36,32 +51,24 @@ Zeabur 中有一个 Marketplace，搜索 PostgreSQL 即可一键部署该服务�
     
     
     
-    
-
-
-接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。
-
+        
     
     
     
-    
-
-
-
-    
+        
     
     
     
 
 
-刚刚我创建的 Server 命名为 n8n，然后右键单击 n8n 下的 Database，点击 Create Database，创建一个名为 n8n 的数据库就可以了，这是非常重要的一步，名字必须命名为 n8n。" />
+接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。" />
 <meta name="keywords" content="n8n,telegram,zeabur," />
 
 <link rel="canonical" href="http://localhost:1313/building-my-n8n-cyberspace-with-zeabur.html/">
 
 
 <meta property="og:url" content="http://localhost:1313/building-my-n8n-cyberspace-with-zeabur.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="使用 Zeabur 构建我的 n8n 赛博空间">
 	<meta property="og:description" content="标题里有两个工具，先简单介绍一番。
 Zeabur 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。
@@ -71,8 +78,7 @@ cover.webp 为什么构建一个“赛博空间” 因为每天都在获取信�
 如何部署 n8n n8n 需要用到数据库，根据 Zeabur 官方文档，这里选择使用 PostgreSQL，所以事先安装好 PostgreSQL 客户端，我这里使用的是 PostgreSQL 15 在官网下载即可，这一步的目的是连接 Zeabur 安装的 PostgreSQL 并新建名为 n8n 的 Database。
 安装 PostgreSQL Zeabur 中有一个 Marketplace，搜索 PostgreSQL 即可一键部署该服务。
 部署数据库之后就可以在 connect 中看到数据库的相关信息了，这里需要用到 Host、Port、Username。
-接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。
-刚刚我创建的 Server 命名为 n8n，然后右键单击 n8n 下的 Database，点击 Create Database，创建一个名为 n8n 的数据库就可以了，这是非常重要的一步，名字必须命名为 n8n。">
+接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。">
 	<meta property="og:locale" content="zh_cn">
 	<meta property="og:type" content="article">
 		<meta property="article:section" content="blog">
@@ -95,8 +101,7 @@ cover.webp 为什么构建一个“赛博空间” 因为每天都在获取信�
 如何部署 n8n n8n 需要用到数据库，根据 Zeabur 官方文档，这里选择使用 PostgreSQL，所以事先安装好 PostgreSQL 客户端，我这里使用的是 PostgreSQL 15 在官网下载即可，这一步的目的是连接 Zeabur 安装的 PostgreSQL 并新建名为 n8n 的 Database。
 安装 PostgreSQL Zeabur 中有一个 Marketplace，搜索 PostgreSQL 即可一键部署该服务。
 部署数据库之后就可以在 connect 中看到数据库的相关信息了，这里需要用到 Host、Port、Username。
-接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。
-刚刚我创建的 Server 命名为 n8n，然后右键单击 n8n 下的 Database，点击 Create Database，创建一个名为 n8n 的数据库就可以了，这是非常重要的一步，名字必须命名为 n8n。">
+接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。">
 
 
 
@@ -110,8 +115,7 @@ cover.webp 为什么构建一个“赛博空间” 因为每天都在获取信�
 如何部署 n8n n8n 需要用到数据库，根据 Zeabur 官方文档，这里选择使用 PostgreSQL，所以事先安装好 PostgreSQL 客户端，我这里使用的是 PostgreSQL 15 在官网下载即可，这一步的目的是连接 Zeabur 安装的 PostgreSQL 并新建名为 n8n 的 Database。
 安装 PostgreSQL Zeabur 中有一个 Marketplace，搜索 PostgreSQL 即可一键部署该服务。
 部署数据库之后就可以在 connect 中看到数据库的相关信息了，这里需要用到 Host、Port、Username。
-接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。
-刚刚我创建的 Server 命名为 n8n，然后右键单击 n8n 下的 Database，点击 Create Database，创建一个名为 n8n 的数据库就可以了，这是非常重要的一步，名字必须命名为 n8n。">
+接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。">
 	<meta itemprop="datePublished" content="2023-08-03T00:00:00+00:00">
 	<meta itemprop="dateModified" content="2023-08-03T00:00:00+00:00">
 	<meta itemprop="wordCount" content="170">
@@ -626,9 +630,11 @@ cover.webp 为什么构建一个“赛博空间” 因为每天都在获取信�
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -657,10 +663,37 @@ cover.webp 为什么构建一个“赛博空间” 因为每天都在获取信�
 <p><a href="https://zeabur.com/">Zeabur</a> 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。</p>
 <p><a href="https://n8n.io/">n8n</a> 是一个开源的工作流自动化工具，类似于 <a href="https://ifttt.com/">IFTTT</a>，iOS 用户应该更容易理解，相当于快捷指令，通过某个条件触发某个动作。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc2762892e.webp" alt="cover.webp" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-37ade0fb"
+        class="image-zoom-toggle"
+        aria-label="放大图片：cover.webp"
+    />
+    <label
+        for="img-37ade0fb"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc2762892e.webp"
+            alt="cover.webp"
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-37ade0fb"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc2762892e.webp"
+            alt="cover.webp"
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption>cover.webp</figcaption>
 </figure>
@@ -673,58 +706,220 @@ cover.webp 为什么构建一个“赛博空间” 因为每天都在获取信�
 <h3 id="安装-postgresql">安装 PostgreSQL</h3>
 <p>Zeabur 中有一个 Marketplace，搜索 PostgreSQL 即可一键部署该服务。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f4287f.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-d6c06318"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-d6c06318"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f4287f.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-d6c06318"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f4287f.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>部署数据库之后就可以在 connect 中看到数据库的相关信息了，这里需要用到 Host、Port、Username。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f679bc.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-a805c469"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-a805c469"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f679bc.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-a805c469"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f679bc.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a1ac36d.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-27c54ac4"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-27c54ac4"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a1ac36d.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-27c54ac4"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a1ac36d.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a2d5459.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-ebffe682"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-ebffe682"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a2d5459.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-ebffe682"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a2d5459.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p>刚刚我创建的 Server 命名为 n8n，然后右键单击 n8n 下的 Database，点击 Create Database，创建一个名为 n8n 的数据库就可以了，这是非常重要的一步，名字必须命名为 n8n。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a401e78.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-09c191ab"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-09c191ab"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a401e78.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-09c191ab"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a401e78.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
 </p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a41dc12.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-98e5e246"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-98e5e246"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a41dc12.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-98e5e246"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a41dc12.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -736,10 +931,37 @@ cover.webp 为什么构建一个“赛博空间” 因为每天都在获取信�
 <h3 id="安装-n8n">安装 n8n</h3>
 <p>同样可以在 Marketplace 里找到 n8n，点击一键部署。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a582c0a.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-ea7249ef"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-ea7249ef"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a582c0a.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-ea7249ef"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a582c0a.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -762,10 +984,37 @@ EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
 EXECUTIONS_DATA_SAVE_ON_PROGRESS=false
 EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false
 </code></pre><p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbbc8c400e0.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-4566391e"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-4566391e"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbbc8c400e0.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-4566391e"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbbc8c400e0.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -776,10 +1025,37 @@ EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false
 <p>YouTube 配置起来有点麻烦，需要申请官方的 API，不过看官方文档和视频操作起来也很简单。至于哔哩哔哩、网易云音乐、Raindrop、GitHub activities 就只需要使用 <a href="https://docs.rsshub.app/">RSShub</a> 生成相应的 RSS 链接即可。这里说一句 RSS 牛逼，RSShub 牛逼，DIYgod 牛逼。</p>
 <p>我的 Workflow 上传到 <a href="https://github.com/huhexian/workflow">GitHub</a> 了，只需要上传这些 .json 文件至 n8n 即可。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc4879f013.webp" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-b36e1f22"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-b36e1f22"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc4879f013.webp"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-b36e1f22"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc4879f013.webp"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -801,9 +1077,257 @@ EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+<aside class="toc-nav" role="navigation" aria-label="目录">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么构建一个赛博空间">为什么构建一个“赛博空间”</a></li>
+    <li><a href="#如何部署-n8n">如何部署 n8n</a>
+      <ul>
+        <li><a href="#安装-postgresql">安装 PostgreSQL</a></li>
+        <li><a href="#安装-n8n">安装 n8n</a></li>
+      </ul>
+    </li>
+    <li><a href="#如何使用-n8n">如何使用 n8n</a></li>
+  </ul>
+</nav>
+</aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tocNav = document.querySelector('.toc-nav');
+    if (!tocNav) return;
+
+    const tocLinks = Array.from(tocNav.querySelectorAll('a'));
+    if (!tocLinks.length) return;
+
+    
+    const idToLink = new Map();
+    const headings = [];
+    const seen = new Set();
+
+    for (const link of tocLinks) {
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') continue;
+        const id = decodeURIComponent(hash.slice(1));
+        idToLink.set(id, link);
+
+        if (!seen.has(id)) {
+            const h = document.getElementById(id);
+            if (h) {
+                headings.push(h);
+                seen.add(id);
+            }
+        }
+    }
+
+    if (!headings.length) return;
+
+    const OFFSET = 100; 
+
+    
+    let currentActive = null;
+    let currentChain = [];
+
+    function buildChainFromLink(link) {
+        const chain = [];
+        if (!link) return chain;
+        chain.push(link);
+        let li = link.closest('li');
+        while (li) {
+            const parentLi = li.parentElement ? li.parentElement.closest('li') : null;
+            if (parentLi) {
+                const parentLink = parentLi.querySelector('a');
+                if (parentLink) chain.push(parentLink);
+            }
+            li = parentLi;
+        }
+        return chain;
+    }
+
+    function applyActiveChain(newLink) {
+        if (newLink === currentActive) return;
+        const newChain = buildChainFromLink(newLink);
+
+        
+        for (const el of currentChain) {
+            if (!newChain.includes(el)) el.classList.remove('active');
+        }
+        
+        for (const el of newChain) {
+            if (!el.classList.contains('active')) el.classList.add('active');
+        }
+
+        currentActive = newLink || null;
+        currentChain = newChain;
+    }
+
+    
+    tocNav.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (!link || !tocNav.contains(link)) return;
+
+        const hash = link.hash || link.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') return;
+
+        const id = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start'
+        });
+
+        
+        applyActiveChain(link);
+    });
+
+    
+    function updateActiveLink() {
+        let linkToActivate = null;
+        for (let i = headings.length - 1; i >= 0; i--) {
+            const top = headings[i].getBoundingClientRect().top;
+            if (top <= OFFSET) {
+                linkToActivate = idToLink.get(headings[i].id) || null;
+                break;
+            }
+        }
+        applyActiveChain(linkToActivate);
+    }
+
+    
+    let ticking = false;
+    function onScrollOrResize() {
+        if (!ticking) {
+            requestAnimationFrame(function () {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+    
+    updateActiveLink();
+});
+</script>
+
+
+</div>
 
 
 
@@ -813,7 +1337,7 @@ EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -828,10 +1352,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 

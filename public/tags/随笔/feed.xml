@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>随笔 on 印记博客</title>
+    <title>随笔 on 印记</title>
     <link>http://localhost:1313/tags/%E9%9A%8F%E7%AC%94/</link>
-    <description>Recent content in 随笔 on 印记博客</description>
+    <description>Recent content in 随笔 on 印记</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     
     
+    
+    <copyright>Copyright © 2018-2026, huhexian.</copyright>
     
     
     <lastBuildDate>Sat, 22 May 2021 00:00:00 +0000</lastBuildDate>

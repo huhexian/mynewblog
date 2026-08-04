@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>村上春树 on 印记博客</title>
+    <title>村上春树 on 印记</title>
     <link>http://localhost:1313/tags/%E6%9D%91%E4%B8%8A%E6%98%A5%E6%A0%91/</link>
-    <description>Recent content in 村上春树 on 印记博客</description>
+    <description>Recent content in 村上春树 on 印记</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     
     
+    
+    <copyright>Copyright © 2018-2026, huhexian.</copyright>
     
     
     <lastBuildDate>Thu, 14 Apr 2022 00:00:00 +0000</lastBuildDate>

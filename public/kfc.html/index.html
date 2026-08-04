@@ -5,10 +5,18 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>不知道吃什么，那就吃肯德基 | 印记博客</title>
+<link rel="shortcut icon" href="http://localhost:1313/img/favicon.png" />
+<title>不知道吃什么，那就吃肯德基 | 印记</title>
 <meta name="title" content="不知道吃什么，那就吃肯德基" />
 <meta name="description" content="
     
+    
+    
+        
+    
+    
+    
+        
     
     
     
@@ -24,6 +32,13 @@
     
     
     
+        
+    
+    
+    
+        
+    
+    
     
 
 
@@ -34,7 +49,7 @@
 
 
 <meta property="og:url" content="http://localhost:1313/kfc.html/">
-	<meta property="og:site_name" content="印记博客">
+	<meta property="og:site_name" content="印记">
 	<meta property="og:title" content="不知道吃什么，那就吃肯德基">
 	<meta property="og:description" content="和往月一样，今天加班，中午点外卖吃得挺饱，下午也吃了一点零食，六点多下班时肚子并没有太饿，本想直接回去，又担心晚上会饿，思来想去不知道吃什么合适，最后奔向了公司附近新开的一家肯德基。
 不知道吃什么，那就吃肯德基。
@@ -588,9 +603,11 @@
 
 <body>
   <header><a href="/" class="title">
-  <h1>印记博客</h1>
+  <h1>印记</h1>
 </a>
 <nav><a href="/">Home</a>
+
+<a href="/about.html">About</a>
 
 <a href="/roll.html">Roll</a>
 
@@ -616,10 +633,37 @@
  
 
 <content> <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://img.yinji.org/8_7EvjnOvF2VEQgx.jpg" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-b3f1362e"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-b3f1362e"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://img.yinji.org/8_7EvjnOvF2VEQgx.jpg"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-b3f1362e"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://img.yinji.org/8_7EvjnOvF2VEQgx.jpg"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -631,10 +675,37 @@
 <p>有一份专属工作日的 OK 三件套只需要 19.9 元，任选 1 份黄金 SPA 鸡排堡或者滋滋 YES 烤鸡腿堡，加一份劲爆鸡米花和中可，对于我来说，中午或晚上来上一份，就能吃饱。</p>
 <p>陈仓颉在《<a href="https://imzm.im/long-live-macdonalds/">麦门永存。</a>》中提到肯德基更像是一个卖一些西餐的中餐厅，不仅有豆浆、烧饼、油条、茶叶蛋，今天看菜单，还有炸串、鸡架，越来越贴近中国人的饮食习惯和口味。在使用闲鱼下单肯德基之后，我更加确定了“不知道吃什么，那就吃肯德基”的合理性（ps：肯德基替换成麦当劳或其他品牌也适用）。一份香辣鸡腿堡，一杯中可，在闲鱼上代下单，不到 14 元，十分满意，本想放出截图，怕有广告嫌疑，遂作罢。</p>
 <p><figure
-    class="image-caption"
+    class="image-caption image-zoom-container"
 >
     
-    <img src="https://img.yinji.org/nbtpDQnS-KN7jKkI.jpeg" alt="" loading="lazy" />
+    <input
+        type="checkbox"
+        id="img-c3087daa"
+        class="image-zoom-toggle"
+        aria-label="放大图片："
+    />
+    <label
+        for="img-c3087daa"
+        class="image-zoom-label"
+    >
+        <img
+            src="https://img.yinji.org/nbtpDQnS-KN7jKkI.jpeg"
+            alt=""
+            loading="lazy"
+            class="zoomable-image"
+        />
+    </label>
+    
+    <label
+        for="img-c3087daa"
+        class="image-zoom-overlay"
+    >
+        <img
+            src="https://img.yinji.org/nbtpDQnS-KN7jKkI.jpeg"
+            alt=""
+            class="zoomable-image"
+        />
+    </label>
     
     <figcaption></figcaption>
 </figure>
@@ -650,9 +721,116 @@
 
 
 
+<div class="upvote-container">
+<small class="upvote">
+  <button class="upvote-btn" id="upvote-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+    <span class="upvote-count" id="upvote-count">0</span>
+  </button>
+</small>
+</div>
+
+<script>
+  let hasUpvoted = false;
+  let upvoteBtn;
+  let upvoteCount;
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const slug = '';
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    getCount(slug);
+
+    
+    upvoteBtn.addEventListener('click', handleUpvote);
+  });
+
+  
+  async function handleUpvote() {
+    if (hasUpvoted) {
+      console.log('You have already upvoted this post!');
+      return;
+    }
+    const slug = '';
+
+    
+    upvoteBtn.disabled = true;
+    
+    upvoteBtn.classList.add('upvoted');
+    
+    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+
+    try {
+      const response = await fetch('upvote.yinji.org\/upvote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: slug, diff: 1 }),
+      });
+
+      if (response.ok) {
+        console.log('Upvote successful!');
+        hasUpvoted = true;
+        await getCount(slug, 3);
+      } else {
+        console.log('Upvote failed!');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    } finally {
+      upvoteBtn.disabled = false;
+    }
+  }
+
+  
+  async function getCount(slug, retryCount = 0) {
+    try {
+      const response = await fetch('upvote.yinji.org\/count?post=' + slug, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.code === 0) {
+        const count = data.data.count;
+        upvoteCount.innerText = count;
+        hasUpvoted = data.data.hasUpvoted;
+        if (hasUpvoted) {
+          upvoteBtn.classList.add('upvoted');
+        } else {
+          upvoteBtn.classList.remove('upvoted');
+        }
+      } else {
+        console.error('Failed to get upvote count: ', data.msg);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+      if (retryCount > 0) {
+        setTimeout(() => {
+          getCount(slug, retryCount - 1);
+        }, 1000);
+      }
+    }
+  }
+</script>
 
 
 
+
+ 
+<div class="toc">
+
+
+
+</div>
 
 
 
@@ -662,7 +840,7 @@
 
 
 
-Subscribe via <a href="/index.xml">RSS</a>.
+Subscribe via <a href="/feed.xml">RSS</a>.
 <br />
 
 
@@ -677,10 +855,11 @@ Made with
 
 
 
+Copyright © 2018-2026, huhexian.
 
 
-
-🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br>🗺️ <a href="/sitemap.xml">Sitemap</a>.
+<br />
 
 </footer>
 
