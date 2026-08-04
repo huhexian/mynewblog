@@ -21,7 +21,9 @@ defaultContentLanguage = "zh-cn"
 
 
 [params]
+  title = "印记"
   description = "Live a life you will remember."
+  favicon = "img/favicon.png"
 
   [params.author]
     name = "青山"
@@ -34,3 +36,6 @@ defaultContentLanguage = "zh-cn"
 
 [pagination]
   pagerSize = 10
+
+
+enableRobotsTXT = true
