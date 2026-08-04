@@ -9,4 +9,4 @@
 
 如果你觉得我的博客还不错，可以考虑[支持作者](/buymeacoffee.html)。
 
-[RSS](/index.xml) / [Twitter](https://x.com/huhexian) / [Telegram](https://t.me/huhexian)
+[RSS](/feed.xml) / [Twitter](https://x.com/huhexian) / [Telegram](https://t.me/huhexian)
