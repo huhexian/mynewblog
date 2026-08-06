@@ -643,13 +643,19 @@ https://blogroll.notion.site
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -668,14 +674,14 @@ https://blogroll.notion.site
 
  
 
-<content> <p>在<a href="https://firewood.news">积薪</a>关停之后，博客阅读来源几乎只有订阅的 RSS，用 <a href="https://yinji.org/day-50-of-using-follow-is-rss-experiencing-a-new-spring.html">Folo</a> 进行查阅。单从积薪的形式和做法来说，它是一个好项目，收录的博客都很有水准，不管是从内容、设计、风格等方面都是一些值得收藏和阅读的好网站，没能延续下去确实是一个遗憾。可能这也是网站商业化的弊端之一，要考虑受众群体的想法和需求。</p>
+<content> <p>在<a href="https://firewood.news" rel="noopener noreferrer">积薪</a>关停之后，博客阅读来源几乎只有订阅的 RSS，用 <a href="https://yinji.org/day-50-of-using-follow-is-rss-experiencing-a-new-spring.html" rel="noopener noreferrer">Folo</a> 进行查阅。单从积薪的形式和做法来说，它是一个好项目，收录的博客都很有水准，不管是从内容、设计、风格等方面都是一些值得收藏和阅读的好网站，没能延续下去确实是一个遗憾。可能这也是网站商业化的弊端之一，要考虑受众群体的想法和需求。</p>
 <p>一个博客导航网站倒下，还会有成千上万个博客导航网站出现。现在就是如此，但同质化太严重，要么是千篇一律的模板，要么是没有严格的收录标准，一些质量低下、存活时间不长的网站输出 RSS 到首页，更是污染时间线的行为，我曾经也做过博客导航网站，也因上述原因而倒下，这次我选择做点不一样的。</p>
 <p>它只是我的一个收藏，像一个图书馆一样，把我喜欢的博客放进去，贴上我定义的标签，按我的想法进行分类，99% 的主观，不带任何广告，不掺杂任何商业元素，不接受任何自荐，我没有收藏某个博客，并不代表这个博客不好，只表示我不喜欢。因此，我这次没有使用其他网站程序，没有找所谓的导航主题，只用 Notion，并用它的自定义域名发布，有人要问了，既然自己收藏，一切都随自己想法，为什么还要公开呢，雅俗共赏，看一看别人的审美和兴趣。</p>
 <p>最初定义的是收藏一些有特色的博客网站，特色的涵盖范围比较广，包括但不限于内容本身、网站设计、文章排版等等。基于我的主观性，拒绝花里胡哨、无病呻吟之流的博客，也拒绝网络搬运、三天打鱼，两天晒网等类型的网站。现在很常见的一个现象是，是个人都能建网站，随便发点东西就能称之为博客，但实际上更多的是在污染中文互联网，制造越来越多的内容农场。与之对应的是优质内容很难快速、便捷获取，这才有了我的这个想法。</p>
 <p>目前使用 Notion 的数据库，画廊模式，添加了网址、标签、程序等字段，后续我也会在详情里添加自己的一些描述和评论。没有额外添加 RSS 地址，我几乎已经订阅了，而且如果访问到这个网站的用户，有需要，直接去博客里寻找即可。</p>
 <p>有意思的是，幸运地使用了 BlogRoll 作为 Notion 二级域名的前缀，所以网址是：</p>
 <blockquote>
-<p><a href="https://blogroll.notion.site">https://blogroll.notion.site</a></p>
+<p><a href="https://blogroll.notion.site" rel="noopener noreferrer">https://blogroll.notion.site</a></p>
 </blockquote>
 <p>以上观点并不针对特定的人和网站，请勿对号入座。</p>
 <blockquote>
@@ -692,9 +698,10 @@ https://blogroll.notion.site
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -708,87 +715,71 @@ https://blogroll.notion.site
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "blogroll.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -802,6 +793,9 @@ https://blogroll.notion.site
 
 
 </div>
+
+
+
 
 
 

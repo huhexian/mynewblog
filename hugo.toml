@@ -32,7 +32,7 @@ defaultContentLanguage = "zh-cn"
   showPostCount = true
   imageZoom = true
   upvote = true
-  upvoteURL = "https://upvote.yinji.org/"
+  upvoteURL = "https://kudos.yinji.org"
   customCSS = ["/custom.css"]
 
   [params.author]

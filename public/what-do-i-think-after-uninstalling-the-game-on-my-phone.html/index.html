@@ -642,13 +642,19 @@
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -670,7 +676,7 @@
 <content> <p>1月4日，我在朋友圈发了这样一句话：<strong>卸载了手机上的游戏，有更多的时间可以做感兴趣的事情</strong>。毋庸置疑，在卸载之前，我的确会在空闲的时间登一把王者，开一把黑，经常这样的结果是什么呢？想看的书没看完，想看的电影一直没动，就如同我说的这句话一样，很多感兴趣的事情由于游戏的干扰，没能做成。</p>
 <p>的确，我也希望卸载游戏之后，可以像我计划的那样，规划寒假的每一天，何时看书、记单词、看网课，但是“计划总赶不上变化”，为什么游戏卸载了，我仍然还是会花很多时间在手机上？在那条朋友圈下面，有这样一条评论：<strong>先卸载抖音、微博、知乎</strong>。看到之后，我恍然大悟，回过头来仔细想想每一天使用的APP，除了微信和QQ，使用时间和频率最长的，就是抖音、微博和知乎，其时间和频率是比游戏还要高的。</p>
 <p>我们往往觉得是游戏占用了自己日常的大部分时间，将一些不好的行为的发生归咎于游戏或者游戏厂商，游戏固然有这个消极的作用，但是类如抖音、微博之类的APP对人的影响似乎更大。</p>
-<p>何同学最新一期视频《<a href="https://www.bilibili.com/video/BV1ev411x7en">这视频能让你戒手机</a>》中，他提出一个人们玩手机的大前提——玩手机是很快乐的，我倒是有类似的看法。</p>
+<p>何同学最新一期视频《<a href="https://www.bilibili.com/video/BV1ev411x7en" rel="noopener noreferrer">这视频能让你戒手机</a>》中，他提出一个人们玩手机的大前提——玩手机是很快乐的，我倒是有类似的看法。</p>
 <p>从游戏说起，一局王者荣耀排位赛，赢了，可能升一颗星或者升一个段位，这时候游戏反映给大脑的是什么？我觉得是一种快感，胜利的快感，这种快感既包括成就感，也有兴奋感，正是因为这种感觉刺激着你想继续来一把；输了，绝大部分人会不甘心，这也是游戏体验反映给大脑的，心里可能在想，不能输，必须赢，久而久之，一把接着一把下来，时间就是这样被游戏所占用了。</p>
 <p>再来说说抖音、知乎和微博，这类可以“无限下滑”的软件，给你提供刷不完的资讯、视频，你可能并不对刷到的东西感兴趣，但是会觉得下一条更有趣，这促使你一条一条往下刷，这种简单、碎片化的信息或许使你产生了一种好奇感，总会好奇下一条的内容会是什么，而这种感觉和游戏不一样，同样的游戏形式和人物，到最后的只有结局的不同，而在抖音类的APP上，推送各种各样的视频，这“<strong>给你提供的是视觉刺激，是多巴胺</strong>”。</p>
 <p>回到何同学的视频上，玩手机是快乐的？他在视频里这么解释：快乐的来源是对现状的满足，短时刺激下的神经兴奋和快乐是两回事。所以，手机并不会使我们快乐，反而可能是使我们焦虑的罪魁祸首。我们经常感叹时间都去哪了，其实在我们刷视频刷微博的过程中，是有很多时间的。</p>
@@ -693,9 +699,10 @@
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -709,87 +716,71 @@
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "what-do-i-think-after-uninstalling-the-game-on-my-phone.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -803,6 +794,9 @@
 
 
 </div>
+
+
+
 
 
 

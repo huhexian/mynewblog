@@ -843,13 +843,19 @@ html {
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -876,12 +882,12 @@ html {
 <p>域名是昨天在 NameSilo 注册的，由于我没有信用卡，无法使用 Google Domains 进行注册。Google Domains 土耳其区注册 .net 域名每年仅需人民币25元左右。亏大发了。</p>
 <h2 id="插件">插件</h2>
 <p>目前加上强化拓展，一共只使用了3个插件。</p>
-<p>分别是 <a href="https://github.com/terrylinooo/githuber-md">WP Githuber MD</a>（用于 Markdown 写作）、<a href="https://fatesinger.com/101005">WP-Douban</a>（用于生成豆瓣条目信息） 和 object-cache.php（用于外部对象缓存）。</p>
+<p>分别是 <a href="https://github.com/terrylinooo/githuber-md" rel="noopener noreferrer">WP Githuber MD</a>（用于 Markdown 写作）、<a href="https://fatesinger.com/101005" rel="noopener noreferrer">WP-Douban</a>（用于生成豆瓣条目信息） 和 object-cache.php（用于外部对象缓存）。</p>
 <p>其他能用代码集成到 function.php 文件中的都用代码替代插件了。</p>
 <h2 id="主题">主题</h2>
-<p>一开始我是基于 WordPress 官方默认主题 Twenty Twelve 进行修改的，但后面看到有一款修改程度更好的成品——<a href="https://xuv.cc/1">Twenty Twelve 木头人修改精简版</a>，就在它的基础上继续修改。</p>
+<p>一开始我是基于 WordPress 官方默认主题 Twenty Twelve 进行修改的，但后面看到有一款修改程度更好的成品——<a href="https://xuv.cc/1" rel="noopener noreferrer">Twenty Twelve 木头人修改精简版</a>，就在它的基础上继续修改。</p>
 <p>所以有想法的朋友可以直接使用上面提到的成品主题，或者继续看我的内容。</p>
-<p>我修改的最终版本：<a href="https://github.com/huhexian/2012-huhexian">2012-huhexian</a></p>
+<p>我修改的最终版本：<a href="https://github.com/huhexian/2012-huhexian" rel="noopener noreferrer">2012-huhexian</a></p>
 <h3 id="首页右上角图片">首页右上角图片</h3>
 <p>先在 header.php 加入下列代码：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://yinji.org/&#34;</span> <span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;回到首页&#34;</span><span style="color:#f92672">&gt;&lt;</span><span style="color:#a6e22e">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://dogefs.s3.ladydaily.com/lucy/storage/1680832936501.png&#34;</span> <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;胡鹤仙&#34;</span><span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;70&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;70&#34;</span><span style="color:#f92672">/&gt;&lt;/</span><span style="color:#a6e22e">a</span><span style="color:#f92672">&gt;</span>
@@ -1321,7 +1327,7 @@ html {
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">add_action</span>(<span style="color:#e6db74">&#39;init&#39;</span>, <span style="color:#e6db74">&#39;html_page_permalink&#39;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
 </span></span></code></pre></div><h3 id="修改全局字体">修改全局字体</h3>
-<p>我采用的是开源字体——<a href="https://github.com/lxgw/LxgwWenKai">霞鹜文楷</a>。在 header.php 添加下列代码：</p>
+<p>我采用的是开源字体——<a href="https://github.com/lxgw/LxgwWenKai" rel="noopener noreferrer">霞鹜文楷</a>。在 header.php 添加下列代码：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;!--</span> <span style="color:#a6e22e">Screen</span> <span style="color:#a6e22e">version</span> <span style="color:#f92672">--&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://npm.elemecdn.com/lxgw-wenkai-screen-webfont@1.1.0/style.css&#34;</span> <span style="color:#f92672">/&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">style</span><span style="color:#f92672">&gt;</span>
@@ -1455,18 +1461,18 @@ html {
 </span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">include</span>(<span style="color:#e6db74">&#34;widget-websitestat.php&#34;</span>);
 </span></span></code></pre></div><p>网站后台添加小工具即可。</p>
 <h3 id="写完哪本书了">写完哪本书了？</h3>
-<p>详见文章《<a href="https://yinji.org/4901.html">ChatGPT 帮我写代码，实现“已写完哪本书”统计</a>》</p>
+<p>详见文章《<a href="https://yinji.org/4901.html" rel="noopener noreferrer">ChatGPT 帮我写代码，实现“已写完哪本书”统计</a>》</p>
 <hr>
 <p>大致就是以上这些，具体还有一些小细节，我直接在 style.css 对照审查元素进行修改了，没有记录，需要的可以下载文件，对照我博客进行修改。</p>
 <p>参考文章：</p>
 <ul>
-<li>《<a href="https://www.bgbiji.com/701.html">WordPress建站，twenty twelve子主题修改全记录</a>》</li>
-<li>《<a href="https://xuv.cc/1">WordPress 经典主题 TwentyTwelve 木头人修改精简版</a>》</li>
+<li>《<a href="https://www.bgbiji.com/701.html" rel="noopener noreferrer">WordPress建站，twenty twelve子主题修改全记录</a>》</li>
+<li>《<a href="https://xuv.cc/1" rel="noopener noreferrer">WordPress 经典主题 TwentyTwelve 木头人修改精简版</a>》</li>
 </ul>
 <h2 id="下载地址">下载地址</h2>
 <ul>
-<li>我修改的：<a href="https://github.com/huhexian/2012-huhexian">GitHub</a></li>
-<li>木头人修改版：<a href="https://pan.lanzouw.com/ilrtz0uyd82d">蓝奏网盘</a></li>
+<li>我修改的：<a href="https://github.com/huhexian/2012-huhexian" rel="noopener noreferrer">GitHub</a></li>
+<li>木头人修改版：<a href="https://pan.lanzouw.com/ilrtz0uyd82d" rel="noopener noreferrer">蓝奏网盘</a></li>
 </ul>
  </content>
 
@@ -1486,9 +1492,10 @@ html {
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -1502,87 +1509,71 @@ html {
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "about-my-blog-2.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -1752,6 +1743,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </div>
+
+
+
 
 
 

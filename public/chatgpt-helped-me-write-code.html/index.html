@@ -734,13 +734,19 @@ function allwords() {
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -759,8 +765,8 @@ function allwords() {
 
  
 
-<content> <p>我算是第一批用上 <a href="https://chat.openai.com">ChatGPT</a> 的人群，去年12月就已经注册好了。到目前为止，我用它帮我写过调查问卷、日常作业，也会问一些奇奇怪怪的问题。昨天利用它，帮我写了一段 WordPress 的代码。</p>
-<p>起初是在林木木的博客里看到他写《<a href="https://immmmm.com/what-book-i-write/">已写完了哪本书</a>》 ，原理我懂，获取全站所有文章的字数，然后看你字数在哪个区间，便输出对应字数的书籍，奈何人家使用的是 Hugo，我便问他如果用在 WordPress 上需要如何修改，他给了我 Typecho 的修改版本，具体看《<a href="https://www.jdeal.cn/152.html">博客全站总字数统计</a>》。又难倒我了，我随即向 ChatGPT 寻求帮助。</p>
+<content> <p>我算是第一批用上 <a href="https://chat.openai.com" rel="noopener noreferrer">ChatGPT</a> 的人群，去年12月就已经注册好了。到目前为止，我用它帮我写过调查问卷、日常作业，也会问一些奇奇怪怪的问题。昨天利用它，帮我写了一段 WordPress 的代码。</p>
+<p>起初是在林木木的博客里看到他写《<a href="https://immmmm.com/what-book-i-write/" rel="noopener noreferrer">已写完了哪本书</a>》 ，原理我懂，获取全站所有文章的字数，然后看你字数在哪个区间，便输出对应字数的书籍，奈何人家使用的是 Hugo，我便问他如果用在 WordPress 上需要如何修改，他给了我 Typecho 的修改版本，具体看《<a href="https://www.jdeal.cn/152.html" rel="noopener noreferrer">博客全站总字数统计</a>》。又难倒我了，我随即向 ChatGPT 寻求帮助。</p>
 <p>我先将林木木博客的代码发给它，解释了一遍代码原理。</p>
 <p><figure
     class="image-caption image-zoom-container"
@@ -977,7 +983,7 @@ function allwords() {
     <figcaption></figcaption>
 </figure>
 </p>
-<p>另外，本来想让它继续写一个友情链接页面的模板文件，但试了多次，效果始终不太理想，目前的效果见<a href="https://yinji.org/friends.html">友情链接</a>页面查看吧，待优化中。</p>
+<p>另外，本来想让它继续写一个友情链接页面的模板文件，但试了多次，效果始终不太理想，目前的效果见<a href="https://yinji.org/friends.html" rel="noopener noreferrer">友情链接</a>页面查看吧，待优化中。</p>
  </content>
 
 <p>
@@ -988,9 +994,10 @@ function allwords() {
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -1004,87 +1011,71 @@ function allwords() {
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "chatgpt-helped-me-write-code.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -1098,6 +1089,9 @@ function allwords() {
 
 
 </div>
+
+
+
 
 
 

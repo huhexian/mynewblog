@@ -56,21 +56,7 @@
     
 
 
-需要注意的是，Xesim 本身不提供 eSIM 套餐，需要自行购买，然后在 Xesim 上激活和使用。
-
-    
-    
-    
-        
-    
-    
-    
-        
-    
-    
-    
-
-" />
+需要注意的是，Xesim 本身不提供 eSIM 套餐，需要自行购买，然后在 Xesim 上激活和使用。" />
 <meta name="keywords" content="esim,xesim," />
 
 <link rel="canonical" href="http://localhost:1313/esim-phone.html/">
@@ -681,13 +667,19 @@
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -708,7 +700,7 @@
 
 <content> <p>手里有一台闲置的旧手机——荣耀30 Pro，2020年购买，目前插了一张 Skinny 卡，平时用来打打游戏。据了解，国内手机几乎是不支持 eSIM 功能，只有少数的 iPad 或者 Apple Watch 支持该功能，想要使用也比较麻烦。</p>
 <h2 id="体验-xesim">体验 Xesim</h2>
-<p>最近接触到一款产品——<a href="https://xesim.cc/?DIST=RUBA">Xesim</a>，通过一张实体 SIM 卡，让原本不支持 eSIM 功能的手机也能用上 eSIM，朋友寄了一张给我，今天拿到之后立马安装到荣耀30 Pro 来体验一番。</p>
+<p>最近接触到一款产品——<a href="https://xesim.cc/?DIST=RUBA" rel="noopener noreferrer">Xesim</a>，通过一张实体 SIM 卡，让原本不支持 eSIM 功能的手机也能用上 eSIM，朋友寄了一张给我，今天拿到之后立马安装到荣耀30 Pro 来体验一番。</p>
 <p><figure
     class="image-caption image-zoom-container"
 >
@@ -1085,10 +1077,10 @@
 <blockquote>
 <p>如果有想法购买体验，可以使用我的折扣码：<strong>huhexian</strong>，获得10%的折扣。</p>
 </blockquote>
-<p>官网地址：<a href="https://xesim.cc/?DIST=RUBA">https://xesim.cc/</a></p>
+<p>官网地址：<a href="https://xesim.cc/?DIST=RUBA" rel="noopener noreferrer">https://xesim.cc/</a></p>
 <p>关于 eSIM 套餐的购买，可以看看这几个供应商，支持的地区和国家都挺多，有无限和有限流量套餐等。</p>
 <blockquote>
-<p>Airalo： <a href="https://www.airalo.com/zh-CN">https://www.airalo.com/zh-CN</a> Holafly：<a href="https://esim.holafly.com/cn/">https://esim.holafly.com/cn/</a> RedteaGO：<a href="https://esim.redteago.com/zh-CN/">https://esim.redteago.com/zh-CN/</a></p>
+<p>Airalo： <a href="https://www.airalo.com/zh-CN" rel="noopener noreferrer">https://www.airalo.com/zh-CN</a> Holafly：<a href="https://esim.holafly.com/cn/" rel="noopener noreferrer">https://esim.holafly.com/cn/</a> RedteaGO：<a href="https://esim.redteago.com/zh-CN/" rel="noopener noreferrer">https://esim.redteago.com/zh-CN/</a></p>
 </blockquote>
  </content>
 
@@ -1102,9 +1094,10 @@
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -1118,87 +1111,71 @@
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "esim-phone.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -1347,6 +1324,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </div>
+
+
+
 
 
 

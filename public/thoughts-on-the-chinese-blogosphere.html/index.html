@@ -661,13 +661,19 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -728,8 +734,8 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
 <p>以上内容是我对中文博客圈微信群的简单叙述。</p>
 <hr>
 <p>博客作为过去时代的产物，到今天已经不是什么新鲜的东西了，中文独立博客就像是天上的星星、地上的沙粒，散乱、无序，分布没有规律，建立一个交流群是我想到的将大家聚在一起的最好的方式。我也尝试过使用 Telegram 群组，但不是所有的人都能使用，权衡之下，微信就是一个相对来说好的选择。</p>
-<p>打开搜索引擎，输入“中文博客”，会发现许多与之相关的项目，大部分为博客导航、博客收录、文章聚合等，但他们聚合的仅仅是文章、博客，而不是我们活生生的人。<a href="https://storeweb.cn">个站商店</a>是一个很棒的平台，展示博客和文章、发帖讨论、友情链接互访，已然是一个中文博客圈的雏形，但是缺乏一个重要的点，就是交流。<strong>在平台上注册账号交流，总让我觉得对方只是一个网友，而在微信群里交流，更能感到人的温度</strong>。</p>
-<p><a href="https://hanyu.life">Damon</a> 建议我也做一个中文博客圈的项目，聚集更多的独立博主，我也有过这个想法，但是一直没有好的构想，博客论坛、博客收录等已经有很多了，它们也不是我理想的项目。再等等吧，目前我就维护好属于我们独立博主的中文博客圈微信群。</p>
+<p>打开搜索引擎，输入“中文博客”，会发现许多与之相关的项目，大部分为博客导航、博客收录、文章聚合等，但他们聚合的仅仅是文章、博客，而不是我们活生生的人。<a href="https://storeweb.cn" rel="noopener noreferrer">个站商店</a>是一个很棒的平台，展示博客和文章、发帖讨论、友情链接互访，已然是一个中文博客圈的雏形，但是缺乏一个重要的点，就是交流。<strong>在平台上注册账号交流，总让我觉得对方只是一个网友，而在微信群里交流，更能感到人的温度</strong>。</p>
+<p><a href="https://hanyu.life" rel="noopener noreferrer">Damon</a> 建议我也做一个中文博客圈的项目，聚集更多的独立博主，我也有过这个想法，但是一直没有好的构想，博客论坛、博客收录等已经有很多了，它们也不是我理想的项目。再等等吧，目前我就维护好属于我们独立博主的中文博客圈微信群。</p>
 <p>我在《[[welcome-to-the-chinese-blogosphere|欢迎加入中文博客圈]]》中写了入群的条件，对于认真写博客的人来说，算不上特别严格。一方面我向独立博主发出邀请，另一方面也有朋友看到我的内容留言想入群。</p>
 <ol>
 <li>独立中文原创博客；</li>
@@ -751,9 +757,10 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -767,87 +774,71 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "thoughts-on-the-chinese-blogosphere.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -861,6 +852,9 @@ Damon 建议我也做一个中文博客圈的项目，聚集更多的独立博�
 
 
 </div>
+
+
+
 
 
 

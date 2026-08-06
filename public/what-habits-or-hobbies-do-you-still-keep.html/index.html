@@ -633,13 +633,19 @@
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -658,7 +664,7 @@
 
  
 
-<content> <p>这是<a href="https://www.v2ex.com/t/731750">v2ex</a>上一位网友发帖问的问题，仔细想了想，这其实也在问我自己，从读书开始到现在养成的习惯和爱好有哪些。</p>
+<content> <p>这是<a href="https://www.v2ex.com/t/731750" rel="noopener noreferrer">v2ex</a>上一位网友发帖问的问题，仔细想了想，这其实也在问我自己，从读书开始到现在养成的习惯和爱好有哪些。</p>
 <p><strong>曾经坚持的写日记</strong>。初高中的时候，对于手写日记挺热衷的，每天写的不多，日记本倒是买了不少，现在到大学了，自由支配的时间虽然多了，但花在写日记上面的时间却很少，一周一篇慢慢变成一月一篇了。这算是曾经坚持过的习惯吧。</p>
 <p><strong>坚持写博客</strong>。从2018年建立这个博客以来，庆幸自己到现在还保持着写博客的习惯，从当初的“每日一博”到现在的“想博就博”，中途虽然有大大小小的变化，但一直保持着我自己的独立思考与书写记录的习惯，我其实把它当作我记录生活的一个方式，手写日记是一种方式，写博客也是一种记录方式。当然这也算是我的一个爱好，网上有句笑话说：“唯一多年坚持做的事情就是给手机充电。”坚持某件事情很难，但是坚持自己的爱好，并最后形成自己的习惯，是可以享受到其中的乐趣的。写博客对于我的好处，懂的人自然懂，不言而喻。当然，看别人博客的文章也包括在写博客里面啦，这就使我每天习惯性地打开阅读器看看有没有新的文章更新。</p>
 <p><strong>坚持广泛的阅读</strong>。中小学时期，很多人的阅读其实是被老师赶着走的，每年都会推出大大小小的“中小学生必读书目”“经典名著”，但每年都是换汤不换药，没办法，与考试挂钩只能这么做。我虽然是跟着老师走，但往往也会自己选择泡在新华书店，初中暑假在家，电脑玩得少，经常跑到新华书店看书蹭空调。到了高中，自己的选择也更多了，对于看的书自己也有了选择，没有局限于上述所说的必读书目，像推理类小说东野圭吾的作品、像玄幻小说例如《大主宰》、《斗破苍穹》，也有大冰的《阿弥托福么么哒》、《小孩》，而对于杂志，小学只接触过《小学生之友》，初高中接触到《意林》、《读者》、《青年文摘》、《环球人物》……我一直认为阅读能提升一个人的修养和品位，充实自己，也有利于自己的写作和思考，因此在阅读上面花的钱和时间毫不吝啬。</p>
@@ -680,9 +686,10 @@
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -696,87 +703,71 @@
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "what-habits-or-hobbies-do-you-still-keep.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -790,6 +781,9 @@
 
 
 </div>
+
+
+
 
 
 

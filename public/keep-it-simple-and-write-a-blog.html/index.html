@@ -625,13 +625,19 @@
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -650,10 +656,10 @@
 
  
 
-<content> <p>怎么又换成twenty twelve主题了？我也想问自己为什么，可能我就适合这样的吧，字多图少，不会配图，瞎放也丑，干脆以后写东西能不放图就不放图，正好也减轻我CDN流量压力。前两天博客被人CC了一番，百度云加速免费版直接超量，要想继续用，只能用付费版，不当他的韭菜了，当腾讯云的韭菜吧。在<a href="https://www.youngfree.cn/">杨景文</a>博主的帮助下，配置了腾讯云CDN，原本一起套了又拍云，但是有问题，就放弃了。</p>
-<p>正如<a href="https://laozhang.org/">张波博主</a>所说：停止一些无意义的折腾。简简单单的写个博客，就是现在最好的追求。<a href="http://www.guanhaodong.com/">官浩东</a>博主现在差不多也和我一样的心态，折腾来折腾去，WordPress和Typecho都用过了，最后还是和我一样用上了twenty twelve。说起来，他开始写博客多多少少还和我有点关系，他看到我在料Sam的评论，“点进去一看，嚯，高中生博主，好厉害，我也要弄”，于是他就注册搭建了。</p>
-<p>看到群里<a href="https://imzm.im/">陈仓颉</a>博主在折腾博客的邮件发信问题，折腾得头都大了，有点像当初的我，左搞搞右搞搞，还是没弄成，当时索性不搞这个功能了，到后来换到腾讯云服务器才折腾好。基本的弄好我觉得就足够了，写博客强调的是写，能写就行，主题也是次要，能入眼就行，顶多稍微改改细节。</p>
-<p>其实换成twenty twelve还有另一个原因，沙唐桔搞了一个主题增强<a href="https://cyhour.com/1626/">插件</a>，一下子就解决了蛮多官方主题的一些问题，让我立即就想上手了，于是真的上手了。</p>
+<content> <p>怎么又换成twenty twelve主题了？我也想问自己为什么，可能我就适合这样的吧，字多图少，不会配图，瞎放也丑，干脆以后写东西能不放图就不放图，正好也减轻我CDN流量压力。前两天博客被人CC了一番，百度云加速免费版直接超量，要想继续用，只能用付费版，不当他的韭菜了，当腾讯云的韭菜吧。在<a href="https://www.youngfree.cn/" rel="noopener noreferrer">杨景文</a>博主的帮助下，配置了腾讯云CDN，原本一起套了又拍云，但是有问题，就放弃了。</p>
+<p>正如<a href="https://laozhang.org/" rel="noopener noreferrer">张波博主</a>所说：停止一些无意义的折腾。简简单单的写个博客，就是现在最好的追求。<a href="http://www.guanhaodong.com/" rel="noopener noreferrer">官浩东</a>博主现在差不多也和我一样的心态，折腾来折腾去，WordPress和Typecho都用过了，最后还是和我一样用上了twenty twelve。说起来，他开始写博客多多少少还和我有点关系，他看到我在料Sam的评论，“点进去一看，嚯，高中生博主，好厉害，我也要弄”，于是他就注册搭建了。</p>
+<p>看到群里<a href="https://imzm.im/" rel="noopener noreferrer">陈仓颉</a>博主在折腾博客的邮件发信问题，折腾得头都大了，有点像当初的我，左搞搞右搞搞，还是没弄成，当时索性不搞这个功能了，到后来换到腾讯云服务器才折腾好。基本的弄好我觉得就足够了，写博客强调的是写，能写就行，主题也是次要，能入眼就行，顶多稍微改改细节。</p>
+<p>其实换成twenty twelve还有另一个原因，沙唐桔搞了一个主题增强<a href="https://cyhour.com/1626/" rel="noopener noreferrer">插件</a>，一下子就解决了蛮多官方主题的一些问题，让我立即就想上手了，于是真的上手了。</p>
 <p>在整理的时候，顺便看了看2018年写的文章，那一年总共有116篇，仔细看的话，有的确实不能算是文章，水的很。现在，也水的很，随性写一写。</p>
 <p>专注写作，专注阅读，专注思考。主题什么的，别想打扰我。</p>
  </content>
@@ -670,9 +676,10 @@
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -686,87 +693,71 @@
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "keep-it-simple-and-write-a-blog.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -780,6 +771,9 @@
 
 
 </div>
+
+
+
 
 
 

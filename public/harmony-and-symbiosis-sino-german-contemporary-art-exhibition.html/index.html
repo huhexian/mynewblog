@@ -128,20 +128,6 @@
     
     
 
-
-
-    
-    
-    
-        
-    
-    
-    
-        
-    
-    
-    
-
 " />
 <meta name="keywords" content="江西省美术馆,艺术展," />
 
@@ -756,13 +742,19 @@
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -784,7 +776,7 @@
 <content> <p>恰逢周六，调休一天，天气也不错，便动身前往江西省美术馆，进行一次久违的 CityWalk。</p>
 <p>粗人一个，对艺术一窍不通，只抱着欣赏与拍照的想法走马观花式的逛了个遍，拍下了我觉得挺不错的作品。</p>
 <p>这次展览是中德当代艺术展，德国艺术家的抽象作品欣赏不来，不看介绍几乎看不懂蕴意，即使看了介绍也会觉得这人扯淡，内心不得不产生一种“换我，我也行”的想法，这可能就是我这种粗人的特点吧。</p>
-<p>以下介绍均摘自江西省美术馆公众号文章《<a href="https://mp.weixin.qq.com/s/ilsqOAjUlXC6O1HFOQZCXQ">艺术盛宴 国际桥梁 “相融共生：中德当代艺术展”</a>》。</p>
+<p>以下介绍均摘自江西省美术馆公众号文章《<a href="https://mp.weixin.qq.com/s/ilsqOAjUlXC6O1HFOQZCXQ" rel="noopener noreferrer">艺术盛宴 国际桥梁 “相融共生：中德当代艺术展”</a>》。</p>
 <blockquote>
 <p>“相融共生：中德当代艺术展”涵盖了绘画、雕塑、摄影、装置艺术等多个领域，风格各异、主题丰富。步入展厅，一场视觉的奇幻盛宴扑面而来，绘画作品有写意有写实，也有多种材料混合的作品。</p>
 <p>斑斓色彩与灵动笔触，勾勒出或写实、或抽象的万千世界，从细腻的人物肖像到壮阔的山水意境，每一幅都是心绪的表达。钢铁雕塑陶瓷类艺术品，有的是立体之姿傲然矗立，有的是温润如玉精美细致。有抽象的物，有变异的人，无不展示出艺术创作的无尽可能性。</p>
@@ -1630,9 +1622,10 @@
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -1646,87 +1639,71 @@
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "harmony-and-symbiosis-sino-german-contemporary-art-exhibition.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -1740,6 +1717,9 @@
 
 
 </div>
+
+
+
 
 
 

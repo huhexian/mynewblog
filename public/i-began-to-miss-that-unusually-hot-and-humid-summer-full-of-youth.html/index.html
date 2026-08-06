@@ -642,13 +642,19 @@
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -667,13 +673,13 @@
 
  
 
-<content> <p>大致在我写的文章《<a href="http://yinji.org/1745.html">我不合群，我要改吗？</a>》里评论说：等到了大学，免不了又要怀念高中了。的确，现在是慢慢又开始怀念了，不单单是高中，还有初中。</p>
+<content> <p>大致在我写的文章《<a href="http://yinji.org/1745.html" rel="noopener noreferrer">我不合群，我要改吗？</a>》里评论说：等到了大学，免不了又要怀念高中了。的确，现在是慢慢又开始怀念了，不单单是高中，还有初中。</p>
 <p>或许是因为昨天下午和熟悉的老同学见面，打了会球，又或者是昨天晚上做梦，梦到了几个熟悉的同学和朋友，早上一醒来，脑海里是高考前我们在考场外面呐喊加油的样子，恍惚之间，这已经是大半年前的事情了。</p>
 <p>一个高中同学在朋友圈里发了一条视频，在视频里我看到了当时考场外面的我们，一个一个喊着加油，大喊、大笑，进考场前，和老师握手，沾沾“手气”，高考前端午节，老师还特意给全班买了粽子、西瓜，把粽子挂在门框上，让我们每个人经过的时候跳起来顶一顶粽子，寓意“高中（粽）”。</p>
 <p>拍毕业照那天，也是难得的最后一次考前放松，几分钟就能拍完的毕业照，我们整个下午都在操场上和老师、同学拍着自己的照片，也是在那时候，第一次看到了班主任充满魔性却很有趣的笑脸。</p>
 <p>几个关系好的高中同学，也算是初中同学，认识六七年了，陆陆续续也回家了。</p>
 <p>昨天下午一起出来打了会球，晚上在夜宵摊饭桌上，你一句我一句，互相分享自己在大学里的所见所闻，有吐槽有埋怨，有骄傲也有兴奋。聊的最多的是自己学校食堂的饭菜口味，例如习惯不了别的地方的口味，要辣没辣，要甜没甜，但无论怎么吐槽，生活了半年之后，也都适应了。朋友不会走远，不会走丢，各自经历之后，会有更多的互相倾诉和分享。</p>
-<p>以前同学说我是个<a href="http://yinji.org/1464.html">念旧</a>的人，和朋友出去玩，习惯性的拍个合照存在手机或电脑里，回家之后也会习惯性的将这和朋友相处的一天写在日记本里，也不为别的，只是以后想他们了，可以翻翻相册、翻翻日记，就能回忆起来。</p>
+<p>以前同学说我是个<a href="http://yinji.org/1464.html" rel="noopener noreferrer">念旧</a>的人，和朋友出去玩，习惯性的拍个合照存在手机或电脑里，回家之后也会习惯性的将这和朋友相处的一天写在日记本里，也不为别的，只是以后想他们了，可以翻翻相册、翻翻日记，就能回忆起来。</p>
 <p>我开始怀念那个异常闷热却全是青春的夏天。这句话不是我说的，朋友微博上发的。怀念不是因为闷热，而是充满青春。一群人，一块复习，周围都是奋斗的气息，我觉得这可以叫做青春；为自己搏一把，为自己拼一次，我觉得这可以叫做青春；疲倦想退缩时，会有老师不断地激励你、鼓励你、安慰你，让自己时时刻刻明白有希望有能力有时间，我觉得这可以叫做青春。</p>
 <p>不过话说回来，那个夏天确实挺闷热的，因为高考推迟，7月份太阳还在，更何况住在五楼，太阳直勾勾地晒，晚上几乎睡不着，这时候距离高考还有十来天，班主任和我们说，实在热可以每天晚上回家睡。在和学校相关领导说了很多之后，终于装上了空调。那几天很凉快，但也流下了汗水，或许是努力之后的汗水。</p>
 <p>我开始怀念那个异常闷热却全是青春的夏天，那个充满汗水和青春的夏天。</p>
@@ -693,9 +699,10 @@
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -709,87 +716,71 @@
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "i-began-to-miss-that-unusually-hot-and-humid-summer-full-of-youth.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -803,6 +794,9 @@
 
 
 </div>
+
+
+
 
 
 

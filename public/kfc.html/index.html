@@ -655,13 +655,19 @@
 </a>
 <nav><a href="/">Home</a>
 
+
+
+
 <a href="/about.html">About</a>
+
+
+
 
 <a href="/roll.html">Roll</a>
 
 
-<a href="/blog/">Blog</a>
 
+<a href="/blog/">Blog</a>
 </nav>
 </header>
   <main>
@@ -721,7 +727,7 @@
 <p>在我小时候的印象里，汉堡叫做汉堡包，搭配薯条、炸鸡、可乐，这也是我对老家本土品牌“欢乐季”最深远的记忆。每到周五，就会有工作人员在学校门口派发传单，四四方方的纸片上印着各种口味的汉堡、炸鸡、饮品，标注着价格，可以将其剪下，凭此以优惠价格购买。小时候收集了很多，但一次都没有用过。那时候一个汉堡、一份薯条，价格昂贵，家人也没有带我去过，每每路过，都会留下羡慕的眼神，尤其是看到有人生日，一家人在店里戴着生日帽、吹着蜡烛、吃着汉堡，更加羡慕。</p>
 <p>长大以后，了解了肯德基、麦当劳，以及现在的塔斯汀，价格虽然没有特别便宜，但这却是上班族较为实惠的选择。人终究会为年少不可得之物困其一生，汉堡、薯条即是如此，遇上疯狂星期四，如果下班早，恰好当天有想吃的餐品，毫不犹豫奔向肯德基；周末在外面，到饭点，麦当劳和肯德基是我认为一人食的最佳选择。吮指原味鸡、热辣香骨鸡、蜜汁全鸡，经典的香辣鸡腿堡、老北京鸡肉卷，只要稍微回忆一下，便能想起它们的味道。</p>
 <p>有一份专属工作日的 OK 三件套只需要 19.9 元，任选 1 份黄金 SPA 鸡排堡或者滋滋 YES 烤鸡腿堡，加一份劲爆鸡米花和中可，对于我来说，中午或晚上来上一份，就能吃饱。</p>
-<p>陈仓颉在《<a href="https://imzm.im/long-live-macdonalds/">麦门永存。</a>》中提到肯德基更像是一个卖一些西餐的中餐厅，不仅有豆浆、烧饼、油条、茶叶蛋，今天看菜单，还有炸串、鸡架，越来越贴近中国人的饮食习惯和口味。在使用闲鱼下单肯德基之后，我更加确定了“不知道吃什么，那就吃肯德基”的合理性（ps：肯德基替换成麦当劳或其他品牌也适用）。一份香辣鸡腿堡，一杯中可，在闲鱼上代下单，不到 14 元，十分满意，本想放出截图，怕有广告嫌疑，遂作罢。</p>
+<p>陈仓颉在《<a href="https://imzm.im/long-live-macdonalds/" rel="noopener noreferrer">麦门永存。</a>》中提到肯德基更像是一个卖一些西餐的中餐厅，不仅有豆浆、烧饼、油条、茶叶蛋，今天看菜单，还有炸串、鸡架，越来越贴近中国人的饮食习惯和口味。在使用闲鱼下单肯德基之后，我更加确定了“不知道吃什么，那就吃肯德基”的合理性（ps：肯德基替换成麦当劳或其他品牌也适用）。一份香辣鸡腿堡，一杯中可，在闲鱼上代下单，不到 14 元，十分满意，本想放出截图，怕有广告嫌疑，遂作罢。</p>
 <p><figure
     class="image-caption image-zoom-container"
 >
@@ -769,9 +775,10 @@
 
 
 
+
 <div class="upvote-container">
 <small class="upvote">
-  <button class="upvote-btn" id="upvote-btn">
+  <button class="upvote-btn" id="upvote-btn" aria-label="Upvote this post" aria-pressed="false">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
     <polyline points="17 11 12 6 7 11"></polyline>
     <polyline points="17 18 12 13 7 18"></polyline>
@@ -785,87 +792,71 @@
   let hasUpvoted = false;
   let upvoteBtn;
   let upvoteCount;
-
   
-  document.addEventListener('DOMContentLoaded', function() {
-    const slug = '';
-    upvoteBtn = document.getElementById('upvote-btn');
-    upvoteCount = document.getElementById('upvote-count');
-    getCount(slug);
-
-    
-    upvoteBtn.addEventListener('click', handleUpvote);
-  });
-
   
-  async function handleUpvote() {
-    if (hasUpvoted) {
-      console.log('You have already upvoted this post!');
-      return;
-    }
-    const slug = '';
+  const entity = "kfc.html";
+  const upvoteBaseUrl = "https://kudos.yinji.org".replace(/\/+$/, '');
 
-    
-    upvoteBtn.disabled = true;
-    
-    upvoteBtn.classList.add('upvoted');
-    
-    upvoteCount.innerText = parseInt(upvoteCount.innerText) + 1;
+  function upvoteUrl(action = '') {
+    return `${upvoteBaseUrl}/${encodeURIComponent(entity)}${action}`;
+  }
 
+  async function requestKudos(url, options) {
+    const response = await fetch(url, options);
+    let data;
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/upvote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: slug, diff: 1 }),
-      });
-
-      if (response.ok) {
-        console.log('Upvote successful!');
-        hasUpvoted = true;
-        await getCount(slug, 3);
-      } else {
-        console.log('Upvote failed!');
-      }
-    } catch (error) {
-      console.error('Error: ', error);
-    } finally {
-      upvoteBtn.disabled = false;
+      data = await response.json();
+    } catch {
+      throw new Error(`Kudos request failed (${response.status})`);
     }
+    if (!response.ok) {
+      throw new Error(data.error ?? `Kudos request failed (${response.status})`);
+    }
+    return data;
+  }
+
+  function renderUpvote({ count, hasKudos }) {
+    upvoteCount.innerText = count;
+    hasUpvoted = hasKudos;
+    upvoteBtn.classList.toggle('upvoted', hasUpvoted);
+    upvoteBtn.setAttribute('aria-pressed', String(hasUpvoted));
+    upvoteBtn.setAttribute('aria-label', hasUpvoted ? 'Remove your upvote' : 'Upvote this post');
   }
 
   
-  async function getCount(slug, retryCount = 0) {
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    upvoteBtn = document.getElementById('upvote-btn');
+    upvoteCount = document.getElementById('upvote-count');
+    loadUpvote();
+
+    upvoteBtn.addEventListener('click', toggleUpvote);
+  });
+
+  async function loadUpvote() {
     try {
-      const response = await fetch('https:\/\/upvote.yinji.org\/count?post=' + slug, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (data.code === 0) {
-        const count = data.data.count;
-        upvoteCount.innerText = count;
-        hasUpvoted = data.data.hasUpvoted;
-        if (hasUpvoted) {
-          upvoteBtn.classList.add('upvoted');
-        } else {
-          upvoteBtn.classList.remove('upvoted');
-        }
-      } else {
-        console.error('Failed to get upvote count: ', data.msg);
-      }
+      const [count, status] = await Promise.all([
+        requestKudos(upvoteUrl()),
+        requestKudos(upvoteUrl('/kudos')),
+      ]);
+      renderUpvote({ count: count.count, hasKudos: status.hasKudos });
     } catch (error) {
-      console.error('Error: ', error);
-      if (retryCount > 0) {
-        setTimeout(() => {
-          getCount(slug, retryCount - 1);
-        }, 1000);
-      }
+      console.error('Failed to load upvote:', error);
+    }
+  }
+
+  async function toggleUpvote() {
+    upvoteBtn.disabled = true;
+
+    try {
+      const state = await requestKudos(upvoteUrl('/kudos'), {
+        method: hasUpvoted ? 'DELETE' : 'POST',
+      });
+      renderUpvote(state);
+    } catch (error) {
+      console.error('Failed to update upvote:', error);
+    } finally {
+      upvoteBtn.disabled = false;
     }
   }
 </script>
@@ -879,6 +870,9 @@
 
 
 </div>
+
+
+
 
 
 
