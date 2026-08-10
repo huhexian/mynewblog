@@ -23,7 +23,7 @@ url: "/about.html"
 
 ## 联系我
 
-- Email：[huhexian0206@gmail.com](mailto:huhexian0206@gmail.com)
+- Email：[me@yinji.org](mailto:me@yinji.org)
 - Twitter：[@huhexian](https://x.com/huhexian)
 - Telegram：[@huhexian](https://t.me/huhexian)
 
