@@ -17,9 +17,8 @@ url: "/about.html"
 ## Self-Hosted
 
 - [Umami](https://github.com/umami-software/umami)：网站统计工具
-- [FreshRSS](https://github.com/FreshRSS/FreshRSS)：RSS 阅读器
 - [Bitwarden](https://github.com/bitwarden)：密码管理工具
-- [Uptime Kuma](https://github.com/louislam/uptime-kuma)：网站资源监控工具
+- [Hugo](https://gohugo.io)：目前使用的博客程序
 
 
 ## 联系我
