@@ -1,6 +1,6 @@
 ---
 title: "Buy me a coffee"
-slug: "/buymeacoffee.html"
+url: "/buymeacoffee.html"
 ---
 
 写作本非易事，字句总要反复推敲才安心。独立博客是条冷清的路，没有掌声，也没有神话，只有一字一句慢慢堆砌。意义在于本身，只要心底那簇火苗不灭，总还能继续写下去。
