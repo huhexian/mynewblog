@@ -7,6 +7,10 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     
+      <managingEditor>me@yinji.org (青山)</managingEditor>
+    
+    
+      <webMaster>me@yinji.org (青山)</webMaster>
     
     
     <copyright>Copyright © 2018-2026, huhexian.</copyright>
@@ -19,35 +23,35 @@
     <item>
       <title>Life</title>
       <link>http://localhost:1313/categories/life/</link>
-      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate><author>me@yinji.org (青山)</author>
       <guid>http://localhost:1313/categories/life/</guid>
       <description></description>
     </item>
     <item>
       <title>Ssn</title>
       <link>http://localhost:1313/categories/ssn/</link>
-      <pubDate>Sat, 14 Feb 2026 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 14 Feb 2026 00:00:00 +0000</pubDate><author>me@yinji.org (青山)</author>
       <guid>http://localhost:1313/categories/ssn/</guid>
       <description></description>
     </item>
     <item>
       <title>Play-Everything</title>
       <link>http://localhost:1313/categories/play-everything/</link>
-      <pubDate>Wed, 03 Dec 2025 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 03 Dec 2025 00:00:00 +0000</pubDate><author>me@yinji.org (青山)</author>
       <guid>http://localhost:1313/categories/play-everything/</guid>
       <description></description>
     </item>
     <item>
       <title>Photograph</title>
       <link>http://localhost:1313/categories/photograph/</link>
-      <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate><author>me@yinji.org (青山)</author>
       <guid>http://localhost:1313/categories/photograph/</guid>
       <description></description>
     </item>
     <item>
       <title>Book-Movie</title>
       <link>http://localhost:1313/categories/book-movie/</link>
-      <pubDate>Sat, 11 Nov 2023 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 11 Nov 2023 00:00:00 +0000</pubDate><author>me@yinji.org (青山)</author>
       <guid>http://localhost:1313/categories/book-movie/</guid>
       <description></description>
     </item>

@@ -37,7 +37,7 @@ defaultContentLanguage = "zh-cn"
 
   [params.author]
     name = "青山"
-    email = ""
+    email = "me@yinji.org"
 
   [params.RSS]
     enableRSS = true

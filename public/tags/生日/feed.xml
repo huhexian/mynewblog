@@ -7,6 +7,10 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     
+      <managingEditor>me@yinji.org (青山)</managingEditor>
+    
+    
+      <webMaster>me@yinji.org (青山)</webMaster>
     
     
     <copyright>Copyright © 2018-2026, huhexian.</copyright>
@@ -19,14 +23,14 @@
     <item>
       <title>我与博客的生日</title>
       <link>http://localhost:1313/my-birthday-with-my-blog.html/</link>
-      <pubDate>Sat, 16 Mar 2024 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 16 Mar 2024 00:00:00 +0000</pubDate><author>me@yinji.org (青山)</author>
       <guid>http://localhost:1313/my-birthday-with-my-blog.html/</guid>
       <description>&lt;p&gt;工作太忙，以至于自己的22岁生日也只是和女朋友匆匆吃了个晚饭，并一起草草记录博客的第6年。&lt;/p&gt;&#xA;&lt;p&gt;&lt;figure&#xA;    class=&#34;image-caption image-zoom-container&#34;&#xA;&gt;&#xA;    &#xA;    &lt;input&#xA;        type=&#34;checkbox&#34;&#xA;        id=&#34;img-1c15d208&#34;&#xA;        class=&#34;image-zoom-toggle&#34;&#xA;        aria-label=&#34;放大图片：&#34;&#xA;    /&gt;&#xA;    &lt;label&#xA;        for=&#34;img-1c15d208&#34;&#xA;        class=&#34;image-zoom-label&#34;&#xA;    &gt;&#xA;        &lt;img&#xA;            src=&#34;https://huhexian.s3.bitiful.net/pic/2024/03/9ae118750e20f6026d727fa4f14a7555.webp&#34;&#xA;            alt=&#34;&#34;&#xA;            loading=&#34;lazy&#34;&#xA;            class=&#34;zoomable-image&#34;&#xA;        /&gt;&#xA;    &lt;/label&gt;&#xA;    &#xA;    &lt;label&#xA;        for=&#34;img-1c15d208&#34;&#xA;        class=&#34;image-zoom-overlay&#34;&#xA;    &gt;&#xA;        &lt;img&#xA;            src=&#34;https://huhexian.s3.bitiful.net/pic/2024/03/9ae118750e20f6026d727fa4f14a7555.webp&#34;&#xA;            alt=&#34;&#34;&#xA;            class=&#34;zoomable-image&#34;&#xA;        /&gt;&#xA;    &lt;/label&gt;&#xA;    &#xA;    &lt;figcaption&gt;&lt;/figcaption&gt;&#xA;&lt;/figure&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;继续借用&lt;a href=&#34;https://blog.sunguoqi.com&#34; rel=&#34;noopener noreferrer&#34;&gt;小孙同学&lt;/a&gt;的照片。&lt;/p&gt;&#xA;&lt;h2 id=&#34;我的22岁&#34;&gt;我的22岁&lt;/h2&gt;&#xA;&lt;p&gt;似乎越长大，对生日越没有什么感觉。以前盼望着生日，能吃蛋糕、吹蜡烛，尽管过去年年生日都是在学校里度过，但也有一些期待和盼望，上大学之后的生日，时间自由了许多，有更多的活动可以庆祝，但我也只是趁此机会和女朋友出去吃一顿好的，然后给家里父母打个电话。&lt;/p&gt;&#xA;&lt;p&gt;昨天是我农历22岁生日，和往常一样，周五工作日，从早上八点半到晚上五点半的重复工作，或许是因为生日，想休息一会，便调休了下午半天，回到租住的房子里美美地睡了一个多小时的午觉，醒来觉得甚是舒畅。晚上和女朋友在南昌老三样吃了一顿晚饭，没有蛋糕，没有生日歌，但有朋友和家人的祝福，自己渐渐觉得不必将生日看作一件特别重要的事情，生日当天也并不特殊，对于我们自己而言，生日或许是提醒自己又老了一岁，只有对于父母而言，意义非凡。&lt;/p&gt;&#xA;&lt;p&gt;就当我以为这次生日会如此平平淡淡地度过，公司举办了今年第一次员工集体生日会，专门为第一季度生日的员工所举办。下班之后来到会议室，桌上摆好了零食和饮料，同事来齐之后就开始了今天的生日会，i 人在这种场合显得不太自在，我便是如此，幸好周围有同部门的同事，跟着一起玩了游戏、唱了生日歌、切了蛋糕，最后还领到了公司送的生日零食礼物。&lt;/p&gt;&#xA;&lt;p&gt;可惜假期总是伴随雨水而来，计划明天出门逛逛，但天气不太好，只能待在家里继续完成毕业论文。&lt;/p&gt;&#xA;&lt;h2 id=&#34;博客的第6年&#34;&gt;博客的第6年&lt;/h2&gt;&#xA;&lt;p&gt;与我的生日一样，博客建立时间的增长也让我体会到时间流逝的速度，猛然间有一种惊讶，我居然写了6年博客，一件事情能坚持6年，我对它应该是真爱。&lt;/p&gt;&#xA;&lt;p&gt;过去这一年里博客的变化也很大，更换域名至少有3次，博客主题想换却没有换，之前喜欢 bearblog 的极简，千方百计想要一套 bearblog 的 WordPress 版主题，等到&lt;a href=&#34;https://yayu.net&#34; rel=&#34;noopener noreferrer&#34;&gt;雅余&lt;/a&gt;制作出来之后，却舍不得换下自己修改过的 &lt;a href=&#34;https://github.com/huhexian/2012-huhexian&#34; rel=&#34;noopener noreferrer&#34;&gt;Twenty Twelve&lt;/a&gt;，更舍不得右上角的红色印章，尽管有朋友说，去掉印章，能让我和我的博客年轻10岁，在此之前以为我是30岁的中年网民。&lt;/p&gt;&#xA;&lt;p&gt;这一年，我帮助过几个朋友搭建博客，在我意料之中的是只有少数几个坚持写着，剩下的估计是等我明年提醒他们续费域名和服务器，时间会检验和筛选一个人，我们还在写博客的应该感到一些庆幸，保留并坚持着一个小众、有趣的爱好。&lt;/p&gt;&#xA;&lt;p&gt;有一件比较遗憾的事情，原本想在小报童上更新一个专栏《&lt;a href=&#34;https://yinji.org/5150.html&#34; rel=&#34;noopener noreferrer&#34;&gt;年轻人的第一份博客手册&lt;/a&gt;》，一开始兴致勃勃，想借助自己的经验，让更多的人了解博客、喜欢博客，从而一起写博客，但或许是小报童后台编辑器较为难用，最主要的原因是我不擅长写需要付费才能阅读的文章，能力不行，在自己的博客 write in public 更适合我，没有坚持多久，便放弃了。相比之下，读者真诚而积极的反馈、鼓励比金钱更有价值，让我更有动力。但也有一件较为高兴的事情，更新了两篇关于博客的教程文章，《&lt;a href=&#34;https://yinji.org/5223.html&#34; rel=&#34;noopener noreferrer&#34;&gt;如何搭建一个博客？&lt;/a&gt;》和《&lt;a href=&#34;https://yinji.org/5211.html&#34; rel=&#34;noopener noreferrer&#34;&gt;如何订阅一个博客？&lt;/a&gt;》，不为别的，纯粹出于兴趣。&lt;/p&gt;&#xA;&lt;p&gt;去年开始写的周报，到12月第8期就中断了，也不知道什么时候会更新第9期，或许是在不远的将来，因为我有太多内容想记录和分享，有太多的话题想用文字讨论，就等一个时间充裕的周末。已经有几篇博客的评论没有回复，一直觉得不太好意思，尽管每条评论都会阅读，但常常都是阅读完就关闭了网页，总以为在梦里已经回复，没想到是错觉，希望能够改正。&lt;/p&gt;&#xA;&lt;p&gt;我与博客的生日在机缘巧合之下撞在了一起，感谢它们，让我写下了今天的文字。&lt;/p&gt;&#xA;</description>
     </item>
     <item>
       <title>祝18岁的自己生日快乐</title>
       <link>http://localhost:1313/happy-birthday-to-18.html/</link>
-      <pubDate>Thu, 27 Feb 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 27 Feb 2020 00:00:00 +0000</pubDate><author>me@yinji.org (青山)</author>
       <guid>http://localhost:1313/happy-birthday-to-18.html/</guid>
       <description>&lt;p&gt;十八成年也乘风。这是我从知乎上摘抄下来的，送给我的生日礼物。&lt;/p&gt;&#xA;&lt;p&gt;出生遇上非典，高考遇上肺炎，我们这一代经历的有点与众不同。17岁的生日，我没有写点什么放在博客上面，但是18岁对我来说，意义却不一样。脱离少年的行列，迈向成年人的队伍，尽管自己的性格脾气，待人处事的方式仍有不成熟的地方，但我也依然要以成年人的态度对待自己，自己也要承担起作为一个成年人的责任与使命。&lt;/p&gt;&#xA;&lt;p&gt;假如没有这次“新冠肺炎”，今天的生日或许就是在学校里过了。小学一直在家过生日，上初中以来，到今年高三，生日的六年里有五年是在学校度过，盼望这一天到来已经很久了。&lt;/p&gt;&#xA;&lt;p&gt;高二的时候，班主任有一次生日当天，上课的时候跟我们讲了一个新词：受难日。我们生日的时候，有时候往往只会想到自己要许一个怎么样的生日愿望，希望自己新的一岁里怎么怎么样，有多少人会想到自己的母亲呢，自己的生日，就是母亲的受难日啊。因此，我们班主任也这样告诉我们，每当她生日的时候，都会给她的母亲打个电话，工作再忙也要请假回家陪陪自己的母亲。&lt;/p&gt;&#xA;&lt;p&gt;我这18年来过得如何，我也很难用词或句子概括，有苦有乐，有收获也有失去，大致如此。&lt;/p&gt;&#xA;&lt;p&gt;2002年农历二月初六，我诞生了，貌似也是出生没多久因为肺炎，进了ICU，吃药打针就和我离不开了。从小体质不好，但随着自己长大，抵抗力也慢慢提高，当然这也是从我父母那得知的。记得一点上幼儿园时候的事情，第一次可能就是哭吧，看着自己的父母走出教室走出校门，自己又不能跟着回家，内心是接近崩溃的。&lt;/p&gt;&#xA;&lt;p&gt;记住18岁的今天，给自己一份信心和努力，把自己的命运掌握在自己手里，我希望18年后，36岁的我，会是我期待的样子。&lt;/p&gt;&#xA;&lt;p&gt;压力很大，担子很重啊。3.1继续推迟开学的我们，高考从今天算起只剩100天了。给自己许下一个生日愿望：&lt;/p&gt;&#xA;&lt;p&gt;生日快乐，高考加油。&lt;/p&gt;&#xA;</description>
     </item>
