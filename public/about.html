@@ -640,7 +640,18 @@ Self-Hosted Umami：网站统计工具 Bitwarden：密码管理工具 Hugo：目
 
 }
 </style>
-</head>
+<style>
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.2s;
+  }
+}
+</style></head>
 
 <body>
   <header><a href="/" class="title">

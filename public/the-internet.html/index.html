@@ -632,7 +632,18 @@ Younger readers may not even know that the internet used to be made entirely ofÂ
 
 }
 </style>
-</head>
+<style>
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.2s;
+  }
+}
+</style></head>
 
 <body>
   <header><a href="/" class="title">
