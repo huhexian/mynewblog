@@ -43,8 +43,6 @@ RSS / Twitter / Telegram / GitHub">
 一位人力资源管理从业者，Blogger/摄影爱好者/数码发烧友。
 如果你觉得我的博客还不错，可以考虑支持作者。
 RSS / Twitter / Telegram / GitHub">
-	<meta itemprop="datePublished" content="2026-09-15T00:00:00+00:00">
-	<meta itemprop="dateModified" content="2026-09-15T00:00:00+00:00">
 	<meta itemprop="wordCount" content="19">
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
@@ -611,6 +609,28 @@ RSS / Twitter / Telegram / GitHub">
     animation-duration: 0.2s;
   }
 }
+
+header .title h1::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 3px;
+  vertical-align: -0.08em;
+  border-radius: 1px;
+  background: #fe5186;
+  animation: title-cursor 1.3s linear infinite;
+}
+
+@keyframes title-cursor {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  header .title h1::after { animation: none; }
+}
+
 </style>
 <script data-goatcounter="https://hhx.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script></head>
@@ -657,6 +677,20 @@ RSS / Twitter / Telegram / GitHub">
 <h3>Recent Posts:</h3>
 
 <ul class="recent-posts">
+
+
+
+<li>
+
+<time>
+2026-11-01
+</time>
+
+<a href="/weekly-14-reconnect.html/">
+周报 #14 – 重新连接
+</a>
+
+</li>
 
 
 
@@ -710,20 +744,6 @@ RSS / Twitter / Telegram / GitHub">
 
 <a href="/dear-you.html/">
 暹罗没有春天
-</a>
-
-</li>
-
-
-
-<li>
-
-<time>
-2026-05-24
-</time>
-
-<a href="/nan-jing.html/">
-金陵三日快时光
 </a>
 
 </li>

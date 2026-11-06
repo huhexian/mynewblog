@@ -9,6 +9,28 @@
     animation-duration: 0.2s;
   }
 }
+
+header .title h1::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 3px;
+  vertical-align: -0.08em;
+  border-radius: 1px;
+  background: #fe5186;
+  animation: title-cursor 1.3s linear infinite;
+}
+
+@keyframes title-cursor {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  header .title h1::after { animation: none; }
+}
+
 </style>
 <script data-goatcounter="https://hhx.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
