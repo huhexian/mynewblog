@@ -24,7 +24,7 @@ RackNerd 没有专门的优惠介绍页面，所以我就自己整理最近优�
 ## 2026年 BlackFriday 活动
 
 | CPU | 内存 | 硬盘（SSD） | 流量 | 价格 | 购买地址 |
-| --- | --- | --- | --- | --- | --- |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 | 1核 | 1G | 20G | 3TB | $15.98/年 | [点击购买](https://my.racknerd.com/aff.php?aff=9255&pid=968&from=yinji.org) |
 | 2核 | 2.5G | 30G | 6TB | $27.98/年 | [点击购买](https://my.racknerd.com/aff.php?aff=9255&pid=969&from=yinji.org) |
 | 4核 | 4G | 60G | 10TB | $47.98/年 | [点击购买](https://my.racknerd.com/aff.php?aff=9255&pid=970&from=yinji.org) |
