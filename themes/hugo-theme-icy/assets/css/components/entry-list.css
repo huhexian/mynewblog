@@ -1,0 +1,179 @@
+/*
+ * Entry list: one line per post — title on the start side, date on the end side.
+ * Used by the home page (full dates) and archive / term pages (grouped by year,
+ * month-day dates).
+ */
+
+.entry-list {
+  /* Rows are separated by rhythm alone — no rules. */
+  margin-block: calc(-1 * var(--space-2));
+}
+
+.entry {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+  padding-block: var(--space-2);
+}
+
+.entry-title {
+  flex: 1;
+  min-inline-size: 0;
+  font-size: 1.0625rem;
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-snug);
+
+  & a {
+    color: var(--color-heading);
+    text-decoration: none;
+    transition: color var(--duration-quick) var(--ease-out);
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+/* Status words (草稿, 受保护): a tiny hairline capsule, like the tag chips. */
+.entry-flag {
+  display: inline-block;
+  margin-inline-start: var(--space-2);
+  padding: 0 0.55em;
+  border: var(--rule);
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  vertical-align: 0.2em;
+}
+
+.entry-date {
+  flex-shrink: 0;
+  color: var(--color-text-faint);
+  font-size: var(--text-sm);
+  transition: color var(--duration-quick) var(--ease-out);
+}
+
+.entry:has(.entry-title a:hover) .entry-date {
+  color: var(--color-text-muted);
+}
+
+/* ---- Archive: year groups ----
+   A larger year with its post count as a superscript at its top right.
+   Even space around the heading: about as much above it (from the previous
+   group) as below it (to the first entry). */
+.year-group + .year-group {
+  margin-block-start: var(--space-6);
+}
+
+.year-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.3rem;
+  margin-block-end: var(--space-3);
+}
+
+.year-number {
+  color: var(--color-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.year-count {
+  color: var(--color-text-faint);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-regular);
+  line-height: 1;
+}
+
+/* ---- Plain child-page list (non-blog sections) ---- */
+.page-links {
+  display: grid;
+  gap: var(--space-5);
+
+  & a {
+    font-size: var(--text-md);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+  }
+
+  & p {
+    margin-block-start: var(--space-1);
+    color: var(--color-text-muted);
+  }
+}
+
+/* ---- Taxonomy index ----
+   A book-style index. Groups by initial flow through columns and never
+   split; each tag is a row: name, a dotted leader, the post count set
+   flush right in figures. The accent is kept for interaction only — the
+   initials are set in the heading colour, the leaders are hairline dots,
+   the counts faint. */
+.term-index {
+  columns: 3 12rem;
+  column-gap: var(--space-7);
+}
+
+.term-group {
+  break-inside: avoid;
+  padding-block-end: var(--space-6);
+  scroll-margin-block-start: var(--space-6);
+}
+
+.term-initial {
+  margin-block-end: var(--space-1);
+  color: var(--color-heading);
+  font-size: var(--text-md);
+  font-weight: var(--weight-strong);
+  line-height: 1.6;
+}
+
+.term-list a {
+  display: grid;
+  grid-template-columns: auto minmax(0.75rem, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-block: 0.1875rem;
+  color: var(--color-text);
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.term-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--duration-quick) var(--ease-out);
+}
+
+.term-leader {
+  border-block-end: 1px dotted color-mix(in oklch, var(--color-text-faint) 55%, transparent);
+  translate: 0 -0.3em;
+}
+
+.term-count {
+  min-inline-size: 2ch;
+  color: var(--color-text-faint);
+  font-size: var(--text-xs);
+  text-align: end;
+  transition: color var(--duration-quick) var(--ease-out);
+}
+
+.term-list a:hover {
+  & .term-name {
+    color: var(--color-accent);
+  }
+
+  & .term-count {
+    color: var(--color-text-muted);
+  }
+}
+
+@container page (inline-size < 30rem) {
+  .term-index {
+    columns: 1;
+  }
+}

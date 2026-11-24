@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="text-scale" content="scale">
+<meta name="color-scheme" content="light dark">
+<script>try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark"){document.documentElement.dataset.colorScheme=s;document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}</script>
+
+<style>:root{--accent:#b75133}</style>
+
+
+<title>使用 CloudCone 的第 7 个月 | 印记</title>
+<meta name="description" content="我在前文《开始使用 CloudCone 复活节特价 VPS》中提到，今年4月，我购买 CloudCone 的复活节特惠 VPS，并且使用至今。配置为 2 vCPUs、2GB RAM、60GB Disk，每月4TB流量。在这台 VPS 上，我部署了自己的 WordPress 博客，Docker 部署的几个小工具，以及 …">
+<link rel="canonical" href="http://localhost:1313/month-7-of-using-cloudcone.html">
+
+<link rel="icon" href="/img/favicon.png" type="image/png" sizes="32x32">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241f1e" media="(prefers-color-scheme: dark)">
+
+<link rel="stylesheet" href="/css/core.css">
+
+<link rel="stylesheet" href="/css/article.css">
+
+<link rel="stylesheet" href="/css/prose.css">
+
+<script type="module" src="/js/main.js"></script>
+
+
+<style>@layer reset,tokens,base,layout,components,utilities;@layer components{@container site-header (inline-size >= 31.75rem){.header-inner{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav actions";column-gap:var(--space-6)}.site-nav[popover],.site-nav[popover]:not(:popover-open){position:static;display:block;justify-self:end;inline-size:auto;block-size:auto;margin:0;padding:0;border:0;background:none;color:inherit;overflow:visible}.menu-toggle,.menu-close,.menu-prefs{display:none}.header-actions>.lang-switch{display:inline-grid}@media(scripting:enabled){.header-actions>.theme-toggle{display:inline-grid}}.site-menu{gap:var(--space-1);margin:0;padding:0;overflow:visible;border:0;border-radius:0;& li{flex:none}& a{padding:var(--space-2) var(--space-3);border-radius:0;&:is([aria-current=page],[aria-current=true]){background-color:transparent}&:after{content:"";position:absolute;inset-inline:var(--space-3);inset-block-end:.125rem;block-size:2px;border-radius:var(--radius-full);background-color:var(--color-accent);scale:0 1;transform-origin:left center;transition:scale var(--duration-base) var(--ease-out)}&:is([aria-current=page],[aria-current=true]):after{scale:1 1}}}}}
+</style>
+
+
+
+
+<script type="speculationrules">{"prefetch":[{"eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[rel~=nofollow], [data-no-speculate], [download]"}}]}}]}</script>
+
+
+
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="青山">
+<meta property="og:site_name" content="印记">
+<meta property="og:title" content="使用 CloudCone 的第 7 个月">
+<meta property="og:description" content="我在前文《开始使用 CloudCone 复活节特价 VPS》中提到，今年4月，我购买 CloudCone 的复活节特惠 VPS，并且使用至今。配置为 2 vCPUs、2GB RAM、60GB Disk，每月4TB流量。在这台 VPS 上，我部署了自己的 WordPress 博客，Docker 部署的几个小工具，以及 …">
+<meta property="og:url" content="http://localhost:1313/month-7-of-using-cloudcone.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-10-26T00:00:00&#43;00:00">
+<meta property="article:modified_time" content="2023-10-26T00:00:00&#43;00:00">
+<meta property="article:section" content="文章">
+<meta property="article:tag" content="Cloudcone">
+<meta property="article:tag" content="Vps">
+<meta property="article:tag" content="服务器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 CloudCone 的第 7 个月">
+<meta name="twitter:description" content="我在前文《开始使用 CloudCone 复活节特价 VPS》中提到，今年4月，我购买 CloudCone 的复活节特惠 VPS，并且使用至今。配置为 2 vCPUs、2GB RAM、60GB Disk，每月4TB流量。在这台 VPS 上，我部署了自己的 WordPress 博客，Docker 部署的几个小工具，以及 …">
+
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"http://localhost:1313/","name":"印记","position":1},{"@type":"ListItem","item":"http://localhost:1313/blog/index.html","name":"文章","position":2},{"@type":"ListItem","item":"http://localhost:1313/month-7-of-using-cloudcone.html","name":"使用 CloudCone 的第 7 个月","position":3}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"dateModified":"2023-10-26T00:00:00+00:00","datePublished":"2023-10-26T00:00:00+00:00","description":"我在前文《开始使用 CloudCone 复活节特价 VPS》中提到，今年4月，我购买 CloudCone 的复活节特惠 VPS，并且使用至今。配置为 2 vCPUs、2GB RAM、60GB Disk，每月4TB流量。在这台 VPS 上，我部署了自己的 WordPress 博客，Docker 部署的几个小工具，以及 …","headline":"使用 CloudCone 的第 7 个月","inLanguage":"zh-CN","keywords":["Cloudcone","Vps","服务器"],"mainEntityOfPage":{"@id":"http://localhost:1313/month-7-of-using-cloudcone.html","@type":"WebPage"},"name":"使用 CloudCone 的第 7 个月","publisher":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"url":"http://localhost:1313/month-7-of-using-cloudcone.html","wordCount":1101}</script>
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  
+<header class="site-header">
+  <div class="header-inner">
+    
+<a class="site-name" href="/">印记</a>
+
+    <nav class="site-nav" id="site-nav" popover aria-label="主导航">
+      <button class="icon-button menu-close" type="button" popovertarget="site-nav" popovertargetaction="hide"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">关闭菜单</span>
+      </button>
+      <ul class="site-menu" role="list">
+        <li><a href="/blog/index.html" aria-current="true">文章</a></li>
+        <li><a href="/tags/">标签</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/now.html">Now</a></li>
+        <li><a href="/roll.html">Roll</a></li>
+      </ul>
+      <div class="menu-prefs">
+        <p class="menu-prefs-row menu-prefs-scheme" role="group" aria-label="配色">
+          <button type="button" data-scheme-set="light" aria-pressed="false">浅色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="dark" aria-pressed="false">深色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="system" aria-pressed="false">跟随系统</button>
+        </p>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-button" href="/search/" title="搜索"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="visually-hidden">搜索</span>
+      </a>
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+        <svg class="theme-toggle-icon" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false">
+          <mask id="theme-toggle-cut">
+            <rect width="24" height="24" fill="#fff"/>
+            <circle class="theme-toggle-shade" cx="17" cy="7" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-toggle-body" cx="12" cy="12" r="8.5" fill="currentColor" mask="url(#theme-toggle-cut)"/>
+          <g class="theme-toggle-rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4L6 18M18 6l1.4-1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden theme-toggle-to-dark">切换到深色</span>
+        <span class="visually-hidden theme-toggle-to-light">切换到浅色</span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" popovertarget="site-nav" aria-haspopup="true"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">菜单</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main id="main" class="page-grid" tabindex="-1">
+
+
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">使用 CloudCone 的第 7 个月</h1>
+    
+<p class="article-meta">
+  <time datetime="2023-10-26T00:00:00Z">2023年10月26日</time>
+  <span>3 分钟</span>
+  <span>1101 字</span>
+</p>
+
+    <ul class="article-tags" role="list" aria-label="标签">
+      <li><a href="/tags/cloudcone/" rel="tag">#Cloudcone</a></li>
+      <li><a href="/tags/vps/" rel="tag">#Vps</a></li>
+      <li><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">#服务器</a></li>
+    </ul>
+  </header>
+
+  <div class="prose">
+    <p>我在前文《<a href="https://yinji.org/4868.html" rel="external">开始使用 CloudCone 复活节特价 VPS</a>》中提到，今年4月，我购买 CloudCone 的复活节特惠 VPS，并且使用至今。配置为 2 vCPUs、2GB RAM、60GB Disk，每月4TB流量。在这台 VPS 上，我部署了自己的 WordPress 博客，Docker 部署的几个小工具，以及 @<a href="https://demochen.com" rel="external">Demochen</a> 的两个网站，约9个网站。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/8b981c4c19125b1830036dd43825e78f.webp</figcaption></figure><p>期间仅在10月初因为官方进行维护，VPS 有2个小时的 offline 状态，其它时候一切正常运行，根据宝塔面板显示，内存使用率一直维持在47.3%左右，60GB 的存储我也只使用了26%，CPU 使用率也比较稳定。</p>
+<p>美国 Los Angeles DC2 机房，速度当然比不上香港服务器，但优点是响应快，国内用户访问我的博客，速度也还可以接受，除了 CSS、图片等静态文件使用了缤纷云的对象存储，其他都是在 VPS 上。我也使用脚本对这台服务器做了一个简单的测速，如下图所示。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/92bdbea7a3384eabe6045c438c0b29dc.webp</figcaption></figure><p>我对 VPS 测速这方面了解不多，也不知道上图是个怎样的水平。测速意义也不大，最主要的是使用体验，按照我目前大半年的使用效果来说，很满意，群里<a href="https://iliu.org" rel="external">图南博客</a>、<a href="https://laozhang.org" rel="external">老张博客</a>、<a href="https://bear1983.com" rel="external">踏雪寻熊</a>（我推荐的）也是使用 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的 VPS，马上到续费的时候，总体评价还是很不错。</p>
+<p>Ping 检测虽然不是一片绿，但起码不是一片红。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/ff87f4258a093db8794ba7e5df568644.webp</figcaption></figure><p>在此之前，2018-2021年这段时间，一直使用腾讯云的学生机，貌似还用过轻量应用服务器，速度快是真的快，价格也挺合适，但仅限国内地区，2021年底把原先的博客出售之后就没考虑过备案的事情，也就再没接触过国内服务器。后来使用老薛的香港虚拟主机，但经不住折腾，最终选择购买 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的 VPS，而且赶上复活节特惠，25.5美元拿下。</p>
+<p>虽然速度没有国内服务器快，但也有不少好处。比如不用备案，续费同价，光是这两点就能让我满足了。自己用着还不错，便在群里和 Twitter 上推荐过几次，博客上还新建了一个 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的介绍页面，不定期更新它的优惠信息。</p>
+<p>承蒙网友支持和购买，我也收获了不少的返利佣金，但苦于提现困难，前几天也问了官方客服，<a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 上的余额和 VPS 都可以通过发工单的方式转移到另一个账号。<strong>所以未来如果有购买 VPS 的需求，可以找我帮忙代购，或者从我的链接下单购买，不胜荣幸</strong>！</p>
+<p>如果你想建个博客，写写文章，<a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的 VPS 是一个不错的选择，如果你想用来科学上网，我不推荐也不反对。</p>
+<p>以上内容是我使用 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的 VPS 大半年之后的体验感受，给想购买 VPS 尤其是购买 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a>的读者朋友做一个简单的参考。</p>
+
+  </div>
+
+</article>
+
+    <button class="fab back-to-top" type="button" data-back-to-top hidden>
+      <svg class="back-to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle cx="22" cy="22" r="21"/>
+      </svg><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="visually-hidden">回到顶部</span>
+    </button>
+  </main>
+  
+<footer class="site-footer">
+  <div class="footer-colophon">
+    <p class="footer-copyright">© 2018–2026 青山</p>
+    <p class="footer-powered">Powered by <a href="https://gohugo.io/" rel="external">Hugo</a> & <a href="https://github.com/DejavuMoe/hugo-theme-icy" rel="external">Icy</a></p>
+  </div>
+</footer>
+<script data-goatcounter="https://hhx.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+</body>
+</html>

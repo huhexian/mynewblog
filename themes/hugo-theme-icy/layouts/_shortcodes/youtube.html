@@ -1,0 +1,79 @@
+{{- /*
+  youtube — privacy-friendly YouTube embed (overrides Hugo's built-in).
+
+    {{< youtube id="aqz-KE-bpKQ" title="…" start="30" >}}
+
+  The thumbnail is fetched once at build time and served from this site, so
+  nothing is requested from Google until the reader clicks; then a
+  youtube-nocookie.com player loads. If YouTube is unreachable, the reader
+  gets a message with Retry and a direct link. Without JS the poster links to
+  YouTube.
+
+  Params: id (required, 11 characters), title, start, end (seconds),
+  poster (custom poster instead of YouTube's thumbnail).
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "youtube" "allowed" (slice "id" "title" "start" "end" "poster")) }}
+{{- $id := .Get "id" | default "" }}
+{{- if not (findRE `^[A-Za-z0-9_-]{11}$` $id) }}
+  {{- errorf "youtube shortcode: id must be an 11-character YouTube video id, got %q: %s" $id .Position }}
+{{- end }}
+{{- $times := dict }}
+{{- range slice "start" "end" }}
+  {{- $raw := printf "%v" ($.Get . | default "0") }}
+  {{- if not (findRE `^\d+$` $raw) }}{{ errorf "youtube shortcode: %s must be whole seconds, got %q: %s" . $raw $.Position }}{{ end }}
+  {{- $times = merge $times (dict . (int $raw)) }}
+{{- end }}
+{{- $title := .Get "title" | default (T "youtubeVideo") }}
+{{- partial "assets/use.html" (dict "page" .Page "feature" "youtube") }}
+
+{{- /* Poster: custom, else YouTube's maxres/hq thumbnail (fetched at build time). */}}
+{{- $poster := false }}
+{{- $posterURL := "" }}
+{{- with .Get "poster" }}
+  {{- $m := partial "func/resolve-media.html" (dict "page" $.Page "src" . "label" "youtube shortcode" "position" $.Position) }}
+  {{- $poster = $m.resource }}
+  {{- /* static/ files and remote URLs that could not be fetched have no resource: use the URL as is. */}}
+  {{- if not $poster }}{{ $posterURL = $m.url }}{{ end }}
+{{- else }}
+  {{- range slice "maxresdefault" "hqdefault" }}
+    {{- if not $poster }}
+      {{- with try (resources.GetRemote (printf "https://i.ytimg.com/vi/%s/%s.jpg" $id .)) }}
+        {{- with .Value }}{{ $poster = . | resources.Copy (printf "media/youtube/%s.jpg" $id) }}{{ end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- /* No thumbnail (YouTube unreachable from the build server, rate-limited…):
+       a plain poster with the play button. Warn (id icy-remote-fetch, which a
+       --panicOnWarning CI may list in ignoreLogs). Pass poster= to pin one. */}}
+  {{- if not $poster }}{{ warnidf "icy-remote-fetch" "youtube shortcode: could not fetch the thumbnail of %q; showing a plain poster %s" $id $.Position }}{{ end }}
+{{- end }}
+{{- with $poster }}
+  {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") }}
+    {{- $posterURL = (.Resize "1280x webp q80").RelPermalink }}
+  {{- else }}
+    {{- $posterURL = .RelPermalink }}
+  {{- end }}
+{{- end }}
+
+{{- $watch := printf "https://www.youtube.com/watch?v=%s" $id }}
+{{- with $times.start }}{{ $watch = printf "%s&t=%ds" $watch . }}{{ end }}
+<figure class="youtube" data-youtube data-id="{{ $id }}" data-title="{{ $title }}"
+  {{- with $times.start }} data-start="{{ . }}"{{ end }}
+  {{- with $times.end }} data-end="{{ . }}"{{ end }}>
+  <div class="youtube-frame">
+    <a class="youtube-poster" href="{{ $watch }}" rel="external">
+      {{- with $posterURL }}
+      <img src="{{ . }}" alt="" width="1280" height="720" loading="lazy" decoding="async">
+      {{- end }}
+      {{ "<!--ui-->" | safeHTML }}<span class="youtube-play" aria-hidden="true">{{ partial "icon.html" "play-centered" }}</span>{{ "<!--/ui-->" | safeHTML }}
+      {{ "<!--ui-->" | safeHTML }}<span class="visually-hidden">{{ T "playOnYouTube" (dict "Title" $title) }}</span>{{ "<!--/ui-->" | safeHTML }}
+    </a>
+    {{ "<!--ui-->" | safeHTML }}<div class="youtube-message" role="status" hidden>
+      <p>{{ T "youtubeUnreachable" }}</p>
+      <p><button class="youtube-retry" type="button" data-youtube-retry>{{ T "retry" }}</button> <a href="{{ $watch }}" rel="external">{{ T "openOnYouTube" }}</a></p>
+    </div>{{ "<!--/ui-->" | safeHTML }}
+  </div>
+  {{- with .Get "title" }}
+  <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>

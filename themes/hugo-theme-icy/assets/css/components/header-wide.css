@@ -1,0 +1,86 @@
+/*
+ * Header, one row: name · links · actions. Not imported by core.css — the
+ * head/header-layout.html partial wraps these rules in a container query on
+ * .site-header whose breakpoint is computed at build time from the site
+ * name / wordmark and the menu, and inlines the result in <head>.
+ */
+.header-inner {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "brand nav actions";
+  column-gap: var(--space-6);
+}
+
+/* The nav is a popover in the compact layout; here it is a plain part of the
+   row again (overriding the browser's popover defaults), and the menu and
+   close buttons go away. */
+.site-nav[popover],
+.site-nav[popover]:not(:popover-open) {
+  position: static;
+  display: block;
+  justify-self: end;
+  inline-size: auto;
+  block-size: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  overflow: visible;
+}
+
+.menu-toggle,
+.menu-close,
+.menu-prefs {
+  display: none;
+}
+
+/* Language and color scheme are icons in the row again. */
+.header-actions > .lang-switch {
+  display: inline-grid;
+}
+
+@media (scripting: enabled) {
+  .header-actions > .theme-toggle {
+    display: inline-grid;
+  }
+}
+
+/* Plain words; the current one over a short accent bar. */
+.site-menu {
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+
+  & li {
+    flex: none;
+  }
+
+  & a {
+    padding: var(--space-2) var(--space-3);
+    border-radius: 0;
+
+    &:is([aria-current="page"], [aria-current="true"]) {
+      background-color: transparent;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-inline: var(--space-3);
+      inset-block-end: 0.125rem;
+      block-size: 2px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-accent);
+      scale: 0 1;
+      transform-origin: left center;
+      transition: scale var(--duration-base) var(--ease-out);
+    }
+
+    &:is([aria-current="page"], [aria-current="true"])::after {
+      scale: 1 1;
+    }
+  }
+}

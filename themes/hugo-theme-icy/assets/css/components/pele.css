@@ -1,0 +1,83 @@
+/*
+ * Pele diagrams. Colors come from Pele's documented CSS variables mapped to
+ * the theme tokens, so switching the color scheme recolors the SVG without
+ * redrawing it. The source block is the fallback (no JS, load failure,
+ * syntax error) and reads as code.
+ */
+
+.pele-figure {
+  --pele-bg: var(--color-bg);
+  --pele-fg: var(--color-text);
+  --pele-muted: var(--color-text-muted);
+  --pele-line: var(--color-text-muted);
+  --pele-surface: var(--color-surface);
+  --pele-surface-alt: var(--color-raised);
+  --pele-border: var(--color-rule);
+  --pele-accent: var(--color-accent);
+  --pele-critical: var(--color-accent);
+  --pele-error: light-dark(oklch(50% 0.12 var(--hue-caution)), oklch(78% 0.1 var(--hue-caution)));
+  --pele-font: var(--font-sans);
+  --pele-font-mono: var(--font-mono);
+  --pele-title-weight: var(--weight-strong);
+  --pele-heading-weight: var(--weight-strong);
+  --pele-bold-weight: var(--weight-strong);
+  --pele-radius: var(--radius-s);
+  --pele-series-1: light-dark(oklch(55% 0.1 var(--hue-note)), oklch(75% 0.09 var(--hue-note)));
+  --pele-series-2: light-dark(oklch(60% 0.1 var(--hue-warning)), oklch(80% 0.09 var(--hue-warning)));
+  --pele-series-3: light-dark(oklch(55% 0.09 var(--hue-tip)), oklch(76% 0.08 var(--hue-tip)));
+  --pele-series-4: var(--color-accent);
+  --pele-series-5: light-dark(oklch(55% 0.1 var(--hue-important)), oklch(76% 0.09 var(--hue-important)));
+  --pele-series-6: var(--color-text-muted);
+  --pele-series-7: light-dark(oklch(70% 0.06 var(--hue-note)), oklch(60% 0.06 var(--hue-note)));
+  --pele-series-8: light-dark(oklch(75% 0.06 var(--hue-warning)), oklch(62% 0.06 var(--hue-warning)));
+  /* Zoom controls (shown when a diagram is shrunk to fit) sit at the top right. */
+  --pele-zoom-top: 0px;
+  --pele-zoom-right: 0px;
+
+  margin-inline: 0;
+}
+
+.prose > .pele-figure {
+  margin-block: 1.25em;
+}
+
+.pele-diagram {
+  position: relative;
+  inline-size: 100%;
+  min-inline-size: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: normal;
+  white-space: normal;
+
+  & > svg {
+    display: block;
+    margin-inline: auto;
+  }
+}
+
+.pele-source {
+  margin: 0;
+  padding: 1em 1.25em;
+  overflow-x: auto;
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--ui-code-bg);
+  color: var(--color-text-muted);
+  font: var(--text-xs) / 1.6 var(--font-mono);
+  white-space: pre;
+}
+
+/* With scripting, hide the source unless rendering fell back to it. */
+@media (scripting: enabled) {
+  .pele-figure:not(.is-source) > .pele-source {
+    display: none;
+  }
+}
+
+/* Diagrams load near the viewport; print the source of any not yet drawn. */
+@media print {
+  .pele-figure:not(.is-mounted) > .pele-source {
+    display: block;
+  }
+}

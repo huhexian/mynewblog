@@ -1,0 +1,90 @@
+{{- /*
+  Friends (blogroll): `layout = "friends"` in front matter.
+  Entries come from data/friends.yaml — a list of { name, url, avatar, description }.
+  On a multilingual site `description` may be a map by language code
+  ({ en: "…", zh-cn: "…" }); the current language's text is shown, else the
+  default language's.
+  The page's own Markdown sits above the list; child pages (e.g. "how to
+  exchange links") are listed below it.
+
+  - Avatars resolve like other media (bundle, assets/, static/, URL). Remote
+    avatars are fetched at build time and served from this site; missing or
+    unreachable ones fall back to the name's initial.
+  - Links carry rel="friend" (XFN) and, when params.friends.ref is set, a
+    `ref` query parameter.
+*/ -}}
+{{ define "main" }}
+{{- partial "assets/use.html" (dict "page" . "feature" "friends") }}
+<header class="page-heading">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{- with .Description }}
+  <p class="page-lede">{{ . }}</p>
+  {{- end }}
+</header>
+
+{{- with .Content }}
+{{- partial "assets/use.html" (dict "page" $ "feature" "prose") }}
+<div class="prose page-intro">{{ . }}</div>
+{{- end }}
+
+{{- $ref := site.Params.friends.ref | default "" }}
+{{- with hugo.Data.friends }}
+<ul class="friends" role="list">
+  {{- range $i, $f := . }}
+    {{- $where := printf "in data/friends.yaml, entry %d" (add $i 1) }}
+    {{- if not (and $f.name $f.url) }}{{ errorf "friends: name and url are required %s" $where }}{{ end }}
+    {{- $u := urls.Parse $f.url }}
+    {{- if not (in (slice "http" "https") $u.Scheme) }}{{ errorf "friends: url must be http(s), got %q %s" $f.url $where }}{{ end }}
+    {{- $href := $f.url }}
+    {{- if and $ref (not ($u.Query.Get "ref")) }}
+      {{- /* The query goes before any #fragment. */}}
+      {{- $base := index (split $f.url "#") 0 }}
+      {{- $fragment := cond (ne $base $f.url) (printf "#%s" $u.Fragment) "" }}
+      {{- /* ":" and "/" are allowed as they are in a query (RFC 3986), so
+           ref=https://example.com stays readable instead of https%3A%2F%2F…;
+           everything else that could end the value is still escaped. */}}
+      {{- $value := urlquery $ref | replaceRE "%3[Aa]" ":" | replaceRE "%2[Ff]" "/" }}
+      {{- $href = printf "%s%sref=%s%s" $base (cond (strings.Contains $base "?") "&" "?") $value $fragment }}
+    {{- end }}
+
+    {{- $avatar := "" }}
+    {{- with $f.avatar }}
+      {{- $m := partial "func/resolve-media.html" (dict "page" $ "src" . "label" "friends" "position" $where) }}
+      {{- with $m.resource }}
+        {{- if and (eq .ResourceType "image") (not (in (slice "svg" "gif") .MediaType.SubType)) }}
+          {{- $avatar = (.Fill "96x96 webp q80 center").RelPermalink }}
+        {{- else }}
+          {{- $avatar = .RelPermalink }}
+        {{- end }}
+      {{- else }}
+        {{- /* static/ files are local; an unfetchable remote URL falls back to the initial. */}}
+        {{- if not (urls.Parse $m.url).IsAbs }}{{ $avatar = $m.url }}{{ end }}
+      {{- end }}
+    {{- end }}
+  <li>
+    <a class="friend" href="{{ $href }}" rel="external friend">
+      {{- with $avatar }}
+      <img class="friend-avatar" src="{{ . }}" alt="" width="48" height="48" loading="lazy" decoding="async">
+      {{- else }}
+      <span class="friend-avatar friend-initial" aria-hidden="true">{{ substr $f.name 0 1 | upper }}</span>
+      {{- end }}
+      <span class="friend-text">
+        <span class="friend-name">{{ $f.name }}</span>
+        {{- $description := $f.description }}
+        {{- if reflect.IsMap $description }}
+          {{- $description = or (index $description site.Language.Lang) (index $description site.Sites.Default.Language.Lang) "" }}
+        {{- end }}
+        {{- with $description }}
+        <span class="friend-description">{{ . }}</span>
+        {{- end }}
+      </span>
+    </a>
+  </li>
+  {{- end }}
+</ul>
+{{- else }}
+<p class="empty-state">{{ T "friendsEmpty" }}</p>
+{{- end }}
+
+{{ partial "page-links.html" (dict "page" $ "pages" (union .RegularPages .Sections) "class" "friends-pages") }}
+{{ end }}

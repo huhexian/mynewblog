@@ -1,0 +1,17 @@
+{{- /*
+  The year range of the footer copyright, e.g. "2019–2026".
+  Starts at params.footer.since, else the year of the earliest dated page;
+  ends at the build year. A single year when the two are the same.
+  Call with partialCached (no context needed).
+*/ -}}
+{{- $now := now.Year }}
+{{- $since := 0 }}
+{{- with site.Params.footer }}{{ with .since }}{{ $since = int . }}{{ end }}{{ end }}
+{{- if not $since }}
+  {{- range sort site.RegularPages "Date" }}
+    {{- if and (not $since) (not .Date.IsZero) }}{{ $since = .Date.Year }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- $years := string $now }}
+{{- if and $since (lt $since $now) }}{{ $years = printf "%d–%d" $since $now }}{{ end }}
+{{- return $years }}

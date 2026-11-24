@@ -1,0 +1,31 @@
+{{- /* Compact intro for the home page: avatar, a title and a short bio,
+     social links. The title and bio default to params.author.name / .bio;
+     params.home.title / .bio replace them (e.g. a project site whose intro
+     describes the project, while the author stays the © holder). Every part
+     is optional. */ -}}
+{{- $author := site.Params.author | default dict }}
+{{- $home := site.Params.home | default dict }}
+{{- $title := $home.title | default $author.name | default site.Title }}
+{{- $bio := $home.bio | default $author.bio }}
+<section class="author-intro" aria-labelledby="author-name">
+  {{- with $author.avatar }}
+    {{- $src := . | relURL }}
+    {{- with resources.Get . }}
+      {{- if eq .ResourceType "image" }}
+        {{- if ne .MediaType.SubType "svg" }}
+          {{- $src = (.Fill "144x144 webp center").RelPermalink }}
+        {{- else }}
+          {{- $src = .RelPermalink }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  <img class="author-avatar" src="{{ $src }}" alt="" width="72" height="72" decoding="async">
+  {{- end }}
+  <div class="author-text">
+    <h1 class="author-name" id="author-name">{{ $title }}</h1>
+    {{- with $bio }}
+    <p class="author-bio">{{ . | markdownify }}</p>
+    {{- end }}
+  </div>
+  {{- partial "social-links.html" . }}
+</section>

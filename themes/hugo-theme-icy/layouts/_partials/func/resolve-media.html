@@ -1,0 +1,96 @@
+{{- /*
+  Resolve a media path used in content.
+
+  Lookup order: page bundle -> assets/ -> another page's bundle (site-root
+  path such as /posts/x/song.m4a) -> static/ -> remote URL.
+  Remote images are fetched once at build time (Hugo caches them) so their
+  size, placeholder and responsive variants can be computed; remote videos are
+  never downloaded.
+
+  Params (dict):
+    page      page whose bundle is searched first
+    src       path or URL as written by the author
+    kind      "image" (default) or "video"
+    label     shortcode / hook name, for error messages
+    position  .Position of the caller, for error messages (optional)
+
+  Returns dict:
+    url       URL to put in the page
+    resource  Hugo resource when one could be resolved (else nil)
+    width     intrinsic width  (0 when unknown)
+    height    intrinsic height (0 when unknown)
+*/ -}}
+{{- $src := .src | default "" | string | strings.TrimSpace }}
+{{- $kind := .kind | default "image" }}
+{{- $where := .position | default "" }}
+{{- if not $src }}
+  {{- errorf "%s: src is required %s" .label $where }}
+{{- end }}
+
+{{- $u := urls.Parse $src }}
+{{- $url := $src }}
+{{- $res := false }}
+{{- $width := 0 }}
+{{- $height := 0 }}
+
+{{- if $u.IsAbs }}
+  {{- if not (in (slice "http" "https") $u.Scheme) }}
+    {{- errorf "%s: unsupported URL scheme in %q %s" .label $src $where }}
+  {{- end }}
+  {{- if eq $kind "image" }}
+    {{- with try (resources.GetRemote $src) }}
+      {{- /* GetRemote returns nothing, without an error, for a 404. */}}
+      {{- with .Err }}
+        {{- warnidf "icy-remote-fetch" "%s: could not fetch %q (%s); it renders from its URL without size information %s" $.label $src . $where }}
+      {{- else }}
+        {{- if not .Value }}{{ warnidf "icy-remote-fetch" "%s: %q was not found (404); it renders from its URL without size information %s" $.label $src $where }}{{ end }}
+      {{- end }}
+      {{- with .Value }}
+        {{- /* Publish fetched files under one tidy folder instead of the site root. */}}
+        {{- $res = . | resources.Copy (printf "media/remote/%s%s" (md5 $src) .MediaType.FirstSuffix.FullSuffix) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- else }}
+  {{- $path := strings.TrimPrefix "./" $u.Path }}
+  {{- with .page.Resources.Get $path }}
+    {{- $res = . }}
+  {{- else with resources.Get (strings.TrimPrefix "/" $path) }}
+    {{- $res = . }}
+  {{- end }}
+  {{- if and (not $res) (hasPrefix $path "/") }}
+    {{- /* A file in another page's bundle, possibly in a subfolder of it:
+         /posts/other-post/song.m4a, /friends/img/a.webp (bundle /friends).
+         Walk up the path until a page owns the remainder as a resource. */}}
+    {{- $segments := split (strings.Trim $path "/") "/" }}
+    {{- range $i := seq (sub (len $segments) 1) 1 }}
+      {{- if not $res }}
+        {{- with site.GetPage (printf "/%s" (delimit (first $i $segments) "/")) }}
+          {{- with .Resources.Get (delimit (after $i $segments) "/") }}{{ $res = . }}{{ end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if $res }}
+  {{- else }}
+    {{- $static := path.Join "static" (strings.TrimPrefix "/" $path) }}
+    {{- if os.FileExists $static }}
+      {{- $url = printf "/%s" (strings.TrimPrefix "/" $path) | relURL }}
+      {{- if and (eq $kind "image") (findRE `(?i)\.(jpe?g|png|gif|webp|bmp|tiff?)$` $path 1) }}
+        {{- with images.Config $static }}{{ $width = .Width }}{{ $height = .Height }}{{ end }}
+      {{- end }}
+    {{- else }}
+      {{- errorf "%s: %q not found in the page bundle, assets/ or static/ %s" .label $src $where }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- with $res }}
+  {{- $url = .RelPermalink }}
+  {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") }}
+    {{- $width = .Width }}
+    {{- $height = .Height }}
+  {{- end }}
+{{- end }}
+
+{{- return dict "url" $url "resource" $res "width" $width "height" $height }}

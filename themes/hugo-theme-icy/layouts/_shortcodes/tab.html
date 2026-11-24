@@ -1,0 +1,20 @@
+{{- /*
+  tab — one panel of a `tabs` block.
+  Params: title (required, inline Markdown).
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "tab" "allowed" (slice "title")) }}
+{{- if or (not .Parent) (ne .Parent.Name "tabs") }}
+  {{- errorf "tab shortcode must be nested inside tabs: %s" .Position }}
+{{- end }}
+{{- $title := .Get "title" }}
+{{- if not $title }}{{ errorf "tab shortcode requires a title: %s" .Position }}{{ end }}
+{{- $parent := .Parent }}
+{{- $n := add (len ($parent.Store.Get "titles" | default slice)) 1 }}
+{{- $parent.Store.Add "titles" (slice $title) }}
+{{- $active := int ($parent.Get "default" | default 1) }}
+{{- $id := printf "tabs-%s" (substr (md5 (printf "%s|%v" .Page.RelPermalink $parent.Position)) 0 8) }}
+<div class="tabs-panel" role="tabpanel" id="{{ $id }}-panel-{{ $n }}" aria-labelledby="{{ $id }}-tab-{{ $n }}" tabindex="0"
+  {{- if ne $n $active }} hidden="until-found"{{ end }}>
+  <p class="tabs-panel-title" aria-hidden="true">{{ $title | .Page.RenderString }}</p>
+  {{ .Inner | strings.TrimSpace | .Page.RenderString (dict "display" "block") }}
+</div>

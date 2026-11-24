@@ -1,0 +1,33 @@
+{{- /*
+  Analytics. Enabled when params.analytics.provider is set; a page opts out
+  with `analytics = false`. Provider: plausible (Plausible Community Edition,
+  self-hosted, or plausible.io): params.analytics.plausible.scriptURL
+  (required), endpoint (optional). For another service, use the
+  extend/head.html partial instead.
+
+  Plausible: settings go into a JSON data block (inert, CSP-friendly), read
+  by a small deferred module that queues plausible.init() before Plausible's
+  own deferred script runs (deferred scripts execute in document order).
+  Plausible does not record visits from localhost, so development builds
+  never pollute the statistics.
+
+  Context: the page.
+*/ -}}
+{{- $cfg := site.Params.analytics | default dict }}
+{{- $provider := $cfg.provider | default "" }}
+{{- if and $provider (ne .Params.analytics false) }}
+  {{- if eq $provider "plausible" }}
+    {{- $p := $cfg.plausible | default dict }}
+    {{- if not $p.scriptURL }}{{ errorf "analytics: plausible needs params.analytics.plausible.scriptURL" }}{{ end }}
+    {{- with urls.Parse $p.scriptURL }}{{ if .Host }}
+<link rel="preconnect" href="{{ .Scheme }}://{{ .Host }}">
+    {{- end }}{{ end }}
+    {{- $settings := dict }}
+    {{- with $p.endpoint }}{{ $settings = merge $settings (dict "endpoint" .) }}{{ end }}
+{{ printf `<script type="application/json" id="icy-analytics">%s</script>` ($settings | jsonify) | safeHTML }}
+    {{- partial "head/script.html" (dict "src" "js/analytics/plausible.js" "out" "js/plausible-init.js") }}
+<script defer src="{{ $p.scriptURL }}"></script>
+  {{- else }}
+    {{- errorf "analytics: unknown provider %q (Icy supports plausible; add other services with layouts/_partials/extend/head.html)" $provider }}
+  {{- end }}
+{{- end }}

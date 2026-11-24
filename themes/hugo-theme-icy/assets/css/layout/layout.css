@@ -1,0 +1,68 @@
+/*
+ * One reading axis for the whole site.
+ *
+ * .page-grid has three columns: [start gutter | content | end gutter].
+ * Children sit in the content column; wide-only asides (hanging years,
+ * TOC rail) are placed into the gutters by their own components, guarded
+ * by a container query on the grid, so they appear only when there is room.
+ *
+ *   ┌──────────── full ────────────┐
+ *   │  start  │   content   │  end │
+ *   │ (years) │ (≤ measure) │ (toc)│
+ */
+
+.page-grid {
+  --grid-content: min(var(--measure), 100% - 2 * var(--gutter));
+
+  container: page / inline-size;
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [content-start] var(--grid-content)
+    [content-end] minmax(var(--gutter), 1fr)
+    [full-end];
+  align-content: start;
+
+  & > * {
+    grid-column: content;
+  }
+}
+
+/* The site chrome shares the same axis. */
+.site-header,
+.site-footer {
+  inline-size: min(var(--measure), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+main {
+  padding-block: var(--space-7) var(--space-8);
+}
+
+/* Page heading used by list, taxonomy and plain pages. */
+.page-heading {
+  margin-block-end: var(--space-6);
+
+  & > * + * {
+    margin-block-start: var(--space-3);
+  }
+}
+
+.page-title {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.01em;
+}
+
+.page-lede {
+  color: var(--color-text-muted);
+  font-size: var(--text-md);
+}
+
+.empty-state {
+  color: var(--color-text-muted);
+}
+
+/* Page body text above a list (taxonomy, friends, changelog…). */
+.page-intro {
+  margin-block-end: var(--space-6);
+}

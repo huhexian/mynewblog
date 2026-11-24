@@ -1,0 +1,22 @@
+{{- /*
+  robots.txt (needs enableRobotsTXT = true in the site config).
+  Production: everything may be crawled; any other environment: nothing.
+  params.robots.blockAI = true additionally disallows known AI crawlers
+  (list in _partials/func/ai-crawlers.html).
+*/ -}}
+User-agent: *
+{{- if hugo.IsProduction }}
+Disallow:
+{{- else }}
+Disallow: /
+{{- end }}
+
+Sitemap: {{ "sitemap.xml" | absURL }}
+{{- if (site.Params.robots | default dict).blockAI }}
+
+# AI crawlers
+{{- range partialCached "func/ai-crawlers.html" "ai" }}
+User-agent: {{ . }}
+{{- end }}
+Disallow: /
+{{- end }}

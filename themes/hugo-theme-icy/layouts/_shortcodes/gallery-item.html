@@ -1,0 +1,40 @@
+{{- /*
+  gallery-item — one photo in a gallery (must be nested in `gallery`).
+
+  Params: src (required), alt, caption (Markdown, shown under the tile),
+  link, width, height, ratio (e.g. "4/3", when the size cannot be read),
+  zoomSrc, loading (lazy|eager).
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "gallery-item" "allowed" (slice "src" "alt" "caption" "link" "width" "height" "ratio" "zoomSrc" "loading")) }}
+{{- if or (not .Parent) (ne .Parent.Name "gallery") }}
+  {{- errorf "gallery-item shortcode must be nested inside gallery: %s" .Position }}
+{{- end }}
+{{- .Parent.Store.Add "tiles" 1 }}
+{{- $media := partial "func/resolve-media.html" (dict "page" .Page "src" (.Get "src") "label" "gallery-item shortcode" "position" .Position) }}
+{{- with .Get "width" }}{{ $media = merge $media (dict "width" (int .)) }}{{ end }}
+{{- with .Get "height" }}{{ $media = merge $media (dict "height" (int .)) }}{{ end }}
+{{- with .Get "ratio" }}
+  {{- $parts := split . "/" }}
+  {{- if ne (len $parts) 2 }}{{ errorf "gallery-item shortcode: ratio must look like 4/3, got %q: %s" . $.Position }}{{ end }}
+  {{- $media = merge $media (dict "width" (int (index $parts 0)) "height" (int (index $parts 1))) }}
+{{- end }}
+{{- if not (and $media.width $media.height) }}
+  {{- errorf "gallery-item shortcode: cannot read the size of %q; add width/height or ratio: %s" (.Get "src") .Position }}
+{{- end }}
+{{- $loading := .Get "loading" | default "lazy" }}
+{{- if not (in (slice "lazy" "eager") $loading) }}
+  {{- errorf "gallery-item shortcode: loading must be lazy or eager, got %q: %s" $loading .Position }}
+{{- end }}
+{{- $article := site.Params.article | default dict }}
+{{- partial "media/figure.html" (dict
+  "page" .Page
+  "media" $media
+  "alt" (.Get "alt" | default "")
+  "caption" (.Get "caption")
+  "link" (.Get "link")
+  "zoom" (ne $article.imageViewer false)
+  "zoomSrc" (.Get "zoomSrc")
+  "variant" "tile"
+  "loading" $loading
+  "sizes" "(max-width: 44rem) 50vw, 22rem"
+) }}

@@ -1,0 +1,21 @@
+{{- /*
+  One line per post: title on the start side, date on the end side.
+  Params (dict):
+    page        the page being rendered (registers the "entries" feature)
+    pages       page collection
+    dateFormat  Go layout or Hugo token for the visible date
+*/ -}}
+{{- partial "assets/use.html" (dict "page" .page "feature" "entries") }}
+{{- $format := .dateFormat | default (T "dateFull") }}
+<ul class="entry-list" role="list">
+  {{- range .pages }}
+  <li class="entry">
+    <span class="entry-title">
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{- if .Params.protected.enabled }}<span class="entry-flag">{{ T "protectedLabel" }}</span>{{ end -}}
+      {{- if .Draft }}<span class="entry-flag">{{ T "draft" }}</span>{{ end -}}
+    </span>
+    <time class="entry-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format $format }}</time>
+  </li>
+  {{- end }}
+</ul>

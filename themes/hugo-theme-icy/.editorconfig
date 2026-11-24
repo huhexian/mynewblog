@@ -1,0 +1,7 @@
+# Every text file in this repository uses LF line endings and UTF-8.
+# .gitattributes enforces LF in Git; this file makes editors write it.
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8

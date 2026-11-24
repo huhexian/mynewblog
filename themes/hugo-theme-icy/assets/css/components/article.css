@@ -1,0 +1,204 @@
+/*
+ * Article page.
+ *
+ * The article spans the whole page grid (subgrid) so the TOC rail can sit in
+ * the end gutter while the text stays on the reading axis:
+ *
+ *   row 1   header (content)
+ *   row 2   prose  (content)   | toc rail (end gutter, sticky)
+ *   row 3   footer (content)   |
+ */
+
+.article {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: full;
+  align-content: start;
+
+  & > * {
+    grid-column: content;
+  }
+}
+
+.article-header {
+  margin-block-end: var(--space-7);
+
+  & > * + * {
+    margin-block-start: var(--space-3);
+  }
+}
+
+.article-title {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.015em;
+}
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+
+  /* A small faint dot between items, evenly spaced. */
+  & > * + *::before {
+    content: "" / "";
+    display: inline-block;
+    inline-size: 3px;
+    block-size: 3px;
+    margin-inline: 0.625rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-text-faint);
+    vertical-align: 0.2em;
+  }
+}
+
+/* Tags under the metadata: plain "#tag" words, no capsules. */
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+  font-size: var(--text-sm);
+
+  & a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--duration-quick) var(--ease-out);
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+.article-header > .article-tags {
+  margin-block-start: var(--space-1);
+}
+
+/* Status after the title (draft, protected): a word in a hairline capsule,
+   like the markers in lists — never an icon. */
+.title-flag {
+  display: inline-block;
+  margin-inline-start: var(--space-3);
+  padding: 0 0.6em;
+  border: var(--rule);
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-regular);
+  line-height: 1.7;
+  letter-spacing: 0;
+  vertical-align: 0.45em;
+}
+
+/* ---- Footer: copyright card + tag chips (components/chips.css) ---- */
+.article-footer {
+  margin-block-start: var(--space-8);
+
+  & > * + * {
+    margin-block-start: var(--space-6);
+  }
+}
+
+/* ---- Cover ---- */
+.article-cover {
+  margin-block-end: var(--space-6);
+
+  & .media-frame {
+    inline-size: 100%;
+  }
+
+  & .media-frame img {
+    inline-size: 100%;
+    max-block-size: 70dvb;
+    object-fit: cover;
+  }
+}
+
+/* ---- Copyright card ----
+   A rounded surface with the CC ring as a large watermark in the end corner;
+   the text keeps clear of it. */
+.copyright-card {
+  --mark-clear: 6.5rem;
+
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-5);
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  background-color: var(--color-surface);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  isolation: isolate;
+}
+
+.copyright-mark {
+  position: absolute;
+  inset-block-end: -1.25rem;
+  inset-inline-end: -1.75rem;
+  z-index: -1;
+  inline-size: 9.25rem;
+  block-size: 9.25rem;
+  fill: none;
+  stroke: var(--color-rule);
+  stroke-width: 6;
+  pointer-events: none;
+}
+
+@container page (inline-size < 30rem) {
+  .copyright-card {
+    --mark-clear: 4.5rem;
+  }
+
+  .copyright-mark {
+    inline-size: 7.5rem;
+    block-size: 7.5rem;
+  }
+}
+
+.copyright-title {
+  color: var(--color-heading);
+  font-size: var(--text-base);
+  font-weight: var(--weight-strong);
+}
+
+.copyright-link a {
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-accent);
+  }
+}
+
+.copyright-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  margin: var(--space-3) 0 0;
+
+  & div {
+    display: grid;
+    gap: 0.125rem;
+  }
+
+  & dt {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  & dd {
+    margin: 0;
+    color: var(--color-heading);
+  }
+}
+
+.copyright-note {
+  margin-block-start: var(--space-2);
+  margin-inline-end: var(--mark-clear);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}

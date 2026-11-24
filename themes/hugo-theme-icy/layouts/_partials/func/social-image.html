@@ -1,0 +1,41 @@
+{{- /*
+  The image used for social previews (Open Graph, Twitter Card, JSON-LD).
+  First match wins:
+    1. front matter `images` (first entry; bundle, assets/, static/ or URL)
+    2. the bundle image named cover.*, feature.* or thumbnail.*
+    3. site.Params.images (first entry)
+  Local raster images larger than 1200px wide are scaled to 1200px (JPEG for
+  widest crawler support) and report their real size and type.
+  Call with partialCached (key: page path). Params: page.
+  Returns dict url (absolute), width, height, type — or nil.
+*/ -}}
+{{- $page := . }}
+{{- $src := "" }}
+{{- $res := false }}
+{{- with $page.Params.images }}
+  {{- $src = index . 0 }}
+{{- else }}
+  {{- $res = partial "func/bundle-cover.html" $page }}
+  {{- if not $res }}{{ with site.Params.images }}{{ $src = index . 0 }}{{ end }}{{ end }}
+{{- end }}
+
+{{- $out := false }}
+{{- if $src }}
+  {{- $m := partial "func/resolve-media.html" (dict "page" $page "src" $src "label" "social image" "position" (printf "for %s" $page.Path)) }}
+  {{- $res = $m.resource }}
+  {{- if not $res }}
+    {{- $out = dict "url" ($m.url | absURL) "width" $m.width "height" $m.height "type" "" }}
+  {{- end }}
+{{- end }}
+{{- with $res }}
+  {{- if and (eq .ResourceType "image") (in (slice "jpeg" "png" "webp" "tiff" "bmp") .MediaType.SubType) }}
+    {{- $img := . }}
+    {{- if or (gt .Width 1200) (in (slice "webp" "tiff" "bmp") .MediaType.SubType) }}
+      {{- $img = .Resize (printf "%dx jpg q82" (cond (gt .Width 1200) 1200 .Width)) }}
+    {{- end }}
+    {{- $out = dict "url" $img.Permalink "width" $img.Width "height" $img.Height "type" $img.MediaType.Type }}
+  {{- else }}
+    {{- $out = dict "url" .Permalink "width" 0 "height" 0 "type" .MediaType.Type }}
+  {{- end }}
+{{- end }}
+{{- return $out }}

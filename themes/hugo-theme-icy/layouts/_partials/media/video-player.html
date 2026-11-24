@@ -1,0 +1,71 @@
+{{- /*
+  Video player. Ships <video controls> (works without JS); video.js replaces
+  the native controls with the theme's bar: play, seek, time, mute, fullscreen.
+  Params (dict): page, src, poster, title, ratio, preload, autoplay, loop, muted, position.
+*/ -}}
+{{- $page := .page }}
+{{- range slice "controls" "video" }}{{ partial "assets/use.html" (dict "page" $page "feature" .) }}{{ end }}
+{{- $video := partial "func/resolve-media.html" (dict "page" $page "src" .src "kind" "video" "label" "video shortcode" "position" .position) }}
+
+{{- $ratio := "16 / 9" }}
+{{- $posterURL := "" }}
+{{- with .poster }}
+  {{- $poster := partial "func/resolve-media.html" (dict "page" $page "src" . "label" "video shortcode" "position" $.position) }}
+  {{- $posterURL = $poster.url }}
+  {{- with $poster.resource }}
+    {{- if and (eq .ResourceType "image") (in (slice "jpeg" "png" "webp" "tiff" "bmp") .MediaType.SubType) (gt .Width 1600) }}
+      {{- $posterURL = (.Resize "1600x webp q80").RelPermalink }}
+    {{- end }}
+  {{- end }}
+  {{- if and $poster.width $poster.height }}{{ $ratio = printf "%d / %d" $poster.width $poster.height }}{{ end }}
+{{- end }}
+{{- with .ratio }}
+  {{- if not (findRE `^\d+(\.\d+)?\s*/\s*\d+(\.\d+)?$` .) }}
+    {{- errorf "video shortcode: ratio must look like 16/9, got %q: %s" . $.position }}
+  {{- end }}
+  {{- $ratio = replace . "/" " / " }}
+{{- end }}
+{{- $title := .title }}
+{{- $parts := split $ratio "/" }}
+{{- $ratioValue := div (float (index $parts 0 | strings.TrimSpace)) (float (index $parts 1 | strings.TrimSpace)) }}
+
+{{- /* Without an explicit ratio, video.js adopts the file's own proportions once
+     its metadata loads (16:9 or the poster's ratio until then). */}}
+<figure class="video-player" data-video-player {{- if .ratio }} data-ratio-fixed{{ end }} style="--ratio: {{ $ratio | safeCSS }}; --ratio-value: {{ printf "%.4f" $ratioValue | safeCSS }}">
+  <div class="video-frame">
+    <video class="media-native" src="{{ $video.url }}" controls playsinline preload="{{ .preload }}"
+      {{- with $posterURL }} poster="{{ . }}"{{ end }}
+      {{- if .autoplay }} autoplay{{ end }}
+      {{- if .loop }} loop{{ end }}
+      {{- if .muted }} muted{{ end }}
+      {{- with $title }} aria-label="{{ . }}"{{ end }}></video>
+    {{ "<!--ui-->" | safeHTML }}<button class="video-big-play" type="button" data-play hidden
+      aria-label="{{ T "play" }}" data-label-play="{{ T "play" }}" data-label-pause="{{ T "pause" }}">
+      {{- partial "icon.html" (dict "name" "play-centered" "class" "icon-play") -}}
+    </button>{{ "<!--/ui-->" | safeHTML }}
+    {{ "<!--ui-->" | safeHTML }}<div class="video-controls" data-controls hidden>
+      <button class="video-button" type="button" data-play
+        aria-label="{{ T "play" }}" data-label-play="{{ T "play" }}" data-label-pause="{{ T "pause" }}">
+        {{- partial "icon.html" (dict "name" "play" "class" "icon-play") -}}
+        {{- partial "icon.html" (dict "name" "pause" "class" "icon-pause") -}}
+      </button>
+      <input class="media-seek" type="range" min="0" max="1000" step="1" value="0" data-seek aria-label="{{ T "seek" }}">
+      <span class="media-time numeric"><span data-current>0:00</span><span class="media-time-sep" aria-hidden="true">/</span><span data-duration>--:--</span></span>
+      <button class="video-button" type="button" data-mute
+        aria-label="{{ T "mute" }}" data-label-mute="{{ T "mute" }}" data-label-unmute="{{ T "unmute" }}">
+        {{- partial "icon.html" (dict "name" "volume" "class" "icon-volume") -}}
+        {{- partial "icon.html" (dict "name" "volume-off" "class" "icon-volume-off") -}}
+      </button>
+      <button class="video-button" type="button" data-fullscreen
+        aria-label="{{ T "fullscreen" }}" data-label-enter="{{ T "fullscreen" }}" data-label-exit="{{ T "exitFullscreen" }}">
+        {{- partial "icon.html" (dict "name" "fullscreen" "class" "icon-fullscreen") -}}
+        {{- partial "icon.html" (dict "name" "fullscreen-exit" "class" "icon-fullscreen-exit") -}}
+      </button>
+    </div>{{ "<!--/ui-->" | safeHTML }}
+    {{ "<!--ui-->" | safeHTML }}<p class="media-error video-error" role="status">{{ T "mediaError" }} <a href="{{ $video.url }}">{{ T "openFile" }}</a></p>{{ "<!--/ui-->" | safeHTML }}
+  </div>
+  {{- with $title }}
+  <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>
+{{- /* chomp trailing newline */ -}}

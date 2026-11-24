@@ -1,0 +1,14 @@
+{{- /*
+  Readable plain text of a page's content, for the search index.
+  Unlike .Plain it drops theme UI that render hooks and shortcodes add inside
+  the content (heading anchors, copy buttons, player controls, tab bars…):
+  those are wrapped in <!--ui--> … <!--/ui--> comment markers by the
+  templates that emit them. Footnote back-links are removed too, and entities
+  are decoded.
+  Params: page. Returns string.
+*/ -}}
+{{- $html := .Content | string }}
+{{- $html = replaceRE `(?s)<!--ui-->.*?<!--/ui-->` " " $html }}
+{{- $html = replaceRE `(?s)<a[^>]*class="footnote-backref"[^>]*>.*?</a>` "" $html }}
+{{- $html = replaceRE `</(p|li|h[1-6]|div|figcaption|blockquote|tr|pre)>` "$0 " $html }}
+{{- return ($html | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace) }}

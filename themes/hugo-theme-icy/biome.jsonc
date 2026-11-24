@@ -1,0 +1,31 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.8/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    "includes": [
+      "assets/**/*.js",
+      "assets/**/*.css",
+      "tools/**/*.mjs",
+      "!assets/js/vendor"
+    ]
+  },
+  "formatter": { "enabled": false },
+  "assist": { "enabled": false },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "complexity": {
+        // !important is deliberate: theme fade, [hidden], reduced motion, and
+        // overriding inline styles from Chroma and Ecoku.
+        "noImportantStyles": "off"
+      },
+      "style": {
+        // False positives with cascade layers and nesting.
+        "noDescendingSpecificity": "off",
+        // String concatenation reads better than nested template literals.
+        "useTemplate": "off"
+      }
+    }
+  }
+}

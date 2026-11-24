@@ -1,0 +1,26 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-block-start: var(--space-7);
+  font-size: var(--text-sm);
+}
+
+.pagination-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--ui-control-size);
+  text-decoration: none;
+
+  &[rel="next"] {
+    margin-inline-start: auto;
+  }
+}
+
+.pagination-status {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}

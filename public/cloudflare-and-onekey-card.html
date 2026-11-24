@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="text-scale" content="scale">
+<meta name="color-scheme" content="light dark">
+<script>try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark"){document.documentElement.dataset.colorScheme=s;document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}</script>
+
+<style>:root{--accent:#b75133}</style>
+
+
+<title>Cloudflare 与 OneKey Card | 印记</title>
+<meta name="description" content="原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那 …">
+<link rel="canonical" href="http://localhost:1313/cloudflare-and-onekey-card.html">
+
+<link rel="icon" href="/img/favicon.png" type="image/png" sizes="32x32">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241f1e" media="(prefers-color-scheme: dark)">
+
+<link rel="stylesheet" href="/css/core.css">
+
+<link rel="stylesheet" href="/css/article.css">
+
+<link rel="stylesheet" href="/css/prose.css">
+
+<link rel="stylesheet" href="/css/toc.css">
+
+<link rel="stylesheet" href="/css/media.css">
+
+<link rel="stylesheet" href="/css/viewer.css">
+
+<script type="module" src="/js/main.js"></script>
+
+<script type="module" src="/js/toc.js"></script>
+
+<script type="module" src="/js/media.js"></script>
+
+<script type="module" src="/js/viewer.js"></script>
+
+
+<style>@layer reset,tokens,base,layout,components,utilities;@layer components{@container site-header (inline-size >= 31.75rem){.header-inner{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav actions";column-gap:var(--space-6)}.site-nav[popover],.site-nav[popover]:not(:popover-open){position:static;display:block;justify-self:end;inline-size:auto;block-size:auto;margin:0;padding:0;border:0;background:none;color:inherit;overflow:visible}.menu-toggle,.menu-close,.menu-prefs{display:none}.header-actions>.lang-switch{display:inline-grid}@media(scripting:enabled){.header-actions>.theme-toggle{display:inline-grid}}.site-menu{gap:var(--space-1);margin:0;padding:0;overflow:visible;border:0;border-radius:0;& li{flex:none}& a{padding:var(--space-2) var(--space-3);border-radius:0;&:is([aria-current=page],[aria-current=true]){background-color:transparent}&:after{content:"";position:absolute;inset-inline:var(--space-3);inset-block-end:.125rem;block-size:2px;border-radius:var(--radius-full);background-color:var(--color-accent);scale:0 1;transform-origin:left center;transition:scale var(--duration-base) var(--ease-out)}&:is([aria-current=page],[aria-current=true]):after{scale:1 1}}}}}
+</style>
+
+
+
+
+<script type="speculationrules">{"prefetch":[{"eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[rel~=nofollow], [data-no-speculate], [download]"}}]}}]}</script>
+
+
+
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="青山">
+<meta property="og:site_name" content="印记">
+<meta property="og:title" content="Cloudflare 与 OneKey Card">
+<meta property="og:description" content="原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那 …">
+<meta property="og:url" content="http://localhost:1313/cloudflare-and-onekey-card.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-09-01T00:00:00&#43;00:00">
+<meta property="article:modified_time" content="2024-09-01T00:00:00&#43;00:00">
+<meta property="article:section" content="文章">
+<meta property="article:tag" content="Cloudflare">
+<meta property="article:tag" content="Cloudflare-R2">
+<meta property="article:tag" content="Onekey-Card">
+<meta property="article:tag" content="Webp-Cloud">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cloudflare 与 OneKey Card">
+<meta name="twitter:description" content="原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那 …">
+
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"http://localhost:1313/","name":"印记","position":1},{"@type":"ListItem","item":"http://localhost:1313/blog/index.html","name":"文章","position":2},{"@type":"ListItem","item":"http://localhost:1313/cloudflare-and-onekey-card.html","name":"Cloudflare 与 OneKey Card","position":3}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"dateModified":"2024-09-01T00:00:00+00:00","datePublished":"2024-09-01T00:00:00+00:00","description":"原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那 …","headline":"Cloudflare 与 OneKey Card","inLanguage":"zh-CN","keywords":["Cloudflare","Cloudflare-R2","Onekey-Card","Webp-Cloud"],"mainEntityOfPage":{"@id":"http://localhost:1313/cloudflare-and-onekey-card.html","@type":"WebPage"},"name":"Cloudflare 与 OneKey Card","publisher":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"url":"http://localhost:1313/cloudflare-and-onekey-card.html","wordCount":1183}</script>
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  
+<header class="site-header">
+  <div class="header-inner">
+    
+<a class="site-name" href="/">印记</a>
+
+    <nav class="site-nav" id="site-nav" popover aria-label="主导航">
+      <button class="icon-button menu-close" type="button" popovertarget="site-nav" popovertargetaction="hide"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">关闭菜单</span>
+      </button>
+      <ul class="site-menu" role="list">
+        <li><a href="/blog/index.html" aria-current="true">文章</a></li>
+        <li><a href="/tags/">标签</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/now.html">Now</a></li>
+        <li><a href="/roll.html">Roll</a></li>
+      </ul>
+      <div class="menu-prefs">
+        <p class="menu-prefs-row menu-prefs-scheme" role="group" aria-label="配色">
+          <button type="button" data-scheme-set="light" aria-pressed="false">浅色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="dark" aria-pressed="false">深色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="system" aria-pressed="false">跟随系统</button>
+        </p>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-button" href="/search/" title="搜索"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="visually-hidden">搜索</span>
+      </a>
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+        <svg class="theme-toggle-icon" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false">
+          <mask id="theme-toggle-cut">
+            <rect width="24" height="24" fill="#fff"/>
+            <circle class="theme-toggle-shade" cx="17" cy="7" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-toggle-body" cx="12" cy="12" r="8.5" fill="currentColor" mask="url(#theme-toggle-cut)"/>
+          <g class="theme-toggle-rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4L6 18M18 6l1.4-1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden theme-toggle-to-dark">切换到深色</span>
+        <span class="visually-hidden theme-toggle-to-light">切换到浅色</span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" popovertarget="site-nav" aria-haspopup="true"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">菜单</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main id="main" class="page-grid" tabindex="-1">
+
+
+
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">Cloudflare 与 OneKey Card</h1>
+    
+<p class="article-meta">
+  <time datetime="2024-09-01T00:00:00Z">2024年9月1日</time>
+  <span>3 分钟</span>
+  <span>1183 字</span>
+</p>
+
+    <ul class="article-tags" role="list" aria-label="标签">
+      <li><a href="/tags/cloudflare/" rel="tag">#Cloudflare</a></li>
+      <li><a href="/tags/cloudflare-r2/" rel="tag">#Cloudflare-R2</a></li>
+      <li><a href="/tags/onekey-card/" rel="tag">#Onekey-Card</a></li>
+      <li><a href="/tags/webp-cloud/" rel="tag">#Webp-Cloud</a></li>
+    </ul>
+  </header>
+  <nav class="toc-rail" role="navigation" aria-labelledby="toc-rail-title" data-toc>
+    <p class="toc-title" id="toc-rail-title">目录</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e8%b5%9b%e5%8d%9a%e4%bd%9b%e7%a5%96">赛博佛祖</a>
+  </li>
+  <li>
+    <a href="#cloudflare-r2">Cloudflare R2</a>
+  </li>
+  <li>
+    <a href="#onekey-card">OneKey Card</a>
+  </li>
+</ul>
+
+
+  </nav>
+
+  <div class="prose">
+    
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://webp.yinji.org/202409012242640.webp" data-viewer>
+<img src="https://webp.yinji.org/202409012242640.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>原本标题可以类似于“开通 Cloudflare R2，创建免费图床”、“域名转入 Cloudflare，香”、“OneKey Card 虚拟信用卡注册激活教程”等等，但我只取了其中两个关键词，诸如此类的教程随便 Google 一下就是一大堆，我没有必要照抄别人的内容，替换自己的图，然后标题一改或者索性不改，那叫什么，那tmd叫<a href="https://t.me/FindBlog/501" rel="external">洗稿</a>。</p>
+<h2 id="赛博佛祖">赛博佛祖<!--ui--><a class="heading-anchor" href="#%e8%b5%9b%e5%8d%9a%e4%bd%9b%e7%a5%96" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>不止一次听过 <a href="https://www.cloudflare.com/zh-cn/" rel="external">Cloudflare</a> 赛博佛祖的外号，也一直想把域名转入到 Cloudflare，使用它的一些免费服务，但信用卡对我来说是一个门槛，没有办理，不知道该办理哪种信用卡，目前也不太想过早使用信用卡，所以 Cloudflare 在我这里还没有派上太大用场。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://webp.yinji.org/202409012231465.webp" data-viewer>
+<img src="https://webp.yinji.org/202409012231465.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>前段时间参与 <a href="https://t.me/dogshouse_bot/join?startapp=m64px3aLRdSfQiipYchkCQ" rel="external">Dogs</a> 的空投（它的狗头画得真丑），昨天发现已经到账 Telegram 的 Wallet，46刀，正想着如何把它用掉，便想到很早之前注册过的 <a href="https://card.onekey.so/?i=VFDH2E" rel="external">OneKey Card</a>，因为当时需要充值 USDC 或 USDT 才能激活，兴趣不大，就搁置了，轻松几步，就将 Telegram Wallet 里的 Dogs 转入到 OneKey Card，并开通了虚拟 Visa 卡。</p>
+<p>信用卡有了，那就开始用 Cloudflare。在将 OneKey Card 绑定到 Cloudflare 作为主要支付方式时，账单地址填写遇到了一点小问题，应该是地址需要稍微调整，不过我挺好奇，外国人非常喜欢邮寄账单吗，听上去是一种很传统的形式，虽然在美剧里也看到过邮寄水电煤账单和选票之类的情节。</p>
+<h2 id="cloudflare-r2">Cloudflare R2<!--ui--><a class="heading-anchor" href="#cloudflare-r2" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p><a href="https://www.cloudflare.com/zh-cn/developer-platform/r2/" rel="external">Cloudflare R2</a> 的使用，参考了 <a href="https://www.pseudoyu.com/zh/2024/06/30/free_image_hosting_system_using_r2_webp_cloud_and_picgo/" rel="external">Pseudoyu</a> 和 <a href="https://justgoidea.com/posts/2024-022/" rel="external">Leslie</a> 的文章，写得非常详细，我是两篇一起看的，理论上不冲突，但个人愚钝，差点搞混了里面的步骤。通过 Pseudoyu 的教程，进行了 Cloudflare 的基础设置，以及 <a href="https://webp.se/" rel="external">WebP Cloud</a> 的开通；通过 Leslie 的教程，部署了<a href="https://github.com/jw-12138" rel="external">一个球</a>大佬开发的 <a href="https://github.com/jw-12138/r2-uploader" rel="external">R2 Uploader</a> 工具，部署简单，界面也很简洁美观，和他<a href="https://jw1.dev/" rel="external">博客</a>一样。</p>
+<p>我对 WebP Cloud 的理解，相当于国内云存储平台的图片处理功能，可以对图片进行体积压缩、添加水印、缓存等等，也有免费额度。</p>
+<p>R2 Uploader 即是一个图片上传工具，替换 Cloudflare R2 后台简陋的上传页面，据 Leslie 的文章介绍，还有图像压缩、大文件上传等功能。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://webp.yinji.org/202409012231824.webp" data-viewer>
+<img src="https://webp.yinji.org/202409012231824.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>将 WebP Cloud 和 R2 Uploader 联动起来，实现一键上传和代理。我在 Piclist 上也进行了相关设置，主要是想使用<strong>从剪切板上传</strong>和<strong>上传后自动复制 markdown 链接</strong>这两个功能，隔空喊话一个球大佬，后续是否有计划给 R2 Uploader 加上这两个功能。</p>
+<p>域名转入不再赘述，就和将大象装进冰箱一样简单。仍然纳闷的是，为何国外域名服务商转移域名如此之快，6年前将一个域名从国内某主机服务商转入腾讯云，花了10天，今天从 Porkbun 转到 Cloudflare，10分钟左右搞定。</p>
+<h2 id="onekey-card">OneKey Card<!--ui--><a class="heading-anchor" href="#onekey-card" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>不记得什么时候注册的账号，当时一起的似乎还有 Depay，或者说 Dupay，不知道它们什么关系，现在情况如何。</p>
+<p>看网上的消息，现在 <a href="https://card.onekey.so/?i=VFDH2E" rel="external">OneKey Card</a> 免月费，不用白不用，趁此机会绑定了支付宝，虽然不知道为什么无法在淘宝上使用这张卡，但在美团上实打实能支付，中午点了麦当劳外卖、买了团购优惠券，本想再充个话费，似乎不太行。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://webp.yinji.org/202409012227703.webp" data-viewer>
+<img src="https://webp.yinji.org/202409012227703.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>头一回知道虚拟货币还能这样使用，也算是开了眼界。用它作为 Cloudflare 的主要支付方式，也非常方便，只不过以后需要支付，还得往里面充值虚拟货币。</p>
+<p><a href="https://card.onekey.so/?i=VFDH2E" rel="external">OneKey Card</a> 现在还能注册，Google 账号一键登录即可，建议尝试一下。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://webp.yinji.org/202409012234583.webp" data-viewer>
+<img src="https://webp.yinji.org/202409012234583.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+  </div>
+
+</article>
+<button class="fab toc-fab" type="button" popovertarget="toc-sheet" aria-controls="toc-sheet"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h1M4 12h1M4 18h1M9 6h11M9 12h11M9 18h11"/></svg><span class="visually-hidden">目录</span>
+</button>
+<nav id="toc-sheet" class="toc-sheet" popover aria-labelledby="toc-sheet-title" data-toc>
+  <div class="toc-sheet-scroll">
+    <p class="toc-title" id="toc-sheet-title">目录</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e8%b5%9b%e5%8d%9a%e4%bd%9b%e7%a5%96">赛博佛祖</a>
+  </li>
+  <li>
+    <a href="#cloudflare-r2">Cloudflare R2</a>
+  </li>
+  <li>
+    <a href="#onekey-card">OneKey Card</a>
+  </li>
+</ul>
+
+
+  </div>
+</nav>
+
+    <button class="fab back-to-top" type="button" data-back-to-top hidden>
+      <svg class="back-to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle cx="22" cy="22" r="21"/>
+      </svg><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="visually-hidden">回到顶部</span>
+    </button>
+  </main>
+  
+<dialog class="viewer" data-viewer-dialog closedby="any" aria-label="图片查看器">
+  <figure class="viewer-stage">
+    <img class="viewer-image" alt="" decoding="async">
+    <figcaption class="viewer-caption" hidden></figcaption>
+  </figure>
+  <p class="viewer-counter" aria-live="polite"></p>
+  <form class="viewer-close-form" method="dialog">
+    <button class="viewer-button viewer-close" data-viewer-close><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="visually-hidden">关闭</span>
+    </button>
+  </form>
+  <button class="viewer-button viewer-prev" type="button" data-viewer-prev><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span class="visually-hidden">上一张</span>
+  </button>
+  <button class="viewer-button viewer-next" type="button" data-viewer-next><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span class="visually-hidden">下一张</span>
+  </button>
+</dialog>
+
+  
+<footer class="site-footer">
+  <div class="footer-colophon">
+    <p class="footer-copyright">© 2018–2026 青山</p>
+    <p class="footer-powered">Powered by <a href="https://gohugo.io/" rel="external">Hugo</a> & <a href="https://github.com/DejavuMoe/hugo-theme-icy" rel="external">Icy</a></p>
+  </div>
+</footer>
+<script data-goatcounter="https://hhx.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+</body>
+</html>

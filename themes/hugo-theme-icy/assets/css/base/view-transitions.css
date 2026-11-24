@@ -1,0 +1,45 @@
+/*
+ * Cross-document view transitions (Chromium 126+, Safari 18.2+).
+ * Both pages opt in through this shared stylesheet; other browsers just
+ * navigate normally. Honors reduced-motion preferences.
+ *
+ * The page content cross-fades. The header is its own group that swaps
+ * instantly: it is the same on both pages (only the current link moves), and
+ * fading it with the root made it blink and shimmer on every navigation.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--duration-base);
+}
+
+.site-header {
+  view-transition-name: site-header;
+}
+
+::view-transition-group(site-header),
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+/* Color-scheme switch (modules/color-scheme.js): the whole page is one
+   snapshot; the new one is revealed by a growing circle (clip-path animated
+   from script) on top of the old one, with no cross-fade. */
+.is-theme-revealing .site-header {
+  view-transition-name: none;
+}
+
+.is-theme-revealing::view-transition-old(root),
+.is-theme-revealing::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}

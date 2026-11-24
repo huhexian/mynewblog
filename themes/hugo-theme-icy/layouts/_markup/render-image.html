@@ -1,0 +1,26 @@
+{{- /*
+  Markdown images.
+  - Stand-alone images (.IsBlock) render as a figure (media/figure.html); the
+    Markdown title becomes the caption; they open in the image viewer.
+  - Images inside a line of text render as small inline images (1.2em high).
+  Requires markup.goldmark.parser.wrapStandAloneImageWithinParagraph = false.
+*/ -}}
+{{- $media := partial "func/resolve-media.html" (dict "page" .PageInner "src" .Destination "label" "image" "position" (printf "in %s" .PageInner.File.Path)) }}
+{{- $article := site.Params.article | default dict }}
+{{- if .IsBlock }}
+  {{- partial "media/figure.html" (dict
+    "page" .Page
+    "media" $media
+    "alt" .PlainText
+    "caption" .Title
+    "zoom" (ne $article.imageViewer false)
+    "class" .Attributes.class
+  ) }}
+{{- else }}
+  {{- partial "assets/use.html" (dict "page" .Page "feature" "media") -}}
+  <img class="inline-image" src="{{ $media.url }}" alt="{{ .PlainText }}"
+    {{- with .Title }} title="{{ . }}"{{ end }}
+    {{- with $media.width }} width="{{ . }}"{{ end }}
+    {{- with $media.height }} height="{{ . }}"{{ end }} loading="lazy" decoding="async">
+{{- end -}}
+{{- /* chomp trailing newline */ -}}

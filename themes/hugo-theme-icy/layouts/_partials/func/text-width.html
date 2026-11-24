@@ -1,0 +1,13 @@
+{{- /*
+  Rough rendered width of a short UI string, in px: wide (CJK and other
+  multi-byte) characters count as 1em, capitals 0.66em, other ASCII 0.56em.
+  Good enough to place a breakpoint with a safety margin, not for layout.
+  Params (dict): text, size (font size in px). Returns float.
+*/ -}}
+{{- $w := 0.0 }}
+{{- range split (.text | string) "" }}
+  {{- if gt (len .) 1 }}{{ $w = add $w 1.0 }}
+  {{- else if findRE `[A-Z]` . }}{{ $w = add $w 0.66 }}
+  {{- else }}{{ $w = add $w 0.56 }}{{ end }}
+{{- end }}
+{{- return mul $w (float .size) }}

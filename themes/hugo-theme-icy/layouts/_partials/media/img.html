@@ -1,0 +1,35 @@
+{{- /*
+  <img> for a resolved media item (func/resolve-media.html).
+  - Intrinsic width/height so the browser reserves space (no layout shift).
+  - Raster resources get a WebP srcset with explicit `sizes`. (`sizes="auto"`
+    is not used: these images size to their content, and with no definite
+    width the browser would fall back to a 300px slot.)
+  Params (dict): media, alt, sizes (optional), loading ("lazy"|"eager"), class,
+  fetchpriority (optional, e.g. "high" for the cover).
+*/ -}}
+{{- $m := .media }}
+{{- $srcset := slice }}
+{{- with $m.resource }}
+  {{- if and (eq .ResourceType "image") (in (slice "jpeg" "png" "webp" "tiff" "bmp") .MediaType.SubType) }}
+    {{- $img := . }}
+    {{- range slice 480 800 1200 1600 2400 }}
+      {{- if lt . $img.Width }}
+        {{- with $img.Resize (printf "%dx webp q82" .) }}
+          {{- $srcset = $srcset | append (printf "%s %dw" .RelPermalink .Width) }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- with $srcset }}
+      {{- $srcset = $srcset | append (printf "%s %dw" $img.RelPermalink $img.Width) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- $loading := .loading | default "lazy" }}
+<img src="{{ $m.url }}" alt="{{ .alt }}"
+  {{- with $srcset }} srcset="{{ delimit . ", " }}" sizes="{{ $.sizes | default "(max-width: 44rem) 100vw, 44rem" }}"{{ end }}
+  {{- with $m.width }} width="{{ . }}"{{ end }}
+  {{- with $m.height }} height="{{ . }}"{{ end }}
+  {{- with .class }} class="{{ . }}"{{ end }}
+  {{- with .fetchpriority }} fetchpriority="{{ . }}"{{ end }}
+  loading="{{ $loading }}" decoding="async">
+{{- /* chomp trailing newline */ -}}

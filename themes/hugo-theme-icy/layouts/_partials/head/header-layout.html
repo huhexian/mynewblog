@@ -1,0 +1,46 @@
+{{- /*
+  The header's one-row layout (assets/css/components/header-wide.css), inlined
+  inside a container query on .site-header. The breakpoint is computed here
+  from what the row actually holds — wordmark or title, the menu labels, the
+  action buttons — so the switch is content-driven, decided before first
+  paint, and never flips while the page loads or the window is resized.
+  Inlined after the stylesheets; it repeats the layer order statement so it
+  joins the same `components` layer.
+*/ -}}
+{{- $px := 0.0 }}
+
+{{- /* Brand: the wordmark at its rendered height (1.75rem), or the title. */}}
+{{- $svg := partialCached "func/wordmark.html" . "wordmark" }}
+{{- with and $svg (findRESubmatch `width="(\d+)" height="(\d+)"` $svg 1) }}
+  {{- $m := index . 0 }}
+  {{- $px = mul 28.0 (div (float (index $m 1)) (float (index $m 2))) }}
+{{- else }}
+  {{- $px = partial "func/text-width.html" (dict "text" site.Title "size" 20) }}
+{{- end }}
+
+{{- /* Links: label + 2 × 12px padding, 4px apart (the search page is not listed). */}}
+{{- $search := false }}
+{{- with site.Params.search.page }}{{ $search = site.GetPage . }}{{ end }}
+{{- $n := 0 }}
+{{- range site.Menus.main }}
+  {{- if and $search .Page (eq .Page $search) }}{{ continue }}{{ end }}
+  {{- $px = add $px (add (partial "func/text-width.html" (dict "text" .Name "size" 15)) 24) }}
+  {{- $n = add $n 1 }}
+{{- end }}
+{{- $px = add $px (mul 4 (math.Max 0 (sub $n 1))) }}
+
+{{- /* Actions: 36px buttons, minus the 8px optical overhang; two 32px gaps. */}}
+{{- /* GetPage returns nil when the search page does not exist: no icon then. */}}
+{{- $buttons := add (cond (not $search) 0 1) (cond (site.Params.colorScheme.toggle | default false) 1 0) }}
+{{- if hugo.IsMultilingual }}{{ $buttons = add $buttons (sub (len hugo.Sites) 1) }}{{ end }}
+{{- $px = add $px (sub (mul 36 $buttons) 8) 64 }}
+
+{{- /* 8% safety for font differences, rounded up to a quarter rem. */}}
+{{- $rem := div (math.Ceil (mul (div (mul $px 1.08) 16) 4)) 4 }}
+
+{{- with resources.Get "css/components/header-wide.css" }}
+  {{- $css := printf "@layer reset, tokens, base, layout, components, utilities;\n@layer components {\n@container site-header (inline-size >= %vrem) {\n%s\n}\n}\n" $rem .Content }}
+  {{- $out := resources.FromString (printf "css/header-wide.%s.css" (md5 $css | truncate 8 "")) $css }}
+  {{- $out = $out | css.Build (dict "minify" true "target" (partialCached "func/css-targets.html" "css-targets")) }}
+<style>{{ $out.Content | safeCSS }}</style>
+{{- end }}

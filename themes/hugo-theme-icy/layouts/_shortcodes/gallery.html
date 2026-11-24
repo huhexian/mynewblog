@@ -1,0 +1,44 @@
+{{- /*
+  gallery — justified rows of photos: every row runs edge to edge and all
+  tiles in a row share one height. Pure CSS (each tile grows in proportion to
+  its aspect ratio), so it adapts to any width without JavaScript.
+
+    {{< gallery caption="Spring in the park" >}}
+      {{< gallery-item src="a.jpg" alt="…" >}}
+      {{< gallery-item src="b.jpg" alt="…" >}}
+    {{< /gallery >}}
+
+  Params:
+    columns  target photos per row: auto (default; 1–3 from the item count) or 1–4
+    caption  caption for the whole gallery (Markdown)
+    label    accessible name when there is no caption
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "gallery" "allowed" (slice "columns" "caption" "label")) }}
+{{- $inner := .Inner | strings.TrimSpace }}
+{{- /* Each gallery-item counts itself while .Inner renders. */}}
+{{- $count := .Store.Get "tiles" | default 0 }}
+{{- if eq $count 0 }}
+  {{- errorf "gallery shortcode needs at least one gallery-item inside: %s" .Position }}
+{{- end }}
+{{- $columnsRaw := .Get "columns" | default "auto" | string }}
+{{- $columns := 3 }}
+{{- if eq $columnsRaw "auto" }}
+  {{- if le $count 2 }}{{ $columns = $count }}{{ else if eq $count 4 }}{{ $columns = 2 }}{{ end }}
+{{- else if in (slice "1" "2" "3" "4") $columnsRaw }}
+  {{- $columns = int $columnsRaw }}
+{{- else }}
+  {{- errorf "gallery shortcode: columns must be auto or 1–4, got %q: %s" $columnsRaw .Position }}
+{{- end }}
+{{- partial "assets/use.html" (dict "page" .Page "feature" "gallery") }}
+{{- $caption := .Get "caption" }}
+{{- /* All tiles on one row: let that row fill the width (the filler that keeps
+     a short last row at its natural size is only for multi-row galleries). */}}
+<figure class="gallery {{- if le $count $columns }} is-single-row{{ end }}" style="--columns: {{ $columns }}"
+  {{- if not $caption }}{{ with .Get "label" }} role="group" aria-label="{{ . }}"{{ end }}{{ end }}>
+  <div class="gallery-grid">
+    {{ $inner | safeHTML }}
+  </div>
+  {{- with $caption }}
+  <figcaption>{{ . | $.Page.RenderString }}</figcaption>
+  {{- end }}
+</figure>

@@ -1,0 +1,378 @@
+/* Rendered Markdown. Vertical rhythm in em so it scales with the text. */
+
+.prose {
+  font-size: var(--text-prose);
+  line-height: var(--leading-prose);
+
+  /* One rhythm for the whole text: every block is one line-gap (1em, 18px)
+     from the previous one — with 1.86 leading that already reads as a
+     clear paragraph break without wasting space. */
+  & > * + * {
+    margin-block-start: 1em;
+  }
+
+  /* Cards, code, tables and media get a little more air than text. */
+  & > :is(.code-block, .highlight, .table-scroll, .alert, .quote, blockquote) {
+    margin-block: 1.25em;
+  }
+
+  /* ---- Headings ---- */
+  /* A heading takes only a little more room above than the common gap, and
+     the common gap below — the spacing before and after stays even. */
+  & :is(h2, h3, h4, h5, h6) {
+    margin-block-start: 1.3em;
+    line-height: var(--leading-tight);
+
+    & + * {
+      margin-block-start: 1em;
+    }
+  }
+
+  /* Markdown leaves empty paragraphs around some block shortcodes. */
+  & > p:empty {
+    display: none;
+  }
+
+  & h2 { font-size: var(--text-lg); font-weight: var(--weight-bold); }
+  & h3 { font-size: var(--text-md); }
+  & :is(h4, h5, h6) { font-size: var(--text-prose); }
+
+  & .heading-anchor {
+    margin-inline-start: 0.4em;
+    color: var(--color-text-faint);
+    font-weight: var(--weight-regular);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity var(--duration-quick) var(--ease-out);
+  }
+
+  & :is(h2, h3, h4, h5, h6):is(:hover, :focus-within) .heading-anchor {
+    opacity: 1;
+  }
+
+  /* ---- Inline ---- */
+  & a {
+    text-decoration-color: color-mix(in oklch, var(--color-accent) 40%, transparent);
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  & strong {
+    color: var(--color-heading);
+    font-weight: var(--weight-strong);
+  }
+
+  & :not(pre) > code {
+    padding: 0.1em 0.35em;
+    border-radius: var(--radius-s);
+    background-color: var(--ui-code-bg);
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+
+  /* Highlighter pen, in CSS only: a stroke sitting low on the line with
+     tapered, slightly slanted ends, a lighter second pass for the uneven ink
+     of a real marker, organic corners, and a fresh stroke on every line. */
+  & mark {
+    --marker: light-dark(oklch(90% 0.13 95 / 0.78), oklch(62% 0.11 85 / 0.42));
+    --marker-light: light-dark(oklch(93% 0.1 95 / 0.55), oklch(66% 0.09 85 / 0.25));
+
+    margin-inline: -0.12em;
+    padding: 0 0.22em;
+    border-radius: 0.35em 0.9em 0.45em 0.8em / 0.7em 0.35em 0.8em 0.4em;
+    background:
+      linear-gradient(101deg, transparent 0.15em, var(--marker) 0.5em, var(--marker) calc(100% - 0.6em), transparent calc(100% - 0.15em))
+        0 88% / 100% 0.92em no-repeat,
+      linear-gradient(97deg, transparent 0.6em, var(--marker-light) 1em, transparent 55%)
+        0 46% / 100% 0.5em no-repeat;
+    color: inherit;
+    box-decoration-break: clone;
+  }
+
+  /* Task lists (- [ ] / - [x]). Goldmark writes a disabled checkbox, which
+     browsers grey out and style each their own way; the box is drawn on the
+     item instead, where a bullet would be, centred on the first line. The
+     input stays in the DOM (visually hidden) for its checked state. */
+  & li:has(> input[type="checkbox"]:first-child, > p:first-child > input[type="checkbox"]:first-child) {
+    --task-box: 0.875em;
+    --task-top: calc((1lh - var(--task-box)) / 2);
+
+    position: relative;
+    list-style: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: -1.3em;
+      inset-block-start: var(--task-top);
+      box-sizing: border-box;
+      inline-size: var(--task-box);
+      block-size: var(--task-box);
+      border: 1.5px solid color-mix(in oklch, var(--color-text-muted) 70%, transparent);
+      border-radius: 0.22em;
+    }
+
+    &:has(> input:checked, > p:first-child > input:checked) {
+      &::before {
+        border-color: var(--color-accent);
+        background-color: var(--color-accent);
+      }
+
+      /* The tick: two borders of a small box, turned. */
+      &::after {
+        content: "";
+        position: absolute;
+        inset-inline-start: calc(-1.3em + var(--task-box) * 0.27);
+        inset-block-start: calc(var(--task-top) + var(--task-box) * 0.24);
+        inline-size: calc(var(--task-box) * 0.46);
+        block-size: calc(var(--task-box) * 0.24);
+        border-block-end: 0.12em solid var(--color-on-accent);
+        border-inline-start: 0.12em solid var(--color-on-accent);
+        rotate: -45deg;
+      }
+    }
+  }
+
+  & li > input[type="checkbox"]:first-child,
+  & li > p:first-child > input[type="checkbox"]:first-child {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ---- Lists ---- */
+  /* Lists written in Markdown: direct children, and lists nested in them.
+     Component lists (playlists, galleries, TOCs…) are left alone. */
+  & > :is(ul, ol),
+  & li > :is(ul, ol) {
+    padding-inline-start: 1.4em;
+
+    & > li + li {
+      margin-block-start: 0.3em;
+    }
+
+    & > li::marker {
+      color: var(--color-text-faint);
+    }
+  }
+
+  /* ---- Blockquote ---- */
+  & > blockquote,
+  & > .quote blockquote {
+    position: relative;
+    padding-inline-start: 1.1em;
+    color: var(--color-text-muted);
+
+    /* A rounded bar rather than a border: no square ends. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 0.35em;
+      inset-inline-start: 0;
+      inline-size: 3px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-rule);
+    }
+
+    & > * + * {
+      margin-block-start: 0.7em;
+    }
+  }
+
+  & hr {
+    margin-block: 3em;
+    inline-size: 6rem;
+    margin-inline: auto;
+  }
+
+  /* ---- Tables (Markdown tables are wrapped by render-table.html) ---- */
+  /* A hairline card like code blocks: a tinted header row, hairlines
+     between rows, cells inset from the edges. Wide tables scroll inside. */
+  & .table-scroll {
+    overflow-x: auto;
+    border: var(--rule);
+    border-radius: var(--radius-l);
+
+    & table {
+      inline-size: 100%;
+      font-size: var(--text-sm);
+      line-height: var(--leading-snug);
+      font-variant-numeric: tabular-nums;
+    }
+
+    & :is(th, td) {
+      padding: 0.7em 1em;
+      border-block-end: var(--rule);
+      text-align: start;
+      vertical-align: top;
+
+      &:first-child { padding-inline-start: 1.25em; }
+      &:last-child { padding-inline-end: 1.25em; }
+      &[data-align="center"] { text-align: center; }
+      &[data-align="right"] { text-align: end; }
+    }
+
+    & thead th {
+      background-color: var(--color-surface);
+      color: var(--color-heading);
+      font-weight: var(--weight-strong);
+      white-space: nowrap;
+    }
+
+    & tbody tr:last-child :is(th, td) {
+      border-block-end: 0;
+    }
+
+    /* Inline code never breaks mid-word inside a cell; short cells keep a
+       readable minimum width instead of collapsing to a character column. */
+    & :not(pre) > code {
+      overflow-wrap: normal;
+      white-space: nowrap;
+    }
+
+    /* The first column holds labels and keys: keep them on one line. */
+    & td:first-child {
+      white-space: nowrap;
+    }
+  }
+
+  /* ---- Footnotes ---- */
+  & .footnotes {
+    position: relative;
+    margin-block-start: 3em;
+    padding-block-start: 1.25em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+
+    & hr {
+      display: none;
+    }
+
+    /* A short rule, as in print: marks the notes without cutting the page. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      inline-size: 3rem;
+      border-block-start: var(--rule);
+      border-color: var(--color-text-faint);
+      opacity: 0.6;
+    }
+
+    & ol {
+      margin: 0;
+      padding-inline-start: 1.4em;
+    }
+
+    & li + li {
+      margin-block-start: 0.4em;
+    }
+
+    & li::marker {
+      color: var(--color-text-faint);
+      font-variant-numeric: tabular-nums;
+    }
+
+    & .footnote-backref {
+      margin-inline-start: 0.25em;
+    }
+  }
+
+  & .footnote-ref {
+    padding-inline: 0.1em;
+    text-decoration: none;
+  }
+}
+
+/* CJK: no faux italics (and no emphasis dots, which read as noise). Emphasis
+   is the heading ink at medium weight — a step below <strong>. */
+.prose:is(:lang(zh), :lang(ja)) em {
+  color: var(--color-heading);
+  font-style: normal;
+  font-weight: var(--weight-medium);
+}
+
+/* ---- Inline writing helpers ---- */
+.prose {
+  /* {{< kbd "Ctrl+K" >}} */
+  /* Small keycaps that sit in the line: UI font, a hairline edge and a
+     one-pixel inner shadow for depth instead of a thick bottom border. */
+  & kbd.kbd {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.2em;
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    line-height: 1;
+  }
+
+  & kbd.kbd > kbd {
+    min-inline-size: 1.75em;
+    padding: 0.2em 0.45em;
+    border: var(--rule);
+    border-radius: 0.35em;
+    background-color: var(--color-surface);
+    box-shadow: inset 0 -1px 0 var(--color-rule);
+    color: var(--color-heading);
+    font-family: inherit;
+    font-weight: var(--weight-medium);
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  & .kbd-plus {
+    color: var(--color-text-faint);
+    font-size: 0.9em;
+  }
+
+  /* {{< ruby "汉字" "hàn zì" >}} */
+  /* Readings sit close above their characters, centred, never tracking
+     the body text's letter spacing. */
+  & ruby {
+    ruby-position: over;
+    ruby-align: center;
+  }
+
+  & rt {
+    color: var(--color-text-muted);
+    font-size: 0.5em;
+    line-height: 1;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  /* Blockquote with attribution (last line starts with "——"). */
+  & > .quote {
+    margin-inline: 0;
+
+    & blockquote > * + * {
+      margin-block-start: 0.7em;
+    }
+  }
+
+  & .quote-source {
+    margin-block-start: 0.5em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-align: end;
+
+    &::before {
+      content: "—— ";
+    }
+  }
+}
+
+/* Block attributes, e.g. a paragraph followed by {.align-right}. */
+.prose {
+  & .align-left { text-align: start; }
+  & .align-center { text-align: center; }
+  & .align-right { text-align: end; }
+  & .align-justify { text-align: justify; }
+}

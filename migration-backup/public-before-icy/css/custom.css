@@ -1,0 +1,88 @@
+/* =========================
+   hugo-bearneo 首页文章列表优化
+   ========================= */
+
+
+/* Recent Posts 标题 */
+
+h2 {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+
+
+/* 首页文章列表 */
+
+h2 + ul {
+
+    list-style: none;
+
+    padding-left: 0;
+
+    margin-left: 0;
+
+}
+
+
+
+/* 每篇文章 */
+
+h2 + ul li {
+
+    margin-bottom: 1.2rem;
+
+    line-height: 1.8;
+
+}
+
+
+
+/* 文章链接 */
+
+h2 + ul li a {
+
+    font-size: 1.25rem;
+
+    text-decoration: none;
+
+}
+
+
+
+/* 鼠标经过 */
+
+h2 + ul li a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+
+/* =========================
+   顶部导航优化
+   ========================= */
+
+
+nav a {
+
+    margin-right: 1rem;
+
+}
+
+
+
+/* =========================
+   手机适配
+   ========================= */
+
+@media(max-width:600px){
+
+    h2 + ul li {
+
+        margin-bottom: 1rem;
+
+    }
+
+}

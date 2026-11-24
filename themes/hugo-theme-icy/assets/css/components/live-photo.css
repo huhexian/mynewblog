@@ -1,0 +1,99 @@
+/*
+ * Live Photo: still image + short video on top. The video fades in while it
+ * plays; the frame scales a touch (as on phones) unless motion is reduced.
+ */
+
+/* Press and hold plays the photo, so the frame opts out of what a long press
+   does to images and links: the iOS callout and link preview, dragging, and
+   text selection. live-photo.js blocks the context menu. */
+.live-photo-frame {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  & :is(a, img) {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+  }
+}
+
+.live-photo-still {
+  display: block;
+}
+
+.live-photo-video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out);
+
+  .live-photo.is-playing & {
+    opacity: 1;
+  }
+}
+
+.live-photo-badge {
+  position: absolute;
+  inset-block-start: var(--space-2);
+  inset-inline-start: var(--space-2);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-block-size: 1.75rem;
+  padding: 0.125rem 0.5rem 0.125rem 0.375rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: oklch(100% 0 0 / 0.72);
+  color: oklch(25% 0 0);
+  font-size: 0.6875rem;
+  font-weight: var(--weight-strong);
+  letter-spacing: 0.06em;
+  -webkit-backdrop-filter: blur(0.5rem) saturate(1.4);
+  backdrop-filter: blur(0.5rem) saturate(1.4);
+
+  & .icon {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+
+  /* The frame's own focus ring would be clipped; the badge gets a clear one. */
+  &:focus-visible {
+    outline-offset: 1px;
+  }
+}
+
+.gallery-item .live-photo-badge {
+  inset-block-start: var(--space-1);
+  inset-inline-start: var(--space-1);
+}
+
+.live-photo[data-state="error"] .live-photo-badge {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .live-photo-still img,
+  .live-photo-video {
+    transition:
+      opacity var(--duration-base) var(--ease-out),
+      scale 600ms var(--ease-out);
+  }
+
+  .live-photo.is-playing :is(.live-photo-still img, .live-photo-video) {
+    scale: 1.03;
+  }
+
+  .live-photo.is-playing .live-photo-badge .icon {
+    animation: live-spin 3s linear infinite;
+  }
+}
+
+@keyframes live-spin {
+  to { rotate: 1turn; }
+}

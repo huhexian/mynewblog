@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="{{ or site.Language.Locale site.Language.Lang }}" dir="{{ or site.Language.Direction `ltr` }}">
+<head>
+  {{- partial "head.html" . }}
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ T "skipToContent" }}</a>
+  {{ partial "header.html" . }}
+  <main id="main" class="page-grid" tabindex="-1">
+    {{- block "main" . }}{{ end }}
+    {{- /* Back to top, with a reading-progress ring. Revealed by main.js once
+         the reader is a screen down; it stacks above the contents button
+         on narrow article pages. Hidden without JS. */}}
+    <button class="fab back-to-top" type="button" data-back-to-top hidden>
+      <svg class="back-to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle cx="22" cy="22" r="21"/>
+      </svg>
+      {{- partial "icon.html" "arrow-up" -}}
+      <span class="visually-hidden">{{ T "backToTop" }}</span>
+    </button>
+  </main>
+  {{- if index (.Store.Get "icyFeatures" | default dict) "viewer" }}
+  {{ partial "media/viewer.html" . }}
+  {{- end }}
+  {{ partial "footer.html" . }}
+  {{- partial "extend/footer.html" . }}
+</body>
+</html>

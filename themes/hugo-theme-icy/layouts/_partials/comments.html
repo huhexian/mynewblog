@@ -1,0 +1,22 @@
+{{- /*
+  Comments section for regular pages.
+
+  Enabled when params.comments.provider is set; a page opts out with
+  `comments = false`. Provider: ecoku (self-hosted Ecoku,
+  params.comments.ecoku). For another system, override this partial in the
+  site (layouts/_partials/comments.html).
+
+  Context: the page.
+*/ -}}
+{{- $cfg := site.Params.comments | default dict }}
+{{- $provider := $cfg.provider | default "" }}
+{{- if and $provider (ne .Params.comments false) }}
+<section class="comments" id="comments" aria-labelledby="comments-title">
+  <h2 class="comments-title" id="comments-title">{{ T "comments" }}</h2>
+  {{- if eq $provider "ecoku" }}
+    {{- partial "comments/ecoku.html" (dict "page" . "cfg" ($cfg.ecoku | default dict)) }}
+  {{- else }}
+    {{- errorf "comments: unknown provider %q (Icy supports ecoku; override layouts/_partials/comments.html for others)" $provider }}
+  {{- end }}
+</section>
+{{- end }}

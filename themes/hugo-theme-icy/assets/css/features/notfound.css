@@ -1,0 +1,2 @@
+/* Feature bundle "notfound" — the 404 page only. */
+@import "../components/not-found.css" layer(components);

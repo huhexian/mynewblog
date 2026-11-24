@@ -1,0 +1,32 @@
+{{- /*
+  Sitemap of what crawlers may index. Left out: pages with
+  `robotsNoIndex = true` or `sitemap.disable = true`, protected pages, and
+  terms without a public article. Aggregate pages (home, sections, terms)
+  take the lastmod of their newest public article.
+*/ -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {{- range .Pages }}
+    {{- $public := where .RegularPages "Params.protected.enabled" "!=" true }}
+    {{- $public = where $public "Params.robotsNoIndex" "!=" true }}
+    {{- $aggregate := not .IsPage }}
+    {{- $include := and .Permalink (not .Sitemap.Disable) (ne .Params.protected.enabled true) (ne .Params.robotsNoIndex true) }}
+    {{- if eq .Kind "term" }}{{ $include = and $include (gt (len $public) 0) }}{{ end }}
+    {{- if $include }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- if and $aggregate $public }}
+    <lastmod>{{ (index $public.ByLastmod.Reverse 0).Lastmod.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
+    {{- else if and (not $aggregate) (not .Lastmod.IsZero) }}
+    <lastmod>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
+    {{- end }}
+    {{- with .Sitemap.ChangeFreq }}
+    <changefreq>{{ . }}</changefreq>
+    {{- end }}
+    {{- if ge .Sitemap.Priority 0.0 }}
+    <priority>{{ .Sitemap.Priority }}</priority>
+    {{- end }}
+  </url>
+    {{- end }}
+  {{- end }}
+</urlset>

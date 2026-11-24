@@ -1,0 +1,89 @@
+/*
+ * Justified gallery, pure CSS.
+ * Each tile's flex-grow and flex-basis are proportional to its aspect ratio
+ * (--ratio, set per tile), so tiles in a row end up the same height and the
+ * row fills the width. The filler after the last tile is about one tile
+ * wide: when the last row has less room left than that, the filler wraps to
+ * an empty line of its own and the row fills the width like the others; only
+ * a clearly short last row keeps the filler, and its natural size.
+ * --columns (set by the shortcode) is the target number of average photos per
+ * row; narrow containers cap it at 2.
+ */
+
+.gallery {
+  container-type: inline-size;
+  margin-inline: 0;
+
+  & > figcaption {
+    margin-block-start: 0.75em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+}
+
+.gallery-grid {
+  --cols: var(--columns, 3);
+  --gap: 0.375rem;
+  /* Target row height: an average (4:3) photo fills 1/cols of the width. */
+  --row: max(8rem, (100cqi - (var(--cols) - 1) * var(--gap)) / var(--cols) * 0.75);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+
+  &::after {
+    content: "";
+    flex: 10000 1 calc(var(--row) * 1.3333);
+  }
+}
+
+/* One row only (no more tiles than columns): it is also the last row, but
+   it should run edge to edge, so no filler and no wrapping. Tiles shrink in
+   proportion to their basis, which is proportional to their aspect ratio, so
+   they keep one shared height. Narrow containers cap rows at 2 photos, so
+   there the gallery may wrap again. */
+@container (inline-size >= 30rem) {
+  .gallery.is-single-row > .gallery-grid {
+    flex-wrap: nowrap;
+
+    &::after {
+      display: none;
+    }
+  }
+}
+
+@container (inline-size < 30rem) {
+  .gallery-grid {
+    --cols: min(var(--columns, 3), 2);
+  }
+}
+
+.gallery-item {
+  flex: var(--ratio, 1.3333) 1 calc(var(--ratio, 1.3333) * var(--row));
+  min-inline-size: 0;
+  margin: 0;
+
+  & .media-frame {
+    inline-size: 100%;
+    aspect-ratio: var(--ratio, 1.3333);
+    margin: 0;
+    border-radius: var(--radius-s);
+  }
+
+  & .media-frame img,
+  & .live-photo-video {
+    inline-size: 100%;
+    block-size: 100%;
+    max-block-size: none;
+    object-fit: cover;
+  }
+
+  & > figcaption {
+    margin-block-start: 0.4em;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+    text-align: start;
+  }
+}

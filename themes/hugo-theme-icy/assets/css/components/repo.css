@@ -1,0 +1,111 @@
+/* Repository cards. */
+
+.prose > .repo-card,
+.prose > .repo-grid {
+  margin-block: 1.25em;
+}
+
+.repo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-3);
+}
+
+.repo-card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  text-decoration: none;
+  transition: border-color var(--duration-quick) var(--ease-out);
+
+  &:hover {
+    border-color: var(--color-text-faint);
+  }
+
+  /* No external-link arrow inside cards. */
+  &::after {
+    content: none !important;
+  }
+}
+
+.repo-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-inline-size: 0;
+}
+
+.repo-icon {
+  color: var(--color-text-muted);
+}
+
+.repo-name {
+  overflow: hidden;
+  color: var(--color-heading);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  .repo-card:hover & {
+    color: var(--color-accent);
+  }
+}
+
+.repo-owner {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-regular);
+  transition: color var(--duration-quick) var(--ease-out);
+
+  /* Owner and name light up together. */
+  .repo-card:hover & {
+    color: var(--color-accent);
+  }
+}
+
+.repo-badge {
+  flex-shrink: 0;
+  padding: 0 var(--space-2);
+  border: var(--rule);
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.repo-description {
+  color: var(--color-text-muted);
+}
+
+.repo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+
+  & > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+  }
+
+  & .icon {
+    inline-size: 1.1em;
+    block-size: 1.1em;
+  }
+}
+
+.repo-language-dot {
+  inline-size: 0.6em;
+  block-size: 0.6em;
+  border-radius: 50%;
+  background-color: var(--language-color);
+}

@@ -1,0 +1,74 @@
+{{- /*
+  Site-level style settings, written as custom properties on :root. This
+  <style> is outside the theme's cascade layers, so it wins over the token
+  defaults without extra specificity.
+
+  params.style.accent / accentDark — tokens.css derives the dark-scheme
+    accent and the tinted greys from them. A plain CSS color (hex or a color
+    function); anything else is ignored with a warning.
+  params.fonts.sans / mono — a CSS font-family list replacing the theme's
+    system-font default (which already varies by language, see tokens.css).
+    Set them per language under [languages.<lang>.params.fonts].
+  params.fonts.stylesheets — web font CSS to load: an absolute URL
+    ("https://…" or "//…"; a preconnect is added for its origin), a site path
+    starting with "/" (a file in static/), or a path in assets/ (minified and
+    fingerprinted in production).
+*/ -}}
+{{- $style := site.Params.style | default dict }}
+{{- $fonts := site.Params.fonts | default dict }}
+{{- $decls := slice }}
+
+{{- $color := `^(#[0-9a-fA-F]{3,8}|(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch)\([0-9a-zA-Z.,%/ +-]+\))$` }}
+{{- range $key, $prop := dict "accent" "--accent" "accentDark" "--accent-dark" }}
+  {{- with index $style $key }}
+    {{- $value := . | string | strings.TrimSpace }}
+    {{- if findRE $color $value }}
+      {{- $decls = $decls | append (printf "%s:%s" $prop $value) }}
+    {{- else }}
+      {{- warnf "hugo-theme-icy: params.style.%s %q is not a CSS color; ignored" $key $value }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- /* Family names (quoted or not) separated by commas; nothing that could
+     end the declaration or the style element. */}}
+{{- $family := `^[\p{L}\p{N} _"'.,-]+$` }}
+{{- range $key, $prop := dict "sans" "--font-sans" "mono" "--font-mono" }}
+  {{- with index $fonts $key }}
+    {{- $value := . | string | strings.TrimSpace }}
+    {{- if findRE $family $value }}
+      {{- $decls = $decls | append (printf "%s:%s" $prop $value) }}
+    {{- else }}
+      {{- warnf "hugo-theme-icy: params.fonts.%s %q is not a font-family list; ignored" $key $value }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- $origins := slice }}
+{{- range $fonts.stylesheets }}
+  {{- $src := . | string | strings.TrimSpace }}
+  {{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") (hasPrefix $src "//") }}
+    {{- with urls.Parse (cond (hasPrefix $src "//") (printf "https:%s" $src) $src) }}
+      {{- $origin := printf "%s://%s" .Scheme .Host }}
+      {{- if not (in $origins $origin) }}
+        {{- $origins = $origins | append $origin }}
+<link rel="preconnect" href="{{ $origin }}">
+      {{- end }}
+    {{- end }}
+<link rel="stylesheet" href="{{ $src }}">
+  {{- else if hasPrefix $src "/" }}
+<link rel="stylesheet" href="{{ $src | relURL }}">
+  {{- else }}
+    {{- with resources.Get $src }}
+      {{- $css := . }}
+      {{- if hugo.IsProduction }}{{ $css = . | minify | fingerprint }}{{ end }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" {{- with $css.Data.Integrity }} integrity="{{ . }}"{{ end }}>
+    {{- else }}
+      {{- errorf "hugo-theme-icy: params.fonts.stylesheets entry %q not found in assets/ (start it with / for a file in static/, or use an absolute URL)" $src }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- with $decls }}
+<style>:root{ {{- delimit . ";" | safeCSS -}} }</style>
+{{- end }}

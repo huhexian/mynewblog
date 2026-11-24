@@ -1,0 +1,26 @@
+{{- /*
+  figure — one image with an optional title and caption (overrides Hugo's built-in).
+
+    {{< figure src="photo.jpg" alt="…" caption="Markdown *caption*" >}}
+
+  Params: src (required), alt, title, caption (Markdown), link, align
+  (center|left|right), class, width, height, zoom (true|false), zoomSrc.
+  width/height override the size read from the file.
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "figure" "allowed" (slice "src" "alt" "title" "caption" "link" "align" "class" "width" "height" "zoom" "zoomSrc")) }}
+{{- $media := partial "func/resolve-media.html" (dict "page" .Page "src" (.Get "src") "label" "figure shortcode" "position" .Position) }}
+{{- with .Get "width" }}{{ $media = merge $media (dict "width" (int .)) }}{{ end }}
+{{- with .Get "height" }}{{ $media = merge $media (dict "height" (int .)) }}{{ end }}
+{{- $article := site.Params.article | default dict }}
+{{- partial "media/figure.html" (dict
+  "page" .Page
+  "media" $media
+  "alt" (.Get "alt" | default "")
+  "title" (.Get "title")
+  "caption" (.Get "caption")
+  "link" (.Get "link")
+  "align" (.Get "align")
+  "class" (.Get "class")
+  "zoom" (partial "func/bool-param.html" (dict "ctx" . "name" "zoom" "default" (ne $article.imageViewer false) "label" "figure"))
+  "zoomSrc" (.Get "zoomSrc")
+) }}

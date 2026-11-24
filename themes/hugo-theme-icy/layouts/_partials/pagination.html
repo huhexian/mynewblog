@@ -1,0 +1,12 @@
+{{- /* Simple previous/next pager. Context: a paginator. */ -}}
+{{- if gt .TotalPages 1 }}
+<nav class="pagination" aria-label="{{ T "pagination" }}">
+  {{- with .Prev }}
+  <a class="pagination-link" href="{{ .URL }}" rel="prev">{{ partial "icon.html" "arrow-left" }}<span>{{ T "newerPosts" }}</span></a>
+  {{- end }}
+  <span class="pagination-status">{{ T "pageXofY" (dict "Current" .PageNumber "Total" .TotalPages) }}</span>
+  {{- with .Next }}
+  <a class="pagination-link" href="{{ .URL }}" rel="next"><span>{{ T "olderPosts" }}</span>{{ partial "icon.html" "arrow-right" }}</a>
+  {{- end }}
+</nav>
+{{- end }}

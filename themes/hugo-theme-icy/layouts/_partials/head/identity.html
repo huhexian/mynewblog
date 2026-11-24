@@ -1,0 +1,17 @@
+{{- /* Favicons, web app manifest and browser theme colors (func/brand.html). */ -}}
+{{- $b := partialCached "func/brand.html" "brand" }}
+{{- with $b.svg }}
+<link rel="icon" href="{{ . }}" type="image/svg+xml">
+{{- end }}
+{{- with $b.favicon }}
+<link rel="icon" href="{{ .RelPermalink }}" type="image/png" sizes="32x32">
+{{- end }}
+{{- if not (or $b.svg $b.favicon) }}
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+{{- end }}
+{{- with $b.appleTouch }}
+<link rel="apple-touch-icon" href="{{ .RelPermalink }}">
+{{- end }}
+<link rel="manifest" href="{{ $b.manifest.RelPermalink }}">
+<meta name="theme-color" content="{{ $b.light }}" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="{{ $b.dark }}" media="(prefers-color-scheme: dark)">

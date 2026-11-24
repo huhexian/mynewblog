@@ -1,0 +1,129 @@
+/* Lite YouTube embed: self-hosted poster, the player loads on click. */
+
+.youtube {
+  margin: 0;
+
+  & > figcaption {
+    margin-block-start: 0.75em;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+}
+
+.prose > .youtube {
+  margin-block: 1.25em;
+}
+
+.youtube-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background-color: oklch(18% 0 0);
+  color: oklch(100% 0 0);
+
+  & iframe {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+  }
+}
+
+.youtube-poster {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: inherit;
+
+  & img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  &:focus-visible {
+    outline-offset: -4px;
+    outline-color: oklch(100% 0 0);
+  }
+}
+
+/* The same frosted play disc as the video player. */
+.youtube-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
+  margin: auto;
+  border: 0;
+  border-radius: var(--radius-full);
+  /* Frosted glass: reads on light and dark footage alike. */
+  background-color: oklch(100% 0 0 / 0.72);
+  color: oklch(22% 0.006 40);
+  box-shadow:
+    inset 0 0 0 1px oklch(100% 0 0 / 0.55),
+    0 0.5rem 1.5rem oklch(0% 0 0 / 0.18);
+  backdrop-filter: blur(12px) saturate(1.4);
+  transition:
+    scale var(--duration-base) cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color var(--duration-quick) var(--ease-out);
+
+  @media (hover: hover) {
+    .youtube-poster:hover & {
+      background-color: oklch(100% 0 0 / 0.86);
+      scale: 1.06;
+    }
+  }
+
+  & .icon {
+    inline-size: 1.375rem;
+    block-size: 1.375rem;
+  }
+
+  .youtube.is-loading & {
+    opacity: 0.6;
+  }
+}
+
+.youtube-message {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: oklch(15% 0 0 / 0.88);
+  font-size: var(--text-sm);
+  text-align: center;
+
+  & p {
+    margin: 0;
+  }
+
+  & a {
+    color: inherit;
+  }
+}
+
+.youtube-retry {
+  min-block-size: var(--ui-control-size);
+  margin-inline-end: var(--space-3);
+  padding-inline: var(--space-4);
+  border: 1px solid oklch(100% 0 0 / 0.5);
+  border-radius: var(--radius-m);
+  background: transparent;
+  color: inherit;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: oklch(100% 0 0 / 0.12);
+    }
+  }
+}

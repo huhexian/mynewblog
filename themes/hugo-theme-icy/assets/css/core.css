@@ -1,0 +1,27 @@
+/*
+ * Icy — core stylesheet, loaded on every page (bundled by css.Build).
+ *
+ * Cascade layers, lowest priority first. Selectors inside layers stay
+ * low-specificity; layer order decides conflicts. Site authors can override
+ * anything with unlayered CSS.
+ *
+ * Only site-wide styles live here. Page-specific components are separate
+ * feature bundles (assets/css/features/*.css) that join the `components`
+ * layer and load only where used — see layouts/_partials/assets/registry.html.
+ */
+@layer reset, tokens, base, layout, components, utilities;
+
+@import "base/reset.css" layer(reset);
+@import "base/tokens.css" layer(tokens);
+@import "base/base.css" layer(base);
+
+@import "layout/layout.css" layer(layout);
+
+@import "components/header.css" layer(components);
+@import "components/footer.css" layer(components);
+@import "components/fab.css" layer(components);
+
+@import "base/utilities.css" layer(utilities);
+
+/* Top-level at-rules that do not belong in a layer. */
+@import "base/view-transitions.css";

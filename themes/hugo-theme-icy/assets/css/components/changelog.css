@@ -1,0 +1,38 @@
+/* Changelog: year groups (shared with the archive) of dated entries. */
+
+/* One date column per year (subgrid), at least 3.5rem wide so the titles of
+   every year line up on the same edge too. */
+.changelog {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, max-content) minmax(0, 1fr);
+  column-gap: var(--space-5);
+  margin-block: calc(-1 * var(--space-2));
+}
+
+/* The date shares the title's baseline (first-line alignment). */
+.change {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+  padding-block: var(--space-2);
+}
+
+.change-date {
+  color: var(--color-text-faint);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.change-title {
+  color: var(--color-heading);
+  font-size: 1.0625rem;
+  line-height: var(--leading-snug);
+}
+
+.change-summary {
+  margin-block-start: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}

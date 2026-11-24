@@ -1,0 +1,66 @@
+{{- /*
+  Asset pipeline — Hugo's built-in esbuild, no Node toolchain.
+
+  Runs deferred (see head.html): by then every template, shortcode and render
+  hook on the page has registered what it rendered, so each page links the
+  core bundle plus only the feature bundles it uses.
+
+  Development: readable output + linked source maps, stable URLs.
+  Production: minified, fingerprinted, with Subresource Integrity.
+
+  Context: the page.
+*/ -}}
+{{- $page := . }}
+{{- $registered := $page.Store.Get "icyFeatures" | default dict }}
+
+{{- /* Resolve dependencies (one level is enough for the current registry). */}}
+{{- $registry := partialCached "assets/registry.html" "registry" }}
+{{- range $registry }}
+  {{- if index $registered .name }}
+    {{- range .needs }}{{ $registered = merge $registered (dict . true) }}{{ end }}
+  {{- end }}
+{{- end }}
+
+{{- /* Core first, then features in registry order. */}}
+{{- $styles := slice (dict "src" "css/core.css" "out" "css/core.css") }}
+{{- $scripts := slice (dict "src" "js/main.js" "out" "js/main.js") }}
+{{- range $registry }}
+  {{- if index $registered .name }}
+    {{- if ne .css false }}
+      {{- $styles = $styles | append (dict "src" (printf "css/features/%s.css" .name) "out" (printf "css/%s.css" .name)) }}
+    {{- end }}
+    {{- if .js }}
+      {{- $scripts = $scripts | append (dict "src" (printf "js/features/%s.js" .name) "out" (printf "js/%s.js" .name)) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- /* Vendored libraries are not linked: they are listed (fingerprinted URL and
+     integrity hash) in an inert JSON block, and the feature module loads them
+     when needed (assets/js/modules/vendor.js). */}}
+{{- $vendor := dict }}
+{{- range $registry }}
+  {{- if and .vendor (index $registered .name) }}
+    {{- $list := slice }}
+    {{- range .vendor }}
+      {{- with resources.Get . }}
+        {{- with . | fingerprint }}
+          {{- $list = $list | append (dict "src" .RelPermalink "integrity" .Data.Integrity) }}
+        {{- end }}
+      {{- else }}
+        {{- errorf "icy: vendor script %q not found in assets/" . }}
+      {{- end }}
+    {{- end }}
+    {{- $vendor = merge $vendor (dict .name $list) }}
+  {{- end }}
+{{- end }}
+{{- with $vendor }}
+{{ printf `<script type="application/json" id="icy-vendor">%s</script>` (. | jsonify) | safeHTML }}
+{{- end }}
+
+{{- range $styles }}
+  {{- partial "head/stylesheet.html" . }}
+{{- end }}
+{{- range $scripts }}
+  {{- partial "head/script.html" . }}
+{{- end }}

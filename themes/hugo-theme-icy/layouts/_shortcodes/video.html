@@ -1,0 +1,31 @@
+{{- /*
+  video — player for directly linked, browser-playable files (MP4, WebM, …).
+
+    {{< video src="clip.mp4" poster="poster.jpg" title="…" >}}
+
+  Params: src (required), poster, title (caption), ratio (e.g. 16/9; default
+  from the poster, else 16/9), preload (metadata|none|auto), autoplay, loop,
+  muted (true|false). autoplay implies muted (browsers only autoplay muted).
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "video" "allowed" (slice "src" "poster" "title" "ratio" "preload" "autoplay" "loop" "muted")) }}
+{{- if not (.Get "src") }}{{ errorf "video shortcode: src is required: %s" .Position }}{{ end }}
+{{- $flags := dict }}
+{{- range slice "autoplay" "loop" "muted" }}
+  {{- $flags = merge $flags (dict . (partial "func/bool-param.html" (dict "ctx" $ "name" . "default" false "label" "video"))) }}
+{{- end }}
+{{- $preload := .Get "preload" | default "metadata" }}
+{{- if not (in (slice "metadata" "none" "auto") $preload) }}
+  {{- errorf "video shortcode: preload must be metadata, none or auto, got %q: %s" $preload .Position }}
+{{- end }}
+{{- partial "media/video-player.html" (dict
+  "page" .Page
+  "src" (.Get "src")
+  "poster" (.Get "poster")
+  "title" (.Get "title")
+  "ratio" (.Get "ratio")
+  "preload" $preload
+  "autoplay" $flags.autoplay
+  "loop" $flags.loop
+  "muted" (or $flags.muted $flags.autoplay)
+  "position" .Position
+) }}

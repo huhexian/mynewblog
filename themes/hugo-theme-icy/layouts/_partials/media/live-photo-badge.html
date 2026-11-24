@@ -1,0 +1,10 @@
+{{- /*
+  LIVE button of a Live Photo, shared by the figure (media/live-photo.html)
+  and the image viewer (media/viewer.html). Hidden until live-photo.js runs.
+*/ -}}
+<button class="live-photo-badge" type="button" aria-pressed="false" hidden>
+  {{- partial "icon.html" "live" -}}
+  <span class="live-photo-badge-text" aria-hidden="true">{{ T "livePhotoBadge" }}</span>
+  <span class="visually-hidden">{{ T "playLivePhoto" }}</span>
+</button>
+{{- /* chomp trailing newline */ -}}

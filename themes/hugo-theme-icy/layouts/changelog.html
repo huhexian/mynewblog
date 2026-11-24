@@ -1,0 +1,62 @@
+{{- /*
+  Changelog: `layout = "changelog"` in front matter, entries in `changes`:
+
+    changes:
+      - date: 2026-08-14
+        title: Switched comments to a self-hosted service
+        summary: Optional, inline **Markdown**.
+
+  Entries are grouped by year (newest first) with the same hanging years as
+  the archive. The page's own Markdown sits above the list.
+*/ -}}
+{{ define "main" }}
+{{- range slice "entries" "changelog" }}{{ partial "assets/use.html" (dict "page" $ "feature" .) }}{{ end }}
+<header class="page-heading">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{- with .Description }}
+  <p class="page-lede">{{ . }}</p>
+  {{- end }}
+</header>
+
+{{- with .Content }}
+{{- partial "assets/use.html" (dict "page" $ "feature" "prose") }}
+<div class="prose page-intro">{{ . }}</div>
+{{- end }}
+
+{{- $changes := slice }}
+{{- range $i, $c := .Params.changes }}
+  {{- if not (and $c.date $c.title) }}
+    {{- errorf "changelog: entry %d in %s needs a date and a title" (add $i 1) $.File.Path }}
+  {{- end }}
+  {{- $changes = $changes | append (merge $c (dict "time" (time.AsTime $c.date))) }}
+{{- end }}
+{{- $changes = sort $changes "time" "desc" }}
+
+{{- $years := slice }}
+{{- range $changes }}{{ $years = $years | append (.time.Format "2006") }}{{ end }}
+{{- range $year := $years | uniq }}
+  {{- $inYear := slice }}
+  {{- range $changes }}{{ if eq (.time.Format "2006") $year }}{{ $inYear = $inYear | append . }}{{ end }}{{ end }}
+<section class="year-group" aria-labelledby="changes-{{ $year }}">
+  <h2 class="year-heading" id="changes-{{ $year }}">
+    <span class="year-number">{{ $year }}</span>
+    <span class="year-count">{{ T "changeCount" (len $inYear) }}</span>
+  </h2>
+  <ol class="changelog" role="list">
+    {{- range $inYear }}
+    <li class="change">
+      <time class="change-date" datetime="{{ .time.Format "2006-01-02" }}">{{ .time | time.Format (T "dateShort") }}</time>
+      <div class="change-body">
+        <p class="change-title">{{ .title | $.RenderString }}</p>
+        {{- with .summary }}
+        <p class="change-summary">{{ . | $.RenderString }}</p>
+        {{- end }}
+      </div>
+    </li>
+    {{- end }}
+  </ol>
+</section>
+{{- else }}
+<p class="empty-state">{{ T "changelogEmpty" }}</p>
+{{- end }}
+{{ end }}

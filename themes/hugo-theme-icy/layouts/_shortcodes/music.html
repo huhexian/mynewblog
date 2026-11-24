@@ -1,0 +1,18 @@
+{{- /*
+  music — a single-track audio player.
+
+    {{< music src="song.mp3" title="…" artist="…" cover="cover.jpg" >}}
+
+  Params: src (required), title, artist, cover, original (original artist),
+  date (recording date, YYYY-MM-DD), device (recording device).
+  src and cover accept a bundle file, an assets/ path, a site-root path or a URL.
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "music" "allowed" (slice "src" "title" "artist" "cover" "original" "date" "device")) }}
+{{- if not (.Get "src") }}{{ errorf "music shortcode: src is required: %s" .Position }}{{ end }}
+{{- partial "media/audio-player.html" (dict
+  "page" .Page
+  "track" (dict "src" (.Get "src") "title" (.Get "title") "artist" (.Get "artist") "cover" (.Get "cover") "original" (.Get "original") "date" (.Get "date") "device" (.Get "device"))
+  "variant" "single"
+  "label" "music shortcode"
+  "position" .Position
+) }}

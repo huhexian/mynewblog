@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="text-scale" content="scale">
+<meta name="color-scheme" content="light dark">
+<script>try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark"){document.documentElement.dataset.colorScheme=s;document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}</script>
+
+<style>:root{--accent:#b75133}</style>
+
+
+<title>2023年，你可以用 Thorn 写博客 | 印记</title>
+<meta name="description" content="作为 Telegram 频道 @FindBlog 的运营者，我非常关注和博客相关的工具。最近在少数派看到关于 Thorn 的介绍文章，便和开发者联系，可以在频道无偿为他宣传产品，借此机会我也能够亲自使用2023年的全新写作和建站工具——Thorn，在此做一个体验分享。">
+<link rel="canonical" href="http://localhost:1313/in-2023-you-can-blog-with-thorn.html">
+
+<link rel="icon" href="/img/favicon.png" type="image/png" sizes="32x32">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241f1e" media="(prefers-color-scheme: dark)">
+
+<link rel="stylesheet" href="/css/core.css">
+
+<link rel="stylesheet" href="/css/article.css">
+
+<link rel="stylesheet" href="/css/prose.css">
+
+<link rel="stylesheet" href="/css/toc.css">
+
+<link rel="stylesheet" href="/css/media.css">
+
+<link rel="stylesheet" href="/css/viewer.css">
+
+<script type="module" src="/js/main.js"></script>
+
+<script type="module" src="/js/toc.js"></script>
+
+<script type="module" src="/js/media.js"></script>
+
+<script type="module" src="/js/viewer.js"></script>
+
+
+<style>@layer reset,tokens,base,layout,components,utilities;@layer components{@container site-header (inline-size >= 31.75rem){.header-inner{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav actions";column-gap:var(--space-6)}.site-nav[popover],.site-nav[popover]:not(:popover-open){position:static;display:block;justify-self:end;inline-size:auto;block-size:auto;margin:0;padding:0;border:0;background:none;color:inherit;overflow:visible}.menu-toggle,.menu-close,.menu-prefs{display:none}.header-actions>.lang-switch{display:inline-grid}@media(scripting:enabled){.header-actions>.theme-toggle{display:inline-grid}}.site-menu{gap:var(--space-1);margin:0;padding:0;overflow:visible;border:0;border-radius:0;& li{flex:none}& a{padding:var(--space-2) var(--space-3);border-radius:0;&:is([aria-current=page],[aria-current=true]){background-color:transparent}&:after{content:"";position:absolute;inset-inline:var(--space-3);inset-block-end:.125rem;block-size:2px;border-radius:var(--radius-full);background-color:var(--color-accent);scale:0 1;transform-origin:left center;transition:scale var(--duration-base) var(--ease-out)}&:is([aria-current=page],[aria-current=true]):after{scale:1 1}}}}}
+</style>
+
+
+
+
+<script type="speculationrules">{"prefetch":[{"eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[rel~=nofollow], [data-no-speculate], [download]"}}]}}]}</script>
+
+
+
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="青山">
+<meta property="og:site_name" content="印记">
+<meta property="og:title" content="2023年，你可以用 Thorn 写博客">
+<meta property="og:description" content="作为 Telegram 频道 @FindBlog 的运营者，我非常关注和博客相关的工具。最近在少数派看到关于 Thorn 的介绍文章，便和开发者联系，可以在频道无偿为他宣传产品，借此机会我也能够亲自使用2023年的全新写作和建站工具——Thorn，在此做一个体验分享。">
+<meta property="og:url" content="http://localhost:1313/in-2023-you-can-blog-with-thorn.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-11-30T00:00:00&#43;00:00">
+<meta property="article:modified_time" content="2023-11-30T00:00:00&#43;00:00">
+<meta property="article:section" content="文章">
+<meta property="article:tag" content="Thorn">
+<meta property="article:tag" content="博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2023年，你可以用 Thorn 写博客">
+<meta name="twitter:description" content="作为 Telegram 频道 @FindBlog 的运营者，我非常关注和博客相关的工具。最近在少数派看到关于 Thorn 的介绍文章，便和开发者联系，可以在频道无偿为他宣传产品，借此机会我也能够亲自使用2023年的全新写作和建站工具——Thorn，在此做一个体验分享。">
+
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"http://localhost:1313/","name":"印记","position":1},{"@type":"ListItem","item":"http://localhost:1313/blog/index.html","name":"文章","position":2},{"@type":"ListItem","item":"http://localhost:1313/in-2023-you-can-blog-with-thorn.html","name":"2023年，你可以用 Thorn 写博客","position":3}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"dateModified":"2023-11-30T00:00:00+00:00","datePublished":"2023-11-30T00:00:00+00:00","description":"作为 Telegram 频道 @FindBlog 的运营者，我非常关注和博客相关的工具。最近在少数派看到关于 Thorn 的介绍文章，便和开发者联系，可以在频道无偿为他宣传产品，借此机会我也能够亲自使用2023年的全新写作和建站工具——Thorn，在此做一个体验分享。","headline":"2023年，你可以用 Thorn 写博客","inLanguage":"zh-CN","keywords":["Thorn","博客"],"mainEntityOfPage":{"@id":"http://localhost:1313/in-2023-you-can-blog-with-thorn.html","@type":"WebPage"},"name":"2023年，你可以用 Thorn 写博客","publisher":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"url":"http://localhost:1313/in-2023-you-can-blog-with-thorn.html","wordCount":1901}</script>
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  
+<header class="site-header">
+  <div class="header-inner">
+    
+<a class="site-name" href="/">印记</a>
+
+    <nav class="site-nav" id="site-nav" popover aria-label="主导航">
+      <button class="icon-button menu-close" type="button" popovertarget="site-nav" popovertargetaction="hide"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">关闭菜单</span>
+      </button>
+      <ul class="site-menu" role="list">
+        <li><a href="/blog/index.html" aria-current="true">文章</a></li>
+        <li><a href="/tags/">标签</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/now.html">Now</a></li>
+        <li><a href="/roll.html">Roll</a></li>
+      </ul>
+      <div class="menu-prefs">
+        <p class="menu-prefs-row menu-prefs-scheme" role="group" aria-label="配色">
+          <button type="button" data-scheme-set="light" aria-pressed="false">浅色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="dark" aria-pressed="false">深色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="system" aria-pressed="false">跟随系统</button>
+        </p>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-button" href="/search/" title="搜索"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="visually-hidden">搜索</span>
+      </a>
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+        <svg class="theme-toggle-icon" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false">
+          <mask id="theme-toggle-cut">
+            <rect width="24" height="24" fill="#fff"/>
+            <circle class="theme-toggle-shade" cx="17" cy="7" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-toggle-body" cx="12" cy="12" r="8.5" fill="currentColor" mask="url(#theme-toggle-cut)"/>
+          <g class="theme-toggle-rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4L6 18M18 6l1.4-1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden theme-toggle-to-dark">切换到深色</span>
+        <span class="visually-hidden theme-toggle-to-light">切换到浅色</span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" popovertarget="site-nav" aria-haspopup="true"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">菜单</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main id="main" class="page-grid" tabindex="-1">
+
+
+
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">2023年，你可以用 Thorn 写博客</h1>
+    
+<p class="article-meta">
+  <time datetime="2023-11-30T00:00:00Z">2023年11月30日</time>
+  <span>4 分钟</span>
+  <span>1901 字</span>
+</p>
+
+    <ul class="article-tags" role="list" aria-label="标签">
+      <li><a href="/tags/thorn/" rel="tag">#Thorn</a></li>
+      <li><a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">#博客</a></li>
+    </ul>
+  </header>
+  <nav class="toc-rail" role="navigation" aria-labelledby="toc-rail-title" data-toc>
+    <p class="toc-title" id="toc-rail-title">目录</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e5%86%99%e4%bd%9c%e4%b8%8e%e5%bb%ba%e7%ab%99%e9%9b%86%e6%88%90">写作与建站集成</a>
+  </li>
+  <li>
+    <a href="#%e5%86%99%e4%bd%9c%e6%98%af%e4%b8%80%e7%a7%8d%e4%ba%ab%e5%8f%97">写作是一种享受</a>
+  </li>
+  <li>
+    <a href="#%e5%80%9f%e5%8a%a9-cloudflare-works-%e5%bb%ba%e7%ab%8b%e7%ab%99%e7%82%b9">借助 Cloudflare Works 建立站点</a>
+  </li>
+  <li>
+    <a href="#thorn-%e7%9a%84%e7%be%8e%e4%b8%ad%e4%b8%8d%e8%b6%b3">Thorn 的美中不足</a>
+  </li>
+</ul>
+
+
+  </nav>
+
+  <div class="prose">
+    <p>作为 Telegram 频道 @<a href="https://t.me/FindBlog" rel="external">FindBlog</a> 的运营者，我非常关注和博客相关的工具。最近在少数派看到关于 Thorn 的介绍文章，便和开发者联系，可以在频道无偿为他宣传产品，借此机会我也能够亲自使用2023年的全新写作和建站工具——<a href="https://thorn.red/" rel="external">Thorn</a>，在此做一个体验分享。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/6d07f168a03ac1a743c09c62a215b736.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/6d07f168a03ac1a743c09c62a215b736.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>2023年，博客已经不是新鲜玩意，但和博客相关的建站工具却层出不穷。前有 WordPress、Hugo、Hexo 等动态/静态博客程序，后有基于 Notion 的无代码建站工具 NotionNext 和 Nobelium，以及十分轻便、简单的 Gridea，让不懂代码的小白也能轻松搭建博客。</p>
+<p>如何让搭建博客的门槛降低，是程序开发者应该考虑的问题，Thorn 似乎更符合这一点。</p>
+<h2 id="写作与建站集成">写作与建站集成<!--ui--><a class="heading-anchor" href="#%e5%86%99%e4%bd%9c%e4%b8%8e%e5%bb%ba%e7%ab%99%e9%9b%86%e6%88%90" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>我用 WordPress 搭建博客，但我并不是用它进行写作，而是需要在电脑上用 Obsidian 写好文章，复制到 WordPress 上进行呈现，Obsidian 是我的写作工具，WordPress 是建站工具。</p>
+<p>Thorn 将写作和建站集成在一起。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/b5280794e2e468226ac322a9ce0e347a.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/b5280794e2e468226ac322a9ce0e347a.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>如上图所示，我打开的是一个空间，将它命名为 Bruce，即我的一个写作空间。在该空间内，我可以编辑文章、添加随记，完完全全将它作为一个写作工具来使用，有字数统计、标签管理，数据在本地和云端都有备份。</p>
+<p>文章编辑页面十分细节。支持 Markdown 语法，直接复制粘贴带有该语法的内容，会自动识别。右侧展示文章信息、大纲、标签，除此之外还可以将特定的文章通过链接分享到网络，也可以邀请他人一起协作编辑，支持导出各种格式的文件。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/deccc5f8b33338586fdd37530eda3120.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/deccc5f8b33338586fdd37530eda3120.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/db29c49089e50bf8112c7cdc6761bd45.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/db29c49089e50bf8112c7cdc6761bd45.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>另外我觉得在文章配图方面，开发者也很用心。提供来自 Unsplash 的免版税图片，文章的封面可以随机切换，有多种样式可以选择。真正让我感到惊讶的是正文的图片编辑功能。</p>
+<p>裁剪、滤镜、微调、标注、马赛克、边框、贴纸，您这是集成了 Photoshop 吗？</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/e06397dadad8d8609224e9106b245042.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/e06397dadad8d8609224e9106b245042.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>不要觉得华而不实，我认为非常实用。要想写好一篇文章，文字和图片同样重要，但大多数人在写作前会对图片花费大量时间，比如配图、修图等等，Thorn 集成了图片编辑功能，我们在写作时可以更加专注文字，图片好不好看先不管，添加的文章里再说，等形成一篇有模有样的文章之后，再回过头对图片进行编辑。</p>
+<p>借助下面介绍的 Cloudflare Works 建立站点，便可以自由创建网站、搭建博客。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/8e9700e0f913d4ce3bc93de6520cbda5.gif" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/8e9700e0f913d4ce3bc93de6520cbda5.gif" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>进入站点管理，可以对你的博客站点进行设置。常用的模板配置，包括设置站点基本信息、站点 SEO 信息、站点全局配置、文章全局配置；页面管理，自由添加、修改页面内容；数据管理，文章的增删修改。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/ec9bca0a19c1613b597f204dc976ab69.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/ec9bca0a19c1613b597f204dc976ab69.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/402bd1358d5a401d69165ca3ee575c66.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/402bd1358d5a401d69165ca3ee575c66.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>还有一个十分全面的仪表盘，可以查看站点分析。</p>
+<h2 id="写作是一种享受">写作是一种享受<!--ui--><a class="heading-anchor" href="#%e5%86%99%e4%bd%9c%e6%98%af%e4%b8%80%e7%a7%8d%e4%ba%ab%e5%8f%97" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>得益于 Thorn 大气、漂亮的外观，精美的 UI 设计，以及灵动的气泡提示音，整个写作过程像是一种享受。</p>
+<p>提供多种墙纸，打造优雅的协作环境。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/cf8937f92d5c4e21a95387316ec4a727.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/cf8937f92d5c4e21a95387316ec4a727.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>这些都是细节部分，能够从使用上提升用户的体验。</p>
+<p>实际编辑时，界面大气，文字显示效果非常棒，对于格式的处理也十分丰富。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/3faff52df55fcc4b26677537043e94d1.gif" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/3faff52df55fcc4b26677537043e94d1.gif" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>提供了类似 Notion 的块编辑，Command/Ctrl + 单击节点，就会出现节点样式菜单，同时也可以拖动节点进行排序。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/de583d7912c441eba1e9cae02e04525c.gif" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/de583d7912c441eba1e9cae02e04525c.gif" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>输入“/”，可以唤醒格式菜单。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/0a728f329cbd252d000667c9e3d90971.gif" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/0a728f329cbd252d000667c9e3d90971.gif" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><h2 id="借助-cloudflare-works-建立站点">借助 Cloudflare Works 建立站点<!--ui--><a class="heading-anchor" href="#%e5%80%9f%e5%8a%a9-cloudflare-works-%e5%bb%ba%e7%ab%8b%e7%ab%99%e7%82%b9" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>过去像 Hugo、Hexo 等静态博客程序一般都采用 GitHub Pages 或者 Cloudflare Pages 作为托管平台，前者对于小白来说，门槛较高，也时常面临着访问困难的问题，后者也差不多，也需要 GitHub 作为中介。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/23ddbb5c6a99580dd29c1051e7c822c9.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/23ddbb5c6a99580dd29c1051e7c822c9.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>Thorn 采用 Cloudflare Works 作为托管平台，只需要注册登录 Cloudflare，在 Works 中获取所需的 ID 和 API 令牌，填入 Thorn 程序中，即可等待站点创建。而且，Cloudflare 有中文界面，更容易看懂。</p>
+<p>即使你不懂什么是 Cloudflare，官网也提供了十分详尽的<a href="https://docs.thorn.red/" rel="external">使用文档</a>，跟着文档来，不会出错。</p>
+<p>在此之后，你只需要通过 Thorn 创建文章，Cloudflare 会帮助你发布站点，一眨眼的功夫，即可访问。支持绑定自定义域名，绑定之后，SSL 证书之类的都会自动搞定。</p>
+<p>最后，就有了下图中的博客，欢迎访问我的 <a href="https://thorn.yinji.org" rel="external">Thorn</a> 站点。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/139a07bb5769e5a223c906d65ddc38bb.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/139a07bb5769e5a223c906d65ddc38bb.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><h2 id="thorn-的美中不足">Thorn 的美中不足<!--ui--><a class="heading-anchor" href="#thorn-%e7%9a%84%e7%be%8e%e4%b8%ad%e4%b8%8d%e8%b6%b3" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>实际体验下来，也有一些使用槽点，不太符合我个人习惯，希望开发团队在后期能够进行优化改进。</p>
+<p>首先是站点管理中发布文章的流程。使用文档中提到将 Thorn 空间中的文章作为内容进行发布，但为什么是拖动？如下图所示。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/30/11b8a513b744e26b3093d3d96dbc1e2e.gif" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/30/11b8a513b744e26b3093d3d96dbc1e2e.gif" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>我很不理解这个逻辑。虽然使用文档中说了有很多个拖拽点可以将文章拖拽至放置点来完成设置操作。</p>
+<p>但为什么不是使用选择文章的形式呢？拖动文章，要打开两个窗口，十分不便。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/69213543-3550541.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/69213543-3550541.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>其次是定价，如果是低频使用，免费方案足矣，但如果高强度使用的话，个人觉得付费方案定价稍贵，希望开发团队后续能够有所调整。</p>
+<p>最后是生态。主题模板不多，目前只有三款，据官网了解，每月会上架1~2款来自官方以及社区的精选模板，如果能保持这样的进度进行确实挺好，但最好是有良好的生态和用户群体，包括使用者和开发者，能够提供更加丰富的模板。另外我希望在进行站点管理时，模板配置这一块增加一个自定义CSS，帮助用户自定义主题。</p>
+<hr>
+<p>以上便是我对 Thorn 的体验分享，希望能给想写博客的你提供可行的参考建议。</p>
+
+  </div>
+
+</article>
+<button class="fab toc-fab" type="button" popovertarget="toc-sheet" aria-controls="toc-sheet"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h1M4 12h1M4 18h1M9 6h11M9 12h11M9 18h11"/></svg><span class="visually-hidden">目录</span>
+</button>
+<nav id="toc-sheet" class="toc-sheet" popover aria-labelledby="toc-sheet-title" data-toc>
+  <div class="toc-sheet-scroll">
+    <p class="toc-title" id="toc-sheet-title">目录</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e5%86%99%e4%bd%9c%e4%b8%8e%e5%bb%ba%e7%ab%99%e9%9b%86%e6%88%90">写作与建站集成</a>
+  </li>
+  <li>
+    <a href="#%e5%86%99%e4%bd%9c%e6%98%af%e4%b8%80%e7%a7%8d%e4%ba%ab%e5%8f%97">写作是一种享受</a>
+  </li>
+  <li>
+    <a href="#%e5%80%9f%e5%8a%a9-cloudflare-works-%e5%bb%ba%e7%ab%8b%e7%ab%99%e7%82%b9">借助 Cloudflare Works 建立站点</a>
+  </li>
+  <li>
+    <a href="#thorn-%e7%9a%84%e7%be%8e%e4%b8%ad%e4%b8%8d%e8%b6%b3">Thorn 的美中不足</a>
+  </li>
+</ul>
+
+
+  </div>
+</nav>
+
+    <button class="fab back-to-top" type="button" data-back-to-top hidden>
+      <svg class="back-to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle cx="22" cy="22" r="21"/>
+      </svg><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="visually-hidden">回到顶部</span>
+    </button>
+  </main>
+  
+<dialog class="viewer" data-viewer-dialog closedby="any" aria-label="图片查看器">
+  <figure class="viewer-stage">
+    <img class="viewer-image" alt="" decoding="async">
+    <figcaption class="viewer-caption" hidden></figcaption>
+  </figure>
+  <p class="viewer-counter" aria-live="polite"></p>
+  <form class="viewer-close-form" method="dialog">
+    <button class="viewer-button viewer-close" data-viewer-close><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="visually-hidden">关闭</span>
+    </button>
+  </form>
+  <button class="viewer-button viewer-prev" type="button" data-viewer-prev><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span class="visually-hidden">上一张</span>
+  </button>
+  <button class="viewer-button viewer-next" type="button" data-viewer-next><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span class="visually-hidden">下一张</span>
+  </button>
+</dialog>
+
+  
+<footer class="site-footer">
+  <div class="footer-colophon">
+    <p class="footer-copyright">© 2018–2026 青山</p>
+    <p class="footer-powered">Powered by <a href="https://gohugo.io/" rel="external">Hugo</a> & <a href="https://github.com/DejavuMoe/hugo-theme-icy" rel="external">Icy</a></p>
+  </div>
+</footer>
+<script data-goatcounter="https://hhx.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+</body>
+</html>

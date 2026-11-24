@@ -1,0 +1,11 @@
+{{ define "main" }}
+{{- partial "assets/use.html" (dict "page" . "feature" "notfound") }}
+{{- /* Plain and quiet: the code, one sentence, one way home. The header and
+     footer carry every other way around. */}}
+<section class="not-found" aria-labelledby="not-found-title">
+  <p class="not-found-code" aria-hidden="true">404</p>
+  <h1 class="not-found-title" id="not-found-title">{{ T "notFoundTitle" }}</h1>
+  <p class="not-found-body">{{ T "notFoundBody" }}</p>
+  <a class="not-found-home" href="{{ site.Home.RelPermalink }}">{{ T "backHome" }}</a>
+</section>
+{{ end }}

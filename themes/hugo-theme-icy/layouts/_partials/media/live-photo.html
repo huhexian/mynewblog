@@ -1,0 +1,40 @@
+{{- /*
+  Live Photo markup. The still is a normal figure image (it opens in the image
+  viewer, where it still plays, only when zoom is on: params.livePhoto.zoom or
+  zoom=true; data-live-video tells the viewer which clip goes with it); the video
+  sits on top, invisible until it plays, and never takes pointer events, so
+  clicks still reach the image link. live-photo.js wires up playback and
+  reveals the LIVE button.
+
+  Params (dict): page, still, video (resolved media), alt, caption, zoom.
+*/ -}}
+{{- $page := .page }}
+{{- $still := .still }}
+{{- range slice "media" "livephoto" }}{{ partial "assets/use.html" (dict "page" $page "feature" .) }}{{ end }}
+{{- if .zoom }}{{ partial "assets/use.html" (dict "page" $page "feature" "viewer") }}{{ end }}
+
+{{- $style := "" }}
+{{- with partial "func/lqip.html" $still }}{{ $style = printf "--lqip: %s;" . }}{{ end }}
+{{- if and $still.width $still.height }}
+  {{- $style = printf "%s --ratio: %.4f;" $style (div (float $still.width) $still.height) }}
+{{- end }}
+{{- $img := partial "media/img.html" (dict "media" $still "alt" .alt) }}
+
+<figure class="figure live-photo" data-live-photo data-align="center"
+  {{- with $style }} style="{{ . | safeCSS }}"{{ end }}>
+  <div class="media-frame live-photo-frame">
+    {{- if .zoom }}
+    <a class="live-photo-still" href="{{ $still.url }}" draggable="false" data-viewer data-live-video="{{ .video.url }}"
+      {{- with $still.width }} data-width="{{ . }}"{{ end }}{{ with $still.height }} data-height="{{ . }}"{{ end }}>{{ $img }}</a>
+    {{- else }}
+    <span class="live-photo-still">{{ $img }}</span>
+    {{- end }}
+    <video class="live-photo-video" src="{{ .video.url }}" muted playsinline preload="none"
+      disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
+    {{ "<!--ui-->" | safeHTML }}{{ partial "media/live-photo-badge.html" . }}{{ "<!--/ui-->" | safeHTML }}
+  </div>
+  {{- with .caption }}
+  <figcaption>{{ . | $page.RenderString }}</figcaption>
+  {{- end }}
+</figure>
+{{- /* chomp trailing newline */ -}}

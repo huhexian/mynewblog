@@ -1,0 +1,36 @@
+/* Comments section shell (the provider draws the comments themselves). */
+
+.comments {
+  margin-block-start: var(--space-8);
+}
+
+.comments-title {
+  margin-block-end: var(--space-4);
+  font-size: var(--text-lg);
+}
+
+.comments-status {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.comments-retry {
+  min-block-size: var(--ui-control-size);
+  padding-inline: var(--space-4);
+  border: var(--rule);
+  border-radius: var(--radius-m);
+  background: transparent;
+  color: var(--color-heading);
+
+  &:hover {
+    border-color: var(--color-text-faint);
+  }
+}
+
+.comments-noscript {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}

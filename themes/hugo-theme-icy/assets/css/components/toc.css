@@ -1,0 +1,184 @@
+/*
+ * Table of contents — one list, two presentations:
+ *   wide   (page container >= 75rem): sticky rail in the end gutter
+ *   narrow: floating button -> bottom-sheet popover
+ * Both are rendered in HTML, so each works without JS; js/modules/toc.js only
+ * marks the current section and closes the sheet after a jump.
+ */
+
+/* ---- The list itself ---- */
+.toc-title {
+  margin-block-end: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+
+  & .toc-list {
+    padding-inline-start: var(--space-4);
+  }
+
+  & a {
+    position: relative;
+    display: block;
+    padding-block: var(--space-1);
+    padding-inline-start: var(--space-3);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--duration-quick) var(--ease-out);
+
+    /* Current-section marker on the inline-start edge. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: var(--space-1);
+      inset-inline-start: 0;
+      inline-size: 2px;
+      border-radius: var(--radius-full);
+      background-color: transparent;
+      transition: background-color var(--duration-quick) var(--ease-out);
+    }
+
+    &:hover {
+      color: var(--color-text);
+    }
+
+    &[aria-current="location"] {
+      color: var(--color-text);
+
+      &::before {
+        background-color: var(--color-accent);
+      }
+    }
+  }
+}
+
+/* ---- Rail (wide only) ---- */
+.toc-rail {
+  display: none;
+}
+
+@container page (inline-size >= 75rem) {
+  .toc-rail {
+    position: sticky;
+    inset-block-start: var(--space-6);
+    display: block;
+    grid-column: content-end / full-end;
+    grid-row: 2 / span 3;
+    align-self: start;
+    inline-size: min(var(--aside-width), 100% - var(--aside-gap) - var(--gutter));
+    max-block-size: calc(100dvb - 2 * var(--space-6));
+    margin-inline-start: var(--aside-gap);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* Scrolls itself to the current item (toc.js); no visible scrollbar. */
+    scrollbar-width: none;
+  }
+
+  /* Only the current section's sub-headings unfold, so a long contents list
+     never runs past the screen. Without JS (no current item) the rail shows
+     the top level. */
+  .toc-rail .toc-list .toc-list {
+    block-size: 0;
+    overflow: clip;
+    visibility: hidden;
+    transition:
+      block-size var(--duration-base) var(--ease-out),
+      visibility var(--duration-base) allow-discrete;
+  }
+
+  .toc-rail li:has(a[aria-current="location"]) > .toc-list {
+    block-size: auto;
+    visibility: visible;
+  }
+}
+
+/* ---- Floating button + sheet (narrow) ----
+   A small card that grows out of the button, not a full-width drawer: the
+   reader keeps their place in the text behind it. */
+/* The button itself is a .fab (components/fab.css). */
+
+.toc-sheet[popover] {
+  position: fixed;
+  inset: auto;
+  inset-block-end: calc(max(var(--space-4), env(safe-area-inset-bottom)) + 2.75rem + var(--space-3));
+  inset-inline-end: max(var(--space-4), env(safe-area-inset-right));
+  inline-size: min(19rem, 100dvi - 2 * var(--space-4));
+  max-block-size: min(60dvb, 28rem);
+  margin: 0;
+  padding: 0;
+  /* The radius clips the scroller (and its scrollbar) so every corner matches. */
+  overflow: hidden;
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--color-raised);
+  color: var(--color-text);
+  box-shadow: var(--shadow-float);
+  transform-origin: 100% 100%;
+
+  &:popover-open {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background-color: light-dark(oklch(20% 0 0 / 0.06), oklch(0% 0 0 / 0.3));
+  }
+}
+
+.toc-sheet-scroll {
+  min-block-size: 0;
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  & .toc-title {
+    margin-block-end: var(--space-2);
+    padding-inline-start: var(--space-3);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toc-sheet[popover] {
+    transition:
+      opacity var(--duration-base) var(--ease-out),
+      scale var(--duration-base) var(--ease-out),
+      display var(--duration-base) allow-discrete,
+      overlay var(--duration-base) allow-discrete;
+    transition-behavior: allow-discrete;
+    opacity: 0;
+    scale: 0.94;
+
+    &:popover-open {
+      opacity: 1;
+      scale: 1;
+
+      @starting-style {
+        opacity: 0;
+        scale: 0.94;
+      }
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .toc-list a[aria-current="location"]::before {
+    background-color: Highlight;
+  }
+}
+
+/* Rail fits: drop the narrow-screen controls. Kept last so it wins over the
+   .toc-fab display above (same layer, same specificity). */
+@container page (inline-size >= 75rem) {
+  .toc-fab,
+  .toc-sheet {
+    display: none;
+  }
+}

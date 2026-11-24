@@ -1,0 +1,7 @@
+{{- /*
+  Table of contents built from .Fragments.Headings (no duplicate ids, so it
+  can be rendered more than once on a page).
+  Params (dict): page, titleId, maxLevel
+*/ -}}
+<p class="toc-title" id="{{ .titleId }}">{{ T "tableOfContents" }}</p>
+{{ partial "toc-items.html" (dict "headings" .page.Fragments.Headings "maxLevel" .maxLevel) }}

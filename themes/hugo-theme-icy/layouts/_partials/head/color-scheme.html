@@ -1,0 +1,17 @@
+{{- /*
+  Color scheme: the site follows the OS preference by default ("light dark").
+  A stored override is applied before first paint to both the meta (for the
+  browser's own UI) and <html data-color-scheme> (which tokens.css maps to
+  `color-scheme`, so all colors flow through light-dark()). Without JS the
+  site simply follows the OS. (An attribute on <html> rather than a :has()
+  on the meta: :has() does not reliably re-match when the meta in <head>
+  changes.)
+
+  The inline script applies a stored override before first paint to avoid a
+  flash of the wrong scheme. It must stay classic (not module/defer) and tiny;
+  the toggle logic itself lives in assets/js/modules/color-scheme.js.
+*/ -}}
+<meta name="color-scheme" content="light dark">
+{{- if site.Params.colorScheme.toggle }}
+<script>try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark"){document.documentElement.dataset.colorScheme=s;document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}</script>
+{{- end }}

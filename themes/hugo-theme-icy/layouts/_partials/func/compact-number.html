@@ -1,0 +1,9 @@
+{{- /* 950 -> "950", 1234 -> "1.2k", 25600 -> "25.6k", 1200000 -> "1.2M". */ -}}
+{{- $n := float . }}
+{{- $out := printf "%.0f" $n }}
+{{- if ge $n 1000000 }}
+  {{- $out = printf "%.1fM" (div $n 1000000) | replaceRE `\.0M$` "M" }}
+{{- else if ge $n 1000 }}
+  {{- $out = printf "%.1fk" (div $n 1000) | replaceRE `\.0k$` "k" }}
+{{- end }}
+{{- return $out }}

@@ -1,0 +1,20 @@
+{{- /*
+  Plain list of child pages and sections, by weight, each with its one-line
+  summary (sections that are not blog archives, the friends page).
+
+  Params (dict): page (registers the "entries" feature), pages, class (extra
+  class on the list).
+*/ -}}
+{{- with .pages }}
+{{- partial "assets/use.html" (dict "page" $.page "feature" "entries") }}
+<ul class="page-links {{- with $.class }} {{ . }}{{ end }}" role="list">
+  {{- range .ByWeight }}
+  <li>
+    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    {{- with partial "func/summary.html" (dict "page" . "length" 120) }}
+    <p>{{ . }}</p>
+    {{- end }}
+  </li>
+  {{- end }}
+</ul>
+{{- end }}

@@ -1,0 +1,14 @@
+{{- /*
+  Read a true/false shortcode parameter (quoted or not). Missing -> default.
+  Params (dict): ctx, name, default (bool), label (shortcode name for errors).
+  Returns bool.
+*/ -}}
+{{- $value := .default }}
+{{- if and .ctx.IsNamedParams (isset .ctx.Params .name) }}
+  {{- $raw := lower (printf "%v" (.ctx.Get .name)) }}
+  {{- if not (in (slice "true" "false") $raw) }}
+    {{- errorf "%s shortcode: %s must be true or false, got %q: %s" .label .name $raw .ctx.Position }}
+  {{- end }}
+  {{- $value = eq $raw "true" }}
+{{- end }}
+{{- return $value }}

@@ -1,0 +1,50 @@
+{{- /*
+  Blockquotes.
+  - GitHub-style alerts: > [!NOTE] / [!TIP] / [!IMPORTANT] / [!WARNING] / [!CAUTION]
+  - Attribution: when the last paragraph starts with "——" (or "— "), it is
+    rendered as a right-aligned source line:
+        > 人生苦短。
+        >
+        > —— 某人
+*/ -}}
+{{- if eq .Type "alert" -}}
+  {{- partial "assets/use.html" (dict "page" .Page "feature" "alert") -}}
+  {{- $type := lower .AlertType -}}
+  {{- $title := .AlertTitle -}}
+  {{- $body := .Text -}}
+  {{- /* With goldmark's CJK eastAsianLineBreaks on, the line break after a
+       custom title disappears between Chinese characters and Hugo folds the
+       whole body into AlertTitle, leaving .Text empty. Never lose the body:
+       show it as the body under the default title. (Writers: put an empty
+       ">" line after a custom title on such sites.) */ -}}
+  {{- if and $title (not (strings.TrimSpace (string $body))) -}}
+    {{- $body = printf "<p>%s</p>" $title | safeHTML -}}
+    {{- $title = "" -}}
+  {{- end -}}
+  {{- if not $title -}}
+    {{- $title = T (printf "alert_%s" $type) | default (title $type) -}}
+  {{- end -}}
+<div class="alert" data-alert="{{ $type }}" role="note">
+  <p class="alert-title">{{ $title }}</p>
+  {{ $body }}
+</div>
+{{- else -}}
+  {{- $text := .Text | string | strings.TrimSpace -}}
+  {{- $m := findRESubmatch `(?s)^(.*)<p>(?:——|—\s)\s*(.+?)</p>$` $text 1 -}}
+  {{- /* Only when that paragraph is the last one: a dash-led line of dialogue
+       followed by more paragraphs is not an attribution. */ -}}
+  {{- if and $m (strings.Contains (index (index $m 0) 2) "<p") }}{{ $m = false }}{{ end -}}
+  {{- with $m -}}
+    {{- $match := index . 0 -}}
+<figure class="quote">
+  <blockquote {{- with $.Attributes.cite }} cite="{{ . }}"{{ end }}>
+    {{ index $match 1 | strings.TrimSpace | safeHTML }}
+  </blockquote>
+  <figcaption class="quote-source">{{ index $match 2 | safeHTML }}</figcaption>
+</figure>
+  {{- else -}}
+<blockquote {{- with .Attributes.cite }} cite="{{ . }}"{{ end }}>
+  {{ .Text }}
+</blockquote>
+  {{- end -}}
+{{- end -}}

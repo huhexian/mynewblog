@@ -1,0 +1,2 @@
+/* Feature bundle "search" — loaded only on pages that register it (see layouts/_partials/assets/registry.html). */
+@import "../components/search.css" layer(components);

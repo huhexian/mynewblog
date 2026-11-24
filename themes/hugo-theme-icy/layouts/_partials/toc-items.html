@@ -1,0 +1,26 @@
+{{- /*
+  Recursive TOC list. Levels below 2 (an h1 in content) are flattened into
+  their children; levels above maxLevel are dropped.
+  Params (dict): headings, maxLevel
+*/ -}}
+{{- $max := .maxLevel }}
+{{- $items := slice }}
+{{- range .headings }}
+  {{- if lt .Level 2 }}
+    {{- range .Headings }}{{ $items = $items | append . }}{{ end }}
+  {{- else if le .Level $max }}
+    {{- $items = $items | append . }}
+  {{- end }}
+{{- end }}
+{{- with $items }}
+<ul class="toc-list" role="list">
+  {{- range . }}
+  <li>
+    <a href="#{{ .ID }}">{{ .Title | plainify }}</a>
+    {{- with .Headings }}
+      {{- partial "toc-items.html" (dict "headings" . "maxLevel" $max) }}
+    {{- end }}
+  </li>
+  {{- end }}
+</ul>
+{{- end }}

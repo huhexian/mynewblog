@@ -1,0 +1,45 @@
+/* Footnote preview (popover positioned by footnotes.js). */
+
+.footnote-preview[popover] {
+  position: fixed;
+  inset: auto;
+  max-inline-size: min(22rem, 100vw - 1rem);
+  max-block-size: 40vh;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  overflow: auto;
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--color-raised);
+  color: var(--color-text);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+
+  & > * + * {
+    margin-block-start: 0.6em;
+  }
+
+  & p {
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .footnote-preview[popover] {
+    transition:
+      opacity var(--duration-quick) var(--ease-out),
+      display var(--duration-quick) allow-discrete,
+      overlay var(--duration-quick) allow-discrete;
+    transition-behavior: allow-discrete;
+    opacity: 0;
+
+    &:popover-open {
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+  }
+}

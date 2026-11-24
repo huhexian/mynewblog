@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="text-scale" content="scale">
+<meta name="color-scheme" content="light dark">
+<script>try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark"){document.documentElement.dataset.colorScheme=s;document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}</script>
+
+<style>:root{--accent:#b75133}</style>
+
+
+<title>多写点内容，少折腾工具 | 印记</title>
+<meta name="description" content="标题这句话是说给自己听的，并不是用来劝诫别人。
+今天在 Hugo 上花了数小时的时间，到最后没有折腾出什么名堂，问 ChatGPT 得不到正确的答案和方法，问 Claude 却超出了免费额度，原本以为按照网上的教程一步一步设置、修改，就能得到想要的模样，结果在最后不知修改了哪里的文件和代码，导致文章页的标题凭空消失，回 …">
+<link rel="canonical" href="http://localhost:1313/write-more-content-and-use-less-tools.html">
+
+<link rel="icon" href="/img/favicon.png" type="image/png" sizes="32x32">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241f1e" media="(prefers-color-scheme: dark)">
+
+<link rel="stylesheet" href="/css/core.css">
+
+<link rel="stylesheet" href="/css/article.css">
+
+<link rel="stylesheet" href="/css/prose.css">
+
+<link rel="stylesheet" href="/css/media.css">
+
+<link rel="stylesheet" href="/css/viewer.css">
+
+<script type="module" src="/js/main.js"></script>
+
+<script type="module" src="/js/media.js"></script>
+
+<script type="module" src="/js/viewer.js"></script>
+
+
+<style>@layer reset,tokens,base,layout,components,utilities;@layer components{@container site-header (inline-size >= 31.75rem){.header-inner{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav actions";column-gap:var(--space-6)}.site-nav[popover],.site-nav[popover]:not(:popover-open){position:static;display:block;justify-self:end;inline-size:auto;block-size:auto;margin:0;padding:0;border:0;background:none;color:inherit;overflow:visible}.menu-toggle,.menu-close,.menu-prefs{display:none}.header-actions>.lang-switch{display:inline-grid}@media(scripting:enabled){.header-actions>.theme-toggle{display:inline-grid}}.site-menu{gap:var(--space-1);margin:0;padding:0;overflow:visible;border:0;border-radius:0;& li{flex:none}& a{padding:var(--space-2) var(--space-3);border-radius:0;&:is([aria-current=page],[aria-current=true]){background-color:transparent}&:after{content:"";position:absolute;inset-inline:var(--space-3);inset-block-end:.125rem;block-size:2px;border-radius:var(--radius-full);background-color:var(--color-accent);scale:0 1;transform-origin:left center;transition:scale var(--duration-base) var(--ease-out)}&:is([aria-current=page],[aria-current=true]):after{scale:1 1}}}}}
+</style>
+
+
+
+
+<script type="speculationrules">{"prefetch":[{"eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[rel~=nofollow], [data-no-speculate], [download]"}}]}}]}</script>
+
+
+
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="青山">
+<meta property="og:site_name" content="印记">
+<meta property="og:title" content="多写点内容，少折腾工具">
+<meta property="og:description" content="标题这句话是说给自己听的，并不是用来劝诫别人。
+今天在 Hugo 上花了数小时的时间，到最后没有折腾出什么名堂，问 ChatGPT 得不到正确的答案和方法，问 Claude 却超出了免费额度，原本以为按照网上的教程一步一步设置、修改，就能得到想要的模样，结果在最后不知修改了哪里的文件和代码，导致文章页的标题凭空消失，回 …">
+<meta property="og:url" content="http://localhost:1313/write-more-content-and-use-less-tools.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-11-22T00:00:00&#43;00:00">
+<meta property="article:modified_time" content="2023-11-22T00:00:00&#43;00:00">
+<meta property="article:section" content="文章">
+<meta property="article:tag" content="Hugo">
+<meta property="article:tag" content="Wordpress">
+<meta property="article:tag" content="博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多写点内容，少折腾工具">
+<meta name="twitter:description" content="标题这句话是说给自己听的，并不是用来劝诫别人。
+今天在 Hugo 上花了数小时的时间，到最后没有折腾出什么名堂，问 ChatGPT 得不到正确的答案和方法，问 Claude 却超出了免费额度，原本以为按照网上的教程一步一步设置、修改，就能得到想要的模样，结果在最后不知修改了哪里的文件和代码，导致文章页的标题凭空消失，回 …">
+
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"http://localhost:1313/","name":"印记","position":1},{"@type":"ListItem","item":"http://localhost:1313/blog/index.html","name":"文章","position":2},{"@type":"ListItem","item":"http://localhost:1313/write-more-content-and-use-less-tools.html","name":"多写点内容，少折腾工具","position":3}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"dateModified":"2023-11-22T00:00:00+00:00","datePublished":"2023-11-22T00:00:00+00:00","description":"标题这句话是说给自己听的，并不是用来劝诫别人。\n今天在 Hugo 上花了数小时的时间，到最后没有折腾出什么名堂，问 ChatGPT 得不到正确的答案和方法，问 Claude 却超出了免费额度，原本以为按照网上的教程一步一步设置、修改，就能得到想要的模样，结果在最后不知修改了哪里的文件和代码，导致文章页的标题凭空消失，回 …","headline":"多写点内容，少折腾工具","inLanguage":"zh-CN","keywords":["Hugo","Wordpress","博客"],"mainEntityOfPage":{"@id":"http://localhost:1313/write-more-content-and-use-less-tools.html","@type":"WebPage"},"name":"多写点内容，少折腾工具","publisher":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"url":"http://localhost:1313/write-more-content-and-use-less-tools.html","wordCount":1179}</script>
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  
+<header class="site-header">
+  <div class="header-inner">
+    
+<a class="site-name" href="/">印记</a>
+
+    <nav class="site-nav" id="site-nav" popover aria-label="主导航">
+      <button class="icon-button menu-close" type="button" popovertarget="site-nav" popovertargetaction="hide"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">关闭菜单</span>
+      </button>
+      <ul class="site-menu" role="list">
+        <li><a href="/blog/index.html" aria-current="true">文章</a></li>
+        <li><a href="/tags/">标签</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/now.html">Now</a></li>
+        <li><a href="/roll.html">Roll</a></li>
+      </ul>
+      <div class="menu-prefs">
+        <p class="menu-prefs-row menu-prefs-scheme" role="group" aria-label="配色">
+          <button type="button" data-scheme-set="light" aria-pressed="false">浅色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="dark" aria-pressed="false">深色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="system" aria-pressed="false">跟随系统</button>
+        </p>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-button" href="/search/" title="搜索"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="visually-hidden">搜索</span>
+      </a>
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+        <svg class="theme-toggle-icon" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false">
+          <mask id="theme-toggle-cut">
+            <rect width="24" height="24" fill="#fff"/>
+            <circle class="theme-toggle-shade" cx="17" cy="7" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-toggle-body" cx="12" cy="12" r="8.5" fill="currentColor" mask="url(#theme-toggle-cut)"/>
+          <g class="theme-toggle-rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4L6 18M18 6l1.4-1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden theme-toggle-to-dark">切换到深色</span>
+        <span class="visually-hidden theme-toggle-to-light">切换到浅色</span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" popovertarget="site-nav" aria-haspopup="true"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">菜单</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main id="main" class="page-grid" tabindex="-1">
+
+
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">多写点内容，少折腾工具</h1>
+    
+<p class="article-meta">
+  <time datetime="2023-11-22T00:00:00Z">2023年11月22日</time>
+  <span>3 分钟</span>
+  <span>1179 字</span>
+</p>
+
+    <ul class="article-tags" role="list" aria-label="标签">
+      <li><a href="/tags/hugo/" rel="tag">#Hugo</a></li>
+      <li><a href="/tags/wordpress/" rel="tag">#Wordpress</a></li>
+      <li><a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">#博客</a></li>
+    </ul>
+  </header>
+
+  <div class="prose">
+    
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/11/22/16d752129c8b722284240182a6c8ccaa.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/11/22/16d752129c8b722284240182a6c8ccaa.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>标题这句话是说给自己听的，并不是用来劝诫别人。</p>
+<p>今天在 Hugo 上花了数小时的时间，到最后没有折腾出什么名堂，问 ChatGPT 得不到正确的答案和方法，问 Claude 却超出了免费额度，原本以为按照网上的教程一步一步设置、修改，就能得到想要的模样，结果在最后不知修改了哪里的文件和代码，导致文章页的标题凭空消失，回滚代码没有复原，也未发现原因。</p>
+<p>遂放弃，老老实实、安安分分地继续使用 WordPress，即使看到再心动的 Hugo 主题，我也会控制自己，多写点内容，少折腾工具。</p>
+<p>简要记录整个过程，以此为戒。</p>
+<p>起初是看到一个静态网站托管服务——Bear Blog，被它简洁、大气的界面所吸引，而后看到群友<a href="https://yuhang.ch" rel="external">陈昱行</a>的博客，使用 Astro 静态程序和仿 Bear Blog 的主题，但我对 Astro 不熟悉，正巧有一款 <a href="https://github.com/janraasch/hugo-bearblog" rel="external">Hugo 主题</a>也是仿照 Bear Blog 开发，更加符合我心中的极简主义。再加上阅读完雅余的《<a href="https://yayu.net/3762.html" rel="external">一个极简主义博客的要素</a>》，按耐不住内心的冲动，便捣鼓了一天的 Hugo。</p>
+<p>刚开始还比较顺利，曾经也用过一段时间 Hugo，对于基本的操作还有印象。通过插件，将 WordPress 的文章转成 Markdown 格式，也按照自己的审美将 Bear Blog 主题的部分样式做了修改，但是在设置 OpenGraph 的途中犯了难，网上也没有详细的介绍和教程，便出现了上面提到的情况。</p>
+<p>回过头去看我目前的博客、主题，以及 Bear Blog，发现自己有点贪心，一方面想拥有 Bear Blog 的极简，另一方面又需要 WordPress 上各种完善的功能。韩宇说你要不先试着用用 Hugo，等熟悉了再换。一开始我也是这样想，一步一步修改、一步一步转换，最后发现还是习惯使用了5年之久的 WordPress，尽管我没有开发主题和插件的能力，遇到问题还需要上网搜索，但只要有写博客的想法，我第一反应便是使用 WordPress。</p>
+<p>多写点内容，少折腾工具。从2018年到现在，期间很多时候都会走向这样一个误区，光顾着装饰外表，忽略了内容的充实，写博客的人，大多都会将自己的网站比喻成一个小家，想方设法把它精心打扮，如有客人来访，内心也是十分兴奋。华丽的外表固然是吸引客人的原因之一，但留住客人的还得是这个家的主人。<a href="https://anotherdayu.com/" rel="external">Dayu</a> 发了一条<a href="https://twitter.com/another_dayu/status/1722218938715799918" rel="external">推文</a>，说平时他博客的 Visitors: Visits 是1:2，最近到1:2.6了，有点开心，大家似乎愿意多停留一会了。多好呀，客人愿意在你家里多待一会，想与你有更深入的了解。</p>
+<p>折腾和写作都是 Blogger 的乐趣之一，有的人擅长写作，有的人擅长折腾，没有优劣贵贱尊卑之分，各有各的玩法和兴致，而我的这两方面还处于学习阶段，以今天的经历，告诉自己，多写点内容，少折腾工具。</p>
+<p>最后我想分享一段在<a href="https://t.me/weiyexing" rel="external">为也行</a>频道里看到的话：</p>
+<blockquote>
+  <p>我们大可宽容些，没必要事事都嘲讽。</p>
+<p>有人喜欢记笔记，那就记笔记，有人喜欢折腾笔记工具，那就折腾笔记工具，这个世界不会因为多了折腾工具的人而出现什么不好。</p>
+<p>博客也是如此，那种嘲讽「博客没几篇，模版倒是换得勤」大可不必。</p>
+<p>就像阅读，这个世界需要阅读的人，也需要买了不读的人。后者满足了自己，也给整个市场做了贡献，为他为你为大家，不好么？</p>
+
+</blockquote>
+  </div>
+
+</article>
+
+    <button class="fab back-to-top" type="button" data-back-to-top hidden>
+      <svg class="back-to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle cx="22" cy="22" r="21"/>
+      </svg><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="visually-hidden">回到顶部</span>
+    </button>
+  </main>
+  
+<dialog class="viewer" data-viewer-dialog closedby="any" aria-label="图片查看器">
+  <figure class="viewer-stage">
+    <img class="viewer-image" alt="" decoding="async">
+    <figcaption class="viewer-caption" hidden></figcaption>
+  </figure>
+  <p class="viewer-counter" aria-live="polite"></p>
+  <form class="viewer-close-form" method="dialog">
+    <button class="viewer-button viewer-close" data-viewer-close><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="visually-hidden">关闭</span>
+    </button>
+  </form>
+  <button class="viewer-button viewer-prev" type="button" data-viewer-prev><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span class="visually-hidden">上一张</span>
+  </button>
+  <button class="viewer-button viewer-next" type="button" data-viewer-next><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span class="visually-hidden">下一张</span>
+  </button>
+</dialog>
+
+  
+<footer class="site-footer">
+  <div class="footer-colophon">
+    <p class="footer-copyright">© 2018–2026 青山</p>
+    <p class="footer-powered">Powered by <a href="https://gohugo.io/" rel="external">Hugo</a> & <a href="https://github.com/DejavuMoe/hugo-theme-icy" rel="external">Icy</a></p>
+  </div>
+</footer>
+<script data-goatcounter="https://hhx.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+</body>
+</html>

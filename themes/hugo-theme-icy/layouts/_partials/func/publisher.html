@@ -1,0 +1,31 @@
+{{- /*
+  The site's publisher as a schema.org node, shared by the home page and every
+  article so all describe the same entity (call with partialCached).
+    params.schema.publisherType  "Person" (default, a personal blog) | "Organization"
+    params.schema.sameAs         profile URLs; default: http(s) links in params.social
+  A Person is named after params.author.name and carries the brand icon as
+  "image"; an Organization is named after the site and carries it as "logo".
+*/ -}}
+{{- $schema := site.Params.schema | default dict }}
+{{- $type := $schema.publisherType | default "Person" }}
+{{- if not (in (slice "Person" "Organization") $type) }}
+  {{- errorf "params.schema.publisherType must be Person or Organization, got %q" $type }}
+{{- end }}
+{{- $isPerson := eq $type "Person" }}
+{{- $name := cond $isPerson (site.Params.author.name | default site.Title) site.Title }}
+{{- $node := dict "@type" $type "name" $name "url" site.Home.Permalink }}
+
+{{- $brand := partialCached "func/brand.html" "brand" }}
+{{- with $brand.icon512 }}
+  {{- $node = merge $node (dict (cond $isPerson "image" "logo") (dict "@type" "ImageObject" "url" .Permalink "width" .Width "height" .Height)) }}
+{{- end }}
+
+{{- $sameAs := slice }}
+{{- range $schema.sameAs }}{{ $sameAs = $sameAs | append (strings.TrimSpace .) }}{{ end }}
+{{- if not $sameAs }}
+  {{- range site.Params.social }}
+    {{- with .url }}{{ if findRE `^https?://` . 1 }}{{ $sameAs = $sameAs | append . }}{{ end }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- with $sameAs }}{{ $node = merge $node (dict "sameAs" .) }}{{ end }}
+{{- return $node }}

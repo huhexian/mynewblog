@@ -1,0 +1,48 @@
+{{- /*
+  repo — card for a GitHub or Forgejo/Gitea repository (metadata fetched at
+  build time; see func/repo-meta.html).
+
+    {{< repo url="https://github.com/gohugoio/hugo" >}}
+
+  Params: url (required), title (override the name), description (override).
+  Several cards side by side: wrap them in {{< repo-grid >}}…{{< /repo-grid >}}.
+*/ -}}
+{{- if .IsNamedParams }}
+  {{- partial "func/shortcode-params.html" (dict "ctx" . "name" "repo" "allowed" (slice "url" "title" "description")) }}
+{{- end }}
+{{- $url := cond .IsNamedParams (.Get "url") (.Get 0) }}
+{{- if not $url }}{{ errorf "repo shortcode requires url: %s" .Position }}{{ end }}
+{{- $r := partial "func/repo-meta.html" (dict "url" $url "position" .Position) }}
+{{- $colors := dict
+  "Go" "#00add8" "JavaScript" "#f1e05a" "TypeScript" "#3178c6" "Python" "#3572a5"
+  "Rust" "#dea584" "Shell" "#89e051" "HTML" "#e34c26" "CSS" "#663399" "Java" "#b07219"
+  "C" "#555555" "C++" "#f34b7d" "C#" "#178600" "Kotlin" "#a97bff" "Swift" "#f05138"
+  "Vue" "#41b883" "Lua" "#000080" "Ruby" "#701516" "PHP" "#4f5d95" "Dockerfile" "#384d54"
+  "Dart" "#00b4ab" "Nix" "#7e7eff" "Zig" "#ec915c"
+}}
+{{- partial "assets/use.html" (dict "page" .Page "feature" "repo") }}
+{{- $description := (cond .IsNamedParams (.Get "description") "") | default $r.description }}
+<a class="repo-card" href="{{ $r.url }}" rel="external">
+  <span class="repo-head">
+    {{- partial "icon.html" (dict "name" "repo" "class" "repo-icon") -}}
+    <span class="repo-name">
+      {{- with (cond .IsNamedParams (.Get "title") "") }}{{ . }}{{ else }}<span class="repo-owner">{{ $r.owner }}/</span>{{ $r.name }}{{ end -}}
+    </span>
+    {{ "<!--ui-->" | safeHTML }}{{- if $r.archived }}<span class="repo-badge">{{ T "repoArchived" }}</span>{{ end }}{{ "<!--/ui-->" | safeHTML }}
+  </span>
+  {{- with $description }}
+  <span class="repo-description">{{ . }}</span>
+  {{- end }}
+  {{- if $r.ok }}
+  {{ "<!--ui-->" | safeHTML }}<span class="repo-meta">
+    {{- with $r.language }}
+    <span class="repo-language"><span class="repo-language-dot" style="--language-color: {{ index $colors . | default "var(--color-text-faint)" | safeCSS }}"></span>{{ . }}</span>
+    {{- end }}
+    <span>{{ partial "icon.html" "star" }}<span class="visually-hidden">{{ T "repoStars" }}</span>{{ partial "func/compact-number.html" $r.stars }}</span>
+    <span>{{ partial "icon.html" "fork" }}<span class="visually-hidden">{{ T "repoForks" }}</span>{{ partial "func/compact-number.html" $r.forks }}</span>
+    {{- with $r.license }}<span>{{ . }}</span>{{ end }}
+    {{- with $r.updated }}<span>{{ T "updatedOn" (dict "Date" (time.Format (T "dateFull") .)) }}</span>{{ end }}
+  </span>{{ "<!--/ui-->" | safeHTML }}
+  {{- end }}
+</a>
+{{- /* chomp trailing newline */ -}}

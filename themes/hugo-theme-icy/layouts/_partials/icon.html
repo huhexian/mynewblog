@@ -1,0 +1,38 @@
+{{- /*
+  Inline an SVG icon from assets/icons/<name>.svg (a site file overrides the theme's).
+  Icons should draw with currentColor so they follow the text color.
+
+  Usage:
+    {{ partial "icon.html" "search" }}                         decorative
+    {{ partial "icon.html" (dict "name" "github" "label" "GitHub") }}  meaningful
+
+  Params: name (required), label (optional accessible name; without it the
+  icon is aria-hidden), class (optional extra class).
+*/ -}}
+{{- $opts := cond (reflect.IsMap .) . (dict "name" .) -}}
+{{- $name := $opts.name | string | strings.TrimSpace | lower -}}
+{{- if not (findRE `^[a-z0-9][a-z0-9_-]*$` $name) -}}
+  {{- errorf "icon: invalid name %q (use the file name in assets/icons/ without .svg)" $opts.name -}}
+{{- end -}}
+{{- with resources.Get (printf "icons/%s.svg" $name) -}}
+  {{- $svg := .Content | strings.TrimSpace | replaceRE `\s+xmlns="[^"]*"` "" -}}
+  {{- if not (hasPrefix $svg "<svg") -}}
+    {{- errorf "icon %q: assets/icons/%s.svg must start with <svg" $name $name -}}
+  {{- end -}}
+  {{- $class := trim (printf "icon %s" ($opts.class | default "")) " " -}}
+  {{- /* Wide logos keep their proportions: width follows the viewBox ratio. */ -}}
+  {{- $width := "1em" -}}
+  {{- with findRESubmatch `viewBox="[-\d.]+[ ,]+[-\d.]+[ ,]+([\d.]+)[ ,]+([\d.]+)"` $svg 1 -}}
+    {{- $ratio := div (float (index (index . 0) 1)) (float (index (index . 0) 2)) -}}
+    {{- if gt (math.Abs (sub $ratio 1)) 0.01 }}{{ $width = printf "%.3gem" $ratio }}{{ end -}}
+  {{- end -}}
+  {{- $attrs := printf ` class="%s" width="%s" height="1em"` $class $width -}}
+  {{- with $opts.label -}}
+    {{- $attrs = printf `%s role="img" aria-label="%s"` $attrs (. | htmlEscape) -}}
+  {{- else -}}
+    {{- $attrs = printf `%s aria-hidden="true" focusable="false"` $attrs -}}
+  {{- end -}}
+  {{- replace $svg "<svg" (printf "<svg%s" $attrs) 1 | safeHTML -}}
+{{- else -}}
+  {{- errorf "icon %q: assets/icons/%s.svg not found in the site or the theme" $name $name -}}
+{{- end -}}

@@ -1,0 +1,42 @@
+{{- /*
+  Site footer.
+  Every line centred:
+    - the [[menus.footer]] links, a small dot between them
+    - the colophon: © <since>–<this year> <author>; Powered by Hugo & <theme>;
+      the credit (e.g. "Hosted on …") — one per line
+  params.footer.copyright = false hides the © line; params.footer.since sets
+  its first year (default: the earliest dated page). Hugo, the theme name and
+  the credit logo are shown in the heading colour. No rules, no card.
+*/ -}}
+{{- $footer := site.Params.footer | default dict }}
+<footer class="site-footer">
+  {{- with site.Menus.footer }}
+  <nav class="footer-nav" aria-label="{{ T "footerNavigation" }}">
+    <ul role="list">
+      {{- range . }}
+      <li><a href="{{ .URL }}" {{- if $.IsMenuCurrent "footer" . }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+      {{- end }}
+    </ul>
+  </nav>
+  {{- end }}
+  <div class="footer-colophon">
+    {{- if ne $footer.copyright false }}
+    <p class="footer-copyright">© {{ partialCached "func/copyright-years.html" . }} {{ site.Params.author.name | default site.Title }}</p>
+    {{- end }}
+    {{- if ne $footer.poweredBy false }}
+    <p class="footer-powered">{{ T "poweredBy" (dict "Hugo" `<a href="https://gohugo.io/" rel="external">Hugo</a>` "Theme" `<a href="https://github.com/DejavuMoe/hugo-theme-icy" rel="external">Icy</a>`) | safeHTML }}</p>
+    {{- end }}
+    {{- with $footer.credit }}
+    <p class="footer-credit">
+      {{- with .prefix }}<span>{{ . }}</span>{{ end -}}
+      <a href="{{ .url }}" rel="external">
+        {{- with .icon }}{{ partial "icon.html" (dict "name" . "label" $footer.credit.name "class" "footer-credit-logo") }}{{ else }}{{ .name }}{{ end -}}
+      </a>
+      {{- with .suffix }}<span>{{ . }}</span>{{ end -}}
+    </p>
+    {{- end }}
+  </div>
+  {{- with $footer.text }}
+  <p class="footer-text">{{ . | markdownify }}</p>
+  {{- end }}
+</footer>

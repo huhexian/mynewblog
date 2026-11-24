@@ -1,0 +1,90 @@
+{{- /*
+  JSON-LD structured data, built as data and serialized with jsonify (which
+  escapes <, > and & so the script block can never be broken out of).
+
+    home                       WebSite (+ publisher)
+    regular page in a blog     BlogPosting
+    other regular page         WebPage, or front matter `schemaType`
+                               (WebPage | AboutPage | ContactPage | ProfilePage | FAQPage)
+    section / taxonomy / term  CollectionPage
+    layout "search"            SearchResultsPage
+    every page but home        BreadcrumbList
+
+  Context: the page.
+*/ -}}
+{{- if not .Params.protected.enabled }}
+{{- $publisher := partialCached "func/publisher.html" "publisher" }}
+{{- $lang := site.Language.Locale | default site.Language.Lang }}
+{{- $description := partial "func/description.html" . }}
+{{- $nodes := slice }}
+
+{{- if .IsHome }}
+  {{- $nodes = $nodes | append (dict
+    "@type" "WebSite"
+    "name" site.Title
+    "url" site.Home.Permalink
+    "description" (site.Params.description | default "")
+    "inLanguage" $lang
+    "publisher" $publisher
+  ) }}
+{{- else }}
+  {{- /* Breadcrumbs: home, then each ancestor section, then this page. */}}
+  {{- $crumbs := slice }}
+  {{- range .Ancestors.Reverse }}
+    {{- $crumbs = $crumbs | append (dict "name" (cond .IsHome site.Title .LinkTitle) "item" .Permalink) }}
+  {{- end }}
+  {{- $crumbs = $crumbs | append (dict "name" .LinkTitle "item" .Permalink) }}
+  {{- $items := slice }}
+  {{- range $i, $c := $crumbs }}
+    {{- $items = $items | append (dict "@type" "ListItem" "position" (add $i 1) "name" $c.name "item" $c.item) }}
+  {{- end }}
+  {{- $nodes = $nodes | append (dict "@type" "BreadcrumbList" "itemListElement" $items) }}
+
+  {{- if .IsPage }}
+    {{- $isBlog := in site.MainSections .Type }}
+    {{- $type := cond $isBlog "BlogPosting" (.Params.schemaType | default "WebPage") }}
+    {{- if eq .Layout "search" }}{{ $type = "SearchResultsPage" }}{{ end }}
+    {{- if not (in (slice "BlogPosting" "WebPage" "AboutPage" "ContactPage" "ProfilePage" "FAQPage" "SearchResultsPage" "CollectionPage") $type) }}
+      {{- errorf "schemaType %q is not supported (in %s)" $type .File.Path }}
+    {{- end }}
+    {{- $node := dict
+      "@type" $type
+      "headline" (.Title | plainify)
+      "name" (.Title | plainify)
+      "description" $description
+      "inLanguage" $lang
+      "url" .Permalink
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+      "publisher" $publisher
+    }}
+    {{- if not .PublishDate.IsZero }}{{ $node = merge $node (dict "datePublished" (.PublishDate.Format "2006-01-02T15:04:05-07:00")) }}{{ end }}
+    {{- if not .Lastmod.IsZero }}{{ $node = merge $node (dict "dateModified" (.Lastmod.Format "2006-01-02T15:04:05-07:00")) }}{{ end }}
+    {{- if $isBlog }}
+      {{- $keywords := slice }}
+      {{- range .GetTerms "tags" }}{{ $keywords = $keywords | append .LinkTitle }}{{ end }}
+      {{- $node = merge $node (dict "wordCount" .WordCount "keywords" $keywords) }}
+      {{- with site.Params.author.name }}
+        {{- $node = merge $node (dict "author" (dict "@type" "Person" "name" . "url" site.Home.Permalink)) }}
+      {{- end }}
+    {{- end }}
+    {{- with partialCached "func/social-image.html" . .Path }}
+      {{- $img := dict "@type" "ImageObject" "url" .url }}
+      {{- if .width }}{{ $img = merge $img (dict "width" .width "height" .height) }}{{ end }}
+      {{- $node = merge $node (dict "image" $img) }}
+    {{- end }}
+    {{- $nodes = $nodes | append $node }}
+  {{- else }}
+    {{- $nodes = $nodes | append (dict
+      "@type" (cond (eq .Layout "search") "SearchResultsPage" "CollectionPage")
+      "name" (.Title | plainify)
+      "description" $description
+      "inLanguage" $lang
+      "url" .Permalink
+    ) }}
+  {{- end }}
+{{- end }}
+
+{{- range $nodes }}
+{{ printf `<script type="application/ld+json">%s</script>` (merge (dict "@context" "https://schema.org") . | jsonify) | safeHTML }}
+{{- end }}
+{{- end }}

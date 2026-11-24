@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="text-scale" content="scale">
+<meta name="color-scheme" content="light dark">
+<script>try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark"){document.documentElement.dataset.colorScheme=s;document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}</script>
+
+<style>:root{--accent:#b75133}</style>
+
+
+<title>Publii：静态博客的另一个选择 | 印记</title>
+<meta name="description" content="最近接触到一个以前没见过的静态内容管理系统，即我们俗称的静态博客生成器，Publii。从2023年提交代码至今一年多，一直在保持更新和维护，使用和部署并不难，提供了非常详细的使用文档。我借助文档，部署了一个，使用体验有点类似开源的 Gridea，都是将静态博客的部署简单化、具体化，不同的是前者更偏向 CMS，后者更着重 …">
+<link rel="canonical" href="http://localhost:1313/publii-another-option-for-static-blogs.html">
+
+<link rel="icon" href="/img/favicon.png" type="image/png" sizes="32x32">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241f1e" media="(prefers-color-scheme: dark)">
+
+<link rel="stylesheet" href="/css/core.css">
+
+<link rel="stylesheet" href="/css/article.css">
+
+<link rel="stylesheet" href="/css/prose.css">
+
+<link rel="stylesheet" href="/css/toc.css">
+
+<link rel="stylesheet" href="/css/media.css">
+
+<link rel="stylesheet" href="/css/viewer.css">
+
+<script type="module" src="/js/main.js"></script>
+
+<script type="module" src="/js/toc.js"></script>
+
+<script type="module" src="/js/media.js"></script>
+
+<script type="module" src="/js/viewer.js"></script>
+
+
+<style>@layer reset,tokens,base,layout,components,utilities;@layer components{@container site-header (inline-size >= 31.75rem){.header-inner{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav actions";column-gap:var(--space-6)}.site-nav[popover],.site-nav[popover]:not(:popover-open){position:static;display:block;justify-self:end;inline-size:auto;block-size:auto;margin:0;padding:0;border:0;background:none;color:inherit;overflow:visible}.menu-toggle,.menu-close,.menu-prefs{display:none}.header-actions>.lang-switch{display:inline-grid}@media(scripting:enabled){.header-actions>.theme-toggle{display:inline-grid}}.site-menu{gap:var(--space-1);margin:0;padding:0;overflow:visible;border:0;border-radius:0;& li{flex:none}& a{padding:var(--space-2) var(--space-3);border-radius:0;&:is([aria-current=page],[aria-current=true]){background-color:transparent}&:after{content:"";position:absolute;inset-inline:var(--space-3);inset-block-end:.125rem;block-size:2px;border-radius:var(--radius-full);background-color:var(--color-accent);scale:0 1;transform-origin:left center;transition:scale var(--duration-base) var(--ease-out)}&:is([aria-current=page],[aria-current=true]):after{scale:1 1}}}}}
+</style>
+
+
+
+
+<script type="speculationrules">{"prefetch":[{"eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[rel~=nofollow], [data-no-speculate], [download]"}}]}}]}</script>
+
+
+
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="青山">
+<meta property="og:site_name" content="印记">
+<meta property="og:title" content="Publii：静态博客的另一个选择">
+<meta property="og:description" content="最近接触到一个以前没见过的静态内容管理系统，即我们俗称的静态博客生成器，Publii。从2023年提交代码至今一年多，一直在保持更新和维护，使用和部署并不难，提供了非常详细的使用文档。我借助文档，部署了一个，使用体验有点类似开源的 Gridea，都是将静态博客的部署简单化、具体化，不同的是前者更偏向 CMS，后者更着重 …">
+<meta property="og:url" content="http://localhost:1313/publii-another-option-for-static-blogs.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-03-20T00:00:00&#43;00:00">
+<meta property="article:modified_time" content="2024-03-20T00:00:00&#43;00:00">
+<meta property="article:section" content="文章">
+<meta property="article:tag" content="Cms">
+<meta property="article:tag" content="Netlify">
+<meta property="article:tag" content="Publii">
+<meta property="article:tag" content="静态博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Publii：静态博客的另一个选择">
+<meta name="twitter:description" content="最近接触到一个以前没见过的静态内容管理系统，即我们俗称的静态博客生成器，Publii。从2023年提交代码至今一年多，一直在保持更新和维护，使用和部署并不难，提供了非常详细的使用文档。我借助文档，部署了一个，使用体验有点类似开源的 Gridea，都是将静态博客的部署简单化、具体化，不同的是前者更偏向 CMS，后者更着重 …">
+
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"http://localhost:1313/","name":"印记","position":1},{"@type":"ListItem","item":"http://localhost:1313/blog/index.html","name":"文章","position":2},{"@type":"ListItem","item":"http://localhost:1313/publii-another-option-for-static-blogs.html","name":"Publii：静态博客的另一个选择","position":3}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"dateModified":"2024-03-20T00:00:00+00:00","datePublished":"2024-03-20T00:00:00+00:00","description":"最近接触到一个以前没见过的静态内容管理系统，即我们俗称的静态博客生成器，Publii。从2023年提交代码至今一年多，一直在保持更新和维护，使用和部署并不难，提供了非常详细的使用文档。我借助文档，部署了一个，使用体验有点类似开源的 Gridea，都是将静态博客的部署简单化、具体化，不同的是前者更偏向 CMS，后者更着重 …","headline":"Publii：静态博客的另一个选择","inLanguage":"zh-CN","keywords":["Cms","Netlify","Publii","静态博客"],"mainEntityOfPage":{"@id":"http://localhost:1313/publii-another-option-for-static-blogs.html","@type":"WebPage"},"name":"Publii：静态博客的另一个选择","publisher":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"url":"http://localhost:1313/publii-another-option-for-static-blogs.html","wordCount":1575}</script>
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  
+<header class="site-header">
+  <div class="header-inner">
+    
+<a class="site-name" href="/">印记</a>
+
+    <nav class="site-nav" id="site-nav" popover aria-label="主导航">
+      <button class="icon-button menu-close" type="button" popovertarget="site-nav" popovertargetaction="hide"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">关闭菜单</span>
+      </button>
+      <ul class="site-menu" role="list">
+        <li><a href="/blog/index.html" aria-current="true">文章</a></li>
+        <li><a href="/tags/">标签</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/now.html">Now</a></li>
+        <li><a href="/roll.html">Roll</a></li>
+      </ul>
+      <div class="menu-prefs">
+        <p class="menu-prefs-row menu-prefs-scheme" role="group" aria-label="配色">
+          <button type="button" data-scheme-set="light" aria-pressed="false">浅色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="dark" aria-pressed="false">深色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="system" aria-pressed="false">跟随系统</button>
+        </p>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-button" href="/search/" title="搜索"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="visually-hidden">搜索</span>
+      </a>
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+        <svg class="theme-toggle-icon" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false">
+          <mask id="theme-toggle-cut">
+            <rect width="24" height="24" fill="#fff"/>
+            <circle class="theme-toggle-shade" cx="17" cy="7" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-toggle-body" cx="12" cy="12" r="8.5" fill="currentColor" mask="url(#theme-toggle-cut)"/>
+          <g class="theme-toggle-rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4L6 18M18 6l1.4-1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden theme-toggle-to-dark">切换到深色</span>
+        <span class="visually-hidden theme-toggle-to-light">切换到浅色</span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" popovertarget="site-nav" aria-haspopup="true"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">菜单</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main id="main" class="page-grid" tabindex="-1">
+
+
+
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">Publii：静态博客的另一个选择</h1>
+    
+<p class="article-meta">
+  <time datetime="2024-03-20T00:00:00Z">2024年3月20日</time>
+  <span>4 分钟</span>
+  <span>1575 字</span>
+</p>
+
+    <ul class="article-tags" role="list" aria-label="标签">
+      <li><a href="/tags/cms/" rel="tag">#Cms</a></li>
+      <li><a href="/tags/netlify/" rel="tag">#Netlify</a></li>
+      <li><a href="/tags/publii/" rel="tag">#Publii</a></li>
+      <li><a href="/tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/" rel="tag">#静态博客</a></li>
+    </ul>
+  </header>
+  <nav class="toc-rail" role="navigation" aria-labelledby="toc-rail-title" data-toc>
+    <p class="toc-title" id="toc-rail-title">目录</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#publii-%e6%98%af%e4%bb%80%e4%b9%88">Publii 是什么</a>
+  </li>
+  <li>
+    <a href="#%e9%83%a8%e7%bd%b2%e4%b9%8b%e5%89%8d%e9%9c%80%e8%a6%81%e5%81%9a%e7%9a%84%e4%ba%8b%e6%83%85">部署之前需要做的事情</a>
+  </li>
+  <li>
+    <a href="#%e4%bd%bf%e7%94%a8-netlify-%e5%85%8d%e8%b4%b9%e9%83%a8%e7%bd%b2-publii">使用 Netlify 免费部署 Publii</a>
+  </li>
+  <li>
+    <a href="#publii-%e7%9a%84%e7%89%b9%e8%89%b2">Publii 的特色</a>
+  </li>
+</ul>
+
+
+  </nav>
+
+  <div class="prose">
+    <p>最近接触到一个以前没见过的静态内容管理系统，即我们俗称的静态博客生成器，Publii。从2023年提交代码至今一年多，一直在保持更新和维护，使用和部署并不难，提供了非常详细的使用文档。我借助文档，部署了一个，使用体验有点类似开源的 <a href="https://gridea.dev" rel="external">Gridea</a>，都是将静态博客的部署简单化、具体化，不同的是前者更偏向 CMS，后者更着重博客。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/6011e4c6407f52d9aae7767f372c29b8.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/6011e4c6407f52d9aae7767f372c29b8.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>由于自己运营着 Telegram 频道 @<a href="https://t.me/findblog" rel="external">FindBlog</a>，便在此记录部署的整个过程，并对 Publii 做一番简单的介绍。</p>
+<h2 id="publii-是什么">Publii 是什么<!--ui--><a class="heading-anchor" href="#publii-%e6%98%af%e4%bb%80%e4%b9%88" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>项目页面介绍称，这是一款面向隐私保护、SEO 优化网站的静态内容管理系统，支持 <strong>Windows</strong>、<strong>macOS</strong> 和 <strong>Linux</strong>，能够让初学者快速且轻松地创建静态网站，这一点我相信 Gridea 已经做到了。</p>
+<p>它将开源的 WordPress 程序与其做对比，WordPress 是基于服务器的 CMS，而 Publii 由于提供了一个易于理解的用户界面，从某种程度上来说也像是在服务器上使用 CMS 程序。</p>
+<p>使用 Publii 的三个步骤：</p>
+<ol>
+<li>下载 Publii</li>
+<li>撰写内容</li>
+<li>发布网站</li>
+</ol>
+<h2 id="部署之前需要做的事情">部署之前需要做的事情<!--ui--><a class="heading-anchor" href="#%e9%83%a8%e7%bd%b2%e4%b9%8b%e5%89%8d%e9%9c%80%e8%a6%81%e5%81%9a%e7%9a%84%e4%ba%8b%e6%83%85" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>下载 Publii，设置语言。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/1bd5b4931fbee7909d7361cee09adee8.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/1bd5b4931fbee7909d7361cee09adee8.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>从 GitHub 或者官网获取安装包安装好之后，最初的界面为英文，需要点击右上角的语言选项安装中文语言包，中文语言包在 GitHub 上可以下载，由国内热心网友翻译维护。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/d94816d6fa8fa97d7c60e3f22fcde6cd.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/d94816d6fa8fa97d7c60e3f22fcde6cd.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p><strong>如何部署 Publii</strong>，目前支持 HTTP/HTTPS 服务器、Netlify、Amazon S3、GitHub Pages、Google Cloud 和 SFTP。</p>
+<h2 id="使用-netlify-免费部署-publii">使用 Netlify 免费部署 Publii<!--ui--><a class="heading-anchor" href="#%e4%bd%bf%e7%94%a8-netlify-%e5%85%8d%e8%b4%b9%e9%83%a8%e7%bd%b2-publii" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>在 Netlify 需要做这些步骤：</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/976aab30f21fc489e36ecc41c42e117f.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/976aab30f21fc489e36ecc41c42e117f.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/e04507c6095f0a1c00adf1fb24619dce.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/e04507c6095f0a1c00adf1fb24619dce.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>首先，前往 Netlify 主页登录，创建一个新的站点——deploy manually，然后上传由 Publii 提供的压缩包，不用解压，直接一整个压缩包上传。随后我们会获得一个 Netlify 提供的域名，可以将其作为博客域名使用，也可以提前解析并绑定自定义域名。</p>
+<p>然后，点击站点设置（Site setting）按钮，找到站点信息（Site information）部分，保存好站点 ID，稍后会用到。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/54589910771cbec4803e44b085f37692.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/54589910771cbec4803e44b085f37692.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>最后，需要生成一个访问令牌（Access Token）。点击右上角账户名称，在个人资料（Profile）部分，点击应用程序（Application），然后新建访问令牌，生成之后保存，稍后会用到。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/769602e04f3d6750451038af9abc1d1a.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/769602e04f3d6750451038af9abc1d1a.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>以上是在 Netlify 需要进行的设置，接下来打开 Publii，进入服务器设置。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/7f51d1b5fdd8fa8fdfef9adb2ca53a63.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/7f51d1b5fdd8fa8fdfef9adb2ca53a63.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>推荐使用 Git Repository 或者 Netlify 部署。使用 Netlify 部署，只需要填写上述提到的三个内容，域名、Site ID 和 Access Token。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/e84ec222b3d6b730499f4a34c38d5b8a.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/e84ec222b3d6b730499f4a34c38d5b8a.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>保存好设置之后可以点击“测试链接”，测试是否能与 Netlify 进行链接，这里有点问题，我点了之后一直没反应，但同步网站之后能正常访问。</p>
+<p>接着点击左下角“同步您的网站”，即可通过域名访问。之后每次有内容更新，可以先在本地预览更改，再同步到 Netlify 进行部署。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/817e0e533c7c75b81d777d151f0e42d8.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/817e0e533c7c75b81d777d151f0e42d8.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><h2 id="publii-的特色">Publii 的特色<!--ui--><a class="heading-anchor" href="#publii-%e7%9a%84%e7%89%b9%e8%89%b2" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>就像它在 GitHub 项目页面上所说的，专为 SEO 优化和注重隐私的网站设计，这应该是 Publii 最大的两个特色。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/12571ce6ac08afa4dce16d4f5ae87809.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/12571ce6ac08afa4dce16d4f5ae87809.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/9a9874c4e8c2b717bd939dc5106a83fe.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/9a9874c4e8c2b717bd939dc5106a83fe.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>对 URL、Sitemap、OpenGraph、Twitter Cards 的支持都直接放在了网站设置里，不用单独的主题进行适配。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/f5cdc6847c8015f785a6f48d8a0efdcb.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/f5cdc6847c8015f785a6f48d8a0efdcb.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>包括对于机器人、爬虫的屏蔽，都可以一键手动开启或屏蔽。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/85823d20b2af680b9fb1ea0dc497aa43.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/85823d20b2af680b9fb1ea0dc497aa43.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>主题的自定义设置，翻译有待更新。我不确定每个主题的自定义设置是否一致，目前默认主题支持以上自定义设置，包括字体、页脚、搜索、菜单栏等内容。</p>
+<p>官网<a href="https://marketplace.getpublii.com/themes/" rel="external">主题市场</a>展示的主题较为丰富，分为博客、文档、问答、杂志、照片、旅行等类别，有免费和付费。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/03/0bc9a0686eacd723d8cd61a152a74692.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/03/0bc9a0686eacd723d8cd61a152a74692.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>提供三种编辑模式，区块编辑器、所见即所得编辑器、Markdown 编辑器，不过我认为 Obsidian 的 Markdown 是最好用的。在文章编辑页面提供的设置也比较多，发布状态、是否精选、精选图片、标签，以及 SEO 设置。</p>
+<p>默认主题呈现的效果也还不错，大气、美观，但似乎没有找到创建和编辑单独页面的功能，希望开发者后期能够更新。</p>
+<p>以上便是我对 Publii 部署的体验分享，对于新手用户来说，确实比 Hugo、Hexo 甚至 Gridea 还要容易上手，并且官网的使用文档十分清楚明了，但可能还需要了解 GitHub、Netlify 的注册和使用，尤其是访问这两个网站。</p>
+<p>如果你对该项目感兴趣，可以点击下方的链接详细了解。</p>
+<ul>
+<li><a href="https://getpublii.com/" rel="external">Publii 官网</a></li>
+<li><a href="https://github.com/GetPublii/Publii" rel="external">Publii 项目地址</a></li>
+<li><a href="https://publii.yinji.org/" rel="external">我部署的 Publii 博客</a></li>
+</ul>
+
+  </div>
+
+</article>
+<button class="fab toc-fab" type="button" popovertarget="toc-sheet" aria-controls="toc-sheet"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h1M4 12h1M4 18h1M9 6h11M9 12h11M9 18h11"/></svg><span class="visually-hidden">目录</span>
+</button>
+<nav id="toc-sheet" class="toc-sheet" popover aria-labelledby="toc-sheet-title" data-toc>
+  <div class="toc-sheet-scroll">
+    <p class="toc-title" id="toc-sheet-title">目录</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#publii-%e6%98%af%e4%bb%80%e4%b9%88">Publii 是什么</a>
+  </li>
+  <li>
+    <a href="#%e9%83%a8%e7%bd%b2%e4%b9%8b%e5%89%8d%e9%9c%80%e8%a6%81%e5%81%9a%e7%9a%84%e4%ba%8b%e6%83%85">部署之前需要做的事情</a>
+  </li>
+  <li>
+    <a href="#%e4%bd%bf%e7%94%a8-netlify-%e5%85%8d%e8%b4%b9%e9%83%a8%e7%bd%b2-publii">使用 Netlify 免费部署 Publii</a>
+  </li>
+  <li>
+    <a href="#publii-%e7%9a%84%e7%89%b9%e8%89%b2">Publii 的特色</a>
+  </li>
+</ul>
+
+
+  </div>
+</nav>
+
+    <button class="fab back-to-top" type="button" data-back-to-top hidden>
+      <svg class="back-to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle cx="22" cy="22" r="21"/>
+      </svg><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="visually-hidden">回到顶部</span>
+    </button>
+  </main>
+  
+<dialog class="viewer" data-viewer-dialog closedby="any" aria-label="图片查看器">
+  <figure class="viewer-stage">
+    <img class="viewer-image" alt="" decoding="async">
+    <figcaption class="viewer-caption" hidden></figcaption>
+  </figure>
+  <p class="viewer-counter" aria-live="polite"></p>
+  <form class="viewer-close-form" method="dialog">
+    <button class="viewer-button viewer-close" data-viewer-close><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="visually-hidden">关闭</span>
+    </button>
+  </form>
+  <button class="viewer-button viewer-prev" type="button" data-viewer-prev><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span class="visually-hidden">上一张</span>
+  </button>
+  <button class="viewer-button viewer-next" type="button" data-viewer-next><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span class="visually-hidden">下一张</span>
+  </button>
+</dialog>
+
+  
+<footer class="site-footer">
+  <div class="footer-colophon">
+    <p class="footer-copyright">© 2018–2026 青山</p>
+    <p class="footer-powered">Powered by <a href="https://gohugo.io/" rel="external">Hugo</a> & <a href="https://github.com/DejavuMoe/hugo-theme-icy" rel="external">Icy</a></p>
+  </div>
+</footer>
+<script data-goatcounter="https://hhx.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+</body>
+</html>

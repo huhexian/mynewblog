@@ -1,0 +1,40 @@
+{{- /*
+  Build the two search index files once per build (call with partialCached).
+
+    meta.<hash>.json     [{ t: title, u: url, d: "YYYY-MM-DD", g: [tags], s: summary }]
+    content.<hash>.json  [ "plain text of entry 0", "plain text of entry 1", … ]  (same order)
+
+  The meta index is small and loads first; the content index loads at low
+  priority. Excluded: pages with `searchHidden = true`, protected
+  pages, and pages without a permalink (drafts are only rendered with
+  --buildDrafts).
+
+  Returns dict: meta / content (each dict url, integrity), count.
+*/ -}}
+{{- $meta := slice }}
+{{- $content := slice }}
+{{- $limit := int (site.Params.search.contentLimit | default 20000) }}
+{{- range site.RegularPages.ByDate.Reverse }}
+  {{- if or .Params.searchHidden .Params.protected.enabled (not .RelPermalink) }}{{ continue }}{{ end }}
+  {{- $summary := partial "func/summary.html" (dict "page" .) }}
+  {{- $tags := slice }}
+  {{- range .GetTerms "tags" }}{{ $tags = $tags | append .LinkTitle }}{{ end }}
+  {{- $meta = $meta | append (dict
+    "t" .Title
+    "u" .RelPermalink
+    "d" (cond .Date.IsZero "" (.Date.Format "2006-01-02"))
+    "g" $tags
+    "s" $summary
+  ) }}
+  {{- $text := partial "func/plain-text.html" . }}
+  {{- if gt (strings.RuneCount $text) $limit }}{{ $text = substr $text 0 $limit }}{{ end }}
+  {{- $content = $content | append $text }}
+{{- end }}
+
+{{- $out := dict "count" (len $meta) }}
+{{- range $name, $data := dict "meta" $meta "content" $content }}
+  {{- with resources.FromString (printf "search/%s.json" $name) ($data | jsonify) | fingerprint }}
+    {{- $out = merge $out (dict $name (dict "url" .RelPermalink "integrity" .Data.Integrity)) }}
+  {{- end }}
+{{- end }}
+{{- return $out }}

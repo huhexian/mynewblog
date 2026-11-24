@@ -1,0 +1,22 @@
+name = "Icy"
+license = "MIT"
+licenselink = "https://github.com/DejavuMoe/hugo-theme-icy/blob/master/LICENSE"
+description = "A quiet, fast Hugo blog theme built on native HTML, CSS and JavaScript: one accent color, light and dark schemes, protected posts, media shortcodes and no front-end dependencies."
+homepage = "https://github.com/DejavuMoe/hugo-theme-icy"
+demosite = "https://icy.zsh.moe/"
+tags = ["blog", "minimal", "clean", "simple", "dark mode", "responsive", "accessible", "multilingual", "search", "gallery", "no-js", "privacy"]
+features = [
+  "light and dark color schemes with one configurable accent",
+  "password-protected posts (encrypted after build)",
+  "client-side search",
+  "images, galleries, live photos, audio and video players",
+  "comments (Ecoku) and analytics (Plausible) providers",
+  "SEO: Open Graph, JSON-LD, sitemap, robots.txt",
+  "view transitions and speculation rules",
+  "no framework or npm dependencies",
+]
+min_version = "0.158.0"
+
+[author]
+  name = "Dejavu Moe"
+  homepage = "https://blog.dejavu.moe"

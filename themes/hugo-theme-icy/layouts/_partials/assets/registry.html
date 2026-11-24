@@ -1,0 +1,52 @@
+{{- /*
+  Feature registry: every optional component and the assets it needs.
+
+  A template, partial, shortcode or render hook that outputs a component
+  registers it for the current page:
+
+    {{ partial "assets/use.html" (dict "page" .Page "feature" "toc") }}
+
+  head/assets.html (run deferred, after the whole page has rendered) emits
+  the CSS and JS of each registered feature, in the order listed here, which
+  is also their cascade order inside the `components` layer.
+
+  Fields:
+    name  feature id
+    css   bool, default true: false when the feature has no
+          assets/css/features/<name>.css
+    js    bool: assets/js/features/<name>.js exists
+    vendor  paths under assets/ of third-party scripts published byte-for-byte
+          (fingerprinted, never re-bundled). They are not linked: the feature
+          module loads them when needed with loadVendor(name) from
+          assets/js/modules/vendor.js
+    needs other features loaded with this one
+*/ -}}
+{{- return slice
+  (dict "name" "entries")
+  (dict "name" "home" "needs" (slice "entries"))
+  (dict "name" "article")
+  (dict "name" "prose")
+  (dict "name" "toc" "js" true)
+  (dict "name" "media" "js" true)
+  (dict "name" "gallery" "needs" (slice "media"))
+  (dict "name" "livephoto" "js" true "needs" (slice "media"))
+  (dict "name" "viewer" "js" true)
+  (dict "name" "controls")
+  (dict "name" "audio" "js" true "needs" (slice "controls"))
+  (dict "name" "video" "js" true "needs" (slice "controls"))
+  (dict "name" "youtube" "js" true)
+  (dict "name" "details")
+  (dict "name" "tabs" "js" true)
+  (dict "name" "repo")
+  (dict "name" "footnotes" "js" true)
+  (dict "name" "pele" "js" true "vendor" (slice "js/vendor/pele.global.js"))
+  (dict "name" "alert")
+  (dict "name" "code" "js" true)
+  (dict "name" "pagination")
+  (dict "name" "search" "js" true)
+  (dict "name" "friends")
+  (dict "name" "notfound")
+  (dict "name" "changelog" "needs" (slice "entries"))
+  (dict "name" "comments" "js" true)
+  (dict "name" "protected" "js" true)
+-}}

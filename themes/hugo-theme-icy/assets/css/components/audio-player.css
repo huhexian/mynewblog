@@ -1,0 +1,172 @@
+/*
+ * Audio player and playlist. One quiet row: the cover is the play button,
+ * title and artist beside it, a thin seek bar underneath.
+ */
+
+.audio-player {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-3);
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+}
+
+.prose > .audio-player,
+.prose > .playlist {
+  margin-block: 1.25em;
+}
+
+.audio-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 4rem;
+  block-size: 4rem;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+
+  & img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  & .audio-art-icon {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+  }
+}
+
+.audio-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background-color: oklch(15% 0 0 / 0.3);
+  color: oklch(100% 0 0);
+  transition: background-color var(--duration-quick) var(--ease-out);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: oklch(15% 0 0 / 0.45);
+    }
+  }
+
+  &:focus-visible {
+    outline-offset: -3px;
+    outline-color: oklch(100% 0 0);
+  }
+
+  & .icon {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+  }
+
+  /* No cover: a plain tile with a dark icon. */
+  .audio-art:not(:has(img)) & {
+    background-color: var(--color-surface);
+    color: var(--color-heading);
+  }
+}
+
+.audio-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+}
+
+.audio-title {
+  color: var(--color-heading);
+  font-weight: var(--weight-medium);
+}
+
+.audio-artist {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.audio-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+  margin-block-start: 0.125rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.audio-player .media-native {
+  margin-block-start: var(--space-2);
+}
+
+.media-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block-start: var(--space-1);
+}
+
+.audio-player .media-error {
+  margin-block-start: var(--space-1);
+}
+
+/* ---- Playlist ----
+   One hairline card (like code blocks and tables): an optional label row on
+   top, then the tracks separated by hairlines. */
+.playlist {
+  overflow: hidden;
+  border: var(--rule);
+  border-radius: var(--radius-l);
+}
+
+.playlist-label {
+  padding: var(--space-3) var(--space-4) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.playlist-list > li + li {
+  border-block-start: var(--rule);
+}
+
+.audio-player.is-row {
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: 0;
+
+  & .audio-art {
+    inline-size: 3rem;
+    block-size: 3rem;
+  }
+
+  & .audio-play .icon {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+  }
+}
+
+/* Rows that are not playing show only their duration, not a seek bar. */
+.audio-player.is-row.is-enhanced:not(.is-current) {
+  & .media-seek,
+  & [data-current],
+  & .media-time-sep {
+    display: none;
+  }
+}
+
+.audio-player.is-current .audio-title {
+  color: var(--color-accent);
+}
+
+.audio-player.has-error .audio-play {
+  display: none;
+}

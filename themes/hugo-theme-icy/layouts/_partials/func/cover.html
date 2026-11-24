@@ -1,0 +1,19 @@
+{{- /*
+  The cover image shown at the top of an article: the first local entry of
+  front matter `images` (bundle, assets/ or static/), else the bundle's
+  cover.* / feature.* / thumbnail.* image. Remote entries are skipped (they
+  stay social-preview only).
+  Params: page. Returns resolved media (func/resolve-media.html) or false.
+*/ -}}
+{{- $out := false }}
+{{- range .Params.images }}
+  {{- if and (not $out) (not (urls.Parse .).IsAbs) }}
+    {{- $out = partial "func/resolve-media.html" (dict "page" $ "src" . "label" "cover" "position" (printf "in %s" $.File.Path)) }}
+  {{- end }}
+{{- end }}
+{{- if not $out }}
+  {{- with partial "func/bundle-cover.html" . }}
+    {{- $out = partial "func/resolve-media.html" (dict "page" $ "src" .Name "label" "cover") }}
+  {{- end }}
+{{- end }}
+{{- return $out }}

@@ -1,0 +1,11 @@
+{{- /*
+  Display title of a page. A taxonomy index without its own content file
+  (e.g. no content/tags/_index.md) takes its name from i18n ("tags" ->
+  "标签") instead of Hugo's default, which is the raw plural key.
+  Params: page. Returns string.
+*/ -}}
+{{- $title := .Title }}
+{{- if and (eq .Kind "taxonomy") (not .File) }}
+  {{- with T .Data.Plural }}{{ $title = . }}{{ end }}
+{{- end }}
+{{- return $title }}

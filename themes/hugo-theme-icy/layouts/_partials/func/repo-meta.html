@@ -1,0 +1,62 @@
+{{- /*
+  Repository metadata from the host's REST API, fetched at build time.
+    github.com           -> api.github.com/repos/<owner>/<repo>
+    any other host       -> <host>/api/v1/repos/<owner>/<repo> (Forgejo / Gitea)
+  Responses are cached by Hugo's getresource cache (set caches.getresource
+  maxAge, e.g. "24h", in the site config). The HUGO_GITHUB_TOKEN environment
+  variable (a read-only token, set as a secret in CI) raises GitHub's limit of
+  60 anonymous requests an hour. Tokens never go in the site config. A failed fetch logs a warning (id icy-remote-fetch)
+  and returns what the URL alone tells (owner, name, link).
+
+  Params (dict): url, position. Returns dict:
+    url owner name description language stars forks license archived updated ok
+*/ -}}
+{{- $raw := .url | strings.TrimSpace | strings.TrimSuffix "/" | strings.TrimSuffix ".git" }}
+{{- $u := urls.Parse $raw }}
+{{- $parts := split (strings.Trim $u.Path "/") "/" }}
+{{- if or (not (in (slice "http" "https") $u.Scheme)) (lt (len $parts) 2) }}
+  {{- errorf "repo shortcode: url must look like https://host/owner/repo, got %q: %s" .url .position }}
+{{- end }}
+{{- $owner := index $parts 0 }}
+{{- $name := index $parts 1 }}
+{{- $info := dict "url" (printf "%s://%s/%s/%s" $u.Scheme $u.Host $owner $name) "owner" $owner "name" $name "ok" false }}
+
+{{- $isGitHub := in (slice "github.com" "www.github.com") $u.Host }}
+{{- $api := cond $isGitHub (printf "https://api.github.com/repos/%s/%s" $owner $name) (printf "%s://%s/api/v1/repos/%s/%s" $u.Scheme $u.Host $owner $name) }}
+{{- $headers := dict "Accept" "application/json" "User-Agent" (site.Params.repo.userAgent | default "hugo-theme-icy") }}
+{{- if $isGitHub }}
+  {{- with os.Getenv "HUGO_GITHUB_TOKEN" }}
+    {{- $headers = merge $headers (dict "Authorization" (printf "Bearer %s" .)) }}
+  {{- end }}
+{{- end }}
+
+{{- with try (resources.GetRemote $api (dict "headers" $headers)) }}
+  {{- /* GetRemote returns nothing, without an error, for a 404. */}}
+  {{- with .Err }}
+    {{- warnidf "icy-remote-fetch" "repo shortcode: could not fetch %s (%s); showing a link-only card %s" $api . $.position }}
+  {{- else }}
+    {{- if not .Value }}{{ warnidf "icy-remote-fetch" "repo shortcode: %s was not found (404); showing a link-only card %s" $api $.position }}{{ end }}
+  {{- end }}
+  {{- with .Value }}
+    {{- with try (. | transform.Unmarshal) }}
+      {{- with .Value }}
+        {{- $license := "" }}
+        {{- with .license }}{{ $license = or .spdx_id .name }}{{ end }}
+        {{- with .licenses }}{{ $license = delimit . ", " }}{{ end }}
+        {{- if eq $license "NOASSERTION" }}{{ $license = "" }}{{ end }}
+        {{- $info = merge $info (dict
+          "ok" true
+          "url" (.html_url | default $info.url)
+          "description" (.description | default "")
+          "language" (.language | default "")
+          "stars" (or .stargazers_count .stars_count 0)
+          "forks" (.forks_count | default 0)
+          "license" $license
+          "archived" (.archived | default false)
+          "updated" (or .pushed_at .updated_at "")
+        ) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- return $info }}

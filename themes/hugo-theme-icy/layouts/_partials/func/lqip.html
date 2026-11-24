@@ -1,0 +1,15 @@
+{{- /*
+  Low-quality image placeholder: a ~24px WebP inlined as a CSS url(), painted
+  (blurred) behind the image until it loads. Returns "" when the source cannot
+  be processed (SVG, GIF, static/ files, failed remote fetch).
+  Params: a resolved media dict (func/resolve-media.html).
+*/ -}}
+{{- $out := "" }}
+{{- with .resource }}
+  {{- if and (eq .ResourceType "image") (in (slice "jpeg" "png" "webp" "tiff" "bmp") .MediaType.SubType) }}
+    {{- with .Resize "24x webp q30" }}
+      {{- $out = printf "url(data:image/webp;base64,%s)" (.Content | base64Encode) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- return $out }}

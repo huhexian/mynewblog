@@ -1,0 +1,238 @@
+/*
+ * Code blocks + Chroma token colors (markup.highlight.noClasses = false).
+ * Hand-written with light-dark() so highlighting follows the active scheme
+ * without shipping two generated Chroma stylesheets.
+ */
+
+.highlight {
+  /* Low-chroma ink tones: highlighting separates tokens without shouting. */
+  --syntax-comment: light-dark(oklch(50% 0.005 260), oklch(72% 0.005 260));
+  --syntax-keyword: light-dark(oklch(45% 0.11 300), oklch(78% 0.08 300));
+  --syntax-string: light-dark(oklch(47% 0.09 150), oklch(78% 0.08 150));
+  --syntax-number: light-dark(oklch(52% 0.1 55), oklch(80% 0.08 65));
+  --syntax-function: light-dark(oklch(47% 0.1 252), oklch(78% 0.08 248));
+  --syntax-type: light-dark(oklch(48% 0.07 200), oklch(80% 0.06 200));
+  --syntax-tag: light-dark(oklch(50% 0.11 25), oklch(77% 0.08 25));
+  --syntax-attr: light-dark(oklch(50% 0.09 80), oklch(80% 0.08 85));
+
+  position: relative;
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--ui-code-bg);
+
+  & pre {
+    margin: 0;
+    padding: 1em 1.25em;
+    overflow-x: auto;
+    background: transparent !important; /* Chroma may emit an inline background */
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    tab-size: 2;
+  }
+
+  & code {
+    font-size: inherit;
+  }
+
+  /* Line numbers / highlighted lines */
+  & .hl {
+    display: block;
+    margin-inline: -1.25em;
+    padding-inline: 1.25em;
+    background-color: color-mix(in oklch, var(--color-accent) 12%, transparent);
+  }
+
+  & .ln,
+  & .lnt {
+    display: inline-block;
+    min-inline-size: 2ch;
+    margin-inline-end: 1.25em;
+    color: var(--syntax-comment);
+    text-align: end;
+    user-select: none;
+  }
+
+  /* Tokens */
+  & :is(.c, .ch, .cm, .c1, .cs, .cp, .cpf) { color: var(--syntax-comment); font-style: italic; }
+  & :is(.k, .kc, .kd, .kn, .kp, .kr, .ow) { color: var(--syntax-keyword); }
+  & :is(.kt, .nc, .nn) { color: var(--syntax-type); }
+  & :is(.s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss) { color: var(--syntax-string); }
+  & :is(.m, .mb, .mf, .mh, .mi, .il, .mo) { color: var(--syntax-number); }
+  & :is(.nf, .fm, .nx) { color: var(--syntax-function); }
+  & :is(.nb, .bp) { color: var(--syntax-type); }
+  & .nt { color: var(--syntax-tag); }
+  & :is(.na, .nd) { color: var(--syntax-attr); }
+  & :is(.nv, .vc, .vg, .vi) { color: var(--syntax-number); }
+  & .gd { color: var(--color-danger); }
+  & .gi { color: light-dark(oklch(50% 0.11 var(--hue-tip)), oklch(78% 0.09 var(--hue-tip))); }
+  & .gh, & .gu { color: var(--syntax-function); font-weight: 600; }
+  & .err { color: var(--color-danger); }
+}
+
+/* ---- Code block frame: header (file name / language + copy) above the code ---- */
+.code-block {
+  overflow: hidden;
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--ui-code-bg);
+
+  & .highlight {
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* Plain blocks (no language → no Chroma wrapper) get the same insets. */
+  & > pre {
+    margin: 0;
+    padding: 1em 1.25em;
+    overflow-x: auto;
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    tab-size: 2;
+  }
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-block-size: 2.125rem;
+  /* The copy button tucks into the corner: the same 4px from the top and
+     the end edge. */
+  padding-inline: 1.25em 0.25rem;
+  /* A faint hairline between the header and the code. */
+  border-block-end: 1px solid color-mix(in oklch, var(--color-rule) 70%, transparent);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.code-label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code-title {
+  color: var(--color-text);
+}
+
+.code-copy {
+  --copy-ease: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-block-size: 1.625rem;
+  padding-inline: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  transition:
+    color var(--duration-quick) var(--ease-out),
+    background-color var(--duration-quick) var(--ease-out);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: color-mix(in oklch, var(--color-text) 6%, transparent);
+      color: var(--color-heading);
+    }
+  }
+
+  &[data-state="copied"] {
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+
+  &[data-state="failed"] {
+    color: var(--color-danger);
+  }
+}
+
+/* Icon: the copy glyph shrinks away while a check is drawn in its place. */
+.code-copy-icons {
+  display: grid;
+  inline-size: 1.15em;
+  block-size: 1.15em;
+
+  & .icon {
+    grid-area: 1 / 1;
+    inline-size: 100%;
+    block-size: 100%;
+    transition:
+      opacity 160ms var(--ease-out),
+      scale 260ms var(--copy-ease);
+  }
+}
+
+.code-copy-icon-done {
+  opacity: 0;
+  scale: 0.6;
+
+  & path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+}
+
+.code-copy[data-state="copied"] {
+  & .code-copy-icon-idle {
+    opacity: 0;
+    scale: 0.6;
+  }
+
+  & .code-copy-icon-done {
+    opacity: 1;
+    scale: 1;
+
+    & path {
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 320ms 60ms var(--ease-out);
+    }
+  }
+}
+
+/* Label: only the current one takes space (so the pill hugs its text and
+   sits snug in the corner); the others overlay it, invisible. The current
+   one slides in from below while the previous one leaves upward. */
+.code-copy-labels {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.code-copy-label {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  white-space: nowrap;
+  opacity: 0;
+  translate: 0 0.6em;
+  transition:
+    opacity 180ms var(--ease-out),
+    translate 240ms var(--ease-out);
+
+  .code-copy:not([data-state]) &[data-for="idle"],
+  .code-copy[data-state="copied"] &[data-for="copied"],
+  .code-copy[data-state="failed"] &[data-for="failed"] {
+    position: relative;
+    display: block;
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .code-copy[data-state] &[data-for="idle"] {
+    translate: 0 -0.6em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code-copy :is(.icon, .code-copy-label, path) {
+    transition: none !important;
+  }
+}

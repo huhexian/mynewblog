@@ -1,0 +1,61 @@
+{{- /*
+  Site identity derived from one square source icon (call with partialCached).
+
+    params.brand.icon        square PNG/JPG in assets/ (≥ 512px) -> favicon, Apple
+                             touch icon and web-app icons are generated from it
+    params.brand.iconSVG     optional SVG favicon (assets/ or static/ path)
+    params.brand.themeColor  { light = "#ffffff", dark = "#241f1e" } browser chrome
+                             colors; defaults match the theme's page ground
+
+  Returns dict: favicon, appleTouch, icon192, icon512 (resources or nil),
+  svg (URL or ""), light, dark (hex), manifest (resource).
+*/ -}}
+{{- $brand := site.Params.brand | default dict }}
+{{- $colors := $brand.themeColor | default dict }}
+{{- $out := dict "light" ($colors.light | default "#ffffff") "dark" ($colors.dark | default "#241f1e") "svg" "" }}
+{{- range $k, $v := dict "light" $out.light "dark" $out.dark }}
+  {{- if not (findRE `^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$` $v 1) }}
+    {{- errorf "params.brand.themeColor.%s must be #rgb or #rrggbb, got %q" $k $v }}
+  {{- end }}
+{{- end }}
+
+{{- with $brand.icon }}
+  {{- $src := resources.Get . }}
+  {{- if not $src }}{{ errorf "params.brand.icon: %q not found in assets/" . }}{{ end }}
+  {{- if not (in (slice "png" "jpeg" "webp") $src.MediaType.SubType) }}
+    {{- errorf "params.brand.icon must be a PNG, JPEG or WebP image, got %s" $src.MediaType.Type }}
+  {{- end }}
+  {{- if or (lt $src.Width 512) (ne $src.Width $src.Height) }}
+    {{- warnf "params.brand.icon should be square and at least 512px (got %dx%d)" $src.Width $src.Height }}
+  {{- end }}
+  {{- $out = merge $out (dict
+    "favicon" ($src.Fill "32x32 png center" | resources.Copy "favicon-32x32.png")
+    "appleTouch" ($src.Fill "180x180 png center" | resources.Copy "apple-touch-icon.png")
+    "icon192" ($src.Fill "192x192 png center" | resources.Copy "icon-192.png")
+    "icon512" ($src.Fill "512x512 png center" | resources.Copy "icon-512.png")
+  ) }}
+{{- end }}
+{{- with $brand.iconSVG }}
+  {{- with resources.Get . }}{{ $out = merge $out (dict "svg" .RelPermalink) }}{{ else }}{{ $out = merge $out (dict "svg" ($brand.iconSVG | relURL)) }}{{ end }}
+{{- end }}
+
+{{- /* Web app manifest */}}
+{{- $icons := slice }}
+{{- with $out.icon192 }}{{ $icons = $icons | append (dict "src" .RelPermalink "sizes" "192x192" "type" "image/png") }}{{ end }}
+{{- with $out.icon512 }}{{ $icons = $icons | append (dict "src" .RelPermalink "sizes" "512x512" "type" "image/png" "purpose" "any") }}{{ end }}
+{{- $manifest := dict
+  "name" site.Title
+  "short_name" (site.Params.shortName | default site.Title)
+  "lang" (site.Language.Locale | default site.Language.Lang)
+  "start_url" site.Home.RelPermalink
+  "scope" site.Home.RelPermalink
+  "display" "standalone"
+  "theme_color" $out.light
+  "background_color" $out.light
+}}
+{{- with $icons }}{{ $manifest = merge $manifest (dict "icons" .) }}{{ end }}
+{{- /* One manifest per language (name, lang and start_url differ); a shared
+     path would let the last language built overwrite the others. */}}
+{{- $manifestPath := cond hugo.IsMultilingual (printf "%s/site.webmanifest" site.Language.Lang) "site.webmanifest" }}
+{{- $out = merge $out (dict "manifest" (resources.FromString $manifestPath ($manifest | jsonify (dict "indent" "  ")))) }}
+{{- return $out }}

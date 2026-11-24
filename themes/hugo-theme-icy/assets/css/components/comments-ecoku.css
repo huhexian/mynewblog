@@ -1,0 +1,792 @@
+/*
+ * Ecoku comments — the complete stylesheet.
+ *
+ * The theme loads Ecoku with data-css-url="none": Ecoku injects no CSS of its
+ * own, so everything below is all the comment area gets (structure included,
+ * following client/ecoku.unstyled.css) and it lives in the normal cascade
+ * layer like every other component. Class names are Ecoku's; the root is
+ * .ecoku-comments.
+ *
+ * Hierarchy, top to bottom:
+ *   composer  — a tinted card holding white, outlined fields and one solid
+ *               accent button: the place to act.
+ *   heading   — "N comments" as a small subheading with the sort control.
+ *   threads   — separated by space, not rules; author in heading ink, meta
+ *               in small muted type; replies hang off a rounded guide bar.
+ */
+
+.ecoku-comments {
+  --ecoku-indent: 1.375rem;
+
+  inline-size: 100%;
+  color: var(--color-heading);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+
+  & *,
+  & ::before,
+  & ::after {
+    box-sizing: border-box;
+  }
+
+  & [hidden] {
+    display: none !important;
+  }
+
+  /* :where() keeps the reset at class specificity, so every component rule
+     below (all later in the file) wins over it. */
+  & :where(button, input, textarea) {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    appearance: none;
+  }
+
+  & :where(button) {
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+
+  &[aria-busy="true"] button:disabled {
+    cursor: progress;
+  }
+
+  & :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-s);
+  }
+}
+
+.ecoku-visually-hidden {
+  position: absolute !important;
+  inline-size: 1px !important;
+  block-size: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ---- Composer (top-level and reply) ---- */
+.ecoku-composer {
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-l);
+  background-color: var(--color-surface);
+}
+
+.ecoku-identity-grid,
+.ecoku-reply-identity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.ecoku-field,
+.ecoku-message-field {
+  min-inline-size: 0;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-m);
+  background-color: var(--color-bg);
+  transition:
+    border-color var(--duration-quick) var(--ease-out),
+    box-shadow var(--duration-quick) var(--ease-out);
+
+  &:hover {
+    border-color: color-mix(in oklch, var(--color-text-faint) 55%, var(--color-rule));
+  }
+
+  &:focus-within {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+  }
+
+  &:has(:is(input, textarea)[aria-invalid="true"]) {
+    border-color: var(--color-danger);
+  }
+}
+
+.ecoku-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--space-3);
+  padding-inline: var(--space-3);
+}
+
+.ecoku-message-field {
+  display: block;
+  margin-block-start: var(--space-2);
+}
+
+.ecoku-field-label {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.ecoku-comments :is(.ecoku-input, .ecoku-textarea) {
+  inline-size: 100%;
+  min-inline-size: 0;
+  outline: 0;
+  color: var(--color-heading);
+
+  &::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+}
+
+.ecoku-comments .ecoku-input {
+  block-size: 2.625rem;
+}
+
+.ecoku-comments .ecoku-textarea {
+  display: block;
+  min-block-size: 8.5rem;
+  padding: var(--space-3);
+  line-height: var(--leading-snug);
+  resize: vertical;
+}
+
+/* Touch: 16px inputs keep iOS from zooming on focus. */
+@media (pointer: coarse) {
+  .ecoku-comments :is(.ecoku-input, .ecoku-textarea) {
+    font-size: 1rem;
+  }
+}
+
+.ecoku-composer-preview {
+  margin-block-start: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-m);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  white-space: pre-wrap;
+}
+
+.ecoku-turnstile-slot {
+  inline-size: min(100%, 300px);
+  margin-block-start: var(--space-2);
+
+  &:empty {
+    display: none;
+  }
+}
+
+.ecoku-cap-widget {
+  --cap-widget-width: 260px;
+  --cap-widget-height: 58px;
+  --cap-widget-padding: 14px;
+  --cap-gap: 14px;
+  --cap-font: inherit;
+  --cap-background: var(--color-bg);
+  --cap-border-color: var(--color-rule);
+  --cap-border-radius: var(--radius-m);
+  --cap-color: var(--color-text);
+  --cap-checkbox-size: 24px;
+  --cap-checkbox-border: 1px solid var(--color-text-faint);
+  --cap-checkbox-border-radius: var(--radius-s);
+  --cap-checkbox-background: var(--color-bg);
+  --cap-spinner-color: var(--color-accent);
+  --cap-spinner-background-color: var(--color-rule);
+  --cap-focus-ring: var(--color-accent-line);
+
+  display: block;
+  inline-size: min(100%, 260px);
+}
+
+.ecoku-form-error {
+  margin-block-start: var(--space-2);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+}
+
+.ecoku-composer-footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-start: var(--space-3);
+  padding-inline-start: var(--space-1);
+}
+
+.ecoku-character-count {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.ecoku-composer-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-inline-start: auto;
+}
+
+/* ---- Buttons ---- */
+.ecoku-comments :is(.ecoku-primary-button, .ecoku-secondary-button, .ecoku-smoji-trigger) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 2.25rem;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  transition:
+    color var(--duration-quick) var(--ease-out),
+    background-color var(--duration-quick) var(--ease-out);
+}
+
+.ecoku-comments :is(.ecoku-secondary-button, .ecoku-smoji-trigger) {
+  color: var(--color-text-muted);
+
+  &:not(:disabled):hover,
+  &[aria-pressed="true"],
+  &[aria-expanded="true"] {
+    background-color: var(--color-bg);
+    color: var(--color-heading);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+/* A secondary button outside the composer (e.g. "reload" in the error card). */
+.ecoku-service-error .ecoku-secondary-button {
+  border: 1px solid var(--color-rule);
+}
+
+.ecoku-comments .ecoku-primary-button {
+  margin-inline-start: var(--space-1);
+  padding-inline: var(--space-5);
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+
+  @media (hover: hover) {
+    &:not(:disabled):hover {
+      background-color: color-mix(in oklch, var(--color-accent) 88%, var(--color-heading));
+    }
+  }
+
+  /* Disabled: a neutral pill with readable text, not a washed-out accent. */
+  &:disabled {
+    background-color: var(--color-rule);
+    color: var(--color-text-muted);
+  }
+}
+
+/* ---- Emoji panel ---- */
+.ecoku-smoji-panel {
+  position: absolute;
+  inset-block-end: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  z-index: 20;
+  inline-size: min(18rem, 100%);
+  max-block-size: 15rem;
+  padding: var(--space-2);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--color-raised);
+  box-shadow: var(--shadow-float);
+}
+
+.ecoku-smoji-tabs {
+  display: flex;
+  gap: var(--space-1);
+  margin-block-end: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ecoku-comments .ecoku-smoji-tab {
+  flex: none;
+  padding: 0.125rem var(--space-2);
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  transition:
+    color var(--duration-quick) var(--ease-out),
+    background-color var(--duration-quick) var(--ease-out);
+
+  &:hover {
+    color: var(--color-heading);
+  }
+
+  &[aria-selected="true"] {
+    background-color: var(--color-surface);
+    color: var(--color-heading);
+  }
+}
+
+.ecoku-smoji-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.125rem;
+}
+
+.ecoku-smoji-item {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: var(--space-1);
+  border-radius: var(--radius-m);
+  transition: background-color var(--duration-quick) var(--ease-out);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-surface);
+    }
+  }
+
+  & img {
+    inline-size: auto;
+    max-inline-size: 100%;
+    block-size: 1.875rem;
+    object-fit: contain;
+  }
+}
+
+.ecoku-smoji-inline {
+  display: inline-block;
+  inline-size: auto;
+  max-inline-size: 4.75em;
+  block-size: 1.9em;
+  margin-inline: 0.15em;
+  object-fit: contain;
+  vertical-align: -0.52em;
+}
+
+.ecoku-smoji-state {
+  padding: var(--space-1) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ---- Heading: count + sort ---- */
+.ecoku-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-7) 0 var(--space-2);
+}
+
+.ecoku-section-title {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: var(--text-base);
+  font-weight: var(--weight-strong);
+}
+
+.ecoku-sort-picker {
+  position: relative;
+}
+
+.ecoku-sort-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  transition: color var(--duration-quick) var(--ease-out);
+
+  &:hover,
+  &[aria-expanded="true"] {
+    color: var(--color-heading);
+  }
+}
+
+.ecoku-sort-chevron {
+  inline-size: 0.375rem;
+  block-size: 0.375rem;
+  border-block-end: 1.5px solid;
+  border-inline-end: 1.5px solid;
+  translate: 0 -0.125rem;
+  rotate: 45deg;
+  transition:
+    rotate var(--duration-base) var(--ease-out),
+    translate var(--duration-base) var(--ease-out);
+
+  [aria-expanded="true"] > & {
+    translate: 0 0.0625rem;
+    rotate: 225deg;
+  }
+}
+
+.ecoku-sort-menu {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-1));
+  inset-inline-end: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 7.5rem;
+  padding: var(--space-1);
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--color-raised);
+  box-shadow: var(--shadow-float);
+}
+
+.ecoku-comments .ecoku-sort-option {
+  min-block-size: 2rem;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-m);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  text-align: start;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-surface);
+      color: var(--color-heading);
+    }
+  }
+
+  &[aria-selected="true"] {
+    color: var(--color-heading);
+    font-weight: var(--weight-medium);
+  }
+}
+
+.ecoku-status-line {
+  margin: 0 0 var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+
+  &:empty {
+    display: none;
+  }
+}
+
+.ecoku-empty-state {
+  margin: var(--space-5) 0;
+  color: var(--color-text-muted);
+
+  & p {
+    margin: 0;
+    white-space: pre-line;
+  }
+}
+
+.ecoku-service-error {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+  margin-block-end: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-l);
+  background-color: var(--color-surface);
+
+  & h3 {
+    margin: 0;
+    font-size: var(--text-base);
+  }
+
+  & p {
+    margin: 0 0 var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+}
+
+/* ---- Threads ---- */
+.ecoku-thread-list > .ecoku-comment-node + .ecoku-comment-node {
+  margin-block-start: var(--space-2);
+}
+
+.ecoku-comment-node {
+  min-inline-size: 0;
+}
+
+.ecoku-comment-row {
+  position: relative;
+  min-inline-size: 0;
+  padding-block: var(--space-3);
+  padding-inline-start: calc(var(--ecoku-depth, 0) * var(--ecoku-indent));
+}
+
+/* Thread connectors, like a tree: each reply is joined to its parent by
+   a rounded elbow that turns into the reply's author line; the vertical
+   only continues past a reply while further siblings follow. Lines exist
+   only between a parent and its replies. Ecoku indents up to depth 4
+   (--ecoku-depth 0–3), so connectors are drawn for depths 2–4; deeper
+   replies share depth 4's column and name whom they answer ("@name"). */
+.ecoku-children > .ecoku-comment-node {
+  --thread-x: calc((var(--node-level) - 2) * var(--ecoku-indent) + 0.3125rem);
+  --thread-mid: calc(var(--space-3) + 0.75rem);
+
+  position: relative;
+
+  &:is([data-depth="2"], [data-depth="3"], [data-depth="4"])::before,
+  &:is([data-depth="2"], [data-depth="3"], [data-depth="4"]):not(:last-child)::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: var(--thread-x);
+    border-color: var(--color-rule);
+    pointer-events: none;
+  }
+
+  /* The elbow: down from the top, then across to the author. */
+  &:is([data-depth="2"], [data-depth="3"], [data-depth="4"])::before {
+    inset-block-start: 0;
+    block-size: var(--thread-mid);
+    inline-size: calc(var(--ecoku-indent) - 0.3125rem - 0.375rem);
+    border-inline-start: 2px solid var(--color-rule);
+    border-block-end: 2px solid var(--color-rule);
+    border-end-start-radius: 0.5rem;
+  }
+
+  /* The trunk continues to the next sibling. */
+  &:is([data-depth="2"], [data-depth="3"], [data-depth="4"]):not(:last-child)::after {
+    inset-block: 0;
+    border-inline-start: 2px solid var(--color-rule);
+  }
+
+  &[data-depth="2"] { --node-level: 2; }
+  &[data-depth="3"] { --node-level: 3; }
+  &[data-depth="4"] { --node-level: 4; }
+}
+
+.ecoku-comment-meta,
+.ecoku-comment-meta-main {
+  display: flex;
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.ecoku-comment-meta {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5rem;
+}
+
+.ecoku-comment-meta-main {
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+}
+
+.ecoku-comment-author-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ecoku-comments .ecoku-comment-author {
+  color: var(--color-heading);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-strong);
+  line-height: 1.5rem;
+  text-decoration: none;
+  transition: color var(--duration-quick) var(--ease-out);
+}
+
+.ecoku-comments a.ecoku-comment-author:hover {
+  color: var(--color-accent);
+}
+
+/* Ecoku writes the badge as "[博主]"; show its title as a pill instead,
+   centred on the author name. */
+.ecoku-blogger-badge {
+  display: inline-flex;
+  color: var(--color-accent);
+  font-size: 0;
+  line-height: 0;
+
+  &::before {
+    content: attr(title);
+    padding: 0 0.5em;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent-soft);
+    font-size: 0.6875rem;
+    font-weight: var(--weight-medium);
+    line-height: 1.125rem;
+  }
+}
+
+.ecoku-comments :is(.ecoku-comment-time, .ecoku-collapse-button, .ecoku-text-action, .ecoku-reply-context) {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--duration-quick) var(--ease-out);
+
+  &:hover:not(:disabled) {
+    color: var(--color-accent);
+  }
+}
+
+/* "[-]" / "[+]" as Ecoku writes them, in monospace at a fixed 3ch, so
+   folding never changes the width of the line. */
+.ecoku-comments .ecoku-collapse-button {
+  flex: 0 0 3ch;
+  inline-size: 3ch;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0;
+}
+
+.ecoku-reply-context,
+.ecoku-folded-summary {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ecoku-comments .ecoku-reply-context {
+  display: block;
+  max-inline-size: min(16rem, 55vw);
+}
+
+.ecoku-folded-summary {
+  color: var(--color-text-faint);
+}
+
+.ecoku-comment-actions {
+  display: none;
+}
+
+.ecoku-comment-copy {
+  margin-block-start: var(--space-1);
+  color: var(--color-text);
+  font-size: 0.9375rem;
+
+  & p {
+    margin: 0;
+    white-space: pre-wrap;
+    text-wrap-style: pretty;
+  }
+}
+
+.ecoku-deleted > .ecoku-comment-row :is(.ecoku-comment-author, .ecoku-comment-copy) {
+  color: var(--color-text-muted);
+}
+
+.ecoku-reply-composer {
+  margin-block: var(--space-2) var(--space-1);
+}
+
+/* ---- Pagination ---- */
+.ecoku-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-block-size: 3rem;
+  margin-block-start: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.ecoku-pager-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.25rem;
+  padding-inline: var(--space-2);
+  transition: color var(--duration-quick) var(--ease-out);
+
+  &:not(:disabled):hover {
+    color: var(--color-accent);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
+
+/* Drawn chevron (comments.js swaps Ecoku's text arrow for this span). */
+.ecoku-pager-chevron {
+  inline-size: 0.375rem;
+  block-size: 0.375rem;
+  border-block-end: 1.5px solid;
+  border-inline-start: 1.5px solid;
+  rotate: 45deg;
+
+  &[data-dir="next"] {
+    rotate: -135deg;
+  }
+}
+
+.ecoku-pagination-status {
+  min-inline-size: 2rem;
+  color: var(--color-heading);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* Ecoku's "｜" separators: spacing does that job here. */
+.ecoku-pagination-separator {
+  display: none;
+}
+
+/* ---- Credit ----
+   "Powered by Ecoku": the last line, at the bottom-right corner of the
+   comments, set like the site footer's "Powered by" (small, faint, the name
+   in heading ink). Right under the pager when there is one. */
+.ecoku-powered-by {
+  margin-block-start: var(--space-4);
+  color: var(--color-text-faint);
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  text-align: end;
+
+  & a {
+    color: var(--color-heading);
+    text-decoration: none;
+    transition: color var(--duration-quick) var(--ease-out);
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+.ecoku-pagination:not([hidden]) + .ecoku-powered-by {
+  margin-block-start: 0;
+}
+
+/* ---- Narrow ---- */
+@media (width <= 620px) {
+  .ecoku-comments {
+    --ecoku-indent: 0.875rem;
+  }
+
+  .ecoku-composer {
+    padding: var(--space-2);
+  }
+
+  .ecoku-identity-grid,
+  .ecoku-reply-identity-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecoku-comments * {
+    transition: none !important;
+  }
+}

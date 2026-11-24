@@ -19,7 +19,7 @@ macOS 上的“日历”程序似乎有点鸡肋，虽然我对于它的使用�
 
 今天在 X 上看见别人分享一款日历工具，正好解决了这个小问题。把日历放在状态栏上，点击小图标，展示本月日历，农历也会在下方显示。
 
-点击具体日期就会进入系统日历程序，可以继续操作，比如添加日程等等。它是一款开源程序，叫做 [LunarBar]([https://github.com/LunarBar-app/LunarBar/]\(https://github.com/LunarBar-app/LunarBar/\))，还翻到开发者写的其开发背后的故事。
+点击具体日期就会进入系统日历程序，可以继续操作，比如添加日程等等。它是一款开源程序，叫做 [LunarBar](https://github.com/LunarBar-app/LunarBar/)，还翻到开发者写的其开发背后的故事。
 
 > LunarBar：[https://github.com/LunarBar-app/LunarBar/](https://github.com/LunarBar-app/LunarBar/)
 > 

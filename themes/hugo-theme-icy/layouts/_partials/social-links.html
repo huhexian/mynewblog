@@ -1,0 +1,17 @@
+{{- /*
+  Social links from site.Params.social: [{ name, url, title? }].
+  The icon is assets/icons/<name>.svg; title (default: name) is the accessible name.
+*/ -}}
+{{- with site.Params.social }}
+<ul class="social-links" role="list">
+  {{- range . }}
+  {{- $title := .title | default .name }}
+  <li>
+    <a class="icon-button" href="{{ .url | relURL }}" rel="me" title="{{ $title }}">
+      {{- partial "icon.html" .name -}}
+      <span class="visually-hidden">{{ $title }}</span>
+    </a>
+  </li>
+  {{- end }}
+</ul>
+{{- end }}

@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "lang": "zh-CN",
+  "name": "印记",
+  "scope": "/",
+  "short_name": "印记",
+  "start_url": "/",
+  "theme_color": "#ffffff"
+}

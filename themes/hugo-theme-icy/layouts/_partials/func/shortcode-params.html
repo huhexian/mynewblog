@@ -1,0 +1,17 @@
+{{- /*
+  Validate a shortcode's parameters: named only, and only known names.
+  Unknown names fail the build (catches typos such as `captoin`).
+  Params (dict): ctx (shortcode context), name (shortcode name), allowed (slice).
+*/ -}}
+{{- $allowed := slice }}
+{{- range .allowed }}{{ $allowed = $allowed | append (lower .) }}{{ end }}
+{{- with .ctx.Params }}
+  {{- if not $.ctx.IsNamedParams }}
+    {{- errorf "%s shortcode: use named parameters, e.g. src=\"…\": %s" $.name $.ctx.Position }}
+  {{- end }}
+  {{- range $key, $_ := . }}
+    {{- if not (in $allowed (lower $key)) }}
+      {{- errorf "%s shortcode: unknown parameter %q (allowed: %s): %s" $.name $key (delimit $.allowed ", ") $.ctx.Position }}
+    {{- end }}
+  {{- end }}
+{{- end }}

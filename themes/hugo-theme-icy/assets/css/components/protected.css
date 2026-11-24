@@ -1,0 +1,118 @@
+/*
+ * Protected posts: no card, no header — just the hint and the password
+ * field, centred where the text would be. The field and the unlock button
+ * are one control: the button sits inside the end of the field. (The
+ * heading stays for assistive tech, visually hidden.)
+ */
+
+.protected-lock {
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+}
+
+.protected-body {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-6);
+  text-align: center;
+}
+
+.protected-hint {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Field and button as one control. */
+.protected-form {
+  position: relative;
+  inline-size: min(100%, 24rem);
+}
+
+.protected-input {
+  display: block;
+  inline-size: 100%;
+  block-size: 2.75rem;
+  padding-inline: var(--space-3) 6rem;
+  border: var(--rule);
+  border-radius: var(--radius-m);
+  background-color: var(--color-bg);
+  color: var(--color-heading);
+  font-size: var(--text-sm);
+  transition: border-color var(--duration-quick) var(--ease-out), box-shadow var(--duration-quick) var(--ease-out);
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  &:hover {
+    border-color: color-mix(in oklch, var(--color-text-faint) 55%, var(--color-rule));
+  }
+
+  &:focus-visible {
+    border-color: var(--color-accent);
+    outline: 0;
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+  }
+
+  .protected-lock[data-state="error"] & {
+    border-color: var(--color-danger);
+  }
+}
+
+.protected-submit {
+  position: absolute;
+  inset-block: 0.3125rem;
+  inset-inline-end: 0.3125rem;
+  padding-inline: var(--space-4);
+  border: 0;
+  border-radius: calc(var(--radius-m) - 0.125rem);
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  transition: background-color var(--duration-quick) var(--ease-out);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: color-mix(in oklch, var(--color-accent) 88%, var(--color-heading));
+    }
+  }
+
+  &:disabled {
+    background-color: var(--color-rule);
+    color: var(--color-text-muted);
+    cursor: progress;
+  }
+}
+
+.protected-status {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+
+  &:empty {
+    display: none;
+  }
+
+  .protected-lock[data-state="error"] & {
+    color: var(--color-danger);
+  }
+}
+
+.protected-content:focus {
+  outline: none;
+}
+
+.protected-content > * + * {
+  margin-block-start: 1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .protected-content:not([hidden]) {
+    animation: protected-reveal var(--duration-base) var(--ease-out);
+  }
+}
+
+@keyframes protected-reveal {
+  from { opacity: 0; }
+}

@@ -1,0 +1,84 @@
+{{- /*
+  Audio player — one track. Used by the `music` shortcode (variant "single")
+  and by `playlist` rows (variant "row").
+
+  Ships a native <audio controls> so it works without JS; audio.js swaps in
+  the custom controls (cover doubles as the play button, seek bar, time).
+
+  Params (dict):
+    page      page (bundle lookup, feature registration)
+    track     dict: src (required), title, artist, cover, original, date, device
+    variant   "single" | "row"
+    label     shortcode name for error messages
+    position  caller position for error messages
+*/ -}}
+{{- $page := .page }}
+{{- $t := .track }}
+{{- $variant := .variant | default "single" }}
+{{- range slice "controls" "audio" }}{{ partial "assets/use.html" (dict "page" $page "feature" .) }}{{ end }}
+
+{{- $audio := partial "func/resolve-media.html" (dict "page" $page "src" $t.src "kind" "audio" "label" .label "position" .position) }}
+{{- $title := $t.title | default (path.Base $t.src) }}
+{{- $coverURL := "" }}
+{{- with $t.cover }}
+  {{- $cover := partial "func/resolve-media.html" (dict "page" $page "src" . "label" $.label "position" $.position) }}
+  {{- $coverURL = $cover.url }}
+  {{- with $cover.resource }}
+    {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") (ne .MediaType.SubType "gif") }}
+      {{- $coverURL = (.Fill "160x160 webp q80 center").RelPermalink }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- $details := slice }}
+{{- with $t.original }}{{ $details = $details | append (T "originalArtist" (dict "Name" .)) }}{{ end }}
+{{- with $t.date }}
+  {{- /* Accept "2024-05-12", "2024-05-12 21:30", full RFC 3339 or a front
+       matter date; anything unparseable is shown as written. */}}
+  {{- $raw := . }}
+  {{- $value := $raw }}
+  {{- if and (eq (printf "%T" $raw) "string") (findRE `^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}$` $raw) }}
+    {{- $value = printf "%s:00" (replace $raw " " "T") }}
+  {{- end }}
+  {{- $label := $raw | string }}
+  {{- with try (time.AsTime $value) }}
+    {{- if not .Err }}{{ $label = time.Format (T "dateLong") .Value }}{{ end }}
+  {{- end }}
+  {{- $details = $details | append (T "recordedOn" (dict "Date" $label)) }}
+{{- end }}
+{{- with $t.device }}{{ $details = $details | append . }}{{ end }}
+
+<figure class="audio-player {{- if eq $variant "row" }} is-row{{ end }}" data-audio-player aria-label="{{ $title }}">
+  <div class="audio-art">
+    {{- with $coverURL }}
+    <img src="{{ . }}" alt="" width="80" height="80" loading="lazy" decoding="async">
+    {{- else }}
+    {{ partial "icon.html" (dict "name" "music" "class" "audio-art-icon") }}
+    {{- end }}
+    {{ "<!--ui-->" | safeHTML }}<button class="audio-play" type="button" data-play hidden
+      aria-label="{{ T "playTitle" (dict "Title" $title) }}"
+      data-label-play="{{ T "playTitle" (dict "Title" $title) }}"
+      data-label-pause="{{ T "pauseTitle" (dict "Title" $title) }}">
+      {{- partial "icon.html" (dict "name" "play" "class" "icon-play") -}}
+      {{- partial "icon.html" (dict "name" "pause" "class" "icon-pause") -}}
+    </button>{{ "<!--/ui-->" | safeHTML }}
+  </div>
+  <div class="audio-main">
+    <div class="audio-meta">
+      <span class="audio-title">{{ $title }}</span>
+      {{- with $t.artist }}
+      <span class="audio-artist">{{ . }}</span>
+      {{- end }}
+    </div>
+    {{- with $details }}
+    <p class="audio-details">{{ range . }}<span>{{ . }}</span>{{ end }}</p>
+    {{- end }}
+    <audio class="media-native" src="{{ $audio.url }}" controls preload="{{ cond (eq $variant "row") "none" "metadata" }}"></audio>
+    {{ "<!--ui-->" | safeHTML }}<div class="media-progress" data-controls hidden>
+      <input class="media-seek" type="range" min="0" max="1000" step="1" value="0" data-seek aria-label="{{ T "seekTitle" (dict "Title" $title) }}">
+      <span class="media-time numeric"><span data-current>0:00</span><span class="media-time-sep" aria-hidden="true">/</span><span data-duration>--:--</span></span>
+    </div>{{ "<!--/ui-->" | safeHTML }}
+    {{ "<!--ui-->" | safeHTML }}<p class="media-error" role="status">{{ T "mediaError" }} <a href="{{ $audio.url }}">{{ T "openFile" }}</a></p>{{ "<!--/ui-->" | safeHTML }}
+  </div>
+</figure>
+{{- /* chomp trailing newline */ -}}

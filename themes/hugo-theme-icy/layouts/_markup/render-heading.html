@@ -1,0 +1,7 @@
+{{- /* Heading with a self-link. The anchor is a pointer convenience, hidden from AT and the tab order. */ -}}
+<h{{ .Level }} id="{{ .Anchor }}"
+  {{- with .Attributes.class }} class="{{ . }}"{{ end }}>
+  {{- .Text -}}
+  {{ "<!--ui-->" | safeHTML }}<a class="heading-anchor" href="#{{ .Anchor }}" aria-hidden="true" tabindex="-1">#</a>{{ "<!--/ui-->" | safeHTML }}
+</h{{ .Level }}>
+{{- /* chomp trailing newline */ -}}

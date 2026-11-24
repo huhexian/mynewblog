@@ -1,0 +1,26 @@
+{{- /*
+  details — a collapsible section on native <details> (overrides Hugo's built-in).
+
+    {{< details summary="Why native?" >}}Markdown content{{< /details >}}
+
+  Consecutive blocks stack as one group of cards. Blocks sharing a `name` form an
+  accordion: the browser keeps one of them open at a time, without script.
+  Names are scoped to the page, so groups in different articles never meet.
+
+  Params: summary (required, inline Markdown), name, open (true|false), class.
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "details" "allowed" (slice "summary" "name" "open" "class")) }}
+{{- $summary := .Get "summary" }}
+{{- if not $summary }}{{ errorf "details shortcode: summary is required: %s" .Position }}{{ end }}
+{{- $open := partial "func/bool-param.html" (dict "ctx" . "name" "open" "default" false "label" "details") }}
+{{- $name := "" }}
+{{- with .Get "name" }}
+  {{- $name = printf "details-%s" (substr (md5 (printf "%s|%s" $.Page.RelPermalink .)) 0 8) }}
+{{- end }}
+{{- partial "assets/use.html" (dict "page" .Page "feature" "details") }}
+<details class="details {{- with .Get "class" }} {{ . }}{{ end }}" {{- with $name }} name="{{ . }}"{{ end }}{{ if $open }} open{{ end }}>
+  <summary class="details-summary">{{ $summary | .Page.RenderString }}</summary>
+  <div class="details-content">
+    {{ .Inner | strings.TrimSpace | .Page.RenderString (dict "display" "block") }}
+  </div>
+</details>

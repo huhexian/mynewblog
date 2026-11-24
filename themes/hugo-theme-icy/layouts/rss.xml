@@ -1,0 +1,69 @@
+{{- /*
+  RSS 2.0 for the home page, sections and terms.
+  - Leaves out pages with `hiddenInRss = true` and protected pages (drafts
+    are only rendered with --buildDrafts).
+  - Stable guid (the permalink), one <category> per tag, channel image from
+    the brand icon (or params.images).
+  - params.rss.fullText = true adds the full content (<content:encoded>) with
+    theme UI and responsive-image attributes stripped and root-relative URLs
+    made absolute, so links and images work in feed readers.
+  - Item count: services.rss.limit (Hugo config).
+*/ -}}
+{{- $ctx := cond .IsHome site . }}
+{{- $pages := $ctx.RegularPages }}
+{{- if .IsHome }}{{ $pages = where site.RegularPages "Type" "in" site.MainSections }}{{ end }}
+{{- $pages = where $pages "Params.hiddenInRss" "!=" true }}
+{{- $pages = where $pages "Params.protected.enabled" "!=" true }}
+{{- $pages = $pages.ByPublishDate.Reverse }}
+{{- with site.Config.Services.RSS.Limit }}{{ if ge . 1 }}{{ $pages = first . $pages }}{{ end }}{{ end }}
+{{- $fullText := (site.Params.rss | default dict).fullText }}
+{{- $base := strings.TrimSuffix "/" site.Home.Permalink }}
+{{- $brand := partialCached "func/brand.html" "brand" }}
+{{- $rfc822 := "Mon, 02 Jan 2006 15:04:05 -0700" }}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ if .IsHome }}{{ site.Params.description | default site.Title }}{{ else }}{{ .Description | default (printf "%s · %s" .Title site.Title) }}{{ end }}</description>
+    {{- $channelImage := "" }}
+    {{- with $brand.icon512 }}{{ $channelImage = .Permalink }}{{ else }}{{ with site.Params.images }}{{ $channelImage = index . 0 | absURL }}{{ end }}{{ end }}
+    {{- with $channelImage }}
+    <image>
+      <url>{{ . }}</url>
+      <title>{{ site.Title }}</title>
+      <link>{{ site.Home.Permalink }}</link>
+    </image>
+    {{- end }}
+    <generator>Hugo</generator>
+    <language>{{ site.Language.Locale | default site.Language.Lang }}</language>
+    {{- with site.Copyright }}
+    <copyright>{{ . | markdownify | plainify }}</copyright>
+    {{- end }}
+    {{- with $pages }}
+    <lastBuildDate>{{ (index .ByLastmod.Reverse 0).Lastmod.Format $rfc822 }}</lastBuildDate>
+    {{- end }}
+    {{- with .OutputFormats.Get "rss" }}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType.Type | safeHTML }}
+    {{- end }}
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <guid isPermaLink="true">{{ .Permalink }}</guid>
+      <pubDate>{{ .PublishDate.Format $rfc822 }}</pubDate>
+      <description>{{ partial "func/description.html" . }}</description>
+      {{- range .GetTerms "tags" }}
+      <category>{{ .LinkTitle }}</category>
+      {{- end }}
+      {{- if $fullText }}
+        {{- $html := .Content | string | replaceRE `(?s)<!--ui-->.*?<!--/ui-->` "" }}
+        {{- $html = replaceRE `\s(?:srcset|sizes)="[^"]*"` "" $html }}
+        {{- $html = replaceRE `(\s(?:href|src|poster)=")/` (printf "${1}%s/" $base) $html }}
+        {{- $html = replace $html "]]>" "]]]]><![CDATA[>" }}
+      <content:encoded>{{ printf "<![CDATA[%s]]>" $html | safeHTML }}</content:encoded>
+      {{- end }}
+    </item>
+    {{- end }}
+  </channel>
+</rss>

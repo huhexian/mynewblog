@@ -1,0 +1,129 @@
+{{- /*
+  Site header (modern-web-guidance: ui-components/navbar).
+  One row when everything fits (a container query whose breakpoint is
+  computed from this very content at build time: head/header-layout.html).
+  Otherwise the links move into a full-screen panel opened by a menu button;
+  the language, search and color-scheme icons stay in the header. The panel
+  is the same <nav>, made a native popover (popovertarget): no script, Esc
+  and the close button dismiss it.
+*/ -}}
+{{- $search := false }}
+{{- /* The menu glyph: three bars that fold into a cross while the panel is
+     open (header.css), drawn the same in both buttons so they line up. */}}
+{{- $menuIcon := `<svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg>` | safeHTML }}
+{{- with site.Params.search.page }}{{ $search = site.GetPage . }}{{ end }}
+<header class="site-header">
+  <div class="header-inner">
+    {{ partial "site-brand.html" . }}
+
+    {{- with site.Menus.main }}
+    <nav class="site-nav" id="site-nav" popover aria-label="{{ T "primaryNavigation" }}">
+      <button class="icon-button menu-close" type="button" popovertarget="site-nav" popovertargetaction="hide">
+        {{- $menuIcon -}}
+        <span class="visually-hidden">{{ T "closeMenu" }}</span>
+      </button>
+      <ul class="site-menu" role="list">
+        {{- range . }}
+          {{- /* The search page already has the header icon; never list it twice. */}}
+          {{- if and $search .Page (eq .Page $search) }}{{ continue }}{{ end }}
+          {{- $current := $.IsMenuCurrent "main" . }}
+          {{- $ancestor := $.HasMenuCurrent "main" . }}
+        <li><a href="{{ .URL }}"
+          {{- if $current }} aria-current="page"{{ else if $ancestor }} aria-current="true"{{ end }}>{{ .Name }}</a></li>
+        {{- end }}
+      </ul>
+      {{- /* Compact panel only (hidden by header-wide.css): the low-frequency
+           settings that live as icons in the wide header — language and
+           color scheme — as quiet text choices at the bottom. */}}
+      {{- $schemes := site.Params.colorScheme.toggle }}
+      {{- if or hugo.IsMultilingual $schemes }}
+      <div class="menu-prefs">
+        {{- if hugo.IsMultilingual }}
+        <p class="menu-prefs-row" role="group" aria-label="{{ T "language" }}">
+          {{- range $i, $s := hugo.Sites }}
+            {{- $lang := .Language.Lang }}
+            {{- $locale := or .Language.Locale $lang }}
+            {{- if $i }}<span class="menu-prefs-dot" aria-hidden="true"></span>{{ end }}
+            {{- if eq $lang site.Language.Lang }}
+          <span class="menu-prefs-current" lang="{{ $locale }}" aria-current="true">{{ .Language.Label }}</span>
+            {{- else }}
+              {{- $href := .Home.RelPermalink }}
+              {{- range $.Translations }}{{ if eq .Language.Lang $lang }}{{ $href = .RelPermalink }}{{ end }}{{ end }}
+          <a href="{{ $href }}" hreflang="{{ $locale }}" lang="{{ $locale }}">{{ .Language.Label }}</a>
+            {{- end }}
+          {{- end }}
+        </p>
+        {{- end }}
+        {{- if $schemes }}
+        <p class="menu-prefs-row menu-prefs-scheme" role="group" aria-label="{{ T "colorSchemeLabel" }}">
+          {{- range $i, $choice := slice "light" "dark" "system" }}
+            {{- if $i }}<span class="menu-prefs-dot" aria-hidden="true"></span>{{ end }}
+          <button type="button" data-scheme-set="{{ $choice }}" aria-pressed="false">{{ T (printf "scheme_%s" $choice) }}</button>
+          {{- end }}
+        </p>
+        {{- end }}
+      </div>
+      {{- end }}
+    </nav>
+    {{- end }}
+
+    <div class="header-actions">
+      {{- /* Multilingual sites (wide header; on phones the menu panel lists
+           the languages): a language icon per other language, linking to
+           this page's translation or, without one, that language's home.
+           With more than two languages the icon carries a short code
+           (params.languageShort, default the first two letters of the code). */}}
+      {{- if hugo.IsMultilingual }}
+        {{- $several := gt (len hugo.Sites) 2 }}
+        {{- range hugo.Sites }}
+          {{- $lang := .Language.Lang }}
+          {{- if eq $lang site.Language.Lang }}{{ continue }}{{ end }}
+          {{- $href := .Home.RelPermalink }}
+          {{- range $.Translations }}{{ if eq .Language.Lang $lang }}{{ $href = .RelPermalink }}{{ end }}{{ end }}
+          {{- $locale := or .Language.Locale $lang }}
+      <a class="icon-button lang-switch" href="{{ $href }}" hreflang="{{ $locale }}" lang="{{ $locale }}" title="{{ .Language.Label }}">
+        {{- partial "icon.html" "language" -}}
+        {{- if $several }}<span class="lang-switch-code" aria-hidden="true">{{ .Params.languageShort | default (upper (substr $lang 0 2)) }}</span>{{ end }}
+        <span class="visually-hidden">{{ .Language.Label }}</span>
+      </a>
+        {{- end }}
+      {{- end }}
+      {{- with $search }}
+      <a class="icon-button" href="{{ .RelPermalink }}" title="{{ T "search" }}" {{- if eq . $ }} aria-current="page"{{ end }}>
+        {{- partial "icon.html" "search" -}}
+        <span class="visually-hidden">{{ T "search" }}</span>
+      </a>
+      {{- end }}
+      {{- if site.Params.colorScheme.toggle }}
+      {{- /* In place from the first paint, so the header never shifts while
+           scripts load (it used to appear only once main.js ran, nudging the
+           header on every navigation); without scripting it is hidden by CSS.
+           One drawn glyph morphs between a sun and a moon (CSS reads the
+           rendered scheme); the label for the action on offer is shown to
+           assistive tech the same way. */}}
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+        <svg class="theme-toggle-icon" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false">
+          <mask id="theme-toggle-cut">
+            <rect width="24" height="24" fill="#fff"/>
+            <circle class="theme-toggle-shade" cx="17" cy="7" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-toggle-body" cx="12" cy="12" r="8.5" fill="currentColor" mask="url(#theme-toggle-cut)"/>
+          <g class="theme-toggle-rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4L6 18M18 6l1.4-1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden theme-toggle-to-dark">{{ T "switchToDark" }}</span>
+        <span class="visually-hidden theme-toggle-to-light">{{ T "switchToLight" }}</span>
+      </button>
+      {{- end }}
+      {{- if site.Menus.main }}
+      {{- /* Compact layout only (hidden by header-wide.css), at the far right,
+           where the thumb reaches it. */}}
+      <button class="icon-button menu-toggle" type="button" popovertarget="site-nav" aria-haspopup="true">
+        {{- $menuIcon -}}
+        <span class="visually-hidden">{{ T "menu" }}</span>
+      </button>
+      {{- end }}
+    </div>
+  </div>
+</header>

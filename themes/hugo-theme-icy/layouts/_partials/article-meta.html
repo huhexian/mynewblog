@@ -1,0 +1,16 @@
+{{- /* Article metadata, items joined by a small middle dot (drawn in CSS). */ -}}
+{{- $article := site.Params.article | default dict }}
+<p class="article-meta">
+  {{- if not .Date.IsZero }}
+  <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date | time.Format (T "dateLong") }}</time>
+  {{- end }}
+  {{- if and (not .Lastmod.IsZero) (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}
+  <span>{{ T "updatedOn" (dict "Date" (.Lastmod | time.Format (T "dateLong"))) }}</span>
+  {{- end }}
+  {{- if ne $article.readingTime false }}
+  <span>{{ T "readingTime" .ReadingTime }}</span>
+  {{- end }}
+  {{- if ne $article.wordCount false }}
+  <span>{{ T "wordCount" .WordCount }}</span>
+  {{- end }}
+</p>

@@ -1,0 +1,33 @@
+{{- /*
+  live-photo — a still photo paired with a short video (like a phone's Live Photo).
+  Hover plays it muted (desktop); long-press or the LIVE button plays it with
+  sound. Without JavaScript, or when the video cannot play, the still remains.
+  Standalone only: a moving tile does not belong in a gallery grid (use
+  gallery-item there).
+
+    {{< live-photo src="still.jpg" video="clip.mp4" alt="…" caption="…" >}}
+
+  Params: src (still, required), video (required), alt, caption (Markdown),
+  width, height, zoom (true|false: open the still in the image viewer;
+  default params.livePhoto.zoom, which is false — the viewer's CSS and JS
+  then load only where a page uses them).
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "live-photo" "allowed" (slice "src" "video" "alt" "caption" "width" "height" "zoom")) }}
+{{- if and .Parent (eq .Parent.Name "gallery") }}
+  {{- /* .Position of a nested shortcode is not reliable: name the photo and the gallery. */}}
+  {{- errorf "live-photo shortcode (src %q) cannot be used inside gallery (use gallery-item there): gallery at %s" (.Get "src") .Parent.Position }}
+{{- end }}
+{{- $still := partial "func/resolve-media.html" (dict "page" .Page "src" (.Get "src") "label" "live-photo shortcode" "position" .Position) }}
+{{- with .Get "width" }}{{ $still = merge $still (dict "width" (int .)) }}{{ end }}
+{{- with .Get "height" }}{{ $still = merge $still (dict "height" (int .)) }}{{ end }}
+{{- if not (.Get "video") }}{{ errorf "live-photo shortcode: video is required: %s" .Position }}{{ end }}
+{{- $video := partial "func/resolve-media.html" (dict "page" .Page "src" (.Get "video") "kind" "video" "label" "live-photo shortcode" "position" .Position) }}
+{{- $live := site.Params.livePhoto | default dict }}
+{{- partial "media/live-photo.html" (dict
+  "page" .Page
+  "still" $still
+  "video" $video
+  "alt" (.Get "alt" | default "")
+  "caption" (.Get "caption")
+  "zoom" (partial "func/bool-param.html" (dict "ctx" . "name" "zoom" "default" ($live.zoom | default false) "label" "live-photo"))
+) }}

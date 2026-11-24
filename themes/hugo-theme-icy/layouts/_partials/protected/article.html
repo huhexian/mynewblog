@@ -1,0 +1,88 @@
+{{- /*
+  Protected (password) post: front matter
+
+    [protected]
+      enabled = true
+      password = "…"
+      hint = "optional, shown above the form"
+
+  What the published page reveals: title, date, a lock form. The content and
+  every file in the page bundle are encrypted after the build by
+  tools/protect/seal.mjs (PBKDF2-SHA-256 + AES-256-GCM); the browser decrypts
+  them with Web Crypto. Before sealing, the page carries the plaintext in two
+  build markers — `hugo server` uses them so authors can preview the unlock
+  flow; production output MUST be sealed (and verified) before deploying.
+
+  Boundary: this hides content in the client; it is not server-side access
+  control. The ciphertext is public and weak passwords can be guessed offline.
+*/ -}}
+{{- $p := .Params.protected }}
+{{- $password := printf "%v" ($p.password | default "") }}
+{{- if not $password }}
+  {{- errorf "protected page %s needs protected.password" .File.Path }}
+{{- end }}
+{{- range slice "article" "prose" "protected" }}{{ partial "assets/use.html" (dict "page" $ "feature" .) }}{{ end }}
+{{- /* Render the content now: shortcodes and render hooks register the
+     features the unlocked content needs, so their assets are on the page. */}}
+{{- $content := .Content | string }}
+{{- if strings.Contains $content "footnote-ref" }}{{ partial "assets/use.html" (dict "page" . "feature" "footnotes") }}{{ end }}
+{{- /* A deploy reminder, so never in `hugo server` (where output is not
+     deployed and --panicOnWarning must keep working). A CI that always seals
+     can silence it with ignoreLogs = ['icy-protected-unsealed']. */}}
+{{- if and hugo.IsProduction (not hugo.IsServer) }}
+  {{- warnidf "icy-protected-unsealed" "icy: %s is password-protected; run tools/protect/seal.mjs (and verify.mjs) on the output before deploying" .RelPermalink }}
+{{- end }}
+
+<article class="article is-protected">
+  <header class="article-header">
+    <h1 class="article-title">
+      {{- .Title -}}
+      <span class="title-flag">{{ T "protectedLabel" }}</span>
+      {{- if .Draft }}<span class="title-flag">{{ T "draft" }}</span>{{ end -}}
+    </h1>
+    <p class="article-meta">
+      {{- if not .Date.IsZero }}
+      <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date | time.Format (T "dateLong") }}</time>
+      {{- end }}
+    </p>
+  </header>
+
+  <div class="prose" data-protected
+    data-text-empty="{{ T "protectedEmpty" }}"
+    data-text-working="{{ T "protectedWorking" }}"
+    data-text-wrong="{{ T "protectedWrong" }}"
+    data-text-unavailable="{{ T "protectedUnavailable" }}"
+    data-text-unsupported="{{ T "protectedUnsupported" }}">
+    <section class="protected-lock" data-protected-lock aria-labelledby="protected-title">
+      <h2 class="visually-hidden" id="protected-title">{{ T "protectedTitle" }}</h2>
+      <div class="protected-body">
+        {{- with $p.hint }}
+        <p class="protected-hint" id="protected-hint">{{ T "protectedHint" (dict "Hint" .) }}</p>
+        {{- end }}
+        <form class="protected-form" data-protected-form novalidate>
+          <label class="visually-hidden" for="protected-password">{{ T "protectedPassword" }}</label>
+          <input class="protected-input" id="protected-password" name="password" type="password"
+            autocomplete="current-password" required
+            placeholder="{{ T "protectedPassword" }}"
+            aria-describedby="protected-status{{ with $p.hint }} protected-hint{{ end }}">
+          <button class="protected-submit" type="submit">{{ T "protectedUnlock" }}</button>
+        </form>
+        <p class="protected-status" id="protected-status" role="status" data-protected-status></p>
+        <noscript><p class="protected-status">{{ T "protectedNoScript" }}</p></noscript>
+      </div>
+    </section>
+    <div class="protected-content" data-protected-content hidden tabindex="-1"></div>
+  </div>
+
+
+  {{- partial "comments.html" . }}
+</article>
+
+{{- /* Build markers, consumed and removed by tools/protect/seal.mjs. */}}
+{{- $terms := slice }}
+{{- range $taxonomy, $_ := site.Taxonomies }}
+  {{- range $.GetTerms $taxonomy }}{{ $terms = $terms | append .RelPermalink }}{{ end }}
+{{- end }}
+{{- $build := dict "version" 1 "password" $password "route" .RelPermalink "termRoutes" ($terms | uniq) }}
+{{ printf `<script id="icy-protected-build" type="text/plain">%s</script>` ($build | jsonify | base64Encode) | safeHTML }}
+{{ printf `<script id="icy-protected-source" type="text/plain">%s</script>` ($content | base64Encode) | safeHTML }}

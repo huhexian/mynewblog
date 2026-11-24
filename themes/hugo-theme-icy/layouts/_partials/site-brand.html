@@ -1,0 +1,8 @@
+{{- /*
+  Site name in the header: the wordmark (params.brand.wordmark) when
+  configured, otherwise the title set as text. See func/wordmark.html.
+*/ -}}
+{{- $svg := partialCached "func/wordmark.html" . "wordmark" }}
+<a class="site-name{{ if $svg }} has-wordmark{{ end }}" href="{{ site.Home.RelPermalink }}" {{- if .IsHome }} aria-current="page"{{ end }}>
+  {{- if $svg }}{{ $svg | safeHTML }}<span class="visually-hidden">{{ site.Title }}</span>{{ else }}{{ site.Title }}{{ end -}}
+</a>

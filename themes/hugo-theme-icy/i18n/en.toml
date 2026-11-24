@@ -1,0 +1,150 @@
+# Chrome
+skipToContent = "Skip to content"
+primaryNavigation = "Primary"
+footerNavigation = "Footer"
+backToTop = "Back to top"
+poweredBy = "Powered by {{ .Hugo }} & {{ .Theme }}"
+configFormat = "Configuration format"
+menu = "Menu"
+closeMenu = "Close menu"
+language = "Language"
+colorSchemeLabel = "Color scheme"
+scheme_light = "Light"
+scheme_dark = "Dark"
+scheme_system = "System"
+search = "Search"
+switchToDark = "Switch to dark theme"
+switchToLight = "Switch to light theme"
+
+# Home / lists
+recentPosts = "Recent posts"
+draft = "Draft"
+pagination = "Pagination"
+newerPosts = "Newer posts"
+olderPosts = "Older posts"
+pageXofY = "Page {{ .Current }} of {{ .Total }}"
+
+# Article
+tableOfContents = "Contents"
+tags = "Tags"
+categories = "Categories"
+updatedOn = "Updated {{ .Date }}"
+table = "Table"
+
+copyrightLabel = "Copyright"
+copyrightAuthor = "Author"
+copyrightPublished = "Published"
+copyrightLicense = "License"
+
+# Media
+imageViewer = "Image viewer"
+closeViewer = "Close"
+previousImage = "Previous image"
+nextImage = "Next image"
+playLivePhoto = "Play Live Photo"
+livePhotoBadge = "LIVE"
+play = "Play"
+pause = "Pause"
+playTitle = "Play {{ .Title }}"
+pauseTitle = "Pause {{ .Title }}"
+seek = "Seek"
+seekTitle = "Seek in {{ .Title }}"
+mute = "Mute"
+unmute = "Unmute"
+fullscreen = "Full screen"
+exitFullscreen = "Exit full screen"
+mediaError = "This file can't be played."
+openFile = "Open it directly"
+originalArtist = "Original by {{ .Name }}"
+recordedOn = "Recorded {{ .Date }}"
+youtubeVideo = "YouTube video"
+playOnYouTube = "Play YouTube video: {{ .Title }}"
+youtubeUnreachable = "YouTube can't be reached right now."
+retry = "Retry"
+openOnYouTube = "Open on YouTube"
+
+# Writing
+peleZoomIn = "Zoom in"
+peleZoomOut = "Zoom out"
+peleReset = "Reset zoom"
+codeCopy = "Copy"
+codeCopied = "Copied"
+codeCopyFailed = "Copy failed"
+repoArchived = "Archived"
+repoStars = "Stars"
+repoForks = "Forks"
+
+# Search
+searchLabel = "Search posts"
+searchPlaceholder = "Search titles, tags and text"
+searchHint = "Type to search. Separate several words with spaces."
+searchLoading = "Loading the index…"
+searchPartial = "The full-text index is still loading; results may be incomplete."
+searchCount = "{count} results."
+searchEmpty = "Nothing matches “{query}”."
+searchError = "The search index failed to load. Reload the page to try again."
+searchNoScript = "Search needs JavaScript."
+
+# Comments
+comments = "Comments"
+commentsRetry = "Reload comments"
+commentsNoScript = "Comments need JavaScript."
+
+# Protected posts
+protectedLabel = "Protected"
+protectedTitle = "Enter the password to continue reading"
+protectedHint = "Hint: {{ .Hint }}"
+protectedPassword = "Password"
+protectedUnlock = "Unlock"
+protectedEmpty = "Enter the password first."
+protectedWorking = "Checking and unlocking…"
+protectedWrong = "Wrong password, or the content could not be verified."
+protectedUnavailable = "The content cannot be loaded right now. Try again later."
+protectedUnsupported = "This browser cannot decrypt locally. Try a newer browser."
+protectedNoScript = "Unlocking needs JavaScript."
+protectedDescription = "This post is password-protected."
+
+# Pages
+friendsEmpty = "No friends listed yet. Add them in data/friends.yaml."
+changelogEmpty = "No changes recorded yet."
+
+# 404
+notFoundTitle = "Page not found"
+notFoundBody = "The link may be broken, or the page has moved."
+backHome = "Back to home"
+
+# Alerts
+alert_note = "Note"
+alert_tip = "Tip"
+alert_important = "Important"
+alert_warning = "Warning"
+alert_caution = "Caution"
+
+# Dates: Go layouts or Hugo localized tokens (see time.Format)
+dateLong = ":date_long"
+dateFull = "2006-01-02"
+dateShort = "Jan 2"
+
+[allPosts]
+one = "All posts"
+other = "All posts"
+
+[postCount]
+one = "{{ .Count }} post"
+other = "{{ .Count }} posts"
+
+[postTotal]
+one = "{{ .Count }} post"
+other = "{{ .Count }} posts"
+
+[readingTime]
+one = "{{ .Count }} min"
+other = "{{ .Count }} min"
+
+[changeCount]
+one = "{{ .Count }} change"
+other = "{{ .Count }} changes"
+
+[wordCount]
+one = "{{ .Count }} word"
+other = "{{ .Count }} words"

@@ -1,0 +1,45 @@
+/* 404: plain text, centred — a large faint code, the title, one sentence and
+   one way home. */
+.not-found {
+  display: grid;
+  justify-items: center;
+  padding-block: var(--space-8) var(--space-4);
+  text-align: center;
+}
+
+.not-found-code {
+  color: var(--color-text-faint);
+  font-size: clamp(3.5rem, 2.5rem + 4vw, 5rem);
+  font-weight: var(--weight-light);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.not-found-title {
+  margin-block-start: var(--space-4);
+  font-size: var(--text-xl);
+}
+
+.not-found-body {
+  margin-block-start: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+.not-found-home {
+  margin-block-start: var(--space-6);
+  padding: 0.5rem 1.25rem;
+  border: var(--rule);
+  border-radius: var(--radius-full);
+  color: var(--color-heading);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition:
+    border-color var(--duration-quick) var(--ease-out),
+    color var(--duration-quick) var(--ease-out);
+
+  &:hover {
+    border-color: var(--color-accent-line);
+    color: var(--color-accent);
+  }
+}

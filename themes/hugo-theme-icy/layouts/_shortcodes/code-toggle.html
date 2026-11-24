@@ -1,0 +1,57 @@
+{{- /*
+  code-toggle — one configuration example in TOML and YAML, as tabs
+  (overrides Hugo's built-in). Write the example once, in TOML; the YAML tab
+  is converted at build time (transform.Remarshal: keys come out sorted and
+  comments are dropped, so put explanations in the TOML or around the block).
+
+    {{< code-toggle file="hugo" >}}
+    [params.style]
+      accent = '#b75133'
+    {{< /code-toggle >}}
+
+  Params: file (file name without extension, shown in the tab panels, e.g.
+  "hugo" → hugo.toml / hugo.yaml; with fm=true it names the content file,
+  "index" → index.md), fm (true: front matter — wrapped in +++ / ---
+  delimiters). copy is accepted (and ignored) for compatibility with
+  Hugo's built-in shortcode: every code block has a copy button.
+*/ -}}
+{{- partial "func/shortcode-params.html" (dict "ctx" . "name" "code-toggle" "allowed" (slice "file" "fm" "copy")) }}
+{{- $toml := .Inner | strings.TrimSpace }}
+{{- if not $toml }}{{ errorf "code-toggle shortcode needs TOML content: %s" .Position }}{{ end }}
+{{- /* Parse as TOML explicitly (by file extension): Remarshal on a string
+     guesses the format from the first ":", "{", "<" or "=", so a comment
+     mentioning <figure> or "note:" made valid TOML fail. The resource name
+     carries the content hash (FromString caches by name). */}}
+{{- $yaml := "" }}
+{{- with try (resources.FromString (printf "code-toggle/%s.toml" (md5 $toml)) $toml | transform.Unmarshal) }}
+  {{- with .Err }}{{ errorf "code-toggle shortcode: the content is not valid TOML (%s): %s" . $.Position }}{{ end }}
+  {{- with .Value }}{{ $yaml = transform.Remarshal "yaml" . | strings.TrimSpace }}{{ end }}
+{{- end }}
+{{- $fm := partial "func/bool-param.html" (dict "ctx" . "name" "fm" "default" false "label" "code-toggle") }}
+{{- $file := .Get "file" | default "" }}
+{{- $formats := slice
+  (dict "label" "TOML" "lang" "toml" "ext" "toml" "code" (cond $fm (printf "+++\n%s\n+++" $toml) $toml))
+  (dict "label" "YAML" "lang" "yaml" "ext" "yaml" "code" (cond $fm (printf "---\n%s\n---" $yaml) $yaml))
+}}
+{{- $id := printf "toggle-%s" (substr (md5 (printf "%s|%v" .Page.RelPermalink .Position)) 0 8) }}
+{{- partial "assets/use.html" (dict "page" .Page "feature" "tabs") }}
+<div class="tabs code-toggle" data-tabs>
+  {{ "<!--ui-->" | safeHTML }}<div class="tabs-list" role="tablist" aria-label="{{ T "configFormat" }}">
+    {{- range $i, $f := $formats }}
+    {{- $n := add $i 1 }}
+    <button class="tabs-tab" type="button" role="tab" id="{{ $id }}-tab-{{ $n }}" aria-controls="{{ $id }}-panel-{{ $n }}"
+      aria-selected="{{ eq $n 1 }}" tabindex="{{ cond (eq $n 1) 0 -1 }}">{{ $f.label }}</button>
+    {{- end }}
+  </div>{{ "<!--/ui-->" | safeHTML }}
+  {{- range $i, $f := $formats }}
+  {{- $n := add $i 1 }}
+  {{- /* Front matter lives in a content file: "index" → index.md in both tabs. */}}
+  {{- $name := cond $fm (printf "%s.md" $file) (printf "%s.%s" $file $f.ext) }}
+  {{- $fence := printf "```%s%s\n%s\n```" $f.lang (cond (ne $file "") (printf " {filename=%q}" $name) "") $f.code }}
+  <div class="tabs-panel" role="tabpanel" id="{{ $id }}-panel-{{ $n }}" aria-labelledby="{{ $id }}-tab-{{ $n }}" tabindex="0"
+    {{- if ne $n 1 }} hidden="until-found"{{ end }}>
+    <p class="tabs-panel-title" aria-hidden="true">{{ $f.label }}</p>
+    {{ $fence | $.Page.RenderString (dict "display" "block") }}
+  </div>
+  {{- end }}
+</div>

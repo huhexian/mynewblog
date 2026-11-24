@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="text-scale" content="scale">
+<meta name="color-scheme" content="light dark">
+<script>try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark"){document.documentElement.dataset.colorScheme=s;document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}</script>
+
+<style>:root{--accent:#b75133}</style>
+
+
+<title>使用 Vercel &#43; Supabase 零成本部署 Umami | 印记</title>
+<meta name="description" content="早些年用过友盟、51.la、百度统计、Google Analytics，各有各的优缺点，百度统计目前只允许备案网站使用，友盟和51.la体验效果不喜欢，Google Analytics 访问也不太好，权衡之下使用这款开源的网站统计服务——Umami。">
+<link rel="canonical" href="http://localhost:1313/umami-using-vercel-supabase.html">
+
+<link rel="icon" href="/img/favicon.png" type="image/png" sizes="32x32">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241f1e" media="(prefers-color-scheme: dark)">
+
+<link rel="stylesheet" href="/css/core.css">
+
+<link rel="stylesheet" href="/css/article.css">
+
+<link rel="stylesheet" href="/css/prose.css">
+
+<link rel="stylesheet" href="/css/toc.css">
+
+<link rel="stylesheet" href="/css/media.css">
+
+<link rel="stylesheet" href="/css/viewer.css">
+
+<script type="module" src="/js/main.js"></script>
+
+<script type="module" src="/js/toc.js"></script>
+
+<script type="module" src="/js/media.js"></script>
+
+<script type="module" src="/js/viewer.js"></script>
+
+
+<style>@layer reset,tokens,base,layout,components,utilities;@layer components{@container site-header (inline-size >= 31.75rem){.header-inner{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav actions";column-gap:var(--space-6)}.site-nav[popover],.site-nav[popover]:not(:popover-open){position:static;display:block;justify-self:end;inline-size:auto;block-size:auto;margin:0;padding:0;border:0;background:none;color:inherit;overflow:visible}.menu-toggle,.menu-close,.menu-prefs{display:none}.header-actions>.lang-switch{display:inline-grid}@media(scripting:enabled){.header-actions>.theme-toggle{display:inline-grid}}.site-menu{gap:var(--space-1);margin:0;padding:0;overflow:visible;border:0;border-radius:0;& li{flex:none}& a{padding:var(--space-2) var(--space-3);border-radius:0;&:is([aria-current=page],[aria-current=true]){background-color:transparent}&:after{content:"";position:absolute;inset-inline:var(--space-3);inset-block-end:.125rem;block-size:2px;border-radius:var(--radius-full);background-color:var(--color-accent);scale:0 1;transform-origin:left center;transition:scale var(--duration-base) var(--ease-out)}&:is([aria-current=page],[aria-current=true]):after{scale:1 1}}}}}
+</style>
+
+
+
+
+<script type="speculationrules">{"prefetch":[{"eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[rel~=nofollow], [data-no-speculate], [download]"}}]}}]}</script>
+
+
+
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="青山">
+<meta property="og:site_name" content="印记">
+<meta property="og:title" content="使用 Vercel &#43; Supabase 零成本部署 Umami">
+<meta property="og:description" content="早些年用过友盟、51.la、百度统计、Google Analytics，各有各的优缺点，百度统计目前只允许备案网站使用，友盟和51.la体验效果不喜欢，Google Analytics 访问也不太好，权衡之下使用这款开源的网站统计服务——Umami。">
+<meta property="og:url" content="http://localhost:1313/umami-using-vercel-supabase.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-04-24T00:00:00&#43;00:00">
+<meta property="article:modified_time" content="2023-04-24T00:00:00&#43;00:00">
+<meta property="article:section" content="文章">
+<meta property="article:tag" content="Github">
+<meta property="article:tag" content="Supabase">
+<meta property="article:tag" content="Umami">
+<meta property="article:tag" content="Vercel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Vercel &#43; Supabase 零成本部署 Umami">
+<meta name="twitter:description" content="早些年用过友盟、51.la、百度统计、Google Analytics，各有各的优缺点，百度统计目前只允许备案网站使用，友盟和51.la体验效果不喜欢，Google Analytics 访问也不太好，权衡之下使用这款开源的网站统计服务——Umami。">
+
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"http://localhost:1313/","name":"印记","position":1},{"@type":"ListItem","item":"http://localhost:1313/blog/index.html","name":"文章","position":2},{"@type":"ListItem","item":"http://localhost:1313/umami-using-vercel-supabase.html","name":"使用 Vercel + Supabase 零成本部署 Umami","position":3}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"dateModified":"2023-04-24T00:00:00+00:00","datePublished":"2023-04-24T00:00:00+00:00","description":"早些年用过友盟、51.la、百度统计、Google Analytics，各有各的优缺点，百度统计目前只允许备案网站使用，友盟和51.la体验效果不喜欢，Google Analytics 访问也不太好，权衡之下使用这款开源的网站统计服务——Umami。","headline":"使用 Vercel + Supabase 零成本部署 Umami","inLanguage":"zh-CN","keywords":["Github","Supabase","Umami","Vercel"],"mainEntityOfPage":{"@id":"http://localhost:1313/umami-using-vercel-supabase.html","@type":"WebPage"},"name":"使用 Vercel + Supabase 零成本部署 Umami","publisher":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"url":"http://localhost:1313/umami-using-vercel-supabase.html","wordCount":896}</script>
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  
+<header class="site-header">
+  <div class="header-inner">
+    
+<a class="site-name" href="/">印记</a>
+
+    <nav class="site-nav" id="site-nav" popover aria-label="主导航">
+      <button class="icon-button menu-close" type="button" popovertarget="site-nav" popovertargetaction="hide"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">关闭菜单</span>
+      </button>
+      <ul class="site-menu" role="list">
+        <li><a href="/blog/index.html" aria-current="true">文章</a></li>
+        <li><a href="/tags/">标签</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/now.html">Now</a></li>
+        <li><a href="/roll.html">Roll</a></li>
+      </ul>
+      <div class="menu-prefs">
+        <p class="menu-prefs-row menu-prefs-scheme" role="group" aria-label="配色">
+          <button type="button" data-scheme-set="light" aria-pressed="false">浅色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="dark" aria-pressed="false">深色</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="system" aria-pressed="false">跟随系统</button>
+        </p>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a class="icon-button" href="/search/" title="搜索"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="visually-hidden">搜索</span>
+      </a>
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+        <svg class="theme-toggle-icon" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false">
+          <mask id="theme-toggle-cut">
+            <rect width="24" height="24" fill="#fff"/>
+            <circle class="theme-toggle-shade" cx="17" cy="7" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-toggle-body" cx="12" cy="12" r="8.5" fill="currentColor" mask="url(#theme-toggle-cut)"/>
+          <g class="theme-toggle-rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4L6 18M18 6l1.4-1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden theme-toggle-to-dark">切换到深色</span>
+        <span class="visually-hidden theme-toggle-to-light">切换到浅色</span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" popovertarget="site-nav" aria-haspopup="true"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">菜单</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main id="main" class="page-grid" tabindex="-1">
+
+
+
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">使用 Vercel &#43; Supabase 零成本部署 Umami</h1>
+    
+<p class="article-meta">
+  <time datetime="2023-04-24T00:00:00Z">2023年4月24日</time>
+  <span>2 分钟</span>
+  <span>896 字</span>
+</p>
+
+    <ul class="article-tags" role="list" aria-label="标签">
+      <li><a href="/tags/github/" rel="tag">#Github</a></li>
+      <li><a href="/tags/supabase/" rel="tag">#Supabase</a></li>
+      <li><a href="/tags/umami/" rel="tag">#Umami</a></li>
+      <li><a href="/tags/vercel/" rel="tag">#Vercel</a></li>
+    </ul>
+  </header>
+  <nav class="toc-rail" role="navigation" aria-labelledby="toc-rail-title" data-toc>
+    <p class="toc-title" id="toc-rail-title">目录</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e5%9c%a8-supabase-%e5%bb%ba%e7%ab%8b%e6%95%b0%e6%8d%ae%e5%ba%93">在 Supabase 建立数据库</a>
+  </li>
+  <li>
+    <a href="#%e5%9c%a8-vercel-%e9%83%a8%e7%bd%b2-umami">在 Vercel 部署 Umami</a>
+  </li>
+  <li>
+    <a href="#%e4%bd%bf%e7%94%a8-vercel-%e8%87%aa%e5%b8%a6%e7%9a%84-storage-%e6%95%b0%e6%8d%ae%e5%ba%93">使用 Vercel 自带的 Storage 数据库</a>
+  </li>
+  <li>
+    <a href="#%e4%bd%bf%e7%94%a8-umami">使用 Umami</a>
+  </li>
+</ul>
+
+
+  </nav>
+
+  <div class="prose">
+    <p>早些年用过友盟、51.la、百度统计、Google Analytics，各有各的优缺点，百度统计目前只允许备案网站使用，友盟和51.la体验效果不喜欢，Google Analytics 访问也不太好，权衡之下使用这款开源的网站统计服务——Umami。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085849.6uue596hp3k0.webp" data-viewer>
+<img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085849.6uue596hp3k0.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>根据官网介绍，<a href="https://github.com/umami-software/umami" rel="external">Umami</a> 是一款简单、易用、美观、轻量、快速、隐私、安全的开源免费网站统计工具，从部署到使用，都是简单、快速，体验也很满意。</p>
+<p><a href="https://umami.is/docs/" rel="external">官方文档</a>介绍了多种部署方式，包括使用自己服务器，或者第三方平台，例如 Netlify、Heroku、Railway 等等，不过这些第三方平台一般都不提供数据库服务，所以我选择使用 Supabse 提供的免费数据库服务，以及 Vercel 的部署。</p>
+<p>在使用前，先注册并登录好 <a href="https://github.com" rel="external">GitHub</a>、<a href="https://vercel.com/" rel="external">Vercel</a>、<a href="https://supabase.com/" rel="external">Supabase</a> 三个平台，并在 GitHub 平台 Fork Umami 的项目仓库。</p>
+<h2 id="在-supabase-建立数据库">在 Supabase 建立数据库<!--ui--><a class="heading-anchor" href="#%e5%9c%a8-supabase-%e5%bb%ba%e7%ab%8b%e6%95%b0%e6%8d%ae%e5%ba%93" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/2023_9130_supabase.3hyoeg3aqp00.webp" data-viewer>
+<img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/2023_9130_supabase.3hyoeg3aqp00.webp" alt="2023_9130_supabase"
+  loading="lazy" decoding="async"></a>
+</figure><p>在官网选择 <a href="https://supabase.com/pricing" rel="external">Free</a> 方案，进入 Create a new project 页面，按要求填写相关内容。Name 填写任意项目名，Database Password 可以使用下方工具 Generate a password 生成，并保存到记事本备用。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085956.7a3bvdm3cpg0.webp" data-viewer>
+<img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424085956.7a3bvdm3cpg0.webp" alt="20230424085956"
+  loading="lazy" decoding="async"></a>
+</figure><p>等待数据库建立，需要几分钟的时间。</p>
+<p>建立之后，点击左下方的 Project Settings，选择 Database，找到 Connection string 中的 URL 一栏，复制内容，并将**[YOUR-PASSWORD]**替换为上一步生成的密码。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/0230424090454.3uya78wr9zi0.webp" data-viewer>
+<img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/0230424090454.3uya78wr9zi0.webp" alt="0230424090454"
+  loading="lazy" decoding="async"></a>
+</figure><p>Supabase 平台的操作就结束了。</p>
+<h2 id="在-vercel-部署-umami">在 Vercel 部署 Umami<!--ui--><a class="heading-anchor" href="#%e5%9c%a8-vercel-%e9%83%a8%e7%bd%b2-umami" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>登录 Vercel 之后，点击右上角 Add New Project，并导入事先 Fork 的项目仓库。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424093134.7j39y4ynm6o0.webp" data-viewer>
+<img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424093134.7j39y4ynm6o0.webp" alt="20230424093134"
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090338.5hx60tko8lk0.webp" data-viewer>
+<img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090338.5hx60tko8lk0.webp" alt="20230424090338"
+  loading="lazy" decoding="async"></a>
+</figure><p>在 Configure Project 中需要设置两个环境变量（Environment Variables）。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090758.4wooxtytmu40.webp" data-viewer>
+<img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090758.4wooxtytmu40.webp" alt="20230424090758"
+  loading="lazy" decoding="async"></a>
+</figure><p>分别添加 <strong>DATABASE_URL</strong> 和 <strong>HASH_SALT</strong>。前者是上一步在 Subabase 复制的 URL，记得替换自己的 Password；后者需要自己随意生成一长串字符串。最后点击 Deploy，等待两分钟。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090827.hyj4gf67hmw.webp" data-viewer>
+<img src="https://cdn.jsdelivr.net/gh/huhexian/img@master/20230424/20230424090827.hyj4gf67hmw.webp" alt="20230424090827"
+  loading="lazy" decoding="async"></a>
+</figure><p>如果有需要，可以先绑定好自己的域名，因为 Vercel 提供的域名在大陆无法访问。</p>
+<h2 id="使用-vercel-自带的-storage-数据库">使用 Vercel 自带的 Storage 数据库<!--ui--><a class="heading-anchor" href="#%e4%bd%bf%e7%94%a8-vercel-%e8%87%aa%e5%b8%a6%e7%9a%84-storage-%e6%95%b0%e6%8d%ae%e5%ba%93" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>Vercel 目前已经提供 PostgreSQL 数据库，无需其他服务，只需要按照上述教程，创建数据库，获取数据库地址，添加对应变量即可。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/05/cba3ef3a6e0153ac40420e9c83d24a2c.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/05/cba3ef3a6e0153ac40420e9c83d24a2c.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/05/6b807437ae03b3f9f7dd7b35ecb959c6.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/05/6b807437ae03b3f9f7dd7b35ecb959c6.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/05/d4f906c2041488a508be949ae16e592f.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/05/d4f906c2041488a508be949ae16e592f.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><h2 id="使用-umami">使用 Umami<!--ui--><a class="heading-anchor" href="#%e4%bd%bf%e7%94%a8-umami" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>按照上述步骤，Umami 已经部署成功了，通过绑定的域名进入网站，默认用户名和密码分别是 <strong>admin</strong> 和 <strong>umami</strong> ，进入后台可以修改密码、设置语言，然后就可以添加网站了。</p>
+<p>提示：如果需要删除网站，先将语言切换至 English，中文状态无法删除。</p>
+
+  </div>
+
+</article>
+<button class="fab toc-fab" type="button" popovertarget="toc-sheet" aria-controls="toc-sheet"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h1M4 12h1M4 18h1M9 6h11M9 12h11M9 18h11"/></svg><span class="visually-hidden">目录</span>
+</button>
+<nav id="toc-sheet" class="toc-sheet" popover aria-labelledby="toc-sheet-title" data-toc>
+  <div class="toc-sheet-scroll">
+    <p class="toc-title" id="toc-sheet-title">目录</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e5%9c%a8-supabase-%e5%bb%ba%e7%ab%8b%e6%95%b0%e6%8d%ae%e5%ba%93">在 Supabase 建立数据库</a>
+  </li>
+  <li>
+    <a href="#%e5%9c%a8-vercel-%e9%83%a8%e7%bd%b2-umami">在 Vercel 部署 Umami</a>
+  </li>
+  <li>
+    <a href="#%e4%bd%bf%e7%94%a8-vercel-%e8%87%aa%e5%b8%a6%e7%9a%84-storage-%e6%95%b0%e6%8d%ae%e5%ba%93">使用 Vercel 自带的 Storage 数据库</a>
+  </li>
+  <li>
+    <a href="#%e4%bd%bf%e7%94%a8-umami">使用 Umami</a>
+  </li>
+</ul>
+
+
+  </div>
+</nav>
+
+    <button class="fab back-to-top" type="button" data-back-to-top hidden>
+      <svg class="back-to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle cx="22" cy="22" r="21"/>
+      </svg><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="visually-hidden">回到顶部</span>
+    </button>
+  </main>
+  
+<dialog class="viewer" data-viewer-dialog closedby="any" aria-label="图片查看器">
+  <figure class="viewer-stage">
+    <img class="viewer-image" alt="" decoding="async">
+    <figcaption class="viewer-caption" hidden></figcaption>
+  </figure>
+  <p class="viewer-counter" aria-live="polite"></p>
+  <form class="viewer-close-form" method="dialog">
+    <button class="viewer-button viewer-close" data-viewer-close><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="visually-hidden">关闭</span>
+    </button>
+  </form>
+  <button class="viewer-button viewer-prev" type="button" data-viewer-prev><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span class="visually-hidden">上一张</span>
+  </button>
+  <button class="viewer-button viewer-next" type="button" data-viewer-next><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span class="visually-hidden">下一张</span>
+  </button>
+</dialog>
+
+  
+<footer class="site-footer">
+  <div class="footer-colophon">
+    <p class="footer-copyright">© 2018–2026 青山</p>
+    <p class="footer-powered">Powered by <a href="https://gohugo.io/" rel="external">Hugo</a> & <a href="https://github.com/DejavuMoe/hugo-theme-icy" rel="external">Icy</a></p>
+  </div>
+</footer>
+<script data-goatcounter="https://hhx.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+</body>
+</html>

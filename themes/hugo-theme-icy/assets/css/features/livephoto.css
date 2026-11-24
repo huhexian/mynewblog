@@ -1,0 +1,2 @@
+/* Feature bundle "livephoto" — loaded only on pages that register it (see layouts/_partials/assets/registry.html). */
+@import "../components/live-photo.css" layer(components);

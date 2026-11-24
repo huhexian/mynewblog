@@ -1,0 +1,29 @@
+{{- /*
+  ruby — reading annotation above text (pinyin, furigana…).
+
+    {{< ruby "汉字" "hàn zì" >}}   or   {{< ruby text="漢字" reading="かんじ" >}}
+
+  When the reading has one space-separated syllable per character
+  ("汉字" + "hàn zì"), each character gets its own reading, centred right
+  above it; otherwise the whole reading spans the whole text (furigana such
+  as "かんじ"). Browsers without ruby support show the reading in parentheses.
+*/ -}}
+{{- $text := "" }}
+{{- $reading := "" }}
+{{- if .IsNamedParams }}
+  {{- partial "func/shortcode-params.html" (dict "ctx" . "name" "ruby" "allowed" (slice "text" "reading")) }}
+  {{- $text = .Get "text" }}
+  {{- $reading = .Get "reading" }}
+{{- else }}
+  {{- $text = .Get 0 }}
+  {{- $reading = .Get 1 }}
+{{- end }}
+{{- if not (and $text $reading) }}{{ errorf "ruby shortcode: needs text and reading, e.g. {{< ruby \"汉字\" \"hàn zì\" >}}: %s" .Position }}{{ end -}}
+{{- $chars := split $text "" }}
+{{- $syllables := split (replaceRE `\s+` " " (strings.TrimSpace $reading)) " " }}
+{{- if and (gt (len $chars) 1) (eq (len $chars) (len $syllables)) -}}
+<ruby class="ruby">{{ range $i, $c := $chars }}{{ $c }}<rp>(</rp><rt>{{ index $syllables $i }}</rt><rp>)</rp>{{ end }}</ruby>
+{{- else -}}
+<ruby class="ruby">{{ $text }}<rp>(</rp><rt>{{ $reading }}</rt><rp>)</rp></ruby>
+{{- end }}
+{{- /* chomp trailing newline */ -}}

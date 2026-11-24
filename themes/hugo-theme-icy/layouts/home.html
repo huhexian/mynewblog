@@ -1,0 +1,31 @@
+{{ define "main" }}
+{{- partial "assets/use.html" (dict "page" . "feature" "home") }}
+{{- $home := site.Params.home | default dict }}
+{{- if ne $home.intro false }}
+  {{ partial "author-intro.html" . }}
+{{- end }}
+
+{{- with .Content }}
+{{- partial "assets/use.html" (dict "page" $ "feature" "prose") }}
+<div class="prose home-intro-content">{{ . }}</div>
+{{- end }}
+
+{{- $posts := where site.RegularPages "Type" "in" site.MainSections }}
+{{- $posts = where $posts "Params.hiddenInHomeList" "!=" true }}
+{{- /* Not `default`: it would turn 0 ("all posts") into 8. */}}
+{{- $count := 8 }}
+{{- if ne $home.recentCount nil }}{{ $count = int $home.recentCount }}{{ end }}
+{{- with $posts }}
+<section class="home-recent" aria-labelledby="recent-posts">
+  <header class="home-section-head">
+    <h2 id="recent-posts" class="home-section-title">{{ T "recentPosts" }}</h2>
+    {{- if or (le $count 0) (gt (len .) $count) }}
+      {{- with site.GetPage (index site.MainSections 0) }}
+    <a class="home-more" href="{{ .RelPermalink }}">{{ T "allPosts" (len $posts) }}</a>
+      {{- end }}
+    {{- end }}
+  </header>
+  {{ partial "entry-list.html" (dict "page" $ "pages" (cond (gt $count 0) (first $count .) .) "dateFormat" (T "dateShort")) }}
+</section>
+{{- end }}
+{{ end }}

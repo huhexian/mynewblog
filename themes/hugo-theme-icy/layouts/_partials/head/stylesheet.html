@@ -1,0 +1,25 @@
+{{- /*
+  Build and link one stylesheet with css.Build.
+  Params (dict): src (path under assets/), out (target path).
+*/ -}}
+{{- $dev := hugo.IsDevelopment }}
+{{- $target := partialCached "func/css-targets.html" "css-targets" }}
+{{- with resources.Get .src }}
+  {{- $opts := dict
+    "minify" (not $dev)
+    "sourceMap" (cond $dev "linked" "none")
+    "target" $target
+    "targetPath" $.out
+  }}
+  {{- with . | css.Build $opts }}
+    {{- if $dev }}
+<link rel="stylesheet" href="{{ .RelPermalink }}">
+    {{- else }}
+      {{- with . | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- else }}
+  {{- errorf "icy: stylesheet %q not found in assets/" .src }}
+{{- end }}

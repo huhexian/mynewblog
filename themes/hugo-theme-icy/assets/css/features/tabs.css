@@ -1,0 +1,2 @@
+/* Feature bundle "tabs" — loaded only on pages that register it (see layouts/_partials/assets/registry.html). */
+@import "../components/tabs.css" layer(components);

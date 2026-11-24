@@ -1,0 +1,20 @@
+{{- /*
+  Speculation Rules: document rules that prefetch/prerender same-site links on
+  user intent (hover / pointerdown). Browsers without support ignore the block.
+  Exclude a link with rel="nofollow" or the `data-no-speculate` attribute.
+*/ -}}
+{{- with site.Params.speculationRules }}
+  {{- if .enable }}
+    {{- $action := .action | default "prefetch" }}
+    {{- $rule := dict
+      "where" (dict "and" (slice
+        (dict "href_matches" (printf "%s*" ("/" | relURL)))
+        (dict "not" (dict "selector_matches" "[rel~=nofollow], [data-no-speculate], [download]"))
+      ))
+      "eagerness" (.eagerness | default "moderate")
+    }}
+    {{- $rules := dict $action (slice $rule) }}
+    {{- /* html/template does not know this script type and would entity-escape the JSON. */}}
+{{ printf `<script type="speculationrules">%s</script>` ($rules | jsonify) | safeHTML }}
+  {{- end }}
+{{- end }}

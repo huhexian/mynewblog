@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="text-scale" content="scale">
+<meta name="color-scheme" content="light dark">
+<script>try{var s=localStorage.getItem("color-scheme");if(s==="light"||s==="dark"){document.documentElement.dataset.colorScheme=s;document.querySelector('meta[name="color-scheme"]').content=s}}catch(e){}</script>
+
+<style>:root{--accent:#b75133}</style>
+
+
+<title>使用 Zeabur 构建我的 n8n 赛博空间 | 印记</title>
+<meta name="description" content="标题里有两个工具，先简单介绍一番。
+Zeabur 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。
+n8n 是一个开源的工作流自动化工具，类似于 IFTTT，iOS 用户应该更容易理解 …">
+<link rel="canonical" href="http://localhost:1313/blog/building-my-n8n-cyberspace-with-zeabur/">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#241f1e" media="(prefers-color-scheme: dark)">
+
+<link rel="stylesheet" href="/css/core.css">
+
+<link rel="stylesheet" href="/css/article.css">
+
+<link rel="stylesheet" href="/css/prose.css">
+
+<link rel="stylesheet" href="/css/toc.css">
+
+<link rel="stylesheet" href="/css/media.css">
+
+<link rel="stylesheet" href="/css/viewer.css">
+
+<link rel="stylesheet" href="/css/code.css">
+
+<script type="module" src="/js/main.js"></script>
+
+<script type="module" src="/js/toc.js"></script>
+
+<script type="module" src="/js/media.js"></script>
+
+<script type="module" src="/js/viewer.js"></script>
+
+<script type="module" src="/js/code.js"></script>
+
+
+<style>@layer reset,tokens,base,layout,components,utilities;@layer components{@container site-header (inline-size >= 25.5rem){.header-inner{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav actions";column-gap:var(--space-6)}.site-nav[popover],.site-nav[popover]:not(:popover-open){position:static;display:block;justify-self:end;inline-size:auto;block-size:auto;margin:0;padding:0;border:0;background:none;color:inherit;overflow:visible}.menu-toggle,.menu-close,.menu-prefs{display:none}.header-actions>.lang-switch{display:inline-grid}@media(scripting:enabled){.header-actions>.theme-toggle{display:inline-grid}}.site-menu{gap:var(--space-1);margin:0;padding:0;overflow:visible;border:0;border-radius:0;& li{flex:none}& a{padding:var(--space-2) var(--space-3);border-radius:0;&:is([aria-current=page],[aria-current=true]){background-color:transparent}&:after{content:"";position:absolute;inset-inline:var(--space-3);inset-block-end:.125rem;block-size:2px;border-radius:var(--radius-full);background-color:var(--color-accent);scale:0 1;transform-origin:left center;transition:scale var(--duration-base) var(--ease-out)}&:is([aria-current=page],[aria-current=true]):after{scale:1 1}}}}}
+</style>
+
+
+
+
+<script type="speculationrules">{"prefetch":[{"eagerness":"moderate","where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[rel~=nofollow], [data-no-speculate], [download]"}}]}}]}</script>
+
+
+
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="青山">
+<meta property="og:site_name" content="印记">
+<meta property="og:title" content="使用 Zeabur 构建我的 n8n 赛博空间">
+<meta property="og:description" content="标题里有两个工具，先简单介绍一番。
+Zeabur 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。
+n8n 是一个开源的工作流自动化工具，类似于 IFTTT，iOS 用户应该更容易理解 …">
+<meta property="og:url" content="http://localhost:1313/blog/building-my-n8n-cyberspace-with-zeabur/">
+<meta property="og:locale" content="en">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Zeabur 构建我的 n8n 赛博空间">
+<meta name="twitter:description" content="标题里有两个工具，先简单介绍一番。
+Zeabur 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。
+n8n 是一个开源的工作流自动化工具，类似于 IFTTT，iOS 用户应该更容易理解 …">
+
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"http://localhost:1313/","name":"印记","position":1},{"@type":"ListItem","item":"http://localhost:1313/blog/","name":"Blogs","position":2},{"@type":"ListItem","item":"http://localhost:1313/blog/building-my-n8n-cyberspace-with-zeabur/","name":"使用 Zeabur 构建我的 n8n 赛博空间","position":3}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","dateModified":"2023-08-03T00:00:00+00:00","datePublished":"2023-08-03T00:00:00+00:00","description":"标题里有两个工具，先简单介绍一番。\nZeabur 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。\nn8n 是一个开源的工作流自动化工具，类似于 IFTTT，iOS 用户应该更容易理解 …","headline":"使用 Zeabur 构建我的 n8n 赛博空间","inLanguage":"en","mainEntityOfPage":{"@id":"http://localhost:1313/blog/building-my-n8n-cyberspace-with-zeabur/","@type":"WebPage"},"name":"使用 Zeabur 构建我的 n8n 赛博空间","publisher":{"@type":"Person","name":"青山","url":"http://localhost:1313/"},"url":"http://localhost:1313/blog/building-my-n8n-cyberspace-with-zeabur/"}</script>
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  
+<header class="site-header">
+  <div class="header-inner">
+    
+<a class="site-name" href="/">印记</a>
+
+    <nav class="site-nav" id="site-nav" popover aria-label="Primary">
+      <button class="icon-button menu-close" type="button" popovertarget="site-nav" popovertargetaction="hide"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">Close menu</span>
+      </button>
+      <ul class="site-menu" role="list">
+        <li><a href="/blog/" aria-current="true">文章</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/now.html">Now</a></li>
+        <li><a href="/roll.html">Roll</a></li>
+      </ul>
+      <div class="menu-prefs">
+        <p class="menu-prefs-row menu-prefs-scheme" role="group" aria-label="Color scheme">
+          <button type="button" data-scheme-set="light" aria-pressed="false">Light</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="dark" aria-pressed="false">Dark</button><span class="menu-prefs-dot" aria-hidden="true"></span>
+          <button type="button" data-scheme-set="system" aria-pressed="false">System</button>
+        </p>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+        <svg class="theme-toggle-icon" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false">
+          <mask id="theme-toggle-cut">
+            <rect width="24" height="24" fill="#fff"/>
+            <circle class="theme-toggle-shade" cx="17" cy="7" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-toggle-body" cx="12" cy="12" r="8.5" fill="currentColor" mask="url(#theme-toggle-cut)"/>
+          <g class="theme-toggle-rays" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4L6 18M18 6l1.4-1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden theme-toggle-to-dark">Switch to dark theme</span>
+        <span class="visually-hidden theme-toggle-to-light">Switch to light theme</span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" popovertarget="site-nav" aria-haspopup="true"><svg class="icon menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="menu-icon-top" d="M4 7h16"/><path class="menu-icon-mid" d="M4 12h16"/><path class="menu-icon-bottom" d="M4 17h16"/></svg><span class="visually-hidden">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main id="main" class="page-grid" tabindex="-1">
+
+
+
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">使用 Zeabur 构建我的 n8n 赛博空间</h1>
+    
+<p class="article-meta">
+  <time datetime="2023-08-03T00:00:00Z">August 3, 2023</time>
+  <span>1 min</span>
+  <span>173 words</span>
+</p>
+
+    <ul class="article-tags" role="list" aria-label="Tags">
+      <li><a href="/tags/n8n/" rel="tag">#N8n</a></li>
+      <li><a href="/tags/telegram/" rel="tag">#Telegram</a></li>
+      <li><a href="/tags/zeabur/" rel="tag">#Zeabur</a></li>
+    </ul>
+  </header>
+  <nav class="toc-rail" role="navigation" aria-labelledby="toc-rail-title" data-toc>
+    <p class="toc-title" id="toc-rail-title">Contents</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e6%9e%84%e5%bb%ba%e4%b8%80%e4%b8%aa%e8%b5%9b%e5%8d%9a%e7%a9%ba%e9%97%b4">为什么构建一个“赛博空间”</a>
+  </li>
+  <li>
+    <a href="#%e5%a6%82%e4%bd%95%e9%83%a8%e7%bd%b2-n8n">如何部署 n8n</a>
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e5%ae%89%e8%a3%85-postgresql">安装 PostgreSQL</a>
+  </li>
+  <li>
+    <a href="#%e5%ae%89%e8%a3%85-n8n">安装 n8n</a>
+  </li>
+</ul>
+
+  </li>
+  <li>
+    <a href="#%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8-n8n">如何使用 n8n</a>
+  </li>
+</ul>
+
+
+  </nav>
+
+  <div class="prose">
+    <p>标题里有两个工具，先简单介绍一番。</p>
+<p><a href="https://zeabur.com/" rel="external">Zeabur</a> 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。</p>
+<p><a href="https://n8n.io/" rel="external">n8n</a> 是一个开源的工作流自动化工具，类似于 <a href="https://ifttt.com/" rel="external">IFTTT</a>，iOS 用户应该更容易理解，相当于快捷指令，通过某个条件触发某个动作。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbc2762892e.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc2762892e.webp" alt="cover.webp"
+  loading="lazy" decoding="async"></a>
+</figure><h2 id="为什么构建一个赛博空间">为什么构建一个“赛博空间”<!--ui--><a class="heading-anchor" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e6%9e%84%e5%bb%ba%e4%b8%80%e4%b8%aa%e8%b5%9b%e5%8d%9a%e7%a9%ba%e9%97%b4" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>因为每天都在获取信息，文章、音乐、视频等常见的内容形式，以及各种工具、软件，它们分散在不同的平台，管理起来比较麻烦。如果统一转发到一个地方，加以标签分类，对于以后检索会更加方便。于是我选择使用 n8n 转发我阅读的文章、点赞或投币过的视频、喜欢听的音乐、读过的书、看过的电影、收藏的各类工具等内容至 Telegram 频道，不同类型的内容打上不同的标签，通过标签索引，十分快捷方便就可以找到。这便是我的“赛博空间”。</p>
+<p>目前为止，看到有人这般操作的有三人，<a href="https://t.me/reorx_share" rel="external">@novoreorx</a>、<a href="https://t.me/RayeJourney" rel="external">@rayepeng_</a>和<a href="https://t.me/pseudoyulife" rel="external">@pseudo_yu</a>，他们的博客里也有很详细的介绍和教程，我的部署过程很大一部分就参考了其中的内容。</p>
+<h2 id="如何部署-n8n">如何部署 n8n<!--ui--><a class="heading-anchor" href="#%e5%a6%82%e4%bd%95%e9%83%a8%e7%bd%b2-n8n" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>n8n 需要用到数据库，根据 Zeabur 官方文档，这里选择使用 PostgreSQL，所以事先安装好 PostgreSQL 客户端，我这里使用的是 <a href="https://www.postgresql.org/download/" rel="external">PostgreSQL 15</a> 在官网下载即可，这一步的目的是连接 Zeabur 安装的 PostgreSQL 并新建名为 n8n 的 Database。</p>
+<h3 id="安装-postgresql">安装 PostgreSQL<!--ui--><a class="heading-anchor" href="#%e5%ae%89%e8%a3%85-postgresql" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h3><p>Zeabur 中有一个 Marketplace，搜索 PostgreSQL 即可一键部署该服务。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f4287f.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f4287f.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>部署数据库之后就可以在 connect 中看到数据库的相关信息了，这里需要用到 Host、Port、Username。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f679bc.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f679bc.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a1ac36d.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a1ac36d.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a2d5459.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a2d5459.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>刚刚我创建的 Server 命名为 n8n，然后右键单击 n8n 下的 Database，点击 Create Database，创建一个名为 n8n 的数据库就可以了，这是非常重要的一步，名字必须命名为 n8n。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a401e78.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a401e78.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a41dc12.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a41dc12.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>至此，有关 PostgreSQL 的设置就结束了。</p>
+<blockquote>
+  <p>关于 Zeabur 的费用，也不用担心，提供了免费方案，每月有5美元的免费额度，我觉得应该是够用。</p>
+
+</blockquote><h3 id="安装-n8n">安装 n8n<!--ui--><a class="heading-anchor" href="#%e5%ae%89%e8%a3%85-n8n" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h3><p>同样可以在 Marketplace 里找到 n8n，点击一键部署。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a582c0a.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a582c0a.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>打开 n8n，右侧会有环境变量 Variable 的设置，本可以不用修改，但需要多加两条变量规则，不然会在使用 n8n 创建 Credential 的时候出错。</p>
+<p>按照我给出的环境变量，将其中的自定义域名改为自己的就行，然后全部复制粘贴进去。</p>
+
+<div class="code-block" data-code-block>
+  <!--ui--><div class="code-header">
+    <span class="code-label"></span>
+    <button class="code-copy" type="button" data-code-copy hidden
+      data-label-copied="Copied" data-label-failed="Copy failed">
+      <span class="code-copy-icons" aria-hidden="true"><svg class="icon code-copy-icon-idle" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg><svg class="icon code-copy-icon-done" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <span class="code-copy-labels">
+        <span class="code-copy-label" data-for="idle">Copy</span>
+        <span class="code-copy-label" data-for="copied" aria-hidden="true">Copied</span>
+        <span class="code-copy-label" data-for="failed" aria-hidden="true">Copy failed</span>
+      </span>
+    </button>
+  </div><!--/ui-->
+  <pre tabindex="0"><code>DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+PASSWORD=78nJ3L6u9Oh2
+DB_POSTGRESDB_USER=${POSTGRES_USERNAME}
+DB_POSTGRESDB_HOST=${POSTGRES_HOST}
+DB_POSTGRESDB_DATABASE=n8n
+WEBHOOK_URL=https://yourdomain
+VUE_APP_URL_BASE_API=https://yourdomain
+DB_TYPE=postgresdb
+DB_POSTGRESDB_PORT=${POSTGRES_PORT}
+EXECUTIONS_DATA_PRUNE=true
+EXECUTIONS_DATA_MAX_AGE=72
+EXECUTIONS_DATA_SAVE_ON_ERROR=all
+EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
+EXECUTIONS_DATA_SAVE_ON_PROGRESS=false
+EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false</code></pre>
+</div>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbbc8c400e0.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbbc8c400e0.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>最后一步，在 Zeabur 绑定自定义域名，一定要和上面环境变量中的保持一致，具体绑定方法参考 Zeabur 的文档吧。</p>
+<h2 id="如何使用-n8n">如何使用 n8n<!--ui--><a class="heading-anchor" href="#%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8-n8n" aria-hidden="true" tabindex="-1">#</a><!--/ui-->
+</h2><p>我自己都没玩懂这一方面，所有的 Workflow 都是参考<a href="https://github.com/reorx/n8n-workflows" rel="external">@novoreorx</a>和<a href="https://github.com/pseudoyu/yu-workflows" rel="external">@pseudo_yu</a>在 GitHub 上分享的代码，一键导入进去，创建好自己的 Credential，将其中的信息修改为自己的，就可以运行了。</p>
+<p>YouTube 配置起来有点麻烦，需要申请官方的 API，不过看官方文档和视频操作起来也很简单。至于哔哩哔哩、网易云音乐、Raindrop、GitHub activities 就只需要使用 <a href="https://docs.rsshub.app/" rel="external">RSShub</a> 生成相应的 RSS 链接即可。这里说一句 RSS 牛逼，RSShub 牛逼，DIYgod 牛逼。</p>
+<p>我的 Workflow 上传到 <a href="https://github.com/huhexian/workflow" rel="external">GitHub</a> 了，只需要上传这些 .json 文件至 n8n 即可。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbc4879f013.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc4879f013.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>YouTube 采用的是 Google 官方的 API，这一步看文档就行；我将 Raindrop 作为书签工具，一方面收藏工具，另一方面收藏文章，所以我建了两个收藏，分别命名为 article 和 tool，开启分享功能，获取它们的 RSS 地址；GitHub 和豆瓣都有官方的 RSS 地址，直接使用就行；网易云音乐和哔哩哔哩则需要借助 RSShub 生成 RSS 地址。本来还想添加 Twitter，但它的 API 被马斯克搞得太恶心，遂放弃。</p>
+<hr>
+<p>以上便是我使用 Zeabur 部署 n8n 的整个过程，虽然没有 Docker 部署那样快捷方便，但也值得尝试。同时欢迎关注我的 <a href="https://t.me/hutalk" rel="external">Telegram 个人频道</a>，可以看到我感兴趣的内容，或许会有相通之处。</p>
+
+  </div>
+
+</article>
+<button class="fab toc-fab" type="button" popovertarget="toc-sheet" aria-controls="toc-sheet"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h1M4 12h1M4 18h1M9 6h11M9 12h11M9 18h11"/></svg><span class="visually-hidden">Contents</span>
+</button>
+<nav id="toc-sheet" class="toc-sheet" popover aria-labelledby="toc-sheet-title" data-toc>
+  <div class="toc-sheet-scroll">
+    <p class="toc-title" id="toc-sheet-title">Contents</p>
+
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e6%9e%84%e5%bb%ba%e4%b8%80%e4%b8%aa%e8%b5%9b%e5%8d%9a%e7%a9%ba%e9%97%b4">为什么构建一个“赛博空间”</a>
+  </li>
+  <li>
+    <a href="#%e5%a6%82%e4%bd%95%e9%83%a8%e7%bd%b2-n8n">如何部署 n8n</a>
+<ul class="toc-list" role="list">
+  <li>
+    <a href="#%e5%ae%89%e8%a3%85-postgresql">安装 PostgreSQL</a>
+  </li>
+  <li>
+    <a href="#%e5%ae%89%e8%a3%85-n8n">安装 n8n</a>
+  </li>
+</ul>
+
+  </li>
+  <li>
+    <a href="#%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8-n8n">如何使用 n8n</a>
+  </li>
+</ul>
+
+
+  </div>
+</nav>
+
+    <button class="fab back-to-top" type="button" data-back-to-top hidden>
+      <svg class="back-to-top-ring" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+        <circle cx="22" cy="22" r="21"/>
+      </svg><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span class="visually-hidden">Back to top</span>
+    </button>
+  </main>
+  
+<dialog class="viewer" data-viewer-dialog closedby="any" aria-label="Image viewer">
+  <figure class="viewer-stage">
+    <img class="viewer-image" alt="" decoding="async">
+    <figcaption class="viewer-caption" hidden></figcaption>
+  </figure>
+  <p class="viewer-counter" aria-live="polite"></p>
+  <form class="viewer-close-form" method="dialog">
+    <button class="viewer-button viewer-close" data-viewer-close><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="visually-hidden">Close</span>
+    </button>
+  </form>
+  <button class="viewer-button viewer-prev" type="button" data-viewer-prev><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span class="visually-hidden">Previous image</span>
+  </button>
+  <button class="viewer-button viewer-next" type="button" data-viewer-next><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span class="visually-hidden">Next image</span>
+  </button>
+</dialog>
+
+  
+<footer class="site-footer">
+  <div class="footer-colophon">
+    <p class="footer-copyright">© 2019–2026 青山</p>
+    <p class="footer-powered">Powered by <a href="https://gohugo.io/" rel="external">Hugo</a> & <a href="https://github.com/DejavuMoe/hugo-theme-icy" rel="external">Icy</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{{- /*
+  repo-grid — lays out several `repo` cards in a responsive grid.
+    {{< repo-grid >}}
+      {{< repo url="…" >}}
+      {{< repo url="…" >}}
+    {{< /repo-grid >}}
+*/ -}}
+{{- with .Params }}{{ errorf "repo-grid shortcode takes no parameters: %s" $.Position }}{{ end }}
+{{- $inner := .Inner | strings.TrimSpace }}
+{{- if not (findRE `class="repo-card"` $inner 1) }}
+  {{- errorf "repo-grid shortcode needs repo shortcodes inside: %s" .Position }}
+{{- end }}
+{{- partial "assets/use.html" (dict "page" .Page "feature" "repo") }}
+<div class="repo-grid">
+  {{ $inner | safeHTML }}
+</div>

@@ -1,0 +1,38 @@
+{{- /*
+  Links:
+  - Resolve page paths to the page in the current language, so a plain
+    `[x](/posts/hello/)` links to the Chinese post from a Chinese page (and
+    gets the baseURL path); relative destinations also resolve to page
+    resources (`[x](../other.md)`, `[x](file.pdf)`). Site paths that are no
+    page (files in static/) get the baseURL path too.
+  - Mark off-site links with rel="external". Links open in the same tab.
+*/ -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $href := .Destination -}}
+{{- if and $u.Path (not $u.IsAbs) (not (strings.HasPrefix $u.Path "//")) -}}
+  {{- $target := false -}}
+  {{- if strings.HasPrefix $u.Path "/" -}}
+    {{- $target = site.GetPage (strings.TrimSuffix "/" $u.Path | default "/") -}}
+  {{- else -}}
+    {{- $path := strings.TrimPrefix "./" $u.Path -}}
+    {{- $target = or (.PageInner.GetPage $path) (.PageInner.Resources.Get $path) -}}
+  {{- end -}}
+  {{- with $target -}}
+    {{- $href = .RelPermalink -}}
+    {{- with $u.RawQuery }}{{ $href = printf "%s?%s" $href . }}{{ end -}}
+    {{- with $u.Fragment }}{{ $href = printf "%s#%s" $href . }}{{ end -}}
+  {{- else -}}
+    {{- /* A site path that is no page (a file in static/): prefix the
+         baseURL path, so it also works on a site served from a subfolder. */ -}}
+    {{- if strings.HasPrefix $u.Path "/" -}}
+      {{- $href = strings.TrimPrefix "/" $u.Path | relURL -}}
+      {{- with $u.RawQuery }}{{ $href = printf "%s?%s" $href . }}{{ end -}}
+      {{- with $u.Fragment }}{{ $href = printf "%s#%s" $href . }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $external := and $u.IsAbs (in (slice "http" "https") $u.Scheme) (ne $u.Host (urls.Parse site.BaseURL).Host) -}}
+<a href="{{ $href }}"
+  {{- with .Title }} title="{{ . }}"{{ end }}
+  {{- if $external }} rel="external"{{ end }}>{{ .Text }}</a>
+{{- /* chomp trailing newline */ -}}

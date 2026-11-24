@@ -1,0 +1,34 @@
+{{- /*
+  The site wordmark (params.brand.wordmark, an SVG in assets/) as inline SVG
+  markup, or "" when none is configured. Inlined so it takes the surrounding
+  text color in both schemes; every <path> gets an index (--i) so CSS can
+  animate the strokes in order. fill/stroke/style attributes are stripped so
+  the theme controls color.
+  Requirements for the SVG: a viewBox, shapes drawn as <path>s.
+  Call with partialCached "func/wordmark.html" . "wordmark". Returns string.
+*/ -}}
+{{- $svg := "" }}
+{{- $brand := site.Params.brand | default dict }}
+{{- with $brand.wordmark }}
+  {{- with resources.Get . }}
+    {{- $content := .Content }}
+    {{- with findRESubmatch `viewBox="([-\d.]+)[ ,]+([-\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)"` $content 1 }}
+      {{- $m := index . 0 }}
+      {{- $height := 32 }}
+      {{- $width := math.Round (mul $height (div (float (index $m 3)) (float (index $m 4)))) }}
+      {{- $inner := replaceRE `(?s)^.*?<svg\b[^>]*>|</svg>\s*$` "" $content }}
+      {{- $inner = replaceRE `\s(fill|stroke|pathLength|style)="[^"]*"` "" $inner }}
+      {{- range $i, $p := findRE `<path\b` $inner }}
+        {{- /* Upper-case marker so the next round skips paths already numbered. */}}
+        {{- $inner = replace $inner "<path" (printf `<PATH style="--i:%d"` $i) 1 }}
+      {{- end }}
+      {{- $inner = replace $inner "<PATH" "<path" }}
+      {{- $svg = printf `<svg class="site-wordmark" viewBox="%s %s %s %s" width="%d" height="%d" aria-hidden="true" focusable="false">%s</svg>` (index $m 1) (index $m 2) (index $m 3) (index $m 4) (int $width) $height ($inner | strings.TrimSpace) }}
+    {{- else }}
+      {{- warnf "hugo-theme-icy: params.brand.wordmark %q has no viewBox; using the site title" $brand.wordmark }}
+    {{- end }}
+  {{- else }}
+    {{- warnf "hugo-theme-icy: params.brand.wordmark %q not found in assets/" $brand.wordmark }}
+  {{- end }}
+{{- end }}
+{{- return $svg }}

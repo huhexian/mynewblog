@@ -1,0 +1,25 @@
+{{- /*
+  User agents of AI training / answer crawlers, used by robots.txt when
+  params.robots.blockAI is true. Grouped into one record (several
+  User-agent lines share one Disallow), as RFC 9309 allows.
+  Taken from the previous theme's list; extend as needed.
+*/ -}}
+{{- return slice
+  "AddSearchBot" "AI2Bot" "Ai2Bot-Dolma" "aiHitBot" "Amazonbot" "Andibot"
+  "anthropic-ai" "Applebot-Extended" "Awario" "bedrockbot" "bigsur.ai"
+  "Brightbot 1.0" "Bytespider" "CCBot" "ChatGPT Agent" "ChatGPT-User" "Claude-SearchBot"
+  "Claude-User" "Claude-Web" "ClaudeBot" "CloudVertexBot" "cohere-ai" "cohere-training-data-crawler"
+  "Cotoyogi" "Crawlspace" "Datenbank Crawler" "DeepSeekBot" "Devin" "Diffbot"
+  "DuckAssistBot" "Echobot Bot" "EchoboxBot" "FacebookBot" "Factset_spyderbot"
+  "FirecrawlAgent" "FriendlyCrawler" "Gemini-Deep-Research" "Google-CloudVertexBot" "Google-Extended" "Google-Firebase"
+  "GoogleAgent-Mariner" "GoogleOther" "GoogleOther-Image" "GoogleOther-Video" "GPTBot" "iaskspider/2.0"
+  "ICC-Crawler" "ImagesiftBot" "img2dataset" "ISSCyberRiskCrawler" "Kangaroo Bot" "LinerBot"
+  "meta-externalagent" "Meta-ExternalAgent" "meta-externalfetcher" "Meta-ExternalFetcher" "meta-webindexer" "MistralAI-User"
+  "MyCentralAIScraperBot" "netEstate Imprint Crawler" "NovaAct" "OAI-SearchBot" "omgili"
+  "omgilibot" "OpenAI" "Operator" "PanguBot" "Panscient" "panscient.com"
+  "Perplexity-User" "PerplexityBot" "PetalBot" "PhindBot" "Poseidon Research Crawler" "QualifiedBot"
+  "QuillBot" "quillbot.com" "SBIntuitionsBot" "Scrapy" "SemrushBot-OCOB" "SemrushBot-SWA"
+  "ShapBot" "Sidetrade indexer bot" "TerraCotta" "Thinkbot" "TikTokSpider" "Timpibot"
+  "VelenPublicWebCrawler" "WARDBot" "Webzio-Extended" "wpbot" "YaK" "YandexAdditional"
+  "YandexAdditionalBot" "YouBot"
+-}}

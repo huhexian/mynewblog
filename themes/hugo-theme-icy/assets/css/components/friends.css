@@ -1,0 +1,82 @@
+/* Friends (blogroll): hairline cards in two columns — the same card as the
+   repository cards. */
+
+.friends {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-3);
+  margin-block-end: var(--space-7);
+}
+
+.friends > li {
+  display: grid;
+}
+
+.friend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--duration-quick) var(--ease-out);
+
+  &:hover {
+    border-color: var(--color-text-faint);
+  }
+}
+
+/* Rounded squares, not circles; a hairline inner ring keeps white avatars
+   from melting into the page. */
+.friend-avatar {
+  flex-shrink: 0;
+  inline-size: 3rem;
+  block-size: 3rem;
+  border-radius: 0.75rem;
+  outline: 1px solid color-mix(in oklch, var(--color-heading) 8%, transparent);
+  outline-offset: -1px;
+  background-color: var(--color-surface);
+  object-fit: cover;
+}
+
+.friend-initial {
+  display: grid;
+  place-items: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+}
+
+.friend-text {
+  display: grid;
+  min-inline-size: 0;
+  line-height: var(--leading-snug);
+}
+
+.friend-name {
+  overflow: hidden;
+  color: var(--color-heading);
+  font-weight: var(--weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  .friend:hover & {
+    color: var(--color-accent);
+  }
+}
+
+.friend-description {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.friends-pages {
+  padding-block-start: var(--space-5);
+}

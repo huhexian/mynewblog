@@ -1,0 +1,7 @@
+{{- /*
+  Browser targets for css.Build, shared by every stylesheet the theme builds.
+  The supported browsers (installation docs, README): light-dark() needs
+  Chrome/Edge 123 and Safari 17.5, the popover menu Firefox 125. Raise these
+  together with the docs. Returns slice.
+*/ -}}
+{{- return (slice "chrome123" "edge123" "firefox125" "ios17.5" "safari17.5") }}

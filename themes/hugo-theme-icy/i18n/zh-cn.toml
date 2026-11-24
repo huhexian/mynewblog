@@ -1,0 +1,144 @@
+# Chrome
+skipToContent = "跳到正文"
+primaryNavigation = "主导航"
+footerNavigation = "页脚导航"
+backToTop = "回到顶部"
+poweredBy = "Powered by {{ .Hugo }} & {{ .Theme }}"
+configFormat = "配置格式"
+menu = "菜单"
+closeMenu = "关闭菜单"
+language = "语言"
+colorSchemeLabel = "配色"
+scheme_light = "浅色"
+scheme_dark = "深色"
+scheme_system = "跟随系统"
+search = "搜索"
+switchToDark = "切换到深色"
+switchToLight = "切换到浅色"
+
+# Home / lists
+recentPosts = "最近文章"
+draft = "草稿"
+pagination = "分页"
+newerPosts = "较新的文章"
+olderPosts = "较早的文章"
+pageXofY = "第 {{ .Current }} / {{ .Total }} 页"
+
+# Article
+tableOfContents = "目录"
+tags = "标签"
+categories = "分类"
+updatedOn = "更新于 {{ .Date }}"
+table = "表格"
+
+copyrightLabel = "版权信息"
+copyrightAuthor = "本文作者"
+copyrightPublished = "发布于"
+copyrightLicense = "许可协议"
+
+# Media
+imageViewer = "图片查看器"
+closeViewer = "关闭"
+previousImage = "上一张"
+nextImage = "下一张"
+playLivePhoto = "播放实况照片"
+livePhotoBadge = "实况"
+play = "播放"
+pause = "暂停"
+playTitle = "播放：{{ .Title }}"
+pauseTitle = "暂停：{{ .Title }}"
+seek = "播放进度"
+seekTitle = "播放进度：{{ .Title }}"
+mute = "静音"
+unmute = "取消静音"
+fullscreen = "全屏"
+exitFullscreen = "退出全屏"
+mediaError = "无法播放这个文件。"
+openFile = "直接打开"
+originalArtist = "原作 {{ .Name }}"
+recordedOn = "录于 {{ .Date }}"
+youtubeVideo = "YouTube 视频"
+playOnYouTube = "播放 YouTube 视频：{{ .Title }}"
+youtubeUnreachable = "暂时无法连接到 YouTube。"
+retry = "重试"
+openOnYouTube = "在 YouTube 打开"
+
+# Writing
+peleZoomIn = "放大图表"
+peleZoomOut = "缩小图表"
+peleReset = "重置图表"
+codeCopy = "复制"
+codeCopied = "已复制"
+codeCopyFailed = "复制失败"
+repoArchived = "已归档"
+repoStars = "星标"
+repoForks = "复刻"
+
+# Search
+searchLabel = "搜索文章"
+searchPlaceholder = "搜索标题、标签与正文"
+searchHint = "输入关键词开始搜索，多个关键词用空格分开。"
+searchLoading = "正在加载索引…"
+searchPartial = "正文索引仍在加载，结果可能不完整。"
+searchCount = "找到 {count} 篇文章。"
+searchEmpty = "没有找到包含“{query}”的文章。"
+searchError = "索引加载失败，请刷新页面重试。"
+searchNoScript = "搜索需要启用 JavaScript。"
+
+# Comments
+comments = "评论"
+commentsRetry = "重新加载评论"
+commentsNoScript = "评论需要启用 JavaScript。"
+
+# Protected posts
+protectedLabel = "受保护"
+protectedTitle = "输入密码以继续阅读"
+protectedHint = "提示：{{ .Hint }}"
+protectedPassword = "访问密码"
+protectedUnlock = "解锁"
+protectedEmpty = "请先输入密码。"
+protectedWorking = "正在验证并解锁…"
+protectedWrong = "密码不正确，或内容无法验证。"
+protectedUnavailable = "内容暂时无法加载，请稍后重试。"
+protectedUnsupported = "当前浏览器不支持本地解密，请换用较新的浏览器。"
+protectedNoScript = "解锁需要启用 JavaScript。"
+protectedDescription = "这篇文章受密码保护。"
+
+# Pages
+friendsEmpty = "还没有友链。在 data/friends.yaml 中添加。"
+changelogEmpty = "还没有更新记录。"
+
+# 404
+notFoundTitle = "页面不存在"
+notFoundBody = "这个链接可能已经失效，或者页面换了地址。"
+backHome = "回到首页"
+
+# Alerts
+alert_note = "注意"
+alert_tip = "提示"
+alert_important = "重要"
+alert_warning = "警告"
+alert_caution = "小心"
+
+# Dates: Go layouts or Hugo localized tokens (see time.Format)
+dateLong = "2006年1月2日"
+dateFull = "2006-01-02"
+dateShort = "01-02"
+
+[allPosts]
+other = "全部文章"
+
+[postCount]
+other = "{{ .Count }} 篇"
+
+[postTotal]
+other = "共 {{ .Count }} 篇文章"
+
+[readingTime]
+other = "{{ .Count }} 分钟"
+
+[changeCount]
+other = "{{ .Count }} 项"
+
+[wordCount]
+other = "{{ .Count }} 字"

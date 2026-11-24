@@ -1,0 +1,35 @@
+{{- /*
+  Copyright card at the end of original blog posts.
+    params.article.copyright = { license = "CC BY-NC-SA 4.0", url = "/copyright/", note = "…" }
+  Shown on regular pages of mainSections when a license is configured, unless
+  front matter says `original = false` (a repost) or `copyright = false`.
+  Front matter `license` overrides the license name for one post.
+  Context: the page.
+*/ -}}
+{{- $cfg := (site.Params.article | default dict).copyright | default dict }}
+{{- $license := .Params.license | default $cfg.license }}
+{{- if and $license (in site.MainSections .Type) (ne .Params.original false) (ne .Params.copyright false) }}
+{{- $published := cond .PublishDate.IsZero .Date .PublishDate }}
+<aside class="copyright-card" aria-label="{{ T "copyrightLabel" }}">
+  {{- /* The Creative Commons ring, as a large watermark in the corner. */}}
+  <svg class="copyright-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <circle cx="50" cy="50" r="44"/>
+    <path d="M44.8 42.2a11 11 0 1 0 0 15.6"/>
+    <path d="M68.8 42.2a11 11 0 1 0 0 15.6"/>
+  </svg>
+  <p class="copyright-title">{{ .Title }}</p>
+  <p class="copyright-link"><a href="{{ .RelPermalink }}">{{ .Permalink }}</a></p>
+  <dl class="copyright-meta">
+    {{- with site.Params.author.name }}
+    <div><dt>{{ T "copyrightAuthor" }}</dt><dd>{{ . }}</dd></div>
+    {{- end }}
+    {{- if not $published.IsZero }}
+    <div><dt>{{ T "copyrightPublished" }}</dt><dd><time datetime="{{ $published.Format "2006-01-02" }}">{{ $published | time.Format (T "dateLong") }}</time></dd></div>
+    {{- end }}
+    <div><dt>{{ T "copyrightLicense" }}</dt><dd>{{ with $cfg.url }}<a href="{{ . | relURL }}">{{ $license }}</a>{{ else }}{{ $license }}{{ end }}</dd></div>
+  </dl>
+  {{- with $cfg.note }}
+  <p class="copyright-note">{{ . | markdownify }}</p>
+  {{- end }}
+</aside>
+{{- end }}

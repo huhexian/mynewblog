@@ -1,0 +1,116 @@
+/*
+ * tabs — a hairline card (same shape as code blocks and repo cards): a row
+ * of pill tabs inside the top edge, the panel below. Panels keep their own
+ * natural height.
+ * Without JavaScript (scripting: none) every panel shows under its own title
+ * and the bar is hidden.
+ */
+
+.prose > .tabs {
+  margin-block: 1.25em;
+}
+
+.tabs {
+  border: var(--rule);
+  border-radius: var(--radius-l);
+}
+
+.tabs-list {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-2) 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs-tab {
+  flex-shrink: 0;
+  min-block-size: 2.25rem;
+  padding-inline: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  transition:
+    color var(--duration-quick) var(--ease-out),
+    background-color var(--duration-quick) var(--ease-out);
+
+  &:hover {
+    color: var(--color-heading);
+  }
+
+  &[aria-selected="true"] {
+    background-color: var(--color-surface);
+    color: var(--color-heading);
+    font-weight: var(--weight-medium);
+  }
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+}
+
+.tabs-panel {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+
+  & > * + * {
+    margin-block-start: 1em;
+  }
+
+  /* A code block inside a panel drops its own frame. */
+  & > :is(.code-block, .highlight):only-child,
+  & > .tabs-panel-title + :is(.code-block, .highlight):last-child {
+    border: 0;
+    border-radius: var(--radius-m);
+  }
+
+  &:focus-visible {
+    outline-offset: -2px;
+    border-radius: var(--radius-l);
+  }
+}
+
+/* Inactive panels use hidden="until-found", which keeps their box (for
+   find-in-page) but not their content: collapse the box completely. */
+.tabs-panel[hidden="until-found"] {
+  padding: 0;
+}
+
+/* A panel holding just a code block: the code fills the card's lower part
+   with a slim inset instead of nesting a second card. */
+.tabs-panel:not([hidden]):has(> :is(.code-block, .highlight):only-child),
+.tabs-panel:not([hidden]):has(> .tabs-panel-title + :is(.code-block, .highlight):last-child) {
+  padding: var(--space-2);
+}
+
+.tabs-panel-title {
+  display: none;
+}
+
+/* No JavaScript: show every panel with its title. */
+@media (scripting: none) {
+  .tabs-list {
+    display: none;
+  }
+
+  /* hidden="until-found" is plain [hidden] (display: none) where it is not
+     supported (Firefox < 139, Safari < 26). */
+  .tabs-panel[hidden] {
+    display: block;
+    content-visibility: visible;
+  }
+
+  .tabs-panel-title {
+    display: block;
+    color: var(--color-heading);
+    font-weight: var(--weight-medium);
+  }
+}
+
+@media (forced-colors: active) {
+  .tabs-tab[aria-selected="true"] {
+    outline: 1px solid Highlight;
+  }
+}

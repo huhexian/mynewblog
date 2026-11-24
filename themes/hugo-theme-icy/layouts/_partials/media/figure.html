@@ -1,0 +1,69 @@
+{{- /*
+  One image as a figure. Shared by the Markdown image hook, the `figure`
+  shortcode and gallery tiles, so size, placeholder and zoom behave the same.
+
+  Params (dict):
+    page      page (feature registration)
+    media     resolved media (func/resolve-media.html)
+    alt       alternative text
+    title     optional caption title (plain text)
+    caption   optional caption (Markdown)
+    link      optional URL: the image links there instead of zooming
+    zoom      bool: open in the image viewer (default params.article.imageViewer)
+    zoomSrc   optional larger image for the viewer (resolved like src)
+    align     "center" (default) | "left" | "right"
+    class     extra class on <figure>
+    variant   "block" (default) | "tile" (gallery item)
+    sizes     optional sizes attribute
+*/ -}}
+{{- $page := .page }}
+{{- $m := .media }}
+{{- $variant := .variant | default "block" }}
+{{- $align := .align | default "center" }}
+{{- if not (in (slice "center" "left" "right") $align) }}
+  {{- errorf "figure: align must be center, left or right, got %q" $align }}
+{{- end }}
+{{- partial "assets/use.html" (dict "page" $page "feature" "media") }}
+
+{{- $zoom := and .zoom (not .link) }}
+{{- $zoomHref := $m.url }}
+{{- $zoomWidth := $m.width }}
+{{- $zoomHeight := $m.height }}
+{{- with .zoomSrc }}
+  {{- $zm := partial "func/resolve-media.html" (dict "page" $page "src" . "label" "figure zoomSrc") }}
+  {{- $zoomHref = $zm.url }}
+  {{- /* The viewer reserves the zoomed image's own size; fall back to the shown one. */}}
+  {{- if and $zm.width $zm.height }}{{ $zoomWidth = $zm.width }}{{ $zoomHeight = $zm.height }}{{ end }}
+{{- end }}
+{{- if $zoom }}
+  {{- partial "assets/use.html" (dict "page" $page "feature" "viewer") }}
+{{- end }}
+
+{{- $lqip := partial "func/lqip.html" $m }}
+{{- $frameStyle := "" }}
+{{- with $lqip }}{{ $frameStyle = printf "--lqip: %s;" . }}{{ end }}
+{{- if and (eq $variant "tile") $m.width $m.height }}
+  {{- $frameStyle = printf "%s --ratio: %.4f;" $frameStyle (div (float $m.width) $m.height) }}
+{{- end }}
+
+{{- $sizes := .sizes }}
+{{- $img := partial "media/img.html" (dict "media" $m "alt" .alt "sizes" $sizes "loading" .loading "fetchpriority" .fetchpriority) }}
+{{- $captionHTML := "" }}
+{{- with .title }}{{ $captionHTML = printf `<strong class="figure-title">%s</strong>` (. | htmlEscape) }}{{ end }}
+{{- with .caption }}{{ $captionHTML = printf "%s %s" $captionHTML (. | $page.RenderString) }}{{ end }}
+
+<figure class="figure {{- if eq $variant "tile" }} gallery-item{{ end }} {{- with .class }} {{ . }}{{ end }}"
+  {{- if eq $variant "block" }} data-align="{{ $align }}"{{ end }}
+  {{- with $frameStyle }} style="{{ . | safeCSS }}"{{ end }}>
+  {{- if .link }}
+  <a class="media-frame" href="{{ .link }}">{{ $img }}</a>
+  {{- else if $zoom }}
+  <a class="media-frame" href="{{ $zoomHref }}" data-viewer {{- with $zoomWidth }} data-width="{{ . }}"{{ end }}{{ with $zoomHeight }} data-height="{{ . }}"{{ end }}>{{ $img }}</a>
+  {{- else }}
+  <span class="media-frame">{{ $img }}</span>
+  {{- end }}
+  {{- with $captionHTML }}
+  <figcaption>{{ . | safeHTML }}</figcaption>
+  {{- end }}
+</figure>
+{{- /* chomp trailing newline */ -}}

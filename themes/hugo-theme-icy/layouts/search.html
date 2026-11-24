@@ -1,0 +1,38 @@
+{{- /*
+  Search page: `layout = "search"` in front matter (e.g. content/search.md).
+  The form is a plain GET form, so ?q= links work and the browser's back
+  button restores queries; search.js reads the indexes and renders results.
+*/ -}}
+{{ define "main" }}
+{{- partial "assets/use.html" (dict "page" . "feature" "search") }}
+{{- $index := partialCached "func/search-index.html" "search-index" }}
+{{- $max := int (site.Params.search.maxResults | default 20) }}
+<header class="page-heading">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{- with .Content }}
+  <div class="page-lede">{{ . }}</div>
+  {{- end }}
+</header>
+
+<form class="search-form" role="search" action="{{ .RelPermalink }}" method="get" data-search
+  data-meta="{{ $index.meta.url }}" data-meta-integrity="{{ $index.meta.integrity }}"
+  data-content="{{ $index.content.url }}" data-content-integrity="{{ $index.content.integrity }}"
+  data-max="{{ $max }}"
+  data-text-hint="{{ T "searchHint" }}"
+  data-text-loading="{{ T "searchLoading" }}"
+  data-text-partial="{{ T "searchPartial" }}"
+  data-text-count="{{ T "searchCount" }}"
+  data-text-empty="{{ T "searchEmpty" }}"
+  data-text-error="{{ T "searchError" }}">
+  <label class="visually-hidden" for="search-input">{{ T "searchLabel" }}</label>
+  <span class="search-field">
+    {{- partial "icon.html" (dict "name" "search" "class" "search-field-icon") -}}
+    <input id="search-input" class="search-input" type="search" name="q"
+      placeholder="{{ .Params.placeholder | default (T "searchPlaceholder") }}" autocomplete="off" spellcheck="false" enterkeyhint="search" autofocus>
+  </span>
+</form>
+
+<p class="search-status" role="status" aria-live="polite">{{ T "searchHint" }}</p>
+<ol class="search-results" role="list"></ol>
+<noscript><p class="search-noscript">{{ T "searchNoScript" }}</p></noscript>
+{{ end }}

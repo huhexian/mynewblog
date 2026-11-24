@@ -1,0 +1,17 @@
+{{- /*
+  One-line page description shared by <meta name="description">, Open Graph,
+  Twitter Card and JSON-LD: front matter description, else the summary of a
+  regular page, else the site description.  Params: page. Returns string.
+*/ -}}
+{{- $d := "" }}
+{{- if .Params.protected.enabled }}
+  {{- $d = T "protectedDescription" }}
+{{- else }}
+  {{- if .IsPage }}
+    {{- $d = partial "func/summary.html" (dict "page" .) }}
+  {{- else }}
+    {{- $d = .Description }}
+  {{- end }}
+  {{- $d = or $d site.Params.description "" | plainify | strings.TrimSpace }}
+{{- end }}
+{{- return $d }}

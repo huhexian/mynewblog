@@ -1,0 +1,10 @@
+{{- /*
+  A page bundle's conventional cover image: the image resource named
+  cover.*, feature.* or thumbnail.* (first match), shared by the article
+  cover and the social preview. Params: page. Returns resource or false.
+*/ -}}
+{{- $r := false }}
+{{- with .Resources.ByType "image" }}
+  {{- with .GetMatch "{cover,feature,thumbnail}.*" }}{{ $r = . }}{{ end }}
+{{- end }}
+{{- return $r }}

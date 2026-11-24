@@ -1,0 +1,119 @@
+/* Element defaults. Never set a root font-size: OS text scaling must win. */
+
+html {
+  scrollbar-gutter: stable;
+  /* Quiet scrollbar colors, inherited by every scroller. */
+  scrollbar-color: var(--color-scrollbar) transparent;
+  scroll-padding-block-start: var(--space-6);
+  hanging-punctuation: first allow-end last;
+  interpolate-size: allow-keywords;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Thin scrollbars on every scroller (scrollbar-width is not inherited). */
+:where(*) {
+  scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  min-block-size: 100dvb;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  overflow-wrap: break-word;
+  font-synthesis-weight: none;
+}
+
+/* CJK refinements (progressive): auto spacing between CJK and Latin, trimmed
+   leading punctuation, and no word-breaking inside CJK titles. */
+:lang(zh),
+:lang(ja) {
+  text-autospace: normal;
+  text-spacing-trim: trim-start;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  color: var(--color-heading);
+  font-weight: var(--weight-strong);
+  line-height: var(--leading-tight);
+  text-wrap-style: balance;
+}
+
+:where(h1, h2, h3):lang(zh) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* text-wrap-style (not the text-wrap shorthand): the shorthand would also
+   reset text-wrap-mode and undo an inherited `white-space: nowrap`. */
+:where(p, li, dd, figcaption, blockquote) {
+  text-wrap-style: pretty;
+}
+
+/* Chinese and Japanese text fills its lines. Safari's `pretty` rebalances
+   the whole paragraph (Chromium only the last lines), which leaves CJK body
+   text visibly ragged and short lists half-width on phones. */
+:where(p, li, dd, figcaption, blockquote):lang(zh),
+:where(p, li, dd, figcaption, blockquote):lang(ja) {
+  text-wrap-style: auto;
+}
+
+:where(a) {
+  color: var(--color-accent);
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.22em;
+}
+
+:where(code, kbd, samp, pre) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+:where(time, .numeric) {
+  font-variant-numeric: tabular-nums;
+}
+
+:where(hr) {
+  border: 0;
+  border-block-start: var(--rule);
+}
+
+:where(:focus-visible) {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-s);
+}
+
+:where(main:focus) {
+  outline: none;
+}
+
+::selection {
+  background-color: color-mix(in oklch, var(--color-accent) 22%, transparent);
+}
+
+@media (forced-colors: active) {
+  :where(:focus-visible) {
+    outline-color: Highlight;
+  }
+}
+
+/* Inline SVG icons (partial "icon.html"). In the base layer so components can
+   resize or swap them. */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  inline-size: 1.25em;
+  block-size: 1.25em;
+  vertical-align: -0.25em;
+}

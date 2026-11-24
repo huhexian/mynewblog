@@ -1,0 +1,13 @@
+{{- /*
+  Register a feature for a page, so head/assets.html loads its assets.
+  Params (dict): page, feature (a name from assets/registry.html).
+  Fails the build on an unknown name, so typos never go unnoticed.
+*/ -}}
+{{- $known := false }}
+{{- range partialCached "assets/registry.html" "registry" }}
+  {{- if eq .name $.feature }}{{ $known = true }}{{ end }}
+{{- end }}
+{{- if not $known }}
+  {{- errorf "icy: unknown asset feature %q (see layouts/_partials/assets/registry.html)" .feature }}
+{{- end }}
+{{- .page.Store.SetInMap "icyFeatures" .feature true }}

@@ -1,0 +1,75 @@
+{{ define "main" }}
+{{- partial "assets/use.html" (dict "page" . "feature" "entries") }}
+{{- /* Protected posts are not counted, and terms with only protected posts
+     never surface. */}}
+{{- $terms := slice }}
+{{- range .Data.Terms.ByCount }}
+  {{- $count := len (where .Pages "Params.protected.enabled" "!=" true) }}
+  {{- if $count }}
+    {{- $terms = $terms | append (dict "page" .Page "count" $count "name" (lower .Page.LinkTitle)) }}
+  {{- end }}
+{{- end }}
+{{- /* An index by initial (A–Z, 0–9; anything else under "#"), names sorted
+     within each group.
+
+     Chinese names on a Simplified Chinese site go under the initial of their
+     pinyin, as in a Chinese book index. Hugo's sort collates by the site
+     language — pinyin order for zh-Hans — so a name's first character is
+     sorted together with the first character of each initial in that order
+     (found by sorting every CJK character with Hugo and checking against a
+     pinyin dictionary: 3748 of the 3755 most common characters land right;
+     the rest are polyphones). A term page can set `initial = 'C'` in its
+     front matter to override the guess. */}}
+{{- $lang := lower (or site.Language.Locale site.Language.Lang) }}
+{{- $pinyin := and (hasPrefix $lang "zh") (not (findRE `hant|tw|hk|mo` $lang)) }}
+{{- $letters := split "A B C D E F G H J K L M N O P Q R S T W X Y Z" " " }}
+{{- $bounds := split "阿 八 擦 搭 讹 发 嘎 哈 讥 咖 垃 妈 拿 哦 趴 七 然 撒 他 挖 夕 丫 匝" " " }}
+{{- $groups := dict }}
+{{- range sort $terms "name" }}
+  {{- $initial := upper (.page.Params.initial | default "") }}
+  {{- if not $initial }}
+    {{- $first := substr .page.LinkTitle 0 1 }}
+    {{- $initial = upper $first }}
+    {{- if and $pinyin (findRE `^\p{Han}$` $first) }}
+      {{- $at := 0 }}
+      {{- range $i, $c := sort ($bounds | append $first) }}{{ if eq $c $first }}{{ $at = $i }}{{ end }}{{ end }}
+      {{- if gt $at 0 }}{{ $initial = index $letters (sub $at 1) }}{{ end }}
+    {{- end }}
+  {{- end }}
+  {{- if not (findRE `^[A-Z0-9]$` $initial) }}{{ $initial = "#" }}{{ end }}
+  {{- $groups = merge $groups (dict $initial ((index $groups $initial | default slice) | append .)) }}
+{{- end }}
+{{- $keys := slice }}
+{{- range $k, $_ := $groups }}{{ if ne $k "#" }}{{ $keys = $keys | append $k }}{{ end }}{{ end }}
+{{- $keys = sort $keys }}
+{{- if index $groups "#" }}{{ $keys = $keys | append "#" }}{{ end }}
+<header class="page-heading">
+  <h1 class="page-title">{{ partial "func/title.html" . }}</h1>
+  {{- with .Description }}
+  <p class="page-lede">{{ . }}</p>
+  {{- end }}
+</header>
+
+{{- with .Content }}
+{{- partial "assets/use.html" (dict "page" $ "feature" "prose") }}
+<div class="prose page-intro">{{ . }}</div>
+{{- end }}
+
+{{- /* A book-style index, as at the back of a book: groups by initial flow
+     through columns; each tag is a row — name, a dotted leader, the number
+     of posts. Groups never split across columns. */}}
+<div class="term-index">
+{{- range $keys }}
+{{- $group := index $groups . }}
+{{- $label := upper . }}
+<section class="term-group" aria-labelledby="initial-{{ $label | urlize | default "other" }}">
+  <h2 class="term-initial" id="initial-{{ $label | urlize | default "other" }}">{{ $label }}</h2>
+  <ul class="term-list" role="list">
+    {{- range $group }}
+    <li><a href="{{ .page.RelPermalink }}"><span class="term-name">{{ .page.LinkTitle }}</span><span class="term-leader" aria-hidden="true"></span><span class="term-count numeric">{{ .count }}</span></a></li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}
+</div>
+{{ end }}

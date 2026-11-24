@@ -1,0 +1,145 @@
+# Theme defaults. Site configuration overrides any value here.
+# Every parameter is documented in the exampleSite docs (content/docs/configuration).
+#
+# Note: Hugo does not merge [markup] from theme config. Settings the theme
+# relies on are enforced in render hooks (code highlighting) or must be set in
+# the site config (stand-alone image figures, block attributes): see
+# exampleSite/content/docs/installation.md.
+
+[module]
+  [module.hugoVersion]
+    min = "0.158.0"
+    extended = false
+
+[params]
+  description = ""
+
+  # [params.author]  name, avatar (assets/ or static/ path), bio (Markdown)
+  # social = [ { name = "github", url = "", title = "GitHub" } ]
+
+  [params.home]
+    intro = true          # author intro above recent posts
+    # title = ''          # intro heading; default params.author.name
+    # bio = ''            # intro text (Markdown); default params.author.bio
+    recentCount = 8       # 0 = all posts
+
+  [params.list]
+    groupByYear = true
+    paginate = false
+
+  [params.article]
+    toc = true            # per page: front matter `toc = false`
+    tocMinHeadings = 2
+    tocMaxLevel = 3
+    readingTime = true
+    wordCount = true
+    cover = true                # show the cover (front matter `images` / bundle *cover*); per page `hideCover = true`
+    imageViewer = true
+    # Copyright card on original posts (front matter `original = false` or `copyright = false` hides it)
+    # [params.article.copyright]
+    #   license = "CC BY-NC-SA 4.0"
+    #   url = "/copyright/"
+    #   note = ""
+
+  # Live photos (live-photo shortcode): zoom = true lets a click open the still
+  # in the image viewer; per photo `zoom=true|false` overrides this.
+  [params.livePhoto]
+    zoom = false
+
+  [params.colorScheme]
+    toggle = true
+
+  # One accent color drives the palette: links, current state, emphasis.
+  # The dark-scheme accent and the tinted greys are derived from it; set
+  # accentDark only to override the derived dark accent.
+  [params.style]
+    accent = "#b75133"
+    # accentDark = ""
+
+  # Fonts. By default Icy uses system fonts only: system-ui for Latin text,
+  # plus each platform's CJK face on Chinese, Japanese and Korean pages
+  # (assets/css/base/tokens.css). Set a CSS font-family list to replace the
+  # default; set it per language under [languages.<lang>.params.fonts].
+  # [params.fonts]
+  #   sans = ''               # e.g. '"Inter", system-ui, sans-serif'
+  #   mono = ''               # e.g. '"JetBrains Mono", ui-monospace, monospace'
+  #   stylesheets = []        # web font CSS: an absolute URL, a /path in static/, or a path in assets/
+
+  [params.search]
+    page = "/search"      # header search link appears only if this page exists
+    maxResults = 20
+    contentLimit = 20000  # characters of body text indexed per page
+
+  # Default social preview image (front matter `images` and bundle cover images win).
+  # images = ["og.png"]
+
+  # Identity: one square icon (assets/, PNG/JPG, >= 512px) generates favicon,
+  # Apple touch icon and web-app icons; themeColor colors the browser chrome.
+  [params.brand]
+    icon = ""
+    iconSVG = ""
+    [params.brand.themeColor]
+      light = "#ffffff"
+      dark = "#241f1e"
+
+  # JSON-LD publisher. sameAs defaults to the http(s) links in params.social.
+  [params.schema]
+    publisherType = "Person"    # Person | Organization
+    sameAs = []
+    twitterSite = ""            # e.g. "@handle"
+
+  # Search engine verification tokens: google, bing, yandex, baidu, naver.
+  [params.verification]
+
+  [params.rss]
+    fullText = false            # include full content (<content:encoded>)
+
+  [params.robots]
+    blockAI = false             # disallow known AI crawlers in robots.txt
+
+  # Comments: provider "ecoku" | "" (off). Pages opt out with `comments = false`.
+  [params.comments]
+    provider = ""
+    # [params.comments.ecoku]
+    #   serverURL = "https://comments.example.com"
+    #   siteId = "example.com"
+    #   scriptURL = ""      # default: <serverURL>/client/ecoku-loader.js
+    #   cssURL = "none"     # default: the theme styles the comments; set Ecoku's CSS URL to use its own
+    #   pageSize = 10
+    #   theme = "auto"      # auto | light | dark
+    #   i18n = ""           # en | zh-CN | zh-Hant; default: from the page language
+
+  # Analytics: provider "plausible" (Plausible CE) | "" (off). Pages opt out with `analytics = false`.
+  [params.analytics]
+    provider = ""
+    # [params.analytics.plausible]
+    #   scriptURL = "https://plausible.io/js/pa-XXXX.js"
+    #   endpoint = ""       # optional, for proxied / self-hosted setups
+
+  # Footer extras: text (Markdown) and a hosting / sponsor credit (icon from assets/icons/).
+  # [params.footer]
+  #   (the [[menus.footer]] links form one centred row, a dot between; 5 or fewer keeps it on one line)
+  #   copyright = true          # "© <since>–<this year> <params.author.name>" under the links; false hides it
+  #   since = 0                 # first copyright year; 0 = year of the earliest dated page
+  #   poweredBy = true          # "Powered by Hugo & Icy"
+  #   text = ""
+  #   [params.footer.credit]
+  #     prefix = "Hosted on"
+  #     name = ""
+  #     url = ""
+  #     icon = ""
+
+  # Repository cards (repo / repo-grid shortcodes) read the host's API at
+  # build time. GitHub allows 60 anonymous requests an hour; set the
+  # HUGO_GITHUB_TOKEN environment variable (a CI secret) to raise that.
+  # [params.repo]
+  #   userAgent = ''
+
+  [params.friends]
+    ref = ""              # optional `ref` query parameter added to friend links
+
+  [params.speculationRules]
+    enable = true
+    action = "prefetch"   # prefetch | prerender
+    eagerness = "moderate"
+

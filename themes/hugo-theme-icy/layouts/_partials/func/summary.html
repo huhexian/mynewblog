@@ -1,0 +1,13 @@
+{{- /*
+  A page's one-line summary as plain text: its front matter description, else
+  its Markdown summary with tags stripped and entities decoded (so "&rsquo;"
+  never shows literally once the caller escapes it again), cut to a length.
+
+  Params (dict): page, length (default 160). Returns string.
+*/ -}}
+{{- $p := .page }}
+{{- $d := $p.Description | plainify | htmlUnescape | strings.TrimSpace }}
+{{- if not $d }}
+  {{- $d = $p.Summary | plainify | htmlUnescape | strings.TrimSpace }}
+{{- end }}
+{{- return ($d | truncate (.length | default 160)) }}

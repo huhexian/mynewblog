@@ -1,0 +1,32 @@
+/* Markdown alerts (> [!NOTE] …). A softly tinted card, evenly rounded, with a
+   colored title; no side bars, no boxes-in-boxes. */
+
+.alert {
+  --alert-hue: var(--hue-note);
+  --alert-color: light-dark(oklch(50% 0.12 var(--alert-hue)), oklch(78% 0.1 var(--alert-hue)));
+
+  padding: 1em 1.25em;
+  border-radius: var(--radius-l);
+  background-color: color-mix(in oklch, var(--alert-color) 8%, transparent);
+
+  & > * + * {
+    margin-block-start: 0.5em;
+  }
+
+  &[data-alert="tip"] { --alert-hue: var(--hue-tip); }
+  &[data-alert="important"] { --alert-hue: var(--hue-important); }
+  &[data-alert="warning"] { --alert-hue: var(--hue-warning); }
+  &[data-alert="caution"] { --alert-hue: var(--hue-caution); }
+}
+
+.alert-title {
+  color: var(--alert-color);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
+}
+
+@media (forced-colors: active) {
+  .alert {
+    border: 1px solid CanvasText;
+  }
+}

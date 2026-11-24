@@ -1,0 +1,36 @@
+{{- /* Order matters: charset first, color-scheme meta + init script before any stylesheet. */ -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- /* Opt in to OS text scaling (Chromium 146+). Never set a root font-size in CSS. */}}
+<meta name="text-scale" content="scale">
+{{ partial "head/color-scheme.html" . }}
+{{- partialCached "head/style.html" . "style" }}
+
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" (partial "func/title.html" .) site.Title }}{{ end }}</title>
+{{- with partial "func/description.html" . }}
+<meta name="description" content="{{ . }}">
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{- end }}
+{{- range .AllTranslations }}
+  {{- if ne .Language.Lang $.Language.Lang }}
+<link rel="alternate" hreflang="{{ or .Language.Locale .Language.Lang }}" href="{{ .Permalink }}">
+  {{- end }}
+{{- end }}
+{{ partial "head/identity.html" . }}
+
+{{- /* Deferred until the page body has rendered, so every registered feature is known. */}}
+{{- $deferKey := printf "icy-assets:%s" .RelPermalink }}
+{{- $deferData := dict "page" . }}
+{{- with (templates.Defer (dict "key" $deferKey "data" $deferData)) }}
+  {{- partial "head/assets.html" .page }}
+{{- end }}
+{{- partialCached "head/header-layout.html" . "header-layout" }}
+{{ partial "head/analytics.html" . }}
+{{ partial "head/speculation-rules.html" . }}
+
+{{ partial "head/seo.html" . }}
+{{ partial "head/schema.html" . }}
+{{- partial "extend/head.html" . }}

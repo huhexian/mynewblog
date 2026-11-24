@@ -1,0 +1,2 @@
+/* Feature bundle "audio" — loaded only on pages that register it (see layouts/_partials/assets/registry.html). */
+@import "../components/audio-player.css" layer(components);

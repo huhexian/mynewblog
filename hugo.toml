@@ -1,52 +1,66 @@
 baseURL = "https://yinji.org/"
-languageCode = "zh-cn"
+locale = "zh-CN"
 title = "印记"
-theme = "hugo-bearneo"
-
+theme = "hugo-theme-icy"
 defaultContentLanguage = "zh-cn"
+mainSections = ["blog"]
+hasCJKLanguage = true
+enableRobotsTXT = true
+copyright = "Copyright © 2018-2026, huhexian."
 
-
+[uglyURLs]
+  blog = true
 [permalinks]
-  blog = "/:contentbasename.html"
+  blog = "/:contentbasename"
   tags = "/tags/:slug"
-
-
 [outputs]
   home = ["HTML", "RSS"]
-
-
 [outputFormats.RSS]
   mediaType = "application/rss+xml"
   baseName = "feed"
+[services.rss]
+  limit = 20
+[pagination]
+  pagerSize = 10
+[markup.goldmark.parser]
+  wrapStandAloneImageWithinParagraph = false
+  [markup.goldmark.parser.attribute]
+    block = true
+[markup.goldmark.extensions.cjk]
+  enable = true
+  eastAsianLineBreaks = true
+[markup.goldmark.renderer]
+  unsafe = true
 
+[[menus.main]]
+  name = "文章"
+  pageRef = "/blog"
+  weight = 10
+[[menus.main]]
+  name = "标签"
+  pageRef = "/tags"
+  weight = 20
 
 [params]
-  title = "印记"
   description = "Live a life you will remember."
-  favicon = "img/favicon.png"
-  copyright = "Copyright © 2018-2026, huhexian."
-  enableRobotsTXT = true
-  postSearch = true
-  toc = true
-  groupByYear = true
-  showPostCount = true
-  imageZoom = true
-  upvote = true
-  upvoteURL = "https://kudos.yinji.org"
-  customCSS = ["/custom.css"]
-
+  # Site overrides: remote images load in the browser; missing legacy files show a notice.
+  remoteImagesAtBuild = false
+  legacyMissingImages = true
   [params.author]
     name = "青山"
     email = "me@yinji.org"
-
-  [params.RSS]
-    enableRSS = true
-    pageLimit = 20
-
-
-[pagination]
-  pagerSize = 10
-
-
-
-
+  [params.home]
+    intro = false
+    recentCount = 10
+  [params.list]
+    groupByYear = true
+    paginate = true
+  [params.article]
+    toc = true
+    imageViewer = true
+  [params.footer]
+    since = 2018
+  [[params.social]]
+    name = "rss"
+    title = "RSS"
+    url = "/feed.xml"

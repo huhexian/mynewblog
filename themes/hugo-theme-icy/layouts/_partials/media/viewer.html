@@ -1,0 +1,40 @@
+{{- /*
+  Image viewer dialog, rendered once on pages that registered the "viewer"
+  feature. viewer.js opens it from any `a[data-viewer]`; without JS those
+  links simply open the full image.
+  `closedby="any"` enables light dismiss where supported; viewer.js adds a
+  backdrop-click fallback.
+  On pages with Live Photos the stage also holds one Live Photo (still, clip
+  and LIVE button): viewer.js shows it for stills that carry data-live-video,
+  and live-photo.js plays it like any other.
+*/ -}}
+{{- $features := .Store.Get "icyFeatures" | default dict }}
+<dialog class="viewer" data-viewer-dialog closedby="any" aria-label="{{ T "imageViewer" }}">
+  <figure class="viewer-stage">
+    <img class="viewer-image" alt="" decoding="async">
+    {{- if index $features "livephoto" }}
+    <div class="viewer-live live-photo" data-live-photo data-viewer-live hidden>
+      <div class="live-photo-frame">
+        <span class="live-photo-still"><img alt="" decoding="async" draggable="false"></span>
+        <video class="live-photo-video" muted playsinline preload="none"
+          disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
+        {{ partial "media/live-photo-badge.html" . }}
+      </div>
+    </div>
+    {{- end }}
+    <figcaption class="viewer-caption" hidden></figcaption>
+  </figure>
+  <p class="viewer-counter" aria-live="polite"></p>
+  {{- /* A dialog form closes the dialog natively; no script needed. */}}
+  <form class="viewer-close-form" method="dialog">
+    <button class="viewer-button viewer-close" data-viewer-close>
+      {{- partial "icon.html" "close" -}}<span class="visually-hidden">{{ T "closeViewer" }}</span>
+    </button>
+  </form>
+  <button class="viewer-button viewer-prev" type="button" data-viewer-prev>
+    {{- partial "icon.html" "chevron-left" -}}<span class="visually-hidden">{{ T "previousImage" }}</span>
+  </button>
+  <button class="viewer-button viewer-next" type="button" data-viewer-next>
+    {{- partial "icon.html" "chevron-right" -}}<span class="visually-hidden">{{ T "nextImage" }}</span>
+  </button>
+</dialog>

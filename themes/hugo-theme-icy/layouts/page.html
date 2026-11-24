@@ -1,0 +1,73 @@
+{{ define "main" }}
+{{- if .Params.protected.enabled }}
+  {{- partial "protected/article.html" . }}
+{{- else }}
+{{- $article := site.Params.article | default dict }}
+{{- $tocMax := int ($article.tocMaxLevel | default 3) }}
+{{- $showToc := partial "func/toc-enabled.html" (dict "page" . "maxLevel" $tocMax) }}
+{{- range slice "article" "prose" }}{{ partial "assets/use.html" (dict "page" $ "feature" .) }}{{ end }}
+{{- if $showToc }}{{ partial "assets/use.html" (dict "page" . "feature" "toc") }}{{ end }}
+{{- if strings.Contains .Content "footnote-ref" }}{{ partial "assets/use.html" (dict "page" . "feature" "footnotes") }}{{ end }}
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">
+      {{- .Title -}}
+      {{- if .Draft }}<span class="title-flag">{{ T "draft" }}</span>{{ end -}}
+    </h1>
+    {{- if not (.Param "hideMeta") }}
+    {{ partial "article-meta.html" . }}
+    {{- end }}
+    {{- with .GetTerms "tags" }}
+    <ul class="article-tags" role="list" aria-label="{{ T "tags" }}">
+      {{- range . }}
+      <li><a href="{{ .RelPermalink }}" rel="tag">#{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </header>
+
+  {{- if and (ne $article.cover false) (not .Params.hideCover) }}
+    {{- with partial "func/cover.html" . }}
+  {{ partial "media/figure.html" (dict "page" $ "media" . "alt" "" "class" "article-cover" "zoom" false "loading" "eager" "fetchpriority" "high") }}
+    {{- end }}
+  {{- end }}
+
+  {{- if $showToc }}
+  {{- /* The explicit role (redundant on <nav> for assistive tech) tells reader
+       modes (Readability in Firefox, Safari's reader…) that the contents
+       list is navigation, not part of the article text. */}}
+  <nav class="toc-rail" role="navigation" aria-labelledby="toc-rail-title" data-toc>
+    {{ partial "toc.html" (dict "page" . "titleId" "toc-rail-title" "maxLevel" $tocMax) }}
+  </nav>
+  {{- end }}
+
+  <div class="prose">
+    {{ .Content }}
+  </div>
+
+  {{- /* Only pages with a copyright card get a footer: an empty one would add
+       its top margin to the comments' own. */}}
+  {{- with partial "copyright.html" . | strings.TrimSpace }}
+  <footer class="article-footer">
+    {{ . | safeHTML }}
+  </footer>
+  {{- end }}
+
+  {{- partial "comments.html" . }}
+</article>
+
+{{- if $showToc }}
+{{- /* Narrow screens: floating button + bottom sheet. Hidden by CSS when the rail fits. */}}
+<button class="fab toc-fab" type="button" popovertarget="toc-sheet" aria-controls="toc-sheet">
+  {{- partial "icon.html" "toc" -}}
+  <span class="visually-hidden">{{ T "tableOfContents" }}</span>
+</button>
+<nav id="toc-sheet" class="toc-sheet" popover aria-labelledby="toc-sheet-title" data-toc>
+  <div class="toc-sheet-scroll">
+    {{ partial "toc.html" (dict "page" . "titleId" "toc-sheet-title" "maxLevel" $tocMax) }}
+  </div>
+</nav>
+{{- end }}
+{{- end }}
+{{ end }}

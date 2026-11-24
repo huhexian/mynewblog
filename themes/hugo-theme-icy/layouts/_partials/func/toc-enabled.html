@@ -1,0 +1,19 @@
+{{- /*
+  Whether a page shows a table of contents.
+  Site default params.article.toc (true), overridden by front matter `toc`;
+  needs at least params.article.tocMinHeadings (2) headings of level 2..maxLevel.
+  Params (dict): page, maxLevel. Returns bool.
+*/ -}}
+{{- $page := .page }}
+{{- $article := site.Params.article | default dict }}
+{{- $enabled := ne $article.toc false }}
+{{- if isset $page.Params "toc" }}
+  {{- $enabled = $page.Params.toc }}
+{{- end }}
+{{- $count := 0 }}
+{{- if $enabled }}
+  {{- range $page.Fragments.HeadingsMap }}
+    {{- if and (ge .Level 2) (le .Level $.maxLevel) }}{{ $count = add $count 1 }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- return (and $enabled (ge $count (int ($article.tocMinHeadings | default 2)))) }}

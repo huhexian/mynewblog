@@ -1,0 +1,18 @@
+{{- /*
+  kbd — a keyboard shortcut. Keys are separated by "+".
+
+    {{< kbd "Ctrl+Shift+P" >}}   or   {{< kbd keys="⌘+K" >}}
+*/ -}}
+{{- $keys := "" }}
+{{- if .IsNamedParams }}
+  {{- partial "func/shortcode-params.html" (dict "ctx" . "name" "kbd" "allowed" (slice "keys")) }}
+  {{- $keys = .Get "keys" }}
+{{- else }}
+  {{- if gt (len .Params) 1 }}{{ errorf "kbd shortcode: pass one string such as \"Ctrl+K\": %s" .Position }}{{ end }}
+  {{- $keys = .Get 0 }}
+{{- end }}
+{{- if not $keys }}{{ errorf "kbd shortcode: keys are required, e.g. {{< kbd \"Ctrl+K\" >}}: %s" .Position }}{{ end }}
+{{- $parts := slice }}
+{{- range split $keys "+" }}{{ with strings.TrimSpace . }}{{ $parts = $parts | append . }}{{ end }}{{ end -}}
+<kbd class="kbd">{{ range $i, $k := $parts }}{{ if $i }}<span class="kbd-plus" aria-hidden="true">+</span>{{ end }}<kbd>{{ $k }}</kbd>{{ end }}</kbd>
+{{- /* chomp trailing newline */ -}}

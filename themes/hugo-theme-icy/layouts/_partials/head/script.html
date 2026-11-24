@@ -1,0 +1,25 @@
+{{- /*
+  Build and link one ES module with js.Build. Modules are deferred by default.
+  Params (dict): src (path under assets/), out (target path).
+*/ -}}
+{{- $dev := hugo.IsDevelopment }}
+{{- with resources.Get .src }}
+  {{- $opts := dict
+    "format" "esm"
+    "target" "es2022"
+    "minify" (not $dev)
+    "sourceMap" (cond $dev "linked" "none")
+    "targetPath" $.out
+  }}
+  {{- with . | js.Build $opts }}
+    {{- if $dev }}
+<script type="module" src="{{ .RelPermalink }}"></script>
+    {{- else }}
+      {{- with . | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- else }}
+  {{- errorf "icy: script %q not found in assets/" .src }}
+{{- end }}

@@ -1,0 +1,218 @@
+/*
+ * Design tokens — the single source of visual decisions.
+ *
+ * Palette "素" (plain): white paper, near-neutral greys, two inks (headings
+ * darker than body text, so long text reads soft), and ONE accent reserved for
+ * links, current state and the few moments of emphasis.
+ *
+ * The accent is the only color a site configures (params.style.accent, emitted
+ * by head/style.html as --accent). Everything else derives from it:
+ *   - the dark-scheme accent is a lighter, calmer version of it;
+ *   - the greys borrow its hue at a barely visible chroma, so a warm accent
+ *     gets warm greys and a cool one cool greys — the page always agrees with
+ *     its accent without anyone picking greys.
+ * Relative color syntax does the derivation; browsers without it get the
+ * literal fallback at the end of this file.
+ *
+ * Tier 1 derived palette -> tier 2 semantic -> tier 3 UI. Components use tiers 2–3.
+ * Every color is one light-dark() line; the scheme comes from `color-scheme`.
+ * Sizes are rem-based so OS text scaling and zoom work; never set a root font-size.
+ *
+ * Contrast on --color-bg (light / dark), default accent: heading 17.2 / 13.2,
+ * text 11.8 / 9.9, muted 6.0 / 6.5, faint 5.1 / 5.2, accent 5.0 / 6.3. Every
+ * text color meets WCAG AA (4.5:1), on --color-surface too. The dark ground
+ * is a soft warm grey (L 0.245), not black.
+ */
+
+:root {
+  /* Follows the OS by default; see layouts/_partials/head/color-scheme.html. */
+  color-scheme: light dark;
+
+  /* ---- Source: the one configurable color ---- */
+  --accent: #b75133;
+  --accent-dark: oklch(from var(--accent) clamp(0.72, l + 0.17, 0.82) calc(c * 0.82) h);
+
+  /* ---- Tier 1: greys tinted with the accent hue ---- */
+  --paper: oklch(100% 0 0);
+  --gray-50: oklch(from var(--accent) 0.972 0.0022 h);
+  --gray-100: oklch(from var(--accent) 0.93 0.003 h);
+  --gray-400: oklch(from var(--accent) 0.54 0.006 h);
+  --gray-500: oklch(from var(--accent) 0.5 0.006 h);
+  --gray-700: oklch(from var(--accent) 0.33 0.006 h);
+  --gray-900: oklch(from var(--accent) 0.215 0.006 h);
+
+  /* Night: a soft, warm dark grey for reading at night — not black. The
+     ground sits at L 0.245, cards a step lighter; text stops short of white. */
+  --night-950: oklch(from var(--accent) 0.245 0.008 h);
+  --night-900: oklch(from var(--accent) 0.285 0.008 h);
+  --night-800: oklch(from var(--accent) 0.345 0.008 h);
+  --night-500: oklch(from var(--accent) 0.66 0.007 h);
+  --night-400: oklch(from var(--accent) 0.72 0.006 h);
+  --night-200: oklch(from var(--accent) 0.84 0.005 h);
+  --night-50: oklch(from var(--accent) 0.93 0.004 h);
+
+  /* Alert hues (only inside callouts) */
+  --hue-note: 252;
+  --hue-tip: 160;
+  --hue-important: 295;
+  --hue-warning: 75;
+  --hue-caution: 25;
+
+  /* ---- Tier 2: semantic colors ---- */
+  --color-bg: light-dark(var(--paper), var(--night-950));
+  --color-heading: light-dark(var(--gray-900), var(--night-50));
+  --color-text: light-dark(var(--gray-700), var(--night-200));
+  --color-text-muted: light-dark(var(--gray-500), var(--night-400));
+  --color-text-faint: light-dark(var(--gray-400), var(--night-500));
+  --color-rule: light-dark(var(--gray-100), var(--night-800));
+  --color-surface: light-dark(var(--gray-50), var(--night-900));
+  --color-raised: light-dark(var(--paper), var(--night-900));
+  --color-accent: light-dark(var(--accent), var(--accent-dark));
+  --color-accent-soft: color-mix(in oklch, var(--color-accent) 9%, transparent);
+  --color-accent-line: color-mix(in oklch, var(--color-accent) 35%, transparent);
+  --color-on-accent: light-dark(var(--paper), var(--night-950));
+  --color-scrollbar: color-mix(in oklch, var(--color-text-faint) 55%, transparent);
+  --color-mark: color-mix(in oklch, var(--color-accent) 16%, transparent);
+  --color-focus: var(--color-accent);
+  --color-danger: light-dark(oklch(52% 0.17 27), oklch(72% 0.13 27));
+
+  /* ---- Typography ---- */
+  /* System fonts only; params.fonts.sans / .mono (per language) override
+     these, and the :lang() rules below pick the CJK faces each platform
+     ships: Windows (Segoe UI + YaHei UI / JhengHei UI / Yu Gothic UI),
+     Apple (SF + PingFang / Hiragino Sans), Android and Linux (Roboto or
+     Cantarell + Noto Sans CJK). */
+  --font-sans: system-ui, sans-serif;
+  --font-mono:
+    ui-monospace, "Cascadia Mono", Menlo, Consolas, "Noto Sans Mono",
+    "DejaVu Sans Mono", monospace;
+
+  /* Scale: 13 · 14 · 16 · 18 · 20 · 24 · 28 · 34 · 48 px at a 16px root.
+     Display sizes grow with the viewport, bounded so max <= 2.5x min. */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-prose: 1.125rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5rem;
+  --text-xl: clamp(1.5rem, 1.3rem + 0.9vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 1.35rem + 1.6vw, 2.125rem);
+  --text-year: clamp(1.75rem, 1rem + 2.6vw, 3rem);
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --weight-bold: 700;
+  --weight-light: 300;
+
+  --leading-tight: 1.3;
+  --leading-snug: 1.55;
+  --leading-prose: 1.86;
+
+  /* ---- Space (4px rhythm, rem) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* ---- Layout ---- */
+  --measure: 44rem;             /* reading column: 704px, ~38 CJK characters at 18px */
+  --gutter: clamp(1.25rem, 0.75rem + 2.5vw, 2rem);
+  --aside-width: 13.5rem;        /* TOC rail */
+  --aside-gap: 3rem;
+
+  /* ---- Shape & elevation ---- */
+  /* Restrained corners: cards 10px, controls and media 6px. */
+  --radius-s: 0.25rem;
+  --radius-m: 0.375rem;
+  --radius-l: 0.625rem;
+  --radius-full: 999px;
+  --rule: 1px solid var(--color-rule);
+  --shadow-float:
+    0 0.75rem 2rem light-dark(oklch(20% 0 0 / 0.1), oklch(0% 0 0 / 0.55)),
+    0 0.125rem 0.375rem light-dark(oklch(20% 0 0 / 0.06), oklch(0% 0 0 / 0.35));
+
+  /* ---- Motion ---- */
+  --duration-quick: 120ms;
+  --duration-base: 220ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- Tier 3: general UI ---- */
+  --ui-control-size: 2.5rem;    /* icon buttons; >= 24px target, comfortable on touch */
+  --ui-code-bg: var(--color-surface);
+
+  /* Nested rules last (keeps the declarations above out of CSSNestedDeclarations). */
+  &[data-color-scheme="dark"] {
+    color-scheme: dark;
+  }
+
+  &[data-color-scheme="light"] {
+    color-scheme: light;
+  }
+}
+
+/* CJK text: the platform's own UI face for the script after system-ui (which
+   sets the Latin letters). params.fonts.sans, set by head/style.html outside
+   any layer, wins over these. */
+:root {
+  &:lang(zh) {
+    --font-sans:
+      system-ui, "PingFang SC", "Microsoft YaHei UI", "Noto Sans CJK SC",
+      "Noto Sans SC", sans-serif;
+    /* Han characters in code fall back to a sans face, not the generic
+       monospace (NSimSun on Windows). */
+    --font-mono:
+      ui-monospace, "Cascadia Mono", Menlo, Consolas, "Noto Sans Mono",
+      "PingFang SC", "Microsoft YaHei UI", "Noto Sans Mono CJK SC",
+      "Noto Sans CJK SC", monospace;
+  }
+
+  &:is(:lang(zh-Hant), :lang(zh-TW), :lang(zh-HK), :lang(zh-MO)) {
+    --font-sans:
+      system-ui, "PingFang TC", "Microsoft JhengHei UI", "Noto Sans CJK TC",
+      "Noto Sans TC", sans-serif;
+    --font-mono:
+      ui-monospace, "Cascadia Mono", Menlo, Consolas, "Noto Sans Mono",
+      "PingFang TC", "Microsoft JhengHei UI", "Noto Sans Mono CJK TC",
+      "Noto Sans CJK TC", monospace;
+  }
+
+  &:lang(ja) {
+    --font-sans:
+      system-ui, "Hiragino Sans", "Yu Gothic UI", "Noto Sans CJK JP",
+      "Noto Sans JP", sans-serif;
+  }
+
+  &:lang(ko) {
+    --font-sans:
+      system-ui, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR",
+      "Noto Sans KR", sans-serif;
+  }
+}
+
+/* Browsers without relative color syntax: literal palette for the default
+   accent (a custom accent still applies; only the derived tints are fixed). */
+@supports not (color: oklch(from red l c h)) {
+  :root {
+    --accent-dark: #e48a6b;
+    --paper: #fff;
+    --gray-50: #f6f5f4;
+    --gray-100: #ebe9e8;
+    --gray-400: #726d6c;
+    --gray-500: #666261;
+    --gray-700: #3a3736;
+    --gray-900: #1d1b1a;
+    --night-950: #241f1e;
+    --night-900: #2e2927;
+    --night-800: #3d3836;
+    --night-500: #96918f;
+    --night-400: #a8a3a2;
+    --night-200: #cec9c8;
+    --night-50: #eae7e6;
+  }
+}

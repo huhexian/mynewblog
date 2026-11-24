@@ -1,0 +1,6 @@
+/* Feature bundle "comments" — loaded only on pages that register it (see layouts/_partials/assets/registry.html). */
+@import "../components/comments.css" layer(components);
+
+/* Ecoku runs with data-css-url="none" (no CSS of its own), so its complete
+   stylesheet is ours and sits in the components layer like everything else. */
+@import "../components/comments-ecoku.css" layer(components);

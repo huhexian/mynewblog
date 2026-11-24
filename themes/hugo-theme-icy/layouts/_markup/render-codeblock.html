@@ -1,0 +1,43 @@
+{{- /*
+  Fenced code blocks.
+  - Class-based Chroma output, so token colors come from components/syntax.css
+    (light/dark aware) whatever the site's markup.highlight.noClasses says.
+    Fence options (hl_lines, linenos, …) still apply.
+  - ```pele blocks render as diagrams (assets/js/modules/pele.js), with the
+    source kept as the no-JS / error fallback.
+  - A slim header shows the file name ({title="main.go"} or {filename="…"})
+    or the language, plus a copy button that code-copy.js reveals.
+*/ -}}
+{{- if eq .Type "pele" -}}
+  {{- partial "assets/use.html" (dict "page" .Page "feature" "pele") -}}
+<figure class="pele-figure" data-label-zoom-in="{{ T "peleZoomIn" }}" data-label-zoom-out="{{ T "peleZoomOut" }}" data-label-reset="{{ T "peleReset" }}">
+  <pre class="pele-source">{{ .Inner }}</pre>
+</figure>
+{{- else -}}
+{{- partial "assets/use.html" (dict "page" .Page "feature" "code") -}}
+{{- $result := transform.HighlightCodeBlock . (dict "noClasses" false "lineNumbersInTable" false) -}}
+{{- $title := or .Attributes.title .Attributes.filename -}}
+{{- $lang := cond (in (slice "" "text" "plaintext" "txt") .Type) "" .Type -}}
+<div class="code-block" data-code-block>
+  {{ "<!--ui-->" | safeHTML }}<div class="code-header">
+    <span class="code-label">
+      {{- with $title }}<span class="code-title">{{ . }}</span>{{ else }}{{ $lang }}{{ end -}}
+    </span>
+    <button class="code-copy" type="button" data-code-copy hidden
+      data-label-copied="{{ T "codeCopied" }}" data-label-failed="{{ T "codeCopyFailed" }}">
+      <span class="code-copy-icons" aria-hidden="true">
+        {{- partial "icon.html" (dict "name" "copy" "class" "code-copy-icon-idle") -}}
+        {{- partial "icon.html" (dict "name" "check" "class" "code-copy-icon-done") -}}
+      </span>
+      {{- /* All labels are stacked in one cell, so the button never changes width. */}}
+      <span class="code-copy-labels">
+        <span class="code-copy-label" data-for="idle">{{ T "codeCopy" }}</span>
+        <span class="code-copy-label" data-for="copied" aria-hidden="true">{{ T "codeCopied" }}</span>
+        <span class="code-copy-label" data-for="failed" aria-hidden="true">{{ T "codeCopyFailed" }}</span>
+      </span>
+    </button>
+  </div>{{ "<!--/ui-->" | safeHTML }}
+  {{ $result.Wrapped }}
+</div>
+{{- end -}}
+{{- /* chomp trailing newline */ -}}

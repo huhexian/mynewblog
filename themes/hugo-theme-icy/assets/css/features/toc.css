@@ -1,0 +1,2 @@
+/* Feature bundle "toc" — loaded only on pages that register it (see layouts/_partials/assets/registry.html). */
+@import "../components/toc.css" layer(components);

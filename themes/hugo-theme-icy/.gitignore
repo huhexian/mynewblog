@@ -1,0 +1,25 @@
+# Hugo output when the theme is built standalone (e.g. an exampleSite)
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# exampleSite build output and caches
+/exampleSite/public/
+/exampleSite/resources/
+/exampleSite/.hugo_build.lock
+/exampleSite/assets/jsconfig.json
+
+# Personal agent settings
+CLAUDE.local.md
+.claude/settings.local.json
+
+# CI tooling (tools/ci/)
+/tools/ci/node_modules/
+/tools/ci/.lighthouseci/
+/tools/ci/lighthouse/

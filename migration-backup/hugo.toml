@@ -1,0 +1,52 @@
+baseURL = "https://yinji.org/"
+languageCode = "zh-cn"
+title = "印记"
+theme = "hugo-bearneo"
+
+defaultContentLanguage = "zh-cn"
+
+
+[permalinks]
+  blog = "/:contentbasename.html"
+  tags = "/tags/:slug"
+
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+
+[outputFormats.RSS]
+  mediaType = "application/rss+xml"
+  baseName = "feed"
+
+
+[params]
+  title = "印记"
+  description = "Live a life you will remember."
+  favicon = "img/favicon.png"
+  copyright = "Copyright © 2018-2026, huhexian."
+  enableRobotsTXT = true
+  postSearch = true
+  toc = true
+  groupByYear = true
+  showPostCount = true
+  imageZoom = true
+  upvote = true
+  upvoteURL = "https://kudos.yinji.org"
+  customCSS = ["/custom.css"]
+
+  [params.author]
+    name = "青山"
+    email = "me@yinji.org"
+
+  [params.RSS]
+    enableRSS = true
+    pageLimit = 20
+
+
+[pagination]
+  pagerSize = 10
+
+
+
+

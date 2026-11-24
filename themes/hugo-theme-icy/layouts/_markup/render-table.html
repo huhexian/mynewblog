@@ -1,0 +1,29 @@
+{{- /*
+  Tables scroll horizontally inside a focusable region instead of overflowing the page.
+  Alignment uses data attributes (no inline styles, CSP-friendly).
+*/ -}}
+<div class="table-scroll" tabindex="0" role="region" aria-label="{{ T "table" }}">
+  <table
+    {{- range $k, $v := .Attributes }}
+      {{- if $v }} {{ printf "%s=%q" $k (string $v) | safeHTMLAttr }}{{ end }}
+    {{- end }}>
+    <thead>
+      {{- range .THead }}
+      <tr>
+        {{- range . }}
+        <th {{- with .Alignment }} data-align="{{ . }}"{{ end }}>{{ .Text }}</th>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </thead>
+    <tbody>
+      {{- range .TBody }}
+      <tr>
+        {{- range . }}
+        <td {{- with .Alignment }} data-align="{{ . }}"{{ end }}>{{ .Text }}</td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>

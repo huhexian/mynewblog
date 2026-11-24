@@ -1,0 +1,95 @@
+/*
+ * details — native disclosure as a hairline card (the same shape as repo
+ * cards and code blocks); consecutive blocks stack as a list of cards.
+ * Opening animates where ::details-content and interpolate-size exist;
+ * elsewhere it simply opens.
+ */
+
+.details {
+  border: var(--rule);
+  border-radius: var(--radius-l);
+  transition: border-color var(--duration-quick) var(--ease-out);
+
+  &:hover,
+  &[open] {
+    border-color: color-mix(in oklch, var(--color-text-faint) 45%, var(--color-rule));
+  }
+}
+
+.prose > .details {
+  margin-block-start: 1.25em;
+}
+
+/* Consecutive blocks read as one list of cards. */
+.prose > .details + .details {
+  margin-block-start: var(--space-2);
+}
+
+.details-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-radius: inherit;
+  color: var(--color-heading);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Chevron drawn with borders: no icon request, follows currentColor. */
+  &::after {
+    content: "";
+    flex-shrink: 0;
+    inline-size: 0.5em;
+    block-size: 0.5em;
+    margin-inline-start: auto;
+    border-block-end: 1.5px solid var(--color-text-muted);
+    border-inline-end: 1.5px solid var(--color-text-muted);
+    rotate: 45deg;
+    translate: 0 -0.15em;
+    transition: rotate var(--duration-base) var(--ease-out), translate var(--duration-base) var(--ease-out);
+  }
+
+  .details[open] > &::after {
+    rotate: 225deg;
+    translate: 0 0.1em;
+  }
+
+  &:hover {
+    color: var(--color-accent);
+  }
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+}
+
+.details-content {
+  padding: 0 var(--space-5) var(--space-5);
+
+  & > * + * {
+    margin-block-start: 1em;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (interpolate-size: allow-keywords) {
+    .details::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size var(--duration-base) var(--ease-out),
+        content-visibility var(--duration-base) allow-discrete;
+      transition-behavior: allow-discrete;
+    }
+
+    .details[open]::details-content {
+      block-size: auto;
+    }
+  }
+}

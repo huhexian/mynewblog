@@ -1,0 +1,101 @@
+/*
+ * Floating buttons (bottom end corner): back to top on every page, the
+ * contents button on narrow article pages. Same shape as the other round
+ * controls: hairline ring, raised paper, soft shadow.
+ */
+.fab {
+  --fab-size: 2.75rem;
+  --fab-inset: max(var(--space-4), env(safe-area-inset-bottom));
+
+  position: fixed;
+  inset-block-end: var(--fab-inset);
+  inset-inline-end: max(var(--space-4), env(safe-area-inset-right));
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  inline-size: var(--fab-size);
+  block-size: var(--fab-size);
+  padding: 0;
+  border: var(--rule);
+  border-radius: var(--radius-full);
+  background-color: var(--color-raised);
+  color: var(--color-text-muted);
+  box-shadow: var(--shadow-float);
+  transition: color var(--duration-quick) var(--ease-out);
+
+  &:hover {
+    color: var(--color-heading);
+  }
+
+  & .icon {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+  }
+}
+
+/* Back to top: rises in once the reader is a screen down; the ring around
+   it fills with reading progress. */
+.back-to-top {
+  opacity: 0;
+  translate: 0 0.5rem;
+  scale: 0.92;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    color var(--duration-quick) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out),
+    translate var(--duration-base) var(--ease-out),
+    scale var(--duration-base) var(--ease-out),
+    visibility var(--duration-base) allow-discrete;
+
+  &[data-visible] {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+.back-to-top-ring {
+  position: absolute;
+  inset: -1px;
+  inline-size: calc(100% + 2px);
+  block-size: calc(100% + 2px);
+  rotate: -90deg;
+  pointer-events: none;
+
+  /* Dash lengths in user units (px = user unit in SVG): the circle's real
+     circumference, 2π × 21. A unitless calc() here (with pathLength="1") is
+     dropped by Firefox, which left the ring always full. */
+  & circle {
+    --ring: 131.95px;
+
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: var(--ring);
+    stroke-dashoffset: calc(var(--ring) * (1 - var(--progress, 0)));
+    transition: stroke-dashoffset 120ms linear;
+  }
+}
+
+/* Narrow article pages also show the contents button: stack above it. */
+.page-grid:has(> .toc-fab) > .back-to-top {
+  inset-block-end: calc(var(--fab-inset) + var(--fab-size) + var(--space-2));
+}
+
+/* Wide: the contents live in the rail; back to top takes the corner. */
+@container page (inline-size >= 75rem) {
+  .page-grid:has(> .toc-fab) > .back-to-top {
+    inset-block-end: var(--fab-inset);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    translate: none;
+    scale: none;
+  }
+}
