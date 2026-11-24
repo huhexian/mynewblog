@@ -49,9 +49,23 @@ copyright = "Copyright © 2018-2026, huhexian."
   [params.author]
     name = "青山"
     email = "me@yinji.org"
+    avatar = '/avatar.png'
+    bio = '一位人力资源管理从业者，Blogger/摄影爱好者/数码发烧友。'
+  [[params.social]]
+    name = 'github'
+    title = 'GitHub'
+    url = 'https://github.com/huhexian'
+  [[params.social]]
+    name = 'x'
+    title = 'X'
+    url = 'https://x.com/huhexian'
+  [[params.social]]
+    name = 'telegram'
+    title = 'Telegram'
+    url = 'https://t.me/findblog'
   [params.home]
-    intro = false
-    recentCount = 10
+    intro = true
+    recentCount = 8
   [params.list]
     groupByYear = true
     paginate = true
