@@ -83,4 +83,7 @@ copyright = "Copyright © 2018-2026, huhexian."
     title = "RSS"
     url = "/feed.xml"
   [params.rss]
-  fullText = true
+    fullText = true
+  [params.article.copyright]
+    license = "保留所有权利"
+    note = "本文为原创文章，未经作者事先书面许可，禁止转载全文或实质性内容。法律允许的合理引用除外；引用时请注明作者及原文链接。"
