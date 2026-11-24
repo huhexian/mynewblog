@@ -50,7 +50,7 @@ copyright = "Copyright © 2018-2026, huhexian."
     name = "青山"
     email = "me@yinji.org"
     avatar = '/avatar.png'
-    bio = '一位人力资源管理从业者，Blogger/摄影爱好者/数码发烧友。'
+    bio = '一位人力资源管理从业者，Blogger/摄影爱好者/数码发烧友。<br>Live a life you will remember. Avicii 《[The Nights](https://www.bilibili.com/video/BV1aB4y1A7ge "The Nights")》'
   [[params.social]]
     name = 'github'
     title = 'GitHub'
@@ -65,7 +65,7 @@ copyright = "Copyright © 2018-2026, huhexian."
     url = 'https://t.me/findblog'
   [params.home]
     intro = true
-    recentCount = 8
+    recentCount = 5
   [params.list]
     groupByYear = true
     paginate = true
@@ -74,7 +74,13 @@ copyright = "Copyright © 2018-2026, huhexian."
     imageViewer = true
   [params.footer]
     since = 2018
+    [params.footer.credit]
+    name = 'Cloudflare'
+    url = 'https://pages.cloudflare.com/'
+    icon = 'cloudflare'
   [[params.social]]
     name = "rss"
     title = "RSS"
     url = "/feed.xml"
+  [params.rss]
+  fullText = true

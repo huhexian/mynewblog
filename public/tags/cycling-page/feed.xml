@@ -18,6 +18,65 @@
 我不喜欢跑步，体力不太行，去年年底买了公路自行车，上半年骑了不少，后来搬家买了二手电动车，自行车时不时就被闲置，以及 6 月买的一块 …</description>
       <category>Cycling-Page</category>
       <category>Running-Page</category>
+      <content:encoded><![CDATA[
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://img.yinji.org/WX20250824-213928@2x.webp" data-viewer>
+<img src="https://img.yinji.org/WX20250824-213928@2x.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>yihong 开源的 <a href="https://github.com/yihong0618/running_page/" rel="external">Running Page</a> 项目特别有意思，他本人是一个跑步爱好者，从他的<a href="https://yihong.run/" rel="external">页面</a>数据可以了解到，跑步 14 年，总里程 12737km，相当于 0.3 个赤道。</p>
+<p>我不喜欢跑步，体力不太行，去年年底买了<a href="https://yinji.org/5386.html" rel="external">公路自行车</a>，上半年骑了不少，后来<a href="https://yinji.org/5548.html" rel="external">搬家</a>买了二手电动车，自行车时不时就被闲置，以及 6 月买的一块 iGPSORT 码表，如何再次提起骑行的兴趣，部署一个 <del>Running</del> Cycling Page 或许是不错的选择。</p>
+<p>刚买自行车那会儿就想折腾一番，想着直接从 Apple Watch 上同步数据，奈何苹果比较封闭，需要手动导出，后来看到小孙同学曲线救国的方法，将 iGPSPORT 的数据同步到 Strava，再通过 yihong 的代码获取 Strava 数据，最后部署静态网站。防止以后忘记，把过程记录下来。</p>
+<p>第一步，Fork 仓库，<a href="https://cyc.guoqi.dev/" rel="external">小孙同学</a>也是骑公路车，我直接 Fork 他的仓库，在上面修改一些数据。</p>
+<p>第二步，获取 Strava 的 Token 和 Code。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://img.yinji.org/WX20250824-211330@2x.png" data-viewer>
+<img src="https://img.yinji.org/WX20250824-211330@2x.png" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>主要是 Client ID、Client Secret 和 Refresh Token，前两个直接从 <a href="http://developers.strava.com/" rel="external">Strava Developers</a> 创建应用再获取，第三个有点复杂。</p>
+<p>首先需要通过下方的链接获取 Code，要替换成自己的 Client ID。</p>
+
+<div class="code-block" data-code-block>
+  
+  <pre tabindex="0"><code>https://www.strava.com/oauth/authorize?client_id=${your_id}&amp;response_type=code&amp;redirect_uri=http://localhost/exchange_token&amp;approval_prompt=force&amp;scope=read_all,profile:read_all,activity:read_all,profile:write,activity:write</code></pre>
+</div><p>接着在终端里输入代码，获取最后需要的 Refresh Token，也是要替换相应内容。</p>
+
+<div class="code-block" data-code-block>
+  
+  <pre tabindex="0"><code>curl -X POST https://www.strava.com/oauth/token \
+-F client_id=${Your Client ID} \
+-F client_secret=${Your Client Secret} \
+-F code=${Your Code} \
+-F grant_type=authorization_code</code></pre>
+</div><p>最后把获取到的三项内容，添加到 Repository secrets 中。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://img.yinji.org/1756041873870.jpg" data-viewer>
+<img src="https://img.yinji.org/1756041873870.jpg" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>最主要的就是这几步，至于还有什么步骤我现在也忘了……yihong 原项目页面上有非常详细的教程，不过对于没什么 Code 基础的我来说还是需要费点时间。做完这些我就部署到了 Cloudflare Page 上，每天通过 GitHub Actions 同步 Strava 数据。</p>
+<p>7 月份下载使用 Strava，它只能同步最新的数据，考虑到 iGPSPORT 还有不少记录，加起来骑行里程也快 100km，不放上去觉得可惜了，幸好没有多少条，全部手动下载 gpx 文件，再导入到 Strava 上，最后总共骑行里程是 200km 左右，一点点的成就感油然而生。</p>
+<blockquote>
+  <p><a href="https://cycling.yinji.org" rel="external">https://cycling.yinji.org</a></p>
+
+</blockquote>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://img.yinji.org/WX20250824-213928@2x.webp" data-viewer>
+<img src="https://img.yinji.org/WX20250824-213928@2x.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>]]></content:encoded>
     </item>
   </channel>
 </rss>

@@ -18,6 +18,87 @@
       <category>Bitwarden</category>
       <category>Cloudcone</category>
       <category>Vps</category>
+      <content:encoded><![CDATA[<p>我是一个强迫症患者，程度算不上低，很早之前就想将自己的博客和其他 self-hosted 服务分开，博客单独一台 VPS，其他杂七杂八的自部署服务放在另一台 VPS 上，既要雨露均沾，也要有个孰轻孰重，以此体现我对于博客的重视，毕竟自诩博客爱好者。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/08/5fc03acde3880f0cede8eb33abd9d285.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/08/5fc03acde3880f0cede8eb33abd9d285.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>好巧不巧，<a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 最近不知抽什么风，上架两款 VPS，其中一款为4核心、2GB内存、30GB SSD 存储，4TB 流量，价格为<a href="https://app.cloudcone.com.cn/vps/268/create?token=hashtag-2024-ssd-vps-2&amp;ref=9587" rel="external">19.9美元</a>，从没摸透过他们的营销手法。从刚开始接触时的复活节，到后面的黑色星期五（被鸽了）、圣诞节、周年庆等活动，优惠力度一次比一次小，这次也算是赶上了，账户里也有点余额，便剁手了一台，买之前想着，多部署一点有意思的工具或服务，让它充分利用起来。</p>
+<p>我对于 VPS 的测试一窍不通，只会学着网友的教程，输入一段代码，运行一个脚本，等待测试结果。VPS 开通之后我用一个融合怪脚本进行测试，下面是它给出的数据结果。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/08/a4d78c936f762f50267f0e23e7c4373d.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/08/a4d78c936f762f50267f0e23e7c4373d.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/08/4c2077e2933595c26b623667331f1078.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/08/4c2077e2933595c26b623667331f1078.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/08/4c1b6f4e21ecb12243c96e64c9311f59.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/08/4c1b6f4e21ecb12243c96e64c9311f59.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/pic/2024/08/a773555289b9ec2e1f96ae4e3140787e.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/pic/2024/08/a773555289b9ec2e1f96ae4e3140787e.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>机房在美国洛杉矶，大多数人用它做一些特殊服务，所以就会关注流媒体解锁情况，我目的不在此，部署网站之后的访问情况令我比较满意，包括现在这个博客，一直运行在 CloudCone 的 VPS 上，也较为稳定。</p>
+<p>一切准备就绪之后想到的第一个服务便是密码管理工具。在这个方面我没有良好的习惯，过去一直都将密码存储在 Edge 浏览器上，通过 Microsoft 账户同步服务在多个设备之间使用，而且有过多个网站使用相同密码的情况，但是从上半年用 iPhone 之后，手机上的浏览器就一直是 Safari，懒得再下一个 Edge，以至于每次想登录某个网站，都得掏出我的荣耀30 Pro。</p>
+<p>之前也使用过 Bitwarden，但后面随着某个域名过期，它也就不了了之。这次仍然采用 Docker 部署的形式，参照了 <a href="https://veryjack.com/technique/%E7%BB%93%E5%90%88%E5%AE%9D%E5%A1%94%E5%92%8Cdocker-%E5%AE%89%E8%A3%85-bitwarden%E5%8F%8A%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" rel="external">Jack</a> 和 <a href="https://atpx.com/blog/docker-vaultwarden/" rel="external">aptX</a> 的教程，非常轻松地部署了 Bitwarden。</p>
+<p>多说一句，aptX 的博客审美十分在线，语言文字、页面排版十分优雅。</p>
+
+<div class="code-block" data-code-block>
+  
+  <pre tabindex="0"><code>docker run -d --name bitwardenrs \ 
+--restart unless-stopped \ 
+-e WEBSOCKET_ENABLED=true \ 
+-v /www/wwwroot/demo/:/data/ \ 
+-p 6666:80 \ 
+-p 3012:3012 \ 
+vaultwarden/server:latest</code></pre>
+</div>
+<div class="code-block" data-code-block>
+  
+  <pre tabindex="0"><code>docker run -d --name bitwardenrs \ 
+--restart unless-stopped \ 
+-e SIGNUPS_ALLOWED=false \ 
+-e WEBSOCKET_ENABLED=true \ 
+-v /www/wwwroot/demo/:/data/ \ 
+-p 6666:80 \ 
+-p 3012:3012 \ 
+vaultwarden/server:latest</code></pre>
+</div><p>步骤还是那几个步骤，先部署，能够访问之后先注册自己的账号，接着关闭注册功能，除此之外也加上了自动同步功能，网页上添加或更新密码，手机客户端也能同步更新。</p>
+<p>浏览器上安装好官方扩展，手机上下载好官方客户端，剩下的就让 Bitwarden 发挥作用吧。</p>
+<p>你以为我会继续部署一些玩意儿吗，找了半天，研究了半天，最后再部署了一个网站资源监控工具——Uptime Kuma，因为我发现自己没那么多需求，现有的工具足够，整个过程让我有一种为了这瓶醋，包了一锅饺子的感觉。文章开头写 CloudCone，但标题却是“从 Bitwarden 开始讲起”，原因是为了避免自己有打广告之嫌。</p>
+<p>使用 Bitwarden，千万记住一点，你的主密码。当然，最主要的，不要做一个<a href="https://blog.gujiakai.top/2024/04/fake-selfhost-lover" rel="external">虚假的自托管爱好者</a>。</p>
+<hr>
+<p>目前正在使用的自部署服务：</p>
+<ul>
+<li><a href="https://umami.is/" rel="external">Umami</a></li>
+<li><a href="https://uptime.kuma.pet/" rel="external">Uptime Kuma</a></li>
+<li><a href="https://bitwarden.com/" rel="external">Bitwarden</a></li>
+<li><a href="https://freshrss.org/index.html" rel="external">FreshRSS</a></li>
+</ul>
+]]></content:encoded>
     </item>
     <item>
       <title>使用 CloudCone 的第 7 个月</title>
@@ -28,6 +109,20 @@
       <category>Cloudcone</category>
       <category>Vps</category>
       <category>服务器</category>
+      <content:encoded><![CDATA[<p>我在前文《<a href="https://yinji.org/4868.html" rel="external">开始使用 CloudCone 复活节特价 VPS</a>》中提到，今年4月，我购买 CloudCone 的复活节特惠 VPS，并且使用至今。配置为 2 vCPUs、2GB RAM、60GB Disk，每月4TB流量。在这台 VPS 上，我部署了自己的 WordPress 博客，Docker 部署的几个小工具，以及 @<a href="https://demochen.com" rel="external">Demochen</a> 的两个网站，约9个网站。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/8b981c4c19125b1830036dd43825e78f.webp</figcaption></figure><p>期间仅在10月初因为官方进行维护，VPS 有2个小时的 offline 状态，其它时候一切正常运行，根据宝塔面板显示，内存使用率一直维持在47.3%左右，60GB 的存储我也只使用了26%，CPU 使用率也比较稳定。</p>
+<p>美国 Los Angeles DC2 机房，速度当然比不上香港服务器，但优点是响应快，国内用户访问我的博客，速度也还可以接受，除了 CSS、图片等静态文件使用了缤纷云的对象存储，其他都是在 VPS 上。我也使用脚本对这台服务器做了一个简单的测速，如下图所示。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/92bdbea7a3384eabe6045c438c0b29dc.webp</figcaption></figure><p>我对 VPS 测速这方面了解不多，也不知道上图是个怎样的水平。测速意义也不大，最主要的是使用体验，按照我目前大半年的使用效果来说，很满意，群里<a href="https://iliu.org" rel="external">图南博客</a>、<a href="https://laozhang.org" rel="external">老张博客</a>、<a href="https://bear1983.com" rel="external">踏雪寻熊</a>（我推荐的）也是使用 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的 VPS，马上到续费的时候，总体评价还是很不错。</p>
+<p>Ping 检测虽然不是一片绿，但起码不是一片红。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/ff87f4258a093db8794ba7e5df568644.webp</figcaption></figure><p>在此之前，2018-2021年这段时间，一直使用腾讯云的学生机，貌似还用过轻量应用服务器，速度快是真的快，价格也挺合适，但仅限国内地区，2021年底把原先的博客出售之后就没考虑过备案的事情，也就再没接触过国内服务器。后来使用老薛的香港虚拟主机，但经不住折腾，最终选择购买 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的 VPS，而且赶上复活节特惠，25.5美元拿下。</p>
+<p>虽然速度没有国内服务器快，但也有不少好处。比如不用备案，续费同价，光是这两点就能让我满足了。自己用着还不错，便在群里和 Twitter 上推荐过几次，博客上还新建了一个 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的介绍页面，不定期更新它的优惠信息。</p>
+<p>承蒙网友支持和购买，我也收获了不少的返利佣金，但苦于提现困难，前几天也问了官方客服，<a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 上的余额和 VPS 都可以通过发工单的方式转移到另一个账号。<strong>所以未来如果有购买 VPS 的需求，可以找我帮忙代购，或者从我的链接下单购买，不胜荣幸</strong>！</p>
+<p>如果你想建个博客，写写文章，<a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的 VPS 是一个不错的选择，如果你想用来科学上网，我不推荐也不反对。</p>
+<p>以上内容是我使用 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a> 的 VPS 大半年之后的体验感受，给想购买 VPS 尤其是购买 <a href="https://yinji.org/cloudcone.html" rel="external">CloudCone</a>的读者朋友做一个简单的参考。</p>
+]]></content:encoded>
     </item>
     <item>
       <title>开始使用 CloudCone 复活节特价 VPS</title>
@@ -37,6 +132,58 @@
       <description>大概是从去年下半年腾讯云的服务器到期之后，就没买过 VPS 了，一来域名没有备案，无法使用国内服务器，二来性价比高的香港 VPS 实在太少，就一直使用老薛主机的基础型香港虚拟主机。</description>
       <category>Cloudcone</category>
       <category>Vps</category>
+      <content:encoded><![CDATA[<p>大概是从去年下半年腾讯云的服务器到期之后，就没买过 VPS 了，一来域名没有备案，无法使用国内服务器，二来性价比高的香港 VPS 实在太少，就一直使用老薛主机的基础型香港虚拟主机。</p>
+<p>最近一段时间，有朋友反馈访问速度太慢，我自己也看了下，确实速度大不如前，而且配置也不高，我有多个网站，2G 磁盘不够用。在看了朋友的博客之后，了解到 CloudCone ，正好这两天是美国的复活节，有终身优惠的美国 VPS，就直接入手了。</p>
+<p>圈里人我知道的有<a href="https://laozhang.org" rel="external">老张博客</a>和<a href="https://iliu.org" rel="external">流金岁月</a>在使用，他们是在去年“黑色星期五”购买的，目前已经后悔，因为配置太高，性能过剩，多花了一百多元，他们的网站访问速度还是不错的。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：CloudCone</figcaption></figure><p>简单说一下配置：</p>
+<table>
+	<thead>
+			<tr>
+					<th>内存</th>
+					<th>CPU</th>
+					<th>硬盘</th>
+					<th>流量</th>
+					<th>年付</th>
+					<th>购买</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1G</td>
+					<td>1核</td>
+					<td>30G HDD</td>
+					<td>3T/月</td>
+					<td>$15</td>
+					<td><a href="https://app.cloudcone.com.cn/vps/180/create?token=ebunny23-1&amp;ref=9587" rel="external">链接</a></td>
+			</tr>
+			<tr>
+					<td><strong>2G</strong></td>
+					<td><strong>2核</strong></td>
+					<td><strong>60G HDD</strong></td>
+					<td><strong>4T/月</strong></td>
+					<td><strong>$25.5</strong></td>
+					<td><a href="https://app.cloudcone.com.cn/vps/181/create?token=ebunny23-2&amp;ref=9587" rel="external">链接</a></td>
+			</tr>
+			<tr>
+					<td>4G</td>
+					<td>4核</td>
+					<td>120G HDD</td>
+					<td>8T/月</td>
+					<td>$47</td>
+					<td><a href="https://app.cloudcone.com.cn/vps/182/create?token=ebunny23-3&amp;ref=9587" rel="external">链接</a></td>
+			</tr>
+	</tbody>
+</table>
+<p>我买的是第二款，内存大一点，价格也适中，位于美国洛杉矶，DC2，折合人民币是176元/年，而且这个价格是终身享受，续费同价，相比我138元/年的虚拟主机，太诱惑了。</p>
+<p>我不懂 VPS 如何测速，用站长工具 Ping 了一下，还是不错的。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：Ping</figcaption></figure><p>需要注意的问题是，分配给你的 IP 可能会被墙，如果出现这种情况，可以销毁主机，重新分配，没有作用的话就发工单，申请付费更换 IP，保证可用，2美元一次。</p>
+<p>美国时间的复活节应该就是今天，优惠时间有限，估计过了今天就没有了。</p>
+<p>这下有了 VPS，又可以进行折腾了。</p>
+<hr>
+<p><strong>最后，明年1月份到期的老薛主机基础型香港主机有人收吗？账户之间可以过户，具体配置查看<a href="https://www.laoxuehost.com/hosting/" rel="external">官网</a>。</strong></p>
+]]></content:encoded>
     </item>
   </channel>
 </rss>

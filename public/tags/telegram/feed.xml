@@ -20,6 +20,61 @@
       <category>Telegram</category>
       <category>Telegram-Channel</category>
       <category>微博客</category>
+      <content:encoded><![CDATA[
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/6Jtvo36MfuDqNmxf.png</figcaption></figure><p>看到标题可能有人就说了，Telegram Channel 本身就可以作为一个微博客使用，但问题是并不是所有人都有能力和方法使用并访问 Telegram Channel，CloudFlare 和开源项目 BroadcastChannel 巧妙地解决了这个问题。</p>
+<h2 id="broadcastchannel-介绍">BroadcastChannel 介绍
+</h2><p><a href="https://github.com/ccbikai/BroadcastChannel" rel="external">BroadcastChannel</a> 是<a href="https://chi.miantiao.me" rel="external">面条</a>大佬开发的项目，可以将 Telegram Channel 转为微博客使用，通过 Telegram Channel 发布内容，另一端通过 <a href="https://astro.build" rel="external">Astro</a> 程序进行呈现。</p>
+<p>事先需要准备好 CloudFlare 账号和可以使用 Telegram 的网络。</p>
+<p>项目提供了 Serverless 和 Docker 两种部署方式，前者简单易懂，也是我目前使用的。</p>
+<h2 id="broadcastchannel-部署">BroadcastChannel 部署
+</h2><p>第一步，Fork 该项目到自己的 GitHub，接着前往 CloudFlare 或者 Vercel、Netlify 等平台创建项目，仓库即选择刚刚 Fork 的 BroadcastChannel。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/WX20241013-231431@2x.png</figcaption></figure><p>选择 BroadcastChannel 项目和 Astro 框架，然后再配置环境变量，其中必须事先配置的是 CHANNEL 变量，内容填频道名称，例如我的 @<a href="https://t.me/findblog" rel="external">FindBlog</a> 频道，变量就填写 FindBlog 即可。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/WX20241013-231556@2x.png</figcaption></figure><p>其他保持默认即可，该项目还提供了其他环境变量可供配置，可以在部署之后自行添加。</p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/WX20241013-231743@2x.png</figcaption></figure><p>只需一眨眼的功夫，该项目成功在 CloudFlare Pages 上部署，可以访问默认域名，也可以添加自定义域名。</p>
+<p>后续只需要在 Telegram Channel 更新内容，即可自动同步并部署至 CloudFlare Pages，无需动手。</p>
+<p>我在该项目开源之后第一时间部署了 @FindBlog 的微博客，效果很惊人，不仅界面美观，SEO 友好，还提供了 RSS，对于想简单写点博客的人来说，是一种简单、快捷的体验方式。</p>
+<p>地址：<a href="https://broadcastchannel.pages.dev/" rel="external">https://broadcastchannel.pages.dev/</a></p>
+
+    <figure class="figure" data-align="center"><figcaption>图片暂缺：images/lcheiO8aJYdBgtau.png</figcaption></figure><p>其他变量：</p>
+
+<div class="code-block" data-code-block>
+  
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="c1">## Telegram 频道用户名，必须配置。 t.me/ 后面那串字符
+</span></span></span><span class="line"><span class="cl"><span class="nx">CHANNEL</span><span class="o">=</span><span class="nx">FindBlog</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 语言和时区设置，语言选项见[dayjs](https://github.com/iamkun/dayjs/tree/dev/src/locale)
+</span></span></span><span class="line"><span class="cl"><span class="nx">LOCALE</span><span class="o">=</span><span class="nx">zh</span><span class="o">-</span><span class="nx">cn</span>
+</span></span><span class="line"><span class="cl"><span class="nx">TIMEZONE</span><span class="o">=</span><span class="nx">Asia</span><span class="o">/</span><span class="nx">Shanghai</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 社交媒体用户名
+</span></span></span><span class="line"><span class="cl"><span class="nx">TELEGRAM</span><span class="o">=</span><span class="nx">huhexian</span>
+</span></span><span class="line"><span class="cl"><span class="nx">TWITTER</span><span class="o">=</span><span class="nx">huhexian</span>
+</span></span><span class="line"><span class="cl"><span class="nx">GITHUB</span><span class="o">=</span><span class="nx">huhexian</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 下面两个社交媒体需要为 URL
+</span></span></span><span class="line"><span class="cl"><span class="nx">DISCORD</span><span class="o">=</span><span class="nx">https</span><span class="o">://</span><span class="nx">DISCORD</span><span class="o">.</span><span class="nx">com</span>
+</span></span><span class="line"><span class="cl"><span class="nx">PODCASRT</span><span class="o">=</span><span class="nx">https</span><span class="o">://</span><span class="nx">PODCASRT</span><span class="o">.</span><span class="nx">com</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 头部尾部代码注入，支持 HTML
+</span></span></span><span class="line"><span class="cl"><span class="nx">FOOTER_INJECT</span><span class="o">=</span><span class="nx">FOOTER_INJECT</span>
+</span></span><span class="line"><span class="cl"><span class="nx">HEADER_INJECT</span><span class="o">=</span><span class="nx">HEADER_INJECT</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## SEO 配置项，可不让搜索引擎索引内容
+</span></span></span><span class="line"><span class="cl"><span class="nx">NO_FOLLOW</span><span class="o">=</span><span class="k">false</span>
+</span></span><span class="line"><span class="cl"><span class="nx">NO_INDEX</span><span class="o">=</span><span class="k">false</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Sentry 配置项，收集服务端报错
+</span></span></span><span class="line"><span class="cl"><span class="nx">SENTRY_AUTH_TOKEN</span><span class="o">=</span><span class="nx">SENTRY_AUTH_TOKEN</span>
+</span></span><span class="line"><span class="cl"><span class="nx">SENTRY_DSN</span><span class="o">=</span><span class="nx">SENTRY_DSN</span>
+</span></span><span class="line"><span class="cl"><span class="nx">SENTRY_PROJECT</span><span class="o">=</span><span class="nx">SENTRY_PROJECT</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Telegram 主机名称和静态资源代理，不建议修改
+</span></span></span><span class="line"><span class="cl"><span class="nx">HOST</span><span class="o">=</span><span class="nx">telegram</span><span class="o">.</span><span class="nx">dog</span>
+</span></span><span class="line"><span class="cl"><span class="nx">STATIC_PROXY</span><span class="o">=</span></span></span></code></pre></div>
+</div>]]></content:encoded>
     </item>
     <item>
       <title>使用 Zeabur 构建我的 n8n 赛博空间</title>
@@ -31,6 +86,134 @@ Zeabur 是国人开发的一款服务部署平台，无论使用什么编程语�
       <category>N8n</category>
       <category>Telegram</category>
       <category>Zeabur</category>
+      <content:encoded><![CDATA[<p>标题里有两个工具，先简单介绍一番。</p>
+<p><a href="https://zeabur.com/" rel="external">Zeabur</a> 是国人开发的一款服务部署平台，无论使用什么编程语言或开发框架，只需要通过几个简单的按钮就可以部署，常见的 Ghost、Halo、Umami 都能部署，就连 WordPress 都可以。</p>
+<p><a href="https://n8n.io/" rel="external">n8n</a> 是一个开源的工作流自动化工具，类似于 <a href="https://ifttt.com/" rel="external">IFTTT</a>，iOS 用户应该更容易理解，相当于快捷指令，通过某个条件触发某个动作。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbc2762892e.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc2762892e.webp" alt="cover.webp"
+  loading="lazy" decoding="async"></a>
+</figure><h2 id="为什么构建一个赛博空间">为什么构建一个“赛博空间”
+</h2><p>因为每天都在获取信息，文章、音乐、视频等常见的内容形式，以及各种工具、软件，它们分散在不同的平台，管理起来比较麻烦。如果统一转发到一个地方，加以标签分类，对于以后检索会更加方便。于是我选择使用 n8n 转发我阅读的文章、点赞或投币过的视频、喜欢听的音乐、读过的书、看过的电影、收藏的各类工具等内容至 Telegram 频道，不同类型的内容打上不同的标签，通过标签索引，十分快捷方便就可以找到。这便是我的“赛博空间”。</p>
+<p>目前为止，看到有人这般操作的有三人，<a href="https://t.me/reorx_share" rel="external">@novoreorx</a>、<a href="https://t.me/RayeJourney" rel="external">@rayepeng_</a>和<a href="https://t.me/pseudoyulife" rel="external">@pseudo_yu</a>，他们的博客里也有很详细的介绍和教程，我的部署过程很大一部分就参考了其中的内容。</p>
+<h2 id="如何部署-n8n">如何部署 n8n
+</h2><p>n8n 需要用到数据库，根据 Zeabur 官方文档，这里选择使用 PostgreSQL，所以事先安装好 PostgreSQL 客户端，我这里使用的是 <a href="https://www.postgresql.org/download/" rel="external">PostgreSQL 15</a> 在官网下载即可，这一步的目的是连接 Zeabur 安装的 PostgreSQL 并新建名为 n8n 的 Database。</p>
+<h3 id="安装-postgresql">安装 PostgreSQL
+</h3><p>Zeabur 中有一个 Marketplace，搜索 PostgreSQL 即可一键部署该服务。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f4287f.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f4287f.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>部署数据库之后就可以在 connect 中看到数据库的相关信息了，这里需要用到 Host、Port、Username。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f679bc.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb79f679bc.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>接着就打开安装好的 PostgreSQL 15 客户端，右键单击左上角的“Server”，Register→Server，输入上面我提到的 Host、Port、Username，最后点击 Save 保存即可。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a1ac36d.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a1ac36d.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a2d5459.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a2d5459.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>刚刚我创建的 Server 命名为 n8n，然后右键单击 n8n 下的 Database，点击 Create Database，创建一个名为 n8n 的数据库就可以了，这是非常重要的一步，名字必须命名为 n8n。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a401e78.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a401e78.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a41dc12.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a41dc12.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>至此，有关 PostgreSQL 的设置就结束了。</p>
+<blockquote>
+  <p>关于 Zeabur 的费用，也不用担心，提供了免费方案，每月有5美元的免费额度，我觉得应该是够用。</p>
+
+</blockquote><h3 id="安装-n8n">安装 n8n
+</h3><p>同样可以在 Marketplace 里找到 n8n，点击一键部署。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a582c0a.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbb7a582c0a.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>打开 n8n，右侧会有环境变量 Variable 的设置，本可以不用修改，但需要多加两条变量规则，不然会在使用 n8n 创建 Credential 的时候出错。</p>
+<p>按照我给出的环境变量，将其中的自定义域名改为自己的就行，然后全部复制粘贴进去。</p>
+
+<div class="code-block" data-code-block>
+  
+  <pre tabindex="0"><code>DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+PASSWORD=78nJ3L6u9Oh2
+DB_POSTGRESDB_USER=${POSTGRES_USERNAME}
+DB_POSTGRESDB_HOST=${POSTGRES_HOST}
+DB_POSTGRESDB_DATABASE=n8n
+WEBHOOK_URL=https://yourdomain
+VUE_APP_URL_BASE_API=https://yourdomain
+DB_TYPE=postgresdb
+DB_POSTGRESDB_PORT=${POSTGRES_PORT}
+EXECUTIONS_DATA_PRUNE=true
+EXECUTIONS_DATA_MAX_AGE=72
+EXECUTIONS_DATA_SAVE_ON_ERROR=all
+EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
+EXECUTIONS_DATA_SAVE_ON_PROGRESS=false
+EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false</code></pre>
+</div>
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbbc8c400e0.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbbc8c400e0.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>最后一步，在 Zeabur 绑定自定义域名，一定要和上面环境变量中的保持一致，具体绑定方法参考 Zeabur 的文档吧。</p>
+<h2 id="如何使用-n8n">如何使用 n8n
+</h2><p>我自己都没玩懂这一方面，所有的 Workflow 都是参考<a href="https://github.com/reorx/n8n-workflows" rel="external">@novoreorx</a>和<a href="https://github.com/pseudoyu/yu-workflows" rel="external">@pseudo_yu</a>在 GitHub 上分享的代码，一键导入进去，创建好自己的 Credential，将其中的信息修改为自己的，就可以运行了。</p>
+<p>YouTube 配置起来有点麻烦，需要申请官方的 API，不过看官方文档和视频操作起来也很简单。至于哔哩哔哩、网易云音乐、Raindrop、GitHub activities 就只需要使用 <a href="https://docs.rsshub.app/" rel="external">RSShub</a> 生成相应的 RSS 链接即可。这里说一句 RSS 牛逼，RSShub 牛逼，DIYgod 牛逼。</p>
+<p>我的 Workflow 上传到 <a href="https://github.com/huhexian/workflow" rel="external">GitHub</a> 了，只需要上传这些 .json 文件至 n8n 即可。</p>
+
+
+
+
+<figure class="figure" data-align="center">
+  <a class="media-frame" href="https://huhexian.s3.bitiful.net/2023/08/03/64cbc4879f013.webp" data-viewer>
+<img src="https://huhexian.s3.bitiful.net/2023/08/03/64cbc4879f013.webp" alt=""
+  loading="lazy" decoding="async"></a>
+</figure><p>YouTube 采用的是 Google 官方的 API，这一步看文档就行；我将 Raindrop 作为书签工具，一方面收藏工具，另一方面收藏文章，所以我建了两个收藏，分别命名为 article 和 tool，开启分享功能，获取它们的 RSS 地址；GitHub 和豆瓣都有官方的 RSS 地址，直接使用就行；网易云音乐和哔哩哔哩则需要借助 RSShub 生成 RSS 地址。本来还想添加 Twitter，但它的 API 被马斯克搞得太恶心，遂放弃。</p>
+<hr>
+<p>以上便是我使用 Zeabur 部署 n8n 的整个过程，虽然没有 Docker 部署那样快捷方便，但也值得尝试。同时欢迎关注我的 <a href="https://t.me/hutalk" rel="external">Telegram 个人频道</a>，可以看到我感兴趣的内容，或许会有相通之处。</p>
+]]></content:encoded>
     </item>
     <item>
       <title>Telegram 频道及 Bot 推荐</title>
@@ -41,6 +224,71 @@ Zeabur 是国人开发的一款服务部署平台，无论使用什么编程语�
 Telegram 频道# 2019-nCoV 疫情实时播报（@nCoV2019）
 如果我没猜错的话，这应该是 …</description>
       <category>Telegram</category>
+      <content:encoded><![CDATA[<p>延续上一篇 [[telegram-channel-recommendations|Telegram 频道推荐]]，推荐了 7 个目前关注并常看的频道，今天继续推荐，另外推荐几个常用的 Telegram Bot。</p>
+<h2 id="telegram-频道">Telegram 频道
+</h2><ol>
+<li>
+<p>2019-nCoV 疫情实时播报（<a href="https://t.me/nCoV2019" rel="external">@nCoV2019</a>）</p>
+<p>如果我没猜错的话，这应该是某位推友运营的频道，频道内是有关 COVID-19 的中文消息，比如疫情通报、疫情动态、防空政策等等，内容均标明出处，支持投稿。</p>
+</li>
+<li>
+<p>Appinn Feed（<a href="https://t.me/appinnfeed" rel="external">@appinnfeed</a>）</p>
+<p>小众软件和发现频道的内容更新，分享免费、小巧、实用、有趣、绿色的软件，可以当作一个小众软件的官方 RSS 订阅来使用，及时获取最新内容。</p>
+</li>
+<li>
+<p>iBeta 尝鲜派｜公告栏（<a href="https://t.me/ibeta_channel" rel="external">@ibeta_channel</a>）</p>
+<p>这是 iBeta 尝鲜派的官方频道，除了推送 Apple 系统的更新之外，还会不定期分享 Apple 系统中出现的 Bug，以及和 Apple 相关的新闻内容。有相应的群组，氛围挺好，Apple 用户值得加入。</p>
+</li>
+<li>
+<p>Android Weekly Update（<a href="https://t.me/update4weekly" rel="external">@update4weekly</a>）</p>
+<p>和上面的尝鲜派相反，这是一个专门分享 Android 相关内容的频道，一份 Android 行业动态分析专栏计划/周报，对于 Android 系统的介绍、体验分享，以及 Android 手机相关内容的分享。</p>
+</li>
+<li>
+<p>搞机日记</p>
+<p>少数派成员路中南的个人频道，目前频道处于私有状态，仅可通过邀请链接进行关注。“主观不专业，更新不定时”，如名字所言，与手机有关的内容分享，主观性很强。</p>
+</li>
+<li>
+<p>小声读书（<a href="https://t.me/weekly_books" rel="external">@weekly_books</a>）</p>
+<p>直接借用频道已有的介绍吧。小声读书是一个探索数字阅读可能性和未来的开放项目，致力于打破信息茧房，挖掘价值信息。亦是一份杂志，一个博客，混搭不拘一格，时常荒腔走板。<strong>不要被名字欺骗，内容不止读书</strong>。</p>
+</li>
+<li>
+<p>Apps推荐&amp;抽奖&amp;活动（<a href="https://t.me/AppsSweepstakesNews" rel="external">@AppsSweepstakesNews</a>）</p>
+<p>推送不限于 Apps 抽奖活动相关资讯，不定时分享好玩、有趣、实用的 App，以及相应的抽奖活动。</p>
+</li>
+<li>
+<p>即刻精选（<a href="https://t.me/jike_collection" rel="external">@jike_collection</a>）</p>
+<p>这个不用多介绍，精选即刻平台上热门讨论的内容及话题。</p>
+</li>
+</ol>
+<h2 id="telegram-bot">Telegram Bot
+</h2><p>借用<a href="https://tingtalk.me" rel="external">庭说</a>博客里的一句话：</p>
+<blockquote>
+  <p>Bots（机器人）就像运行在 Telegram 内部的小程序。借助 Telegram 开放的 APIs，可以实现很多让你意想不到的功能。</p>
+
+</blockquote><ol>
+<li>
+<p>Telegraph（<a href="https://t.me/telgraph" rel="external">@telegraph</a>）</p>
+<p>通过这个 Bot，可以登录 Telegraph 平台，编辑上面的文章，统计浏览量。</p>
+</li>
+<li>
+<p>Telegram 抽奖助手（<a href="https://t.me/cnLottery_bot" rel="external">@cnLottery_bot</a>）</p>
+<p>方便好用、公平公正的 Telegram 群组抽奖工具。需要将其添加到你的 Telgram 群组中方可使用。</p>
+</li>
+<li>
+<p>超级索引（<a href="https://t.me/hao1234bot" rel="external">@hao1234bot</a>）</p>
+<p>知道 hao123 的人基本上就知道超级索引机器人是做什么的。Telegram 必备神器，搜索自己感兴趣的频道、群组和机器人。</p>
+</li>
+<li>
+<p>SE-索引秘书（<a href="https://t.me/zh_secretary_bot" rel="external">@zh_secretary_bot</a>）</p>
+<p>功能与超级索引类似，中文索引导航，开源、非盈利。提供<a href="https://t.me/zh_secretary" rel="external">索引频道</a>，推送收录的频道和群组。</p>
+</li>
+<li>
+<p>1library（<a href="https://t.me/firstlibrarybot" rel="external">@firstlibrarybot</a>）</p>
+<p>该 Bot 功能不便细说，自行使用便知。</p>
+</li>
+</ol>
+<p>我在我的 <a href="https://t.me/findblog" rel="external">@FindBlog</a> 频道中搜集过一次将 Telegram 频道作为个人博客平台的使用者及其频道地址，欢迎大家前往查看、分享、关注。该消息地址：<a href="https://t.me/FindBlog/134" rel="external">FindBlog/134</a></p>
+]]></content:encoded>
     </item>
     <item>
       <title>Telegram 频道推荐</title>
@@ -51,6 +299,39 @@ Telegram 频道# 2019-nCoV 疫情实时播报（@nCoV2019）
 竹新社（@tnews365）
 这是一个7×24不定时编译国内外媒体的即时新闻报道，每条新闻下面都会标明来源，客观，没有频道运营者个人的主观评价。</description>
       <category>Telegram</category>
+      <content:encoded><![CDATA[<p>Telegram 不单单是一个即时通讯工具，更是一个获取信息的渠道。尤其是关注一些频道，能够获取各种各样，不同方面的内容。</p>
+<ol>
+<li>
+<p>竹新社（<a href="https://t.me/tnews365" rel="external">@tnews365</a>）</p>
+<p>这是一个7×24不定时编译国内外媒体的即时新闻报道，每条新闻下面都会标明来源，客观，没有频道运营者个人的主观评价。</p>
+</li>
+<li>
+<p>不求甚解（<a href="https://t.me/fakeye" rel="external">@fakeye</a>）</p>
+<p>这里更像是运营者的个人博客，记录他的所思所想，关于美食、软件、科技等内容。</p>
+</li>
+<li>
+<p>ALL About RSS（<a href="https://t.me/aboutrss" rel="external">@aboutrss</a>）</p>
+<p>一个RSS爱好者运营的频道，搜集任何与RSS有关的内容，包括但不限于关于RSS技术的应用、周边、教程、技巧等。</p>
+</li>
+<li>
+<p>APPDO 数字生活指南（<a href="https://t.me/appdodo" rel="external">@AppDoDo</a>）</p>
+<p>关键词：互联网/数码/App/羊毛等各种数字生活指南。</p>
+</li>
+<li>
+<p>硬核小卒（<a href="https://t.me/yinghexiaozu" rel="external">@yinghexiaozu</a>）</p>
+<p>分享最优质的内容，范围很广泛，但值得关注。“小卒可以无名，但不能不硬核”。</p>
+</li>
+<li>
+<p>庭说 TingTalk（<a href="https://t.me/tingtalk" rel="external">@tingtalk</a>）</p>
+<p>保持蓬勃的好奇心，这应该是该频道的宗旨，运营者写了全网最详细的<a href="https://tingtalk.me/telegram" rel="external">Telegram新手教程</a>，频道内容也极其丰富，值得收藏阅读。</p>
+</li>
+<li>
+<p>阿里云盘盘（<a href="https://t.me/yunpanpan" rel="external">@yunpanpan</a>）</p>
+<p>一个分享阿里云盘资源的频道，电影、剧集、书籍等各种资源。</p>
+</li>
+</ol>
+<p>今天暂时先分享上述 7 个我订阅关注的频道，下次再继续分享。另外，如果乐意，欢迎关注我的小频道：<a href="https://t.me/findblog" rel="external">@FindBlog</a>。</p>
+]]></content:encoded>
     </item>
     <item>
       <title>尝试博客最新文章推送至 Telegram 频道及群组</title>
@@ -63,6 +344,28 @@ Telegram频道
       <category>Telegram</category>
       <category>Tg</category>
       <category>社交软件</category>
+      <content:encoded><![CDATA[<p><a href="https://t.me/huhexian02" rel="external">Telegram群组</a></p>
+<p><a href="https://t.me/hhxblog" rel="external">Telegram频道</a></p>
+<p>前段时间，美国前总统川建国同志的 Twitter 被封号，随即各大主流社交网络平台也相继封杀建国同志，同时也掀起一股“美国言论自由”的讨论。尽管如此，川建国同志仍有平台可以发声，即 Telegram 。</p>
+<blockquote>
+  <p>Telegram（非正式简称TG）是跨平台的即时通信软件，其客户端是自由及开放源代码软件，但服务器端是专有软件。用户可以相互交换加密与自毁消息（类似于“阅后即焚”），发送照片、影片等所有类型文件。官方提供手机版（Android、iOS、Windows Phone）、桌面版（Windows、macOS、Linux）和网页版等多种平台客户端；同时官方开放应用程序接口（API），因此拥有许多第三方的客户端可供选择，其中多款内置中文。截止 2020 年 12 月 23 日，<a href="https://t.me/durov/142" rel="external">Telegram 已有 5 亿月活跃用户</a>。</p>
+
+</blockquote><p>我忘记我是什么时候接触的 <em>Telegram</em> 了，期间账号被删除过一次，因为官方规定，<strong>超过规定时长未登录会自动删除账号</strong>。因为现在习惯了电脑上一直开着代理，自然而然就把 Telegram 和QQ、微信一样，挂在电脑上，方便及时收发信息。我也说不清 Telegram 哪里优秀，作为一个社交软件，和国内的微信、QQ有优势互补，唯一的不足是国内不能正常访问，而且 Telegram 上面擦边球信息（有一个20w人的鉴黄中心）太多，可能这是没有审查带来的后果。</p>
+<p>Telegram支持 <strong>Mac/Windows/Linux/Android/iOS</strong> ，因为是开源的，所以衍生出许多第三方客户端，主要有 <strong>Telegram X、Telegram plus、Telegreat</strong> ，推荐使用后面两个，第一个已经不更新了。</p>
+<p><strong>今天这篇主要不是介绍 Telegram ，尽管已经占了一半篇幅</strong>。</p>
+<p>在2020年7月的时候，<a href="https://tingtalk.me/" rel="external">庭说</a>博主——庭博士给我留言，问我是不是应该在博客首页贴出我的 Telegram 频道，遗憾的是当时对 Telegram 不是特别熟悉，许多功能都没有了解清楚，因此没有建立我的 Personal Channel 。昨天， Telegram 上有人希望通过频道来订阅我的博客，当时我就想，有人习惯通过 RSS 订阅博客，也有人习惯通过 Telegram Channel 订阅博客，RSS 在 WordPress 可以直接使用，我就只需要折腾下 Telegram Channel 渠道了。</p>
+<p>在<a href="https://www.daniao.org/" rel="external">大鸟博客</a>看到这样一篇文章——《 <a href="https://www.daniao.org/7750.html" rel="external">WordPress 安装 Telegram 插件 – 自动推送文章到TG群或频道</a>》，大致方法是通过 Telegram 的机器人抓取博客最新文章然后推送至频道或群组，可能是由于我用的是国内服务器，本身无法与 Telegram 取得连接，折腾了多次也没有成功，甚至向插件作者咨询也没有得到解决方法。</p>
+<p><a href="https://tingtalk.me/" rel="external">庭博士</a>私聊我说，没必要自动推送，毕竟是博客，发文也不频繁，建一个 Personal Channel ，再建一个群组，关联起来，每当博客新文章发布，在频道推送，订阅用户就可以在群组里看到并且讨论。</p>
+<p>说干就干，建个频道和群组简单，名称、头像、简介，就建好了，目前关注的人比较少。以后博客一有文章发布，就直接在频道里推送一下，频道会自动将消息推送到群组里。所以这个方法和大鸟博客里的方法就是手动与自动的差异。我这也算是“曲线救国”吧。</p>
+<p>或许将来我会在博客上继续写一写 Telegram 的使用技巧，目前我也还在摸索。</p>
+<p>最后贴一下我的频道和群组链接，有 Telegram 账号的朋友可以关注下，没有账号的朋友可以尝试注册一下玩一玩。</p>
+<p>群组：<a href="https://t.me/huhexian02" rel="external">https://t.me/huhexian02</a> 频道：<a href="https://t.me/hhxblog" rel="external">https://t.me/hhxblog</a></p>
+<p>Tips：</p>
+<ol>
+<li>庭博士的博客（<a href="https://tingtalk.me/" rel="external">https://tingtalk.me/</a>)需要挂代理并全局模式访问</li>
+<li>Telegram 官网地址：<a href="https://telegram.org/" rel="external">https://telegram.org/</a> 需要挂代理访问</li>
+</ol>
+]]></content:encoded>
     </item>
   </channel>
 </rss>
