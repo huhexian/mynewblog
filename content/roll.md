@@ -31,5 +31,6 @@ menu: "main"
 - [Raye's Journey](https://rayepeng.net/)：且趁闲身未老，尽放我、些子疏狂。
 - [博客大联盟](https://bo.ke)：一个属于写作者的博客联盟。慢一点，写长一点，读认真一点。
 - [atpX](https://atpx.com/)：非常喜欢这位博主的设计。
+- [烧饼论坛](https://sb.sb)：烧饼博客旗下的社区论坛。
 
 ...更新中
