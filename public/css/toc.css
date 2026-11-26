@@ -134,7 +134,8 @@
   }
   @container page (inline-size >= 75rem) {
     .toc-fab,
-    .toc-sheet {
+    .toc-sheet,
+    .toc-sheet[popover]:popover-open {
       display: none;
     }
   }

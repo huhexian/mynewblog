@@ -29,11 +29,11 @@
 {{- end }}
 {{- $px = add $px (mul 4 (math.Max 0 (sub $n 1))) }}
 
-{{- /* Actions: 36px buttons, minus the 8px optical overhang; two 32px gaps. */}}
+{{- /* Actions: 36px buttons, minus the 8px optical overhang; 32px after the name, -4px before the actions. */}}
 {{- /* GetPage returns nil when the search page does not exist: no icon then. */}}
 {{- $buttons := add (cond (not $search) 0 1) (cond (site.Params.colorScheme.toggle | default false) 1 0) }}
 {{- if hugo.IsMultilingual }}{{ $buttons = add $buttons (sub (len hugo.Sites) 1) }}{{ end }}
-{{- $px = add $px (sub (mul 36 $buttons) 8) 64 }}
+{{- $px = add $px (sub (mul 36 $buttons) 8) 28 }}
 
 {{- /* 8% safety for font differences, rounded up to a quarter rem. */}}
 {{- $rem := div (math.Ceil (mul (div (mul $px 1.08) 16) 4)) 4 }}

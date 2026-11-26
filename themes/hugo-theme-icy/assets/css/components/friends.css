@@ -49,9 +49,13 @@
   font-weight: var(--weight-medium);
 }
 
+/* Always as tall as a name plus two description lines, so every card is the
+   same height whatever its text. */
 .friend-text {
   display: grid;
+  align-content: center;
   min-inline-size: 0;
+  min-block-size: calc((1em + 2 * var(--text-sm)) * var(--leading-snug));
   line-height: var(--leading-snug);
 }
 

@@ -132,6 +132,17 @@ function initBackToTop() {
   });
 }
 
+// ns-hugo-imp:/Users/huhexian/Desktop/mynewblog/themes/hugo-theme-icy/assets/js/modules/popover-layout.js
+function closeWithInvoker(popover, invoker) {
+  const watch = new ResizeObserver(() => {
+    if (popover.matches(":popover-open") && !invoker.checkVisibility()) popover.hidePopover();
+  });
+  popover.addEventListener("toggle", (event) => {
+    if (event.newState === "open") watch.observe(invoker);
+    else watch.disconnect();
+  });
+}
+
 // ns-hugo-imp:/Users/huhexian/Desktop/mynewblog/themes/hugo-theme-icy/assets/js/modules/menu.js
 function initMenu() {
   const nav = document.getElementById("site-nav");
@@ -144,6 +155,7 @@ function initMenu() {
   document.addEventListener("keydown", () => {
     pointer = false;
   }, { capture: true });
+  closeWithInvoker(nav, toggle);
   nav.addEventListener("toggle", (event) => {
     if (event.newState === "closed" && pointer && toggle.matches(":focus-visible")) {
       toggle.blur();

@@ -40,6 +40,13 @@
     #   license = "CC BY-NC-SA 4.0"
     #   url = "/copyright/"
     #   note = ""
+    # QR code buttons above the copyright card (front matter `qrcodes = false` hides them):
+    # hovering, clicking or tapping one shows its square image.
+    # [[params.article.qrcodes]]
+    #   icon = "wechat"           # assets/icons/<name>.svg; default "qrcode"
+    #   label = "WeChat"          # "" = icon only (the caption then names the button)
+    #   image = "qrcodes/wechat.png"  # assets/, static/ or URL
+    #   caption = ""              # optional line under the image (Markdown)
 
   # Live photos (live-photo shortcode): zoom = true lets a click open the still
   # in the image viewer; per photo `zoom=true|false` overrides this.

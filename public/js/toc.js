@@ -1,3 +1,14 @@
+// ns-hugo-imp:/Users/huhexian/Desktop/mynewblog/themes/hugo-theme-icy/assets/js/modules/popover-layout.js
+function closeWithInvoker(popover, invoker) {
+  const watch = new ResizeObserver(() => {
+    if (popover.matches(":popover-open") && !invoker.checkVisibility()) popover.hidePopover();
+  });
+  popover.addEventListener("toggle", (event) => {
+    if (event.newState === "open") watch.observe(invoker);
+    else watch.disconnect();
+  });
+}
+
 // ns-hugo-imp:/Users/huhexian/Desktop/mynewblog/themes/hugo-theme-icy/assets/js/modules/toc.js
 var READING_LINE = 0.25;
 function initToc() {
@@ -52,6 +63,8 @@ function initToc() {
   window.addEventListener("resize", schedule, { passive: true });
   recompute();
   const sheet = document.getElementById("toc-sheet");
+  const fab = document.querySelector(".toc-fab");
+  if (sheet && fab) closeWithInvoker(sheet, fab);
   sheet?.addEventListener("click", (event) => {
     if (event.target.closest("a")) sheet.hidePopover();
   });

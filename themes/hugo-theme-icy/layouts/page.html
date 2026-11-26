@@ -46,9 +46,9 @@
     {{ .Content }}
   </div>
 
-  {{- /* Only pages with a copyright card get a footer: an empty one would add
-       its top margin to the comments' own. */}}
-  {{- with partial "copyright.html" . | strings.TrimSpace }}
+  {{- /* Only pages with QR code buttons or a copyright card get a footer: an
+       empty one would add its top margin to the comments' own. */}}
+  {{- with print (partial "qrcodes.html" .) (partial "copyright.html" .) | strings.TrimSpace }}
   <footer class="article-footer">
     {{ . | safeHTML }}
   </footer>

@@ -1,6 +1,7 @@
 /**
  * Table of contents: mark the current section in every [data-toc] list and
- * close the bottom sheet after a jump. Both TOC presentations already work
+ * close the bottom sheet after a jump, or when the window grows wide enough
+ * for the rail. Both TOC presentations already work
  * without this script.
  *
  * The current section is the last heading whose top has passed a reading
@@ -9,6 +10,8 @@
  * reads with no writes in between, and it stays correct across long jumps
  * (anchor links, Home/End) where intersection notifications can be skipped.
  */
+import { closeWithInvoker } from "./popover-layout.js";
+
 const READING_LINE = 0.25;
 
 export function initToc() {
@@ -73,6 +76,8 @@ export function initToc() {
   // Close the sheet after choosing a section; on opening, bring the current
   // section into view inside the sheet (never scrolling the page).
   const sheet = document.getElementById("toc-sheet");
+  const fab = document.querySelector(".toc-fab");
+  if (sheet && fab) closeWithInvoker(sheet, fab);
   sheet?.addEventListener("click", (event) => {
     if (event.target.closest("a")) sheet.hidePopover();
   });

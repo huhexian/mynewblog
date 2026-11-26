@@ -4,10 +4,21 @@
  * .site-header whose breakpoint is computed at build time from the site
  * name / wordmark and the menu, and inlines the result in <head>.
  */
+/* The links and the icons read as one group at the end of the row: the last
+   link sits as far from the first icon as two icons from each other (16px
+   between glyphs: the link padding and the button padding, less 4px). The
+   name keeps 32px of clearance. */
 .header-inner {
   grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-areas: "brand nav actions";
-  column-gap: var(--space-6);
+}
+
+.site-name {
+  margin-inline-end: var(--space-6);
+}
+
+.header-actions {
+  margin-inline-start: calc(-1 * var(--space-1));
 }
 
 /* The nav is a popover in the compact layout; here it is a plain part of the

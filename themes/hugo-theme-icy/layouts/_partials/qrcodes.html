@@ -1,0 +1,47 @@
+{{- /*
+  QR code buttons at the end of original blog posts, above the copyright card:
+  a WeChat official account, a tip code… Hovering (mouse), clicking or
+  tapping a button shows its square image in a small card.
+
+    [[params.article.qrcodes]]
+      icon = "wechat"                 # assets/icons/<name>.svg; default "qrcode"
+      label = "WeChat"                # button text; "" = icon only
+      image = "qrcodes/wechat.png"    # square image (assets/, static/ or URL), required
+      caption = "…"                   # line under the image (Markdown); names an icon-only button
+
+  The image is published as it is (never resized or re-encoded), so the code
+  stays exactly as scannable as the original; it loads when the card opens.
+  Shown on regular pages of mainSections, unless front matter says
+  `qrcodes = false`. Without JavaScript the button still opens the card
+  (a native popover, centred in the window).
+  Context: the page.
+*/ -}}
+{{- $items := (site.Params.article | default dict).qrcodes | default slice }}
+{{- if and $items (in site.MainSections .Type) (ne .Params.qrcodes false) }}
+{{- partial "assets/use.html" (dict "page" . "feature" "qrcode") }}
+{{- $page := . }}
+<div class="qrcodes">
+  {{- range $i, $item := $items }}
+    {{- $label := $item.label | default "" | string | strings.TrimSpace }}
+    {{- $caption := $item.caption | default "" | string | strings.TrimSpace }}
+    {{- /* An icon-only button (empty label) is named by its caption. */}}
+    {{- $name := $label | default ($caption | markdownify | plainify | htmlUnescape | strings.TrimSpace) }}
+    {{- if not $name }}{{ errorf "params.article.qrcodes[%d]: set a label, or a caption to name the icon-only button" $i }}{{ end }}
+    {{- if not $item.image }}{{ errorf "params.article.qrcodes[%d] (%s): image is required" $i $name }}{{ end }}
+    {{- $media := partial "func/resolve-media.html" (dict "page" $page "src" $item.image "label" (printf "params.article.qrcodes[%d]" $i)) }}
+    {{- $id := printf "qrcode-%d" (add $i 1) }}
+  <div class="qrcode" data-qrcode>
+    <button class="qrcode-button{{ if not $label }} qrcode-icon-only{{ end }}" type="button" popovertarget="{{ $id }}">
+      {{- partial "icon.html" ($item.icon | default "qrcode") -}}
+      <span{{ if not $label }} class="visually-hidden"{{ end }}>{{ $name }}</span>
+    </button>
+    <div class="qrcode-card" id="{{ $id }}" popover role="dialog" aria-label="{{ $name }}">
+      <img src="{{ $media.url }}" alt="{{ $name }}" width="240" height="240" loading="lazy" decoding="async">
+      {{- with $caption }}
+      <p class="qrcode-caption">{{ . | markdownify }}</p>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+</div>
+{{- end }}

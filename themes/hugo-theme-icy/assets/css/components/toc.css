@@ -175,10 +175,12 @@
 }
 
 /* Rail fits: drop the narrow-screen controls. Kept last so it wins over the
-   .toc-fab display above (same layer, same specificity). */
+   .toc-fab display above (same layer, same specificity). A sheet still open
+   from a narrower window hides too (toc.js also closes it). */
 @container page (inline-size >= 75rem) {
   .toc-fab,
-  .toc-sheet {
+  .toc-sheet,
+  .toc-sheet[popover]:popover-open {
     display: none;
   }
 }
